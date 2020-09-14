@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="PantryStock@ucseniordesign.database.windows.net" uuid="bfd84b82-cb5d-46b2-a082-e5b39b91b0ce">
+      <driver-ref>azure.ms</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:sqlserver://ucseniordesign.database.windows.net:1433;database=PantryStock</jdbc-url>
+    </data-source>
+  </component>
+</project>
