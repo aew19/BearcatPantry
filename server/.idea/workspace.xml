@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RunManager">
+    <configuration name="BcpApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="bcpStockerApplication" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.bcpstockerapp.bcp.BcpApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+</project>
