@@ -1,2 +1,2 @@
 com\bcpstockerapp\bcp\BcpApplication.class
-com\bcpstockerapp\bcp\BcpController.class
+com\bcpstockerapp\bcp\model\PantryItem.class
