@@ -30,6 +30,7 @@ a.navbar-brand {
     height: 40px;
 }
 
+
 /* Provide sufficient contrast against white background */
 a {
     color: #0366d6;
@@ -51,6 +52,38 @@ a {
     background-color: #1b6ec2;
     border-color: #1861ac;
 }
+.text-Header {
+    font-family: sans-serif;
+    font-size: 40px;
+    color: black;
+    text-align: center;
+}
+.item-display {
+    height: 150px;
+    padding-left: 40px;
+    padding-right: 40px;
+
+}
+.items-divs {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    text-align: center;
+}
+.image-Button {
+    border:none;
+    background:none;
+    padding:0;
+}
+.horizontal-div {
+    display: inline-block;
+}
+.add-to-cart-button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 /* Sticky footer styles
 -------------------------------------------------- */

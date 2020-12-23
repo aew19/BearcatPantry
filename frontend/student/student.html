@@ -2,9 +2,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://kit.fontawesome.com/4c3f5e6aba.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/demo/frontend/bootstrap.min.css">
+    <link rel="stylesheet" href="/demo/frontend/global.css">
+    <title>Student Page</title>
 </head>
-<body>
-
+<body style="overflow-y: hidden">
+    <div style="height: 100vh;position: relative;">
+        <div id="navBar"></div>
+        <div>
+            <a href="#" class="btn btn-red">Categories</a>
+            <a style="float: right" href="#" class="btn btn-red">Checkout</a>
+        </div>
+        <div id="popItemsSection">
+            <div>
+                <p class="text-Header"> Popular Items</p>
+            </div>
+            <div class="items-divs">
+                <div class="horizontal-div">
+                    <a href="/demo/frontend/admin/inventory.html"><button id="popItem1" class="image-Button"><img class="item-display" src="/demo/frontend/images/axeDeo.jpg"/></button></a>
+                    <button class="add-to-cart-button">Add to Cart</button>
+                </div>
+                <div class="horizontal-div">
+                    <a href="/demo/frontend/admin/inventory.html"><button id="popItem2" class="image-Button"><img class="item-display" src="/demo/frontend/images/tacoShells.jpg"/></button></a>
+                    <button class="add-to-cart-button">Add to Cart</button>
+                </div>
+                <div class="horizontal-div">
+                    <a href="/demo/frontend/admin/inventory.html"><button id="popItem3" class="image-Button"><img class="item-display" src="/demo/frontend/images/cannedCorn.jpg"/></button></a>
+                    <button class="add-to-cart-button">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+        <div style="height: 60px"></div>
+        <div id="newItemsSection" class="items-divs">
+            <div>
+                <p class="text-Header"> New Items</p>
+            </div>
+            <div class="items-divs">
+                <div class="horizontal-div">
+                    <a href="/demo/frontend/admin/inventory.html"><button id="newItem1" class="image-Button"><img class="item-display" src="/demo/frontend/images/axeDeo.jpg"/></button></a>
+                    <button class="add-to-cart-button">Add to Cart</button>
+                </div>
+                <div class="horizontal-div">
+                    <a href="/demo/frontend/admin/inventory.html"><button id="newItem2" class="image-Button"><img class="item-display" src="/demo/frontend/images/cannedCorn.jpg"/></button></a>
+                    <button class="add-to-cart-button">Add to Cart</button>
+                </div>
+                <div class="horizontal-div">
+                    <a href="/demo/frontend/admin/inventory.html"><button id="newItem3" class="image-Button"><img class="item-display" src="/demo/frontend/images/tacoShells.jpg"/></button></a>
+                    <button class="add-to-cart-button">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="student.js"></script>
 </body>
 </html>
