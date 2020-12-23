@@ -132,3 +132,7 @@ body {
     width: 100%;
     white-space: nowrap;
 }
+.table{
+    font-family: sans-serif !important;
+    padding: 20px !important;
+}
