@@ -1,10 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="./admin.css">
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    </head>
 
-</body>
+    <body onload="makeTableScroll();">
+        <div id="navBar"> </div>
+
+        <div id="chart_div" onload="makeTableScroll();""></div>
+
+        <div style="margin-top:50px" class="scrollingTable">
+            <table id="users_table"></table>
+        </div>
+    </body>
+
+    <script>
+        $(function(){
+        $("#navBar").load("../navBar.html");
+        });
+    </script>
+    <script src="users-table.js"></script>
+    <script src="visitors-graph.js"></script>
+
 </html>
