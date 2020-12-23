@@ -3,6 +3,28 @@ $(function(){
     $("#navBar").load("../navBar.html");
 });
 
+$(function () {
+    $('#pantrytable').DataTable({
+      "pageLength": 3,
+      "paging": false,
+      "lengthChange": true,
+      "searching": false,
+      "ordering": true,
+      "info": false,
+      "autoWidth": true
+      });
+});
+
+function exportCSV(elem){
+    var table = document.getElementById("pantrytable");
+    var html = table.outerHTML;
+    var url = 'data:application/vnd.ms-excel,' + escape(html); // Set your html table into url 
+    elem.setAttribute("href", url);
+    elem.setAttribute("download", "pantrystock.xls"); // Choose the file name
+    return false;
+}
+
+
 function loadPantryItems(items){
     const table = document.getElementById("pantryStock");
     items.forEach(item => {
@@ -23,28 +45,6 @@ function loadPantryItems(items){
         expiration.innerHTML = item.expiration;
     });
 }
-//Helper function for sorting table data
-function sorting(a,b){
-    if (a.value < b.value){
-        return -1;
-    }
-    if (a.value > b.value){
-        return 1;
-    }
-    return 0;
-}
-//Sorts the columns list
-function sortColumn(list, direction){
-    var sorted = list.sort(sorting);
-
-    if (direction == -1){
-        list.reverse();
-    }
-    return sorted;
-}
-
-
-
 const items = [
     {name: "Pasta", quantity: 10, type:"Grains", brand: "Kroger", vegOrVeg: "Vegetarian", bestBuy:"11/09/2020", expiration:"11/09/2020"},
     {name: "Tomatos", quantity: 20, type:"Vegtable", brand: "Walmart", vegOrVeg: "Vegan", bestBuy:"11/10/2020", expiration:"11/10/2020"}
