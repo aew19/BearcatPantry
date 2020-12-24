@@ -24,6 +24,7 @@ function drawBasic() {
                 bold: '1',
                 italic: '1',
             },
+            slantedText: true
         },
         vAxis: {
             title: 'Number of Students',

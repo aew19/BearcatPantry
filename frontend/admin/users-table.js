@@ -11,10 +11,22 @@ let users = [
     { Select: "", Name: "Joshua St. Pierre", Role: "Supervisor"}
 ];
 
+$(function () {
+    $('#users_table').DataTable({
+      "pageLength": 3,
+      "paging": false,
+      "lengthChange": true,
+      "searching": false,
+      "ordering": true,
+      "info": false,
+      "autoWidth": true
+      });
+});
+
 function generateTableHead(table) {
     let thead = table.createTHead();
     let row = thead.insertRow();
-    for (let key of data) {
+    for (let key of users_data) {
         let th = document.createElement("th");
         let text = document.createTextNode(key);
         th.appendChild(text);
@@ -22,8 +34,8 @@ function generateTableHead(table) {
     }
 }
 
-function generateTable(table, data) {
-    for (let element of data) {
+function generateTable(table, users_data) {
+    for (let element of users_data) {
         let row = table.insertRow();
         for (key in element) {
             let cell = row.insertCell();
@@ -34,22 +46,7 @@ function generateTable(table, data) {
     }
 }
 
-function makeTableScroll() {
-    var maxRows = 6;
-
-    var table = document.getElementById('users_table');
-    var wrapper = table.parentNode;
-    var rowsInTable = table.rows.length;
-    var height = 0;
-    if (rowsInTable > maxRows) {
-        for (var i = 0; i < maxRows; i++) {
-            height += table.rows[i].clientHeight;
-        }
-        wrapper.style.height = height + "px";
-    }
-}
-
-let table = document.querySelector("table");
-let data = Object.keys(users[0]);
-generateTable(table, users);
-generateTableHead(table, data);
+let users_table = document.getElementById('users_table');
+let users_data = Object.keys(users[0]);
+generateTable(users_table, users);
+generateTableHead(users_table, users_data);

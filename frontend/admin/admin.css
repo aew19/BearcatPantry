@@ -1,22 +1,5 @@
-#users_table {
-    border:1px solid #c0c0c0;
-    width:100%;
-    font-family: 'Open Sans';
-    box-shadow: 3px 3px 3px #888888;
-}
-
 #users_table th {
-    border:1px solid #c0c0c0;
     background-color: #f5f5f5;
-    height: 50px;
-    text-align: center;
-    font-size: 20px;
-}
-
-#users_table td {
-    height: 30px;
-    text-align: left;
-    padding: 5px;
 }
 
 #users_table tr:nth-child(even) {
@@ -27,10 +10,93 @@
     background-color: #ddd;
 }
 
-#users_table table {
-    width:100%;
+#inventory_table th {
+    background-color: #f5f5f5;
+}
+
+#inventory_table tr:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
+#inventory_table tr:hover {
+    background-color: #ddd;
+}
+
+#transactions_table th {
+    background-color: #f5f5f5;
+}
+
+#transactions_table tr:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
+#transactions_table tr:hover {
+    background-color: #ddd;
 }
 
 .scrollingTable {
     overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.grid-container {
+    display: grid;
+    grid-gap: 10px;
+    padding: 10px;
+}
+
+.grid-container > div {
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    padding: 20px 0;
+}
+
+.item1 {
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+.item2 {
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+.item3 {
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+
+.item4 {
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+
+.item5 {
+    grid-row-start: 3;
+    grid-row-end: 4;
+}
+
+.item6 {
+    grid-row-start: 3;
+    grid-row-end: 4;
+}
+
+.item7 {
+    grid-row-start: 4;
+    grid-row-end: 5;
+}
+
+.item8 {
+    grid-row-start: 4;
+    grid-row-end: 5;
+}
+
+.item9 {
+    grid-row-start: 5;
+    grid-row-end: 6;
+}
+
+.item10 {
+    grid-row-start: 5;
+    grid-row-end: 6;
 }

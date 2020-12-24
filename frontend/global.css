@@ -45,7 +45,10 @@ a {
     color: #ffffff;
     background-color: #e00122;
     margin: 5px;
-    font-family: sans-serif;
+    font-family: 'Open Sans';
+}
+.btn-red:hover {
+    color: black;
 }
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #fff;
@@ -53,7 +56,7 @@ a {
     border-color: #1861ac;
 }
 .text-Header {
-    font-family: sans-serif;
+    font-family: 'Open Sans';
     font-size: 40px;
     color: black;
     text-align: center;
@@ -133,6 +136,6 @@ body {
     white-space: nowrap;
 }
 .table{
-    font-family: sans-serif !important;
+    font-family: 'Open Sans' !important;
     padding: 20px !important;
 }
