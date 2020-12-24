@@ -132,7 +132,13 @@ body {
     width: 100%;
     white-space: nowrap;
 }
-.table{
+/*.table{*/
+/*    font-family: sans-serif !important;*/
+/*    padding: 20px !important;*/
+/*}*/
+.pantrytable{
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 20px;
     font-family: sans-serif !important;
-    padding: 20px !important;
 }

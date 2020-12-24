@@ -8,7 +8,7 @@ $(function () {
       "pageLength": 3,
       "paging": false,
       "lengthChange": true,
-      "searching": false,
+      "searching": true,
       "ordering": true,
       "info": false,
       "autoWidth": true
