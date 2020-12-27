@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="js/jquery/jquery-3.1.0.js"></script>
     <script src="https://kit.fontawesome.com/4c3f5e6aba.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../bootstrap.min.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
@@ -14,29 +15,100 @@
     <title>Inventory</title>
 </head>
 <body>
-<div id="navBar"></div>
-<div>
-    <a href="#" class="btn btn-red">Scan Item</a>
-    <a href="#" class="btn btn-red">Scan Multiple Items</a>
-    <a href="#" id = "csv" onClick="exportCSV(this)" class="btn btn-red">Export Information(csv)</a>
-    <a href="#" class="btn btn-red">Re-count Inventory</a>
-</div>
-<div class="pantrytable">
-    <table class = "table" id = "pantrytable" width="100%" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col">Item</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Type</th>
-                <th scope="col">Brand</th>
-                <th scope="col">Vegetarian/Vegan</th>
-                <th scope="col">Best Buy Date</th>
-                <th scope="col">Expiration Date</th>
-            </tr>
-        </thead>
-        <tbody id = "pantryStock"></tbody>
-    </table>
-</div>
-<script src="inventory.js"></script>
+    <div id="navBar"></div>
+    <div>
+        <button class="btn btn-red" onclick = "popScan()">Scan Item</button>
+        <button class="btn btn-red">Scan Multiple Items</button>
+        <button id = "csv" onClick="exportCSV(this)" class="btn btn-red">Export Information(csv)</button>
+        <button class="btn btn-red">Re-count Inventory</button>
+    </div>
+    <!-- Scan Item Modal -->
+    <div class="modal" id="scanItem" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Scan Item!</h5>
+                    <button type="button" class="close" onclick="popScan()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class = "form-group">
+                            <input class="form-control" id="barcode" placeholder="Scan Item">
+                        </div>
+                        <button type="submit" class="btn btn-secondary" onclick="popNewItemModal()">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- New Item Modal -->
+    <div class="modal" id="newItem" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Item not recognized please enter the following: </h5>
+                    <button type="button" class="close" onclick="popNewItemModal()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <input type="hidden" name="_token" value="">
+                        <div class = "form-group">
+                            <input class="form-control" id="name" placeholder="Item Name">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" id="quantity" placeholder="Quantity">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" id="brand" placeholder="Brand">
+                        </div>
+                        <div class="form-group">
+                            <label for="type">Type:</label>
+                            <select id="type" name="type">
+                                <option value="Vegtable">Vegtable</option>
+                                <option value="Grain">Grains</option>
+                                <option value="Fruit">Fruit</option>
+                                <option value="Dairy">Dairy</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" id="url" placeholder="Product Link(URL)">
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" id="vegetarian" name="vegetarian">
+                            <label for="vegetarian">Vegetarian</label>
+                            <input type="checkbox" id="vegan" name="vegan">
+                            <label for="vegetarian">Vegan</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="img">Select Image: </label>
+                            <input type="file" id="prodImg" name="prodImg" accept="image/*">
+                        </div>
+                        <button type="submit" class="btn btn-secondary" onclick="popNewItemModal()">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pantrytable">
+        <table class = "table" id = "pantrytable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Brand</th>
+                    <th scope="col">Vegetarian/Vegan</th>
+                    <th scope="col">Best Buy Date</th>
+                    <th scope="col">Expiration Date</th>
+                </tr>
+            </thead>
+            <tbody id = "pantryStock"></tbody>
+        </table>
+    </div>
+    <script src="inventory.js"></script>
 </body>
 </html>
