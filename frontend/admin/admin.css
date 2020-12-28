@@ -67,7 +67,7 @@
 
 .item2 {
     grid-row-start: 1;
-    grid-row-end: 2;
+    grid-row-end: 3;
 }
 
 .item3 {
@@ -76,16 +76,11 @@
 }
 
 .item4 {
-    grid-row-start: 2;
-    grid-row-end: 3;
-}
-
-.item5 {
     grid-row-start: 3;
     grid-row-end: 4;
 }
 
-.item6 {
+.item5 {
     grid-row-start: 3;
     grid-row-end: 4;
 }
