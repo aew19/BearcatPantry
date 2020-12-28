@@ -19,7 +19,7 @@
     <div>
         <button class="btn btn-red" onclick = "popScan()">Scan Item</button>
         <button class="btn btn-red">Scan Multiple Items</button>
-        <button id = "csv" onClick="exportCSV(this)" class="btn btn-red">Export Information(csv)</button>
+        <a href='' id = "csv" onClick="exportCSV(this)" class="btn btn-red">Export Information(csv)</a>
         <button class="btn btn-red">Re-count Inventory</button>
     </div>
     <!-- Scan Item Modal -->
@@ -37,8 +37,8 @@
                         <div class = "form-group">
                             <input class="form-control" id="barcode" placeholder="Scan Item">
                         </div>
-                        <button type="submit" class="btn btn-secondary" onclick="popNewItemModal()">Submit</button>
                     </form>
+                    <button type="submit" class="btn btn-secondary" onclick="popNewItemModal()">Submit</button>
                 </div>
             </div>
         </div>

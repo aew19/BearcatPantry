@@ -7,12 +7,12 @@ var newItem = null
 var scanItem = null
 function popNewItemModal(){
     let request = new XMLHttpRequest();
-    if(newItem === null && scanItem === true){
-        document.getElementById("scanItem").style.display = "none";
-        scanItem = null
+    document.getElementById("scanItem").style.display = "none";
+    scanItem = null
+    if(newItem === null){
         document.getElementById("newItem").style.display = "block";
-        // var inputVal = document.getElementById("comment").value;
-        // console.log(inputVal);
+        var inputVal = document.getElementById("barcode").value;
+        console.log(inputVal);
         // request.open("POST", "http://localhost:8080/newBarcode", true);
         // request.send(inputVal);
         // request.onload = () => {
@@ -22,20 +22,6 @@ function popNewItemModal(){
         //     }
         // }
         newItem = true
-    }else if(newItem === null){
-        document.getElementById("newItem").style.display = "block";
-        // var inputVal = document.getElementById("comment").value;
-        // console.log(inputVal);
-        // request.open("POST", "http://localhost:8080/newBarcode", true);
-        // request.send(inputVal);
-        // request.onload = () => {
-        //     console.log(request);
-        //     if (request.status === 200){
-        //         console.log("SUCCESS!")
-        //     }
-        // }
-        newItem = true
-
     } else {
         document.getElementById("newItem").style.display = "none";
         newItem = null
