@@ -11,8 +11,10 @@ function popNewItemModal(){
     scanItem = null
     if(newItem === null){
         document.getElementById("newItem").style.display = "block";
-        var inputVal = document.getElementById("barcode").value;
-        console.log(inputVal);
+        var barcode = document.getElementById("barcode").value;
+        console.log(barcode);
+        var quantity = document.getElementById("quantity").value;
+        console.log(quantity);
         // request.open("POST", "http://localhost:8080/newBarcode", true);
         // request.send(inputVal);
         // request.onload = () => {

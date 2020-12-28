@@ -16,7 +16,7 @@
 </head>
 <body>
     <div id="navBar"></div>
-    <div>
+    <div style='padding-left:40px;'>
         <button class="btn btn-red" onclick = "popScan()">Scan Item</button>
         <button class="btn btn-red">Scan Multiple Items</button>
         <a href='' id = "csv" onClick="exportCSV(this)" class="btn btn-red">Export Information(csv)</a>
@@ -36,6 +36,9 @@
                     <form role="form">
                         <div class = "form-group">
                             <input class="form-control" id="barcode" placeholder="Scan Item">
+                        </div>
+                        <div class = "form-group">
+                            <input class="form-control" id="quantity" placeholder="Quantity">
                         </div>
                     </form>
                     <button type="submit" class="btn btn-secondary" onclick="popNewItemModal()">Submit</button>
@@ -58,9 +61,6 @@
                         <input type="hidden" name="_token" value="">
                         <div class = "form-group">
                             <input class="form-control" id="name" placeholder="Item Name">
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control" id="quantity" placeholder="Quantity">
                         </div>
                         <div class="form-group">
                             <input class="form-control" id="brand" placeholder="Brand">
