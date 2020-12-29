@@ -40,7 +40,9 @@ function generateTable(table, users_data) {
         for (key in element) {
             let cell = row.insertCell();
             let text = document.createTextNode(element[key]);
-            // Need to figure out how to add checkbox here
+            if (element[key] == "") {
+                cell.innerHTML = "<input type=\"checkbox\">"; 
+            }
             cell.appendChild(text);
         }
     }

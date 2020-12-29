@@ -3,8 +3,7 @@ $(function(){
 });
 
 function makeTableScroll() {
-    var maxRows = 6;
-
+    var maxRows = 8;
     var table = document.getElementById('inventory_table');
     var wrapper = table.parentNode;
     var rowsInTable = table.rows.length;
@@ -16,6 +15,7 @@ function makeTableScroll() {
         wrapper.style.height = height + "px";
     }
 
+    maxRows = 6;
     table = document.getElementById('transactions_table');
     wrapper = table.parentNode;
     rowsInTable = table.rows.length;
@@ -27,6 +27,7 @@ function makeTableScroll() {
         wrapper.style.height = height + "px";
     }
 
+    maxRows = 8;
     table = document.getElementById('users_table');
     wrapper = table.parentNode;
     rowsInTable = table.rows.length;

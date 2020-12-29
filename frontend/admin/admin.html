@@ -21,12 +21,19 @@
 
         <div id="navBar"></div>
         <div class="grid-container" onload="makeTableScroll();">
-            <div class="item1" id="chart_div"></div>  
-            <div class="item2 scrollingTable">
-                <table class ="table" id="inventory_table"></table>
+            <div class="item1" id="chart_div">
+            </div>  
+            <div class="item2">
+                <h2>Inventory</h2>
+                <div class="scrollingTable">
+                    <table class ="table" id="inventory_table"></table>
+                </div>
             </div>
-            <div class="item3 scrollingTable">
-                <table class ="table" id="users_table"></table>
+            <div class="item3">
+                <h2>Users</h2>
+                <div class="scrollingTable">
+                    <table class ="table" id="users_table"></table>
+                </div>
             </div>
             <div class="item4">
                 <a href="#" id = "" onClick="" class="btn btn-red">Inventory Page</a>
@@ -38,14 +45,78 @@
                 <a href="#" id = "addUsers" onClick="" class="btn btn-red">Add Users</a>
                 <a href="#" id = "delUsers" onClick="" class="btn btn-red">Delete Users</a>
             </div> 
-            <div class="item7 scrollingTable">
-                <table class ="table" id="transactions_table"></table>
+            <div class="item7">
+                <h2 style="margin-bottom:2rem">Statistics</h2>
+                <div class="row row-cols-1 row-cols-md-3 text-center">
+                    <div class="col">
+                      <div class="card mb-4 shadow-sm">
+                      <div class="card-header">
+                        <h4 class="my-0 fw-normal">Most Popular Item</h4>
+                      </div>
+                      <div class="card-body">
+                        <h2 class="card-title pricing-card-title">Canned Corn</h2>
+                      </div>
+                    </div>
+                    </div>
+                    <div class="col">
+                      <div class="card mb-4 shadow-sm">
+                      <div class="card-header">
+                        <h4 class="my-0 fw-normal">Total Stock</h4>
+                      </div>
+                      <div class="card-body">
+                        <h1 class="card-title pricing-card-title">158</h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                        </ul>
+                      </div>
+                    </div>
+                    </div>
+                    <div class="col">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-header">
+                                <h4 class="my-0 fw-normal">Total Users</h4>
+                            </div>
+                            <div class="card-body">
+                                <h1 class="card-title pricing-card-title">44</h1>
+                                <ul class="list-unstyled mt-3 mb-4">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-header">
+                                <h4 class="my-0 fw-normal">Total Transactions</h4>
+                            </div>
+                            <div class="card-body">
+                                <h1 class="card-title pricing-card-title">18</h1>
+                                <ul class="list-unstyled mt-3 mb-4">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-header">
+                                <h4 class="my-0 fw-normal">Visits This Month</h4>
+                            </div>
+                            <div class="card-body">
+                                <h1 class="card-title pricing-card-title">29</h1>
+                                <ul class="list-unstyled mt-3 mb-4">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
             </div>
-            <div class="item8"></div>
             <div class="item9">
+                <h2>Transactions</h2>
+                <div class="scrollingTable">
+                    <table class ="table" id="transactions_table"></table>
+                </div>
+            </div>
+            <div class="item11">
                 <a href="#" id = "trnCSV" onClick="exportCSV(this)" class="btn btn-red">Export Transactions (csv)</a>
             </div>
-            <div class="item10"></div>
         </div>
 
     </body>

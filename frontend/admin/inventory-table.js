@@ -40,7 +40,15 @@ function generateTable(table, inventory_data) {
         for (key in element) {
             let cell = row.insertCell();
             let text = document.createTextNode(element[key]);
-            // Need to figure out how to add buttons here
+            if (element[key] < 15) {
+                cell.style.backgroundColor = '#e00122';
+            }
+            else if (element[key] >= 15 & element[key] < 45) {
+                cell.style.backgroundColor = 'Yellow';
+            }
+            else if (element[key] >= 45) {
+                cell.style.backgroundColor = '#22e001';
+            }
             cell.appendChild(text);
         }
     }

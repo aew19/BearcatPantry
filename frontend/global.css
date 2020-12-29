@@ -42,8 +42,9 @@ a {
     border-color: #1861ac;
 }
 .btn-red {
-    color: #ffffff;
+    color: #fff;
     background-color: #e00122;
+    border-color: #dc3545;
     margin: 5px;
     font-family: 'Open Sans';
 }

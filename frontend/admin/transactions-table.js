@@ -40,7 +40,9 @@ function generateTable(table, transactions_data) {
         for (key in element) {
             let cell = row.insertCell();
             let text = document.createTextNode(element[key]);
-            // Need to figure out how to add buttons here
+            if (element[key] == "") {
+                cell.innerHTML = "<input type=\"button\" class=\"btn btn-red\" value=\"See Items\" id=\"myBtn\">"; 
+            }
             cell.appendChild(text);
         }
     }
