@@ -35,13 +35,15 @@ function generateTableHead(table) {
 }
 
 function generateTable(table, users_data) {
+    var counter = 0;
     for (let element of users_data) {
         let row = table.insertRow();
         for (key in element) {
             let cell = row.insertCell();
             let text = document.createTextNode(element[key]);
             if (element[key] == "") {
-                cell.innerHTML = "<input type=\"checkbox\">"; 
+                cell.innerHTML = "<input type=\"checkbox\" id=\"checkbox"+counter+"\"><label for=\"checkbox"+counter+"\"></label>";
+                counter++;
             }
             cell.appendChild(text);
         }

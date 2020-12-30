@@ -36,14 +36,14 @@
                 </div>
             </div>
             <div class="item4">
-                <a href="#" id = "" onClick="" class="btn btn-red">Inventory Page</a>
-                <a href="#" id = "invCSV" onClick="exportCSV(this)" class="btn btn-red">Export Inventory (csv)</a>
-            </div>
-            <div class="item5">
                 <a href="#" id = "usrCSV" onClick="exportCSV(this)" class="btn btn-red">Export Users (csv)</a>
                 <a href="#" id = "editUsers" onClick="" class="btn btn-red">Edit Users</a>
                 <a href="#" id = "addUsers" onClick="" class="btn btn-red">Add Users</a>
                 <a href="#" id = "delUsers" onClick="" class="btn btn-red">Delete Users</a>
+            </div>
+            <div class="item5">
+                <a href="#" id = "" onClick="" class="btn btn-red">Inventory Page</a>
+                <a href="#" id = "invCSV" onClick="exportCSV(this)" class="btn btn-red">Export Inventory (csv)</a>
             </div> 
             <div class="item7">
                 <h2 style="margin-bottom:2rem">Statistics</h2>
@@ -113,14 +113,28 @@
                 <div class="scrollingTable">
                     <table class ="table" id="transactions_table"></table>
                 </div>
+                <!-- View Transaction Modal -->
+                <div class="modal" id="viewTransaction" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Transaction</h5>
+                                <button type="button" class="close" onclick="popViewTransaction()" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <b>Item 1</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="item11">
                 <a href="#" id = "trnCSV" onClick="exportCSV(this)" class="btn btn-red">Export Transactions (csv)</a>
             </div>
         </div>
-
     </body>
-
     <script src="users-table.js"></script>
     <script src="transactions-table.js"></script>
     <script src="inventory-table.js"></script>
