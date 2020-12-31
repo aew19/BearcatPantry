@@ -47,8 +47,24 @@ a {
     border-color: #dc3545;
     margin: 5px;
 }
+.btn-reject:hover,
+.btn-green:hover,
 .btn-red:hover {
     color: black;
+}
+.btn-reject {
+    color: #fff;
+    background-color: #ff3823;
+    border-color: #ff3823;
+    margin: 5px;
+    font-family: 'Open Sans';
+}
+.btn-green {
+    color: #fff;
+    background-color: #92d36e;
+    border-color: #92d36e;
+    margin: 5px;
+    font-family: 'Open Sans';
 }
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #fff;

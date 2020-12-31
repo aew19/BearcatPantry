@@ -19,7 +19,8 @@ $(function () {
       "searching": false,
       "ordering": true,
       "info": false,
-      "autoWidth": true
+      "autoWidth": true,
+      "order": ["desc"]
       });
 });
 
@@ -40,14 +41,17 @@ function generateTable(table, inventory_data) {
         for (key in element) {
             let cell = row.insertCell();
             let text = document.createTextNode(element[key]);
+            cell.style.fontWeight = 700;
             if (element[key] < 15) {
-                cell.style.backgroundColor = '#e00122';
+                cell.style.backgroundColor = '#ff3823';
+                cell.style.color = '#fff';
             }
             else if (element[key] >= 15 & element[key] < 45) {
-                cell.style.backgroundColor = 'Yellow';
+                cell.style.backgroundColor = '#fefb64';
             }
             else if (element[key] >= 45) {
-                cell.style.backgroundColor = '#22e001';
+                cell.style.backgroundColor = '#92d36e';
+                cell.style.color = '#fff';
             }
             cell.appendChild(text);
         }
