@@ -66,13 +66,6 @@ function exportCSV(elem){
 }
 
 var closeModal = null
-function popNewItemModal(){
-    let request = new XMLHttpRequest();
-    document.getElementById("viewTransaction").style.display = "none";
-    closeModal = null
-    document.getElementById("newItem").style.display = "none";
-}
-
 function popViewTransaction(clicked_id){
     if(closeModal === null){
         document.getElementById("viewTransaction").style.display = "block";
