@@ -2,6 +2,10 @@ $(function(){
     $("#navBar").load("../navBar.html");
 });
 
+$(function(){
+    $("#footer").load("../footer.html");
+});
+
 function makeTableScroll() {
     var maxRows = 8;
     var table = document.getElementById('inventory_table');
@@ -59,4 +63,23 @@ function exportCSV(elem){
     elem.setAttribute("href", url);
 
     return false;
+}
+
+var closeModal = null
+function popNewItemModal(){
+    let request = new XMLHttpRequest();
+    document.getElementById("viewTransaction").style.display = "none";
+    closeModal = null
+    document.getElementById("newItem").style.display = "none";
+}
+
+function popViewTransaction(clicked_id){
+    if(closeModal === null){
+        document.getElementById("viewTransaction").style.display = "block";
+        closeModal = true
+        document.getElementById("modal-body").innerHTML = clicked_id;
+    } else {
+        document.getElementById("viewTransaction").style.display = "none";
+        closeModal = null
+    }
 }

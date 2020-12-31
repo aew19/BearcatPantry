@@ -43,7 +43,7 @@ function generateTable(table, transactions_data) {
             let cell = row.insertCell();
             let text = document.createTextNode(element[key]);
             if (element[key] == "") {
-                cell.innerHTML = "<input type=\"button\" class=\"btn btn-red\" value=\"See Items\" id=\"Btn"+counter+"\" onclick = \"popViewTransaction()\">";
+                cell.innerHTML = "<input type=\"button\" class=\"btn btn-red\" value=\"See Items\" id=\"Btn"+counter+"\" onclick = \"popViewTransaction(this.id)\">";
                 counter++;
             }
             cell.appendChild(text);
