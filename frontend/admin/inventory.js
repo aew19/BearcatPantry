@@ -5,6 +5,7 @@ $(function(){
 
 var newItem = null
 var scanItem = null
+var scanmulti = null
 function popNewItemModal(){
     let request = new XMLHttpRequest();
     document.getElementById("scanItem").style.display = "none";
@@ -53,6 +54,29 @@ function popScan(){
 
 }
 
+function popMultiScan(){
+    let request = new XMLHttpRequest();
+    document.getElementById("scanItem").style.display = "none";
+    if(scanmulti === null){
+        document.getElementById("multipleItems").style.display = "block";
+        var barcode = document.getElementById("barcode").value;
+        console.log(barcode);
+        var quantity = document.getElementById("quantity").value;
+        console.log(quantity);
+        // request.open("POST", "http://localhost:8080/newBarcode", true);
+        // request.send(inputVal);
+        // request.onload = () => {
+        //     console.log(request);
+        //     if (request.status === 200){
+        //         console.log("SUCCESS!")
+        //     }
+        // }
+        scanmulti = true
+    } else {
+        document.getElementById("multipleItems").style.display = "none";
+        scanmulti = null
+    }
+}
 
 $(function () {
     $('#pantrytable').DataTable({
