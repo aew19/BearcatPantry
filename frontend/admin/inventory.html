@@ -16,7 +16,7 @@
 </head>
 <body>
     <div id="navBar"></div>
-    <div style='padding-left:40px;'>
+    <div style='padding-left:40px; padding-top: 10px;'>
         <button class="btn btn-red" onclick = "popScan()">Scan Item</button>
         <button class="btn btn-red" onclick="popMultiScan()">Scan Multiple Items</button>
         <a href='' id = "csv" onClick="exportCSV(this)" class="btn btn-red">Export Information(csv)</a>
@@ -93,9 +93,9 @@
             </div>
         </div>
     </div>
-    <div class="pantrytable">
-        <table class = "table" id = "pantrytable" width="100%" cellspacing="0">
-            <thead>
+    <div class="pantrytable table-responsive-md">
+        <table class = "table table-bordered" id = "pantrytable" width="100%" cellspacing="0">
+            <thead style="text-align: center" class="thead-light">
                 <tr>
                     <th scope="col">Item</th>
                     <th scope="col">Quantity</th>
@@ -106,7 +106,7 @@
                     <th scope="col">Expiration Date</th>
                 </tr>
             </thead>
-            <tbody id = "pantryStock"></tbody>
+            <tbody style="text-align: center" id = "pantryStock"></tbody>
         </table>
     </div>
     <!-- Scan Multiple Items Modal -->

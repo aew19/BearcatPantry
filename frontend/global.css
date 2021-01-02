@@ -46,6 +46,7 @@ a {
     background-color: #e00122;
     border-color: #dc3545;
     margin: 5px;
+    box-shadow: none !important;
 }
 .btn-reject:hover,
 .btn-green:hover,
@@ -159,6 +160,7 @@ body {
     padding-left: 40px;
     padding-right: 40px;
     padding-top: 20px;
+
 }
 
 
