@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface InventoryTableRepository extends JpaRepository<InventoryTable, Long>{
+    InventoryTable findByBarcode(String barcode);
 }
