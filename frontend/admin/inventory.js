@@ -2,10 +2,12 @@
 $(function(){
     $("#navBar").load("../navBar.html");
 });
-
+//Modal Pop variables
 var newItem = null
 var scanItem = null
 var scanmulti = null
+
+//This function pops the new item modal
 function popNewItemModal(){
     let request = new XMLHttpRequest();
     document.getElementById("scanItem").style.display = "none";
@@ -31,7 +33,7 @@ function popNewItemModal(){
     }
 }
 
-
+//This function pops the scan item modal
 function popScan(){
     let request = new XMLHttpRequest();
     if(scanItem === null){
@@ -54,6 +56,7 @@ function popScan(){
 
 }
 
+//This function pops the bulk scan modal
 function popMultiScan(){
     let request = new XMLHttpRequest();
     document.getElementById("scanItem").style.display = "none";
@@ -78,6 +81,8 @@ function popMultiScan(){
     }
 }
 
+//This function is used for the formatting of the table
+//Right now searching and ordering is on
 $(function () {
     $('#pantrytable').DataTable({
       "pageLength": 3,
@@ -90,6 +95,7 @@ $(function () {
       });
 });
 
+//This function is used for exporting data in a table to CSV
 function exportCSV(elem){
     var table = document.getElementById("pantrytable");
     var html = table.outerHTML;
@@ -99,7 +105,7 @@ function exportCSV(elem){
     return false;
 }
 
-
+//This function loads pantry items from data
 function loadPantryItems(items){
     const table = document.getElementById("pantryStock");
     for (let element of items) {
@@ -122,6 +128,14 @@ function loadPantryItems(items){
         }
     }
 }
+
+// let request = new XMLHttpRequest();
+// request.open("GET", "http://localhost:8080/items", true);
+// request.onload = function (){
+//     let data = JSON.parse(this.response);
+//     console.log(data)
+// }
+// request.send()
 const items = [
     {name: "Pasta", quantity: 10, type:"Grains", brand: "Kroger", vegOrVeg: "Vegetarian", bestBuy:"11/09/2020", expiration:"11/09/2020"},
     {name: "Tomatos", quantity: 20, type:"Vegtable", brand: "Walmart", vegOrVeg: "Vegan", bestBuy:"11/10/2020", expiration:"11/10/2020"}
