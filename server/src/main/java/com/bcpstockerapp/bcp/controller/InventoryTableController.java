@@ -11,7 +11,8 @@ import org.springframework.http.HttpStatus;
 import java.util.Date;
 import java.util.List;
 
-@Controller
+@CrossOrigin
+@RestController
 public class InventoryTableController {
     @Autowired
     private InventoryTableRepository inventoryTableRepository;
