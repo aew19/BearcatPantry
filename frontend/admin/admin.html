@@ -22,10 +22,12 @@
         <div id="navBar"></div>
         <div class="grid-container" onload="makeTableScroll();">
             <div class="item1" id="chart_div">
-            </div>  
+            </div>
+            <!--Class Item 2 is what causes the nav bar to not load-->
             <div class="item2">
                 <h2>Inventory</h2>
                 <div class="scrollingTable">
+                    <!--Id inventory_table is specifically what causes the nav bar to not show up-->
                     <table class ="table" id="inventory_table"></table>
                 </div>
             </div>
@@ -44,7 +46,7 @@
             <div class="item5">
                 <a href="#" id = "" onClick="" class="btn btn-red">Inventory Page</a>
                 <a href="#" id = "invCSV" onClick="exportCSV(this)" class="btn btn-red">Export Inventory (csv)</a>
-            </div> 
+            </div>
             <div class="item7">
                 <h2 style="margin-bottom:2rem">Statistics</h2>
                 <div class="row row-cols-1 row-cols-md-3 text-center">
@@ -55,7 +57,7 @@
                       </div>
                       <div class="card-body">
                         <h1 class="card-title pricing-card-title">78</h1>
-                        <ul class="list-unstyled mt-3 mb-4">
+                          <ul class="list-unstyled mt-3 mb-4"></ul>
                       </div>
                     </div>
                     </div>
