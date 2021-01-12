@@ -29,8 +29,7 @@ public class InventoryTable {
 
     //Constructors
     public InventoryTable(){}
-    public InventoryTable(Long id, String barcode, String name, Integer quantity, String type, String brand, boolean vegetarian, boolean vegan, Date bestBuy, Date expiration){
-        this.id = id;
+    public InventoryTable(String barcode, String name, Integer quantity, String type, String brand, boolean vegetarian, boolean vegan, Date bestBuy, Date expiration){
         this.barcode = barcode;
         this.name = name;
         this.quantity = quantity;
@@ -65,9 +64,6 @@ public class InventoryTable {
     public Date getExpiration(){ return expiration;}
 
     //Setters
-    public void setId(Long id){
-        this.id = id;
-    }
     public void setBarcode(String barcode){this.barcode = barcode;}
     public void setName(String name){this.name = name;}
     public void setQuantity(Integer quantity){

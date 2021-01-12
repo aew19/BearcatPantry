@@ -29,10 +29,9 @@ public class InventoryTableController {
     }
 
     @PostMapping("/items")
-    public @ResponseBody ResponseEntity<String> createItem(@RequestParam Long id, String barcode, String name, Integer quantity, String type, String brand, boolean vegetarian, boolean vegan, Date bestBuy, Date expiration) {
+    public @ResponseBody ResponseEntity<String> createItem(@RequestParam String barcode, String name, Integer quantity, String type, String brand, boolean vegetarian, boolean vegan, Date bestBuy, Date expiration) {
         try{
             InventoryTable item = new InventoryTable();
-            item.setId(id);
             item.setBarcode(barcode);
             item.setName(name);
             item.setQuantity(quantity);
