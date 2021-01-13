@@ -9,7 +9,7 @@ import java.util.Date;
 
 
 @Entity
-public class InventoryTable {
+public class ProductTable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -20,16 +20,15 @@ public class InventoryTable {
     private String brand;
     private boolean vegetarian;
     private boolean vegan;
-    private Date bestBuy;
-    private Date expiration;
+    private Date addedDate;
 
     //TODO: IMAGE STORAGE!!!!!!!
 
 
 
     //Constructors
-    public InventoryTable(){}
-    public InventoryTable(String barcode, String name, Integer quantity, String type, String brand, boolean vegetarian, boolean vegan, Date bestBuy, Date expiration){
+    public ProductTable(){}
+    public ProductTable(String barcode, String name, Integer quantity, String type, String brand, boolean vegetarian, boolean vegan, Date addedDate){
         this.barcode = barcode;
         this.name = name;
         this.quantity = quantity;
@@ -37,8 +36,7 @@ public class InventoryTable {
         this.brand = brand;
         this.vegetarian = vegetarian;
         this.vegan = vegan;
-        this.bestBuy = bestBuy;
-        this.expiration = expiration;
+        this.addedDate = addedDate;
     }
 
     //Getters
@@ -60,8 +58,8 @@ public class InventoryTable {
     }
     public boolean getVegetarian(){ return vegetarian;}
     public boolean getVegan(){ return vegan;}
-    public Date getBestBuy(){ return bestBuy; }
-    public Date getExpiration(){ return expiration;}
+    public Date getAddedDate(){ return addedDate; }
+
 
     //Setters
     public void setBarcode(String barcode){this.barcode = barcode;}
@@ -77,7 +75,6 @@ public class InventoryTable {
     }
     public void setVegetarian(boolean vegetarian){ this.vegetarian = vegetarian;}
     public void setVegan(boolean vegan){ this.vegan = vegan;}
-    public void setBestBuy(Date bestBuy){this.bestBuy = bestBuy;}
-    public void setExpiration(Date expiration){this.expiration = expiration;}
+    public void setAddedDate(Date addedDate){this.addedDate = addedDate;}
 }
 

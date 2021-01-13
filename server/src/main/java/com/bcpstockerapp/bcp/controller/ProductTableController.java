@@ -1,10 +1,9 @@
 package com.bcpstockerapp.bcp.controller;
 
-import com.bcpstockerapp.bcp.model.InventoryTable;
-import com.bcpstockerapp.bcp.repository.InventoryTableRepository;
+import com.bcpstockerapp.bcp.model.ProductTable;
+import com.bcpstockerapp.bcp.repository.ProductTableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
@@ -13,15 +12,15 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-public class InventoryTableController {
+public class ProductTableController {
     @Autowired
-    private InventoryTableRepository inventoryTableRepository;
+    private ProductTableRepository productTableRepository;
 
     @GetMapping("/items")
-    public @ResponseBody ResponseEntity<List<InventoryTable>> getAllItems(){
+    public @ResponseBody ResponseEntity<List<ProductTable>> getAllItems(){
         try{
-            List<InventoryTable> inventory = inventoryTableRepository.findAll();
-            return new ResponseEntity<>(inventory, HttpStatus.OK);
+            List<ProductTable> product = productTableRepository.findAll();
+            return new ResponseEntity<>(product, HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -29,9 +28,9 @@ public class InventoryTableController {
     }
 
     @PostMapping("/items")
-    public @ResponseBody ResponseEntity<String> createItem(@RequestParam String barcode, String name, Integer quantity, String type, String brand, boolean vegetarian, boolean vegan, Date bestBuy, Date expiration) {
+    public @ResponseBody ResponseEntity<String> createItem(@RequestParam String barcode, String name, Integer quantity, String type, String brand, boolean vegetarian, boolean vegan, Date bestBuy, Date addedDate) {
         try{
-            InventoryTable item = new InventoryTable();
+            ProductTable item = new ProductTable();
             item.setBarcode(barcode);
             item.setName(name);
             item.setQuantity(quantity);
@@ -39,9 +38,8 @@ public class InventoryTableController {
             item.setBrand(brand);
             item.setVegetarian(vegetarian);
             item.setVegan(vegan);
-            item.setBestBuy(bestBuy);
-            item.setExpiration(expiration);
-            inventoryTableRepository.save(item);
+            item.setAddedDate(addedDate);
+            productTableRepository.save(item);
             return new ResponseEntity<>("Saved!", HttpStatus.CREATED);
         } catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -49,9 +47,9 @@ public class InventoryTableController {
     }
 
     @GetMapping("/items/{barcode}")
-    public @ResponseBody ResponseEntity<InventoryTable> findByBarcode(@PathVariable(value="barcode") String barcode){
+    public @ResponseBody ResponseEntity<ProductTable> findByBarcode(@PathVariable(value="barcode") String barcode){
         try{
-            InventoryTable item = inventoryTableRepository.findByBarcode(barcode);
+            ProductTable item = productTableRepository.findByBarcode(barcode);
             return new ResponseEntity<>(item, HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
