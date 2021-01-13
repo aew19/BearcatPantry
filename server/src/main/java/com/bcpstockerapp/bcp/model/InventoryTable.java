@@ -9,28 +9,34 @@ import java.util.Date;
 
 
 @Entity
-public class PantryItem {
+public class InventoryTable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    private String barcode;
     private String name;
     private Integer quantity;
     private String type;
     private String brand;
-    private String vegVegan;
+    private boolean vegetarian;
+    private boolean vegan;
     private Date bestBuy;
     private Date expiration;
 
+    //TODO: IMAGE STORAGE!!!!!!!
+
+
+
     //Constructors
-    public PantryItem(){}
-    public PantryItem(Long id, String name, Integer quantity, String type, String brand, String vegVegan, Date bestBuy, Date expiration){
-        this.id = id;
+    public InventoryTable(){}
+    public InventoryTable(String barcode, String name, Integer quantity, String type, String brand, boolean vegetarian, boolean vegan, Date bestBuy, Date expiration){
+        this.barcode = barcode;
         this.name = name;
         this.quantity = quantity;
         this.type = type;
         this.brand = brand;
-        this.vegVegan = vegVegan;
+        this.vegetarian = vegetarian;
+        this.vegan = vegan;
         this.bestBuy = bestBuy;
         this.expiration = expiration;
     }
@@ -39,6 +45,7 @@ public class PantryItem {
     public Long getId(){
         return id;
     }
+    public String getBarcode(){return barcode;}
     public String getName(){
         return name;
     }
@@ -51,16 +58,13 @@ public class PantryItem {
     public String getBrand(){
         return brand;
     }
-    public String getVegVegan(){
-        return vegVegan;
-    }
+    public boolean getVegetarian(){ return vegetarian;}
+    public boolean getVegan(){ return vegan;}
     public Date getBestBuy(){ return bestBuy; }
     public Date getExpiration(){ return expiration;}
 
     //Setters
-    public void setId(Long id){
-        this.id = id;
-    }
+    public void setBarcode(String barcode){this.barcode = barcode;}
     public void setName(String name){this.name = name;}
     public void setQuantity(Integer quantity){
         this.quantity = quantity;
@@ -71,9 +75,8 @@ public class PantryItem {
     public void setBrand(String brand){
         this.brand = brand;
     }
-    public void setVegVegan(String vegVegan){
-        this.vegVegan = vegVegan;
-    }
+    public void setVegetarian(boolean vegetarian){ this.vegetarian = vegetarian;}
+    public void setVegan(boolean vegan){ this.vegan = vegan;}
     public void setBestBuy(Date bestBuy){this.bestBuy = bestBuy;}
     public void setExpiration(Date expiration){this.expiration = expiration;}
 }
