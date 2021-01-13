@@ -21,31 +21,30 @@
 
         <div id="navBar"></div>
         <div class="grid-container" onload="makeTableScroll();">
-            <div class="item1" id="chart_div">
-            </div>  
-            <div class="item2">
+            <div class="item1 grid-border" id="chart_div"></div>  
+            <div class="item2 grid-top">
                 <h2>Inventory</h2>
                 <div class="scrollingTable">
                     <table class ="table" id="inventory_table"></table>
                 </div>
             </div>
-            <div class="item3">
+            <div class="item3 grid-top">
                 <h2>Users</h2>
                 <div class="scrollingTable">
                     <table class ="table" id="users_table"></table>
                 </div>
             </div>
-            <div class="item4">
+            <div class="item4 grid-bottom">
                 <a href="#" id = "usrCSV" onClick="exportCSV(this)" class="btn btn-red">Export Users (csv)</a>
                 <a href="#" id = "editUsers" onClick="" class="btn btn-red">Edit Users</a>
                 <a href="#" id = "addUsers" onClick="" class="btn btn-red">Add Users</a>
                 <a href="#" id = "delUsers" onClick="" class="btn btn-red">Delete Users</a>
             </div>
-            <div class="item5">
+            <div class="item5 grid-bottom">
                 <a href="#" id = "" onClick="" class="btn btn-red">Inventory Page</a>
                 <a href="#" id = "invCSV" onClick="exportCSV(this)" class="btn btn-red">Export Inventory (csv)</a>
             </div> 
-            <div class="item7">
+            <div class="item7 grid-border">
                 <h2 style="margin-bottom:2rem">Statistics</h2>
                 <div class="row row-cols-1 row-cols-md-3 text-center">
                     <div class="col">
@@ -109,7 +108,7 @@
                     </div>
                   </div>
             </div>
-            <div class="item9">
+            <div class="item9 grid-top">
                 <h2>Transactions</h2>
                 <div class="scrollingTable">
                     <table class ="table" id="transactions_table"></table>
@@ -131,7 +130,7 @@
                     </div>
                 </div>
             </div>
-            <div class="item11">
+            <div class="item11 grid-bottom">
                 <a href="#" id = "trnCSV" onClick="exportCSV(this)" class="btn btn-red">Export Transactions (csv)</a>
             </div>
         </div>
