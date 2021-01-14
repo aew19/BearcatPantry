@@ -51,6 +51,7 @@
     </dependencies>
 
     <build>
+        <finalName>web-services</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
