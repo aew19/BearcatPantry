@@ -1,6 +1,6 @@
 //This function just loads the navbar onto the page
 $(function(){
-    $("#navBar").load("../navBar.html");
+    $("#navBarAdmin").load("navBarAdmin.html");
 });
 //Modal Pop variables
 var newItem = null

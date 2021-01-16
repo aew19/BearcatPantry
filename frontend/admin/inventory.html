@@ -15,13 +15,13 @@
     <title>Inventory</title>
 </head>
 <body>
-    <div id="navBar"></div>
+    <div id="navBarAdmin"></div>
     <div style="padding: 0px 15px;">
         <h2>Inventory</h2>
-        <button class="btn btn-red" style="margin: 10px 0px" onclick = "popScan()">Scan Item</button>
-        <button class="btn btn-red" style="margin: 10px 0px" onclick="popMultiScan()">Scan Multiple Items</button>
-        <a href='' id = "csv" onClick="exportCSV(this)" style="margin: 10px 0px" class="btn btn-red">Export Information(csv)</a>
-        <button class="btn btn-red" style="margin: 10px 0px">Re-count Inventory</button>
+        <button class="btn btn-red" onclick = "popScan()">Scan Item</button>
+        <button class="btn btn-red" onclick="popMultiScan()">Scan Multiple Items</button>
+        <a href='' id = "csv" onClick="exportCSV(this)" class="btn btn-red">Export Information(csv)</a>
+        <button class="btn btn-red">Re-count Inventory</button>
     </div>
     <!-- Scan Item Modal -->
     <div class="modal" id="scanItem" tabindex="-1" role="dialog">
