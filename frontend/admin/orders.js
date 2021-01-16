@@ -12,6 +12,48 @@ let orders = [
     { Date: "11/02/2020", Name: "Teja Bollimunta",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
     { Date: "11/02/2020", Name: "Connor Herbert",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
     { Date: "10/29/2020", Name: "Isaac Smitherman",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "10/28/2020", Name: "Joshua St. Pierre",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Karl Dierking", Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Jake van Meter", Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Daniel Cummins",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Isaiah Corso-Phinney",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Logan Lindsay",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Sivani Alla",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/03/2020", Name: "Teja Bollimunta",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/03/2020", Name: "Connor Herbert",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/03/2020", Name: "Isaac Smitherman",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/02/2020", Name: "Joshua St. Pierre",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/02/2020", Name: "Teja Bollimunta",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/02/2020", Name: "Connor Herbert",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "10/29/2020", Name: "Isaac Smitherman",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "10/28/2020", Name: "Joshua St. Pierre",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Karl Dierking", Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Jake van Meter", Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Daniel Cummins",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Isaiah Corso-Phinney",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Logan Lindsay",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Sivani Alla",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/03/2020", Name: "Teja Bollimunta",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/03/2020", Name: "Connor Herbert",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/03/2020", Name: "Isaac Smitherman",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/02/2020", Name: "Joshua St. Pierre",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/02/2020", Name: "Teja Bollimunta",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/02/2020", Name: "Connor Herbert",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "10/29/2020", Name: "Isaac Smitherman",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "10/28/2020", Name: "Joshua St. Pierre",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Karl Dierking", Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Jake van Meter", Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Daniel Cummins",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Isaiah Corso-Phinney",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Logan Lindsay",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Sivani Alla",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/03/2020", Name: "Teja Bollimunta",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/03/2020", Name: "Connor Herbert",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/03/2020", Name: "Isaac Smitherman",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/02/2020", Name: "Joshua St. Pierre",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/02/2020", Name: "Teja Bollimunta",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/02/2020", Name: "Connor Herbert",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "10/29/2020", Name: "Isaac Smitherman",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
     { Date: "10/28/2020", Name: "Joshua St. Pierre",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"}
 ]
 
@@ -20,15 +62,22 @@ $(function(){
 });
 
 $(function () {
-    $('#pantrytable').DataTable({
-      "pageLength": 3,
-      "paging": false,
+    $('#orders_table').DataTable({
+      "pageLength": 10,
       "lengthChange": true,
       "searching": true,
       "ordering": true,
       "info": false,
       "autoWidth": true,
-      "order": [0, "desc"]
+      "order": [0, "desc"],
+      "paging": true,
+      "pagingType": "full_numbers",
+      "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+      language: {
+        lengthMenu: "Display _MENU_ Orders Per Page",
+        searchPlaceholder: "Search Orders",
+        search: "",
+      }
       });
 });
 

@@ -5,20 +5,21 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link rel="stylesheet" href="./admin.css">
-        <link rel="stylesheet" href="../global.css">
-        <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>    
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="js/jquery/jquery-3.1.0.js"></script>
+        <script src="https://kit.fontawesome.com/4c3f5e6aba.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="../bootstrap.min.css">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
         <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+        <link rel="stylesheet" href="../global.css">
+        <title>Orders</title>
     </head>
     <body>
         <div id="navBar"></div>
-        <div style='padding-left:40px;'>
-            <a href='' id = "csv" onClick="exportCSV(this)" class="btn btn-red">Export Information(csv)</a>
+        <div style="padding: 0px 15px;">
+            <h2>Orders</h2>
+            <a href='' id = "csv" onClick="exportCSV(this)" style="margin: 10px 0px" class="btn btn-red">Export Information(csv)</a>
         </div>
         <div class="modal" id="viewOrder" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
@@ -35,8 +36,8 @@
                 </div>
             </div>
         </div>
-        <div class="scrollingTable">
-            <table class ="table" id="orders_table"></table>
+        <div style="padding:0px 15px;">
+            <table class ="table table-bordered" id="orders_table"></table>
         </div>
     </body>
     <script src="orders.js"></script>

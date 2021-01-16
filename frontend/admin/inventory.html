@@ -16,11 +16,12 @@
 </head>
 <body>
     <div id="navBar"></div>
-    <div style='padding-left:40px; padding-top: 10px;'>
-        <button class="btn btn-red" onclick = "popScan()">Scan Item</button>
-        <button class="btn btn-red" onclick="popMultiScan()">Scan Multiple Items</button>
-        <a href='' id = "csv" onClick="exportCSV(this)" class="btn btn-red">Export Information(csv)</a>
-        <button class="btn btn-red">Re-count Inventory</button>
+    <div style="padding: 0px 15px;">
+        <h2>Inventory</h2>
+        <button class="btn btn-red" style="margin: 10px 0px" onclick = "popScan()">Scan Item</button>
+        <button class="btn btn-red" style="margin: 10px 0px" onclick="popMultiScan()">Scan Multiple Items</button>
+        <a href='' id = "csv" onClick="exportCSV(this)" style="margin: 10px 0px" class="btn btn-red">Export Information(csv)</a>
+        <button class="btn btn-red" style="margin: 10px 0px">Re-count Inventory</button>
     </div>
     <!-- Scan Item Modal -->
     <div class="modal" id="scanItem" tabindex="-1" role="dialog">
@@ -93,9 +94,9 @@
             </div>
         </div>
     </div>
-    <div class="pantrytable table-responsive-md">
+    <div style="padding:0px 15px;" class="table-responsive-md">
         <table class = "table table-bordered" id = "pantrytable" width="100%" cellspacing="0">
-            <thead style="text-align: center" class="thead-light">
+            <thead style="text-align: center">
                 <tr>
                     <th scope="col">Item</th>
                     <th scope="col">Quantity</th>
