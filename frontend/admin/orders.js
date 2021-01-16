@@ -16,7 +16,7 @@ let orders = [
 ]
 
 $(function(){
-    $("#navBar").load("../navBar.html");
+    $("#navBarAdmin").load("navBarAdmin.html");
 });
 
 $(function () {
