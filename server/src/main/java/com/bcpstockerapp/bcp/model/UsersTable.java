@@ -1,6 +1,5 @@
 package com.bcpstockerapp.bcp.model;
 
-import javax.jws.soap.SOAPBinding;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
