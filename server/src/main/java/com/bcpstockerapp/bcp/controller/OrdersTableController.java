@@ -28,11 +28,11 @@ public class OrdersTableController {
     }
 
     @PostMapping("/orders")
-    public @ResponseBody ResponseEntity<String> createOrder(@RequestParam List<Int> orderItems, List<Int> quantites, Date orderDate, boolean delOrPickUp, Date delDate, Int orderStatus, String mNumber, String address, String email, String phoneNumber) {
+    public @ResponseBody ResponseEntity<String> createOrder(@RequestParam String orderItems, String quantities, Date orderDate, boolean delOrPickUp, Date delDate, int orderStatus, String mNumber, String address, String email, String phoneNumber) {
         try{
             OrdersTable item = new OrdersTable();
             item.setOrderItems(orderItems);
-            item.setQuantities(quantites);
+            item.setQuantities(quantities);
             item.setOrderDate(orderDate);
             item.setDelOrPickUp(delOrPickUp);
             item.setDelDate(delDate);
@@ -49,7 +49,7 @@ public class OrdersTableController {
     }
 
     @GetMapping("/orders/{orderID}")
-    public @ResponseBody ResponseEntity<OrdersTable> findByOrderID(@PathVariable(value="orderID") Int orderID){
+    public @ResponseBody ResponseEntity<OrdersTable> findByOrderID(@PathVariable(value="orderID") int orderID){
         try{
             OrdersTable item = ordersTableRepository.findByOrderID(orderID);
             return new ResponseEntity<>(item, HttpStatus.OK);
