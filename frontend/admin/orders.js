@@ -1,6 +1,6 @@
 let orders = [
     { Date: "11/04/2020", Name: "Karl Dierking", Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Jake van Meter", Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Ashley Wilhelm", Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
     { Date: "11/04/2020", Name: "Daniel Cummins",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
     { Date: "11/04/2020", Name: "Isaiah Corso-Phinney",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
     { Date: "11/04/2020", Name: "Logan Lindsay",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
