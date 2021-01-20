@@ -7,6 +7,10 @@ $(function(){
     $("#newItemModal").load("newItemModal.html");
 });
 
+$(function(){
+    $("#scanMultipleItemsModal").load("scanMultipleItemsModal.html");
+});
+
 //Modal Pop variables
 var newItem = null
 var scanItem = null

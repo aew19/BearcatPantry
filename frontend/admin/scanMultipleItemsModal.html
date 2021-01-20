@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- Scan Multiple Items Modal -->
+<div class="modal" id="multipleItems" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Scan Items!</h5>
+                <button type="button" class="close" onclick="popMultiScan()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-inline">
+                    <div style="padding-right:10px; padding-bottom: 10px;"class = "form-group">
+                        <input class="form-control" id="barcode" placeholder="Scan Item">
+                    </div>
+                    <div style="padding-bottom: 10px;"pclass = "form-group">
+                        <input type="number" onkeypress="return event.charCode >= 48" min="1" class="form-control" id="quantity" placeholder="Quantity">
+                    </div>
+                </form>
+                <div style="text-align: left;">
+                    <button type="submit" class="btn btn-red" onclick="popMultiScan()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

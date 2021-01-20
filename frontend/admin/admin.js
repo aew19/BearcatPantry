@@ -2,9 +2,9 @@ $(function(){
     $("#navBarAdmin").load("navBarAdmin.html");
 });
 
-$(function(){
-    $("#footer").load("../footer.html");
-});
+// $(function(){
+//     $("#footer").load("../footer.html");
+// });
 
 function makeTableScroll() {
     var maxRows = 8;
