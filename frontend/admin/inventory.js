@@ -2,6 +2,9 @@
 $(function(){
     $("#navBarAdmin").load("navBarAdmin.html");
 });
+$(function(){
+    $("#scanMultipleItemsModal").load("scanMultipleItemsModal.html");
+});
 //Modal Pop variables
 var newItem = null
 var scanItem = null
