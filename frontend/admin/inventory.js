@@ -2,6 +2,11 @@
 $(function(){
     $("#navBarAdmin").load("navBarAdmin.html");
 });
+
+$(function(){
+    $("#newItemModal").load("newItemModal.html");
+});
+
 //Modal Pop variables
 var newItem = null
 var scanItem = null
@@ -78,6 +83,22 @@ function popMultiScan(){
     } else {
         document.getElementById("multipleItems").style.display = "none";
         scanmulti = null
+    }
+}
+
+//This function pops the bulk scan modal
+function popNewItem(){
+    let request = new XMLHttpRequest();
+    document.getElementById("scanItem").style.display = "none";
+    if(scanmulti === null){
+        document.getElementById("newItem").style.display = "block";
+        var barcode = document.getElementById("barcode").value;
+        var quantity = document.getElementById("quantity").value;
+        
+        newItem = true
+    } else {
+        document.getElementById("newItem").style.display = "none";
+        newItem = null
     }
 }
 

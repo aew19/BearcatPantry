@@ -20,6 +20,7 @@
         <h2>Inventory</h2>
         <button class="btn btn-red" onclick = "popScan()">Scan Item</button>
         <button class="btn btn-red" onclick="popMultiScan()">Scan Multiple Items</button>
+        <button class="btn btn-red" onclick="popNewItem()">TEMP NEW ITEM</button>
         <a href='' id = "csv" onClick="exportCSV(this)" class="btn btn-red">Export Information(csv)</a>
         <button class="btn btn-red">Re-count Inventory</button>
     </div>
@@ -52,44 +53,51 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Item not recognized please enter the following: </h5>
+                    <h5 class="modal-title">New Item!</h5>
                     <button type="button" class="close" onclick="popNewItemModal()" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="form-inline">
-                        <input type="hidden" name="_token" value="">
-                        <div style="padding-right: 10px; padding-bottom: 10px;" class = "form-group">
-                            <input class="form-control" id="name" placeholder="Item Name">
-                        </div>
-                        <div style="padding-right: 10px; padding-bottom: 10px;" class="form-group">
-                            <input class="form-control" id="brand" placeholder="Brand">
-                        </div>
-                        <div style="padding-right: 10px; padding-bottom: 10px;" class="form-group">
-                            <label for="type">Type:</label>
-                            <select id="type" name="type">
-                                <option value="Vegtable">Vegtable</option>
-                                <option value="Grain">Grains</option>
-                                <option value="Fruit">Fruit</option>
-                                <option value="Dairy">Dairy</option>
-                            </select>
-                        </div>
-                        <div style="padding-right: 10px; padding-bottom: 10px;" class="form-group">
-                            <input class="form-control" id="url" placeholder="Product Link(URL)">
-                        </div>
-                        <div style="padding-right: 10px; padding-bottom: 10px;" class="form-check">
-                            <input type="checkbox" class="form-check-input" id="vegetarian">
-                            <label style="padding-right: 20px;"for="vegetarian">Vegetarian</label>
-                            <input type="checkbox" class="form-check-input" id="vegan">
-                            <label for="vegetarian">Vegan</label>
-                        </div>
-                        <div style="padding-right: 10px; padding-bottom: 10px;" class="form-group">
-                            <label for="img">Select Image: </label>
-                            <input type="file" id="prodImg" name="prodImg" accept="image/*">
-                        </div>
-                        <button type="submit" class="btn btn-red" onclick="popNewItemModal()">Submit</button>
-                    </form>
+                    <h6>This item is new to our system and needs more information before it can be submitted. Please fill out the following items:</h6>
+                    <div class="grid-container">
+                        <form class="form-inline">
+                            <input type="hidden" name="_token" value="">
+                            <div class="item1 form-group">
+                                <input class="form-control" id="name" placeholder="Item Name">
+                            </div>
+                            <div class="item2 form-group">
+                                <input class="form-control" id="quantity" placeholder="Quantity">
+                            </div>
+                            <div class="item3 form-group">
+                                <label for="img">Select Image: </label>
+                                <input type="file" id="prodImg" name="prodImg" accept="image/*">
+                            </div>
+                            <div class="item4 form-group">
+                                <input class="form-control" id="brand" placeholder="Company Name (Brand)">
+                            </div>
+                            <div class="item5 form-group">
+                                <label for="type">Product Type</label>
+                                <select id="type" name="type">
+                                    <option value="Vegtable">Vegetable</option>
+                                    <option value="Grain">Grains</option>
+                                    <option value="Fruit">Fruit</option>
+                                    <option value="Dairy">Dairy</option>
+                                    <option value="Dairy">Beans</option>
+                                </select>
+                            </div>
+                            <div class="item6 form-group">
+                                <input style="padding-right: 14.2rem"class="form-control" id="productURL" placeholder="Product Link (URL)">
+                            </div>
+                            <div class="item7 form-check">
+                                <input type="checkbox" class="form-check-input" id="vegetarian">
+                                <label style="padding-right: 20px;"for="vegetarian">Vegetarian</label>
+                                <input type="checkbox" class="form-check-input" id="vegan">
+                                <label for="vegetarian">Vegan</label>
+                            </div>
+                            <button type="submit" class="btn btn-red" onclick="popNewItemModal()">Submit</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -123,7 +131,7 @@
                 <div class="modal-body">
                     <form class="form-inline">
                         <div style="padding-right:10px; padding-bottom: 10px;"class = "form-group">
-                            <input class="form-control" id="barcode" placeholder="Scan Item">
+                            <input class="form-control" id="ItemName" placeholder="Scan Item">
                         </div>
                         <div style="padding-bottom: 10px;"pclass = "form-group">
                             <input type="number" onkeypress="return event.charCode >= 48" min="1" class="form-control" id="quantity" placeholder="Quantity">
