@@ -11,14 +11,14 @@ public class OrdersTable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int orderID;
+    private Long orderID;
 
     private String orderItems;
     private String quantities;
     private Date orderDate;
     private boolean delOrPickUp;
     private Date delDate;
-    private int orderStatus;
+    private Integer orderStatus;
     private String mNumber;
     private String address;
     private String email;
@@ -26,7 +26,7 @@ public class OrdersTable {
 
     //Constructors
     public OrdersTable(){}
-    public OrdersTable(int orderID, String orderItems, String quantities, Date orderDate, boolean delOrPickUp, Date delDate, int orderStatus, String mNumber, String address, String email, String phoneNumber){
+    public OrdersTable(Long orderID, String orderItems, String quantities, Date orderDate, boolean delOrPickUp, Date delDate, Integer orderStatus, String mNumber, String address, String email, String phoneNumber){
         this.orderID = orderID;
         this.orderItems = orderItems;
         this.quantities = quantities;
@@ -41,26 +41,26 @@ public class OrdersTable {
     }
 
     //Getters
-    public int getOrderId(){ return orderID; }
-    public String getOrderItems(){ return orderItems; }
-    public String getQuantities(){ return quantities; }
-    public Date getOrderDate(){ return orderDate; }
-    public boolean getDelOrPickUp(){ return delOrPickUp; }
-    public Date getDelDate(){ return delDate; }
-    public int getOrderStatus(){ return orderStatus; }
-    public String getMNumber(){ return mNumber; }
-    public String getAddress(){ return address; }
-    public String getEmail(){ return email; }
-    public String getPhoneNumber(){ return phoneNumber; }
+    public Long getOrderId(){ return this.orderID; }
+    public String getOrderItems(){ return this.orderItems; }
+    public String getQuantities(){ return this.quantities; }
+    public Date getOrderDate(){ return this.orderDate; }
+    public boolean getDelOrPickUp(){ return this.delOrPickUp; }
+    public Date getDelDate(){ return this.delDate; }
+    public Integer getOrderStatus(){ return this.orderStatus; }
+    public String getMNumber(){ return this.mNumber; }
+    public String getAddress(){ return this.address; }
+    public String getEmail(){ return this.email; }
+    public String getPhoneNumber(){ return this.phoneNumber; }
 
     //Setters
-    public void setOrderId(int orderID){ this.orderID = orderID; }
+    public void setOrderId(Long orderID){ this.orderID = orderID; }
     public void setOrderItems(String orderItems){ this.orderItems = orderItems; }
     public void setQuantities(String quantities){ this.quantities = quantities; }
     public void setOrderDate(Date orderDate){ this.orderDate = orderDate; }
     public void setDelOrPickUp(boolean delOrPickUp){ this.delOrPickUp = delOrPickUp; }
     public void setDelDate(Date delDate){ this.delDate = delDate; }
-    public void setOrderStatus(int orderStatus){ this.orderStatus = orderStatus; }
+    public void setOrderStatus(Integer orderStatus){ this.orderStatus = orderStatus; }
     public void setMNumber(String mNumber){ this.mNumber = mNumber; }
     public void setAddress(String address){ this.address = address; }
     public void setEmail(String email){ this.email = email; }

@@ -26,10 +26,6 @@ public class ProductTableController {
         }
 
     }
-    @GetMapping("/hi")
-    public String hi(){
-        return "hi";
-    }
 
     @PostMapping("/items")
     public @ResponseBody ResponseEntity<String> createItem(@RequestParam String barcode, String name, Integer quantity, String type, String brand, boolean vegetarian, boolean vegan, Date bestBuy, Date addedDate) {

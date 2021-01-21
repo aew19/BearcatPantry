@@ -41,24 +41,24 @@ public class ProductTable {
 
     //Getters
     public Long getId(){
-        return id;
+        return this.id;
     }
-    public String getBarcode(){return barcode;}
+    public String getBarcode(){return this.barcode;}
     public String getName(){
-        return name;
+        return this.name;
     }
     public Integer getQuantity(){
-        return quantity;
+        return this.quantity;
     }
     public String getType(){
-        return type;
+        return this.type;
     }
     public String getBrand(){
-        return brand;
+        return this.brand;
     }
-    public boolean getVegetarian(){ return vegetarian;}
-    public boolean getVegan(){ return vegan;}
-    public Date getAddedDate(){ return addedDate; }
+    public boolean getVegetarian(){ return this.vegetarian;}
+    public boolean getVegan(){ return this.vegan;}
+    public Date getAddedDate(){ return this.addedDate; }
 
 
     //Setters
