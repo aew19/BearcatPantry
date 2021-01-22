@@ -16,8 +16,8 @@ public class OrderItemsTable {
     private Integer itemQuantity;
 
     //Constructors
-    OrderItemsTable(){};
-    OrderItemsTable(Long orderItemID, Long orderId, Long inventoryId, Integer itemQuantity){
+    public OrderItemsTable(){};
+    public OrderItemsTable(Long orderItemID, Long orderId, Long inventoryId, Integer itemQuantity){
         this.orderItemID = orderItemID;
         this.orderId = orderId;
         this.inventoryId = inventoryId;
