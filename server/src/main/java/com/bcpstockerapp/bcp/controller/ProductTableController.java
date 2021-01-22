@@ -48,15 +48,4 @@ public class ProductTableController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    @GetMapping("/items/{barcode}")
-    public @ResponseBody ResponseEntity<ProductTable> findByBarcode(@PathVariable(value="barcode") String barcode){
-        try{
-            ProductTable item = productTableRepository.findByBarcode(barcode);
-            return new ResponseEntity<>(item, HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-    }
 }
