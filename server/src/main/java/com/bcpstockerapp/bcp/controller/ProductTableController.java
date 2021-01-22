@@ -28,17 +28,20 @@ public class ProductTableController {
     }
 
     @PostMapping("/items")
-    public @ResponseBody ResponseEntity<String> createItem(@RequestParam String barcode, String name, Integer quantity, String type, String brand, boolean vegetarian, boolean vegan, Date bestBuy, Date addedDate) {
+    public @ResponseBody ResponseEntity<String> createItem(@RequestParam String barcodeId, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, Date scanDate, int imageId, String imageFileName, String productURL, boolean isActive) {
         try{
             ProductTable item = new ProductTable();
-            item.setBarcode(barcode);
-            item.setName(name);
-            item.setQuantity(quantity);
-            item.setType(type);
+            item.setBarcode(barcodeId);
+            item.setName(productTitle);
+            item.setType(foodType);
             item.setBrand(brand);
             item.setVegetarian(vegetarian);
             item.setVegan(vegan);
-            item.setAddedDate(addedDate);
+            item.setAddedDate(scanDate);
+            item.setImageId(imageId);
+            item.setImageFileName(imageFileName);
+            item.setProductURL(productURL);
+            item.setActive(isActive);
             productTableRepository.save(item);
             return new ResponseEntity<>("Saved!", HttpStatus.CREATED);
         } catch (Exception e){
