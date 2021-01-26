@@ -51,6 +51,25 @@ async function getBarcode(barcode){
     }
 }
 
+async function getInventory(){
+    let response = await fetch("http://localhost:8080/inventoryTable/")
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+//Calls API To load Database Information into the table
+function createInventoryTable(){
+    getInventory().then(
+        data => {
+            if (data != "notFound") {
+                loadPantryItems(data)
+            }
+        }
+    );
+}
+
 //This function pops the scan item modal
 function popScan(){
     let request = new XMLHttpRequest();
@@ -78,41 +97,12 @@ function popMultiScan(){
         console.log(barcode);
         var quantity = document.getElementById("quantity").value;
         console.log(quantity);
-        // request.open("POST", "http://localhost:8080/newBarcode", true);
-        // request.send(inputVal);
-        // request.onload = () => {
-        //     console.log(request);
-        //     if (request.status === 200){
-        //         console.log("SUCCESS!")
-        //     }
-        // }
         scanmulti = true
     } else {
         document.getElementById("multipleItems").style.display = "none";
         scanmulti = null
     }
 }
-
-//This function is used for the formatting of the table
-//Right now searching and ordering is on
-$(function () {
-    $('#pantrytable').DataTable({
-      "pageLength": 15,
-      "lengthChange": true,
-      "searching": true,
-      "ordering": true,
-      "info": false,
-      "autoWidth": true,
-      "paging": true,
-      "pagingType": "full_numbers",
-      "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]],
-      language: {
-        lengthMenu: "Display _MENU_ Items Per Page",
-        searchPlaceholder: "Search Items",
-        search: "",
-      },
-      });
-});
 
 //This function is used for exporting data in a table to CSV
 function exportCSV(elem){
@@ -128,12 +118,12 @@ function exportCSV(elem){
 function loadPantryItems(items){
     const table = document.getElementById("pantryStock");
     for (let element of items) {
-        console.log(element.name)
+        console.log(element)
         let row = table.insertRow();
 
         //name
         let cell = row.insertCell();
-        let text = document.createTextNode(element.name);
+        let text = document.createTextNode(element.productTitle);
         cell.appendChild(text);
 
         //quantity
@@ -155,7 +145,7 @@ function loadPantryItems(items){
 
         //type
         cell = row.insertCell();
-        text = document.createTextNode(element.type);
+        text = document.createTextNode(element.foodType);
         cell.appendChild(text);
 
         //brand
@@ -165,43 +155,53 @@ function loadPantryItems(items){
 
         //Vegetarian or Vegan
         cell = row.insertCell();
-        if (element.vegan == 1 && element.vegetarian == 1){
-            text = document.createTextNode("Vegan/Vegetarian");
+        if (element.vegan == true){
+            text = document.createTextNode("Vegan");
             cell.appendChild(text);
         }
-        else if (element.vegan == 1){
-                text = document.createTextNode("Vegan");
+        else if (element.vegetarian == true){
+                text = document.createTextNode("Vegetarian");
                 cell.appendChild(text);
-        }
-        else if (element.vegetarian == 1){
-            text = document.createTextNode("Vegetarian");
-            cell.appendChild(text);
-        }else{
-            text = document.createTextNode("");
+        } else{
+            text = document.createTextNode("Neither");
             cell.appendChild(text);
         }
 
         //Best Buy Date
         cell = row.insertCell();
-        text = document.createTextNode(element.bestBuy);
-        cell.appendChild(text);
+        if (element.bestBuyDate == null || element.bestBuyDate == ""){
+            text = document.createTextNode("Unknown");
+            cell.appendChild(text);
+        }else{
+            text = document.createTextNode(element.bestBuyDate);
+            cell.appendChild(text);
+        }
 
-        //Expiration Date
-        cell = row.insertCell();
-        text = document.createTextNode(element.expiration);
-        cell.appendChild(text);
+
     }
+    //This function is used for the formatting of the table
+    //Right now searching and ordering is on
+    $(function () {
+        $('#pantrytable').DataTable({
+            "pageLength": 15,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": false,
+            "autoWidth": true,
+            "paging": true,
+            "pagingType": "full_numbers",
+            "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]],
+            language: {
+                lengthMenu: "Display _MENU_ Items Per Page",
+                searchPlaceholder: "Search Items",
+                search: "",
+
+            },
+        });
+    });
 }
 
-//Calls API To load Database Information into the table
-let request = new XMLHttpRequest();
-request.open("GET",  "http://localhost:8080/items", true);
-request.onload = function (){
-    let data = JSON.parse(this.response);
-    console.log(data)
-    loadPantryItems(data);
-}
-request.send()
 
 //Dummy Data
 //DELETE ONCE FULLY ON DATABASE
@@ -249,4 +249,4 @@ request.send()
 //     {name: "Pears", quantity: 15, type:"Grains", brand: "Kroger", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"6/29/2020"},
 //     {name: "Apples", quantity: 24, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2022"}
 // ];
-loadPantryItems(items);
+// loadPantryItems(items);
