@@ -176,8 +176,6 @@ function loadPantryItems(items){
             text = document.createTextNode(element.bestBuyDate);
             cell.appendChild(text);
         }
-
-
     }
     //This function is used for the formatting of the table
     //Right now searching and ordering is on
