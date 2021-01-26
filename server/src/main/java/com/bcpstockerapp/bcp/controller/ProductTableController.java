@@ -28,7 +28,7 @@ public class ProductTableController {
     }
 
     @PostMapping("/items")
-    public @ResponseBody ResponseEntity<String> createItem(@RequestParam String barcodeId, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, Date scanDate, int imageId, String imageFileName, String productURL, boolean isActive) {
+    public @ResponseBody ResponseEntity<String> createItem(@RequestParam String barcodeId, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, Date scanDate, String imageId, String imageFileName, String productURL, boolean isActive) {
         try{
             ProductTable item = new ProductTable();
             item.setBarcode(barcodeId);
@@ -47,5 +47,9 @@ public class ProductTableController {
         } catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @GetMapping("/items/{barcodeId}")
+    public ProductTable getByBarcode(@PathVariable(value="barcodeId") String barcodeId){
+        return productTableRepository.findByBarcodeId(barcodeId);
     }
 }

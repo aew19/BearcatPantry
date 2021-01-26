@@ -20,7 +20,7 @@ public class ProductTable {
     private boolean vegetarian;
     private boolean vegan;
     private Date scanDate;
-    private Integer imageId;
+    private String imageId;
     private String imageFileName;
     private String productURL;
     private boolean isActive;
@@ -28,7 +28,7 @@ public class ProductTable {
 
     //Constructors
     public ProductTable(){}
-    public ProductTable(String barcodeId, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, Date scanDate, int imageId, String imageFileName, String productURL, boolean isActive){
+    public ProductTable(String barcodeId, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, Date scanDate, String imageId, String imageFileName, String productURL, boolean isActive){
         this.barcodeId = barcodeId;
         this.productTitle = productTitle;
         this.foodType = foodType;
@@ -59,7 +59,7 @@ public class ProductTable {
     public boolean getVegetarian(){ return this.vegetarian;}
     public boolean getVegan(){ return this.vegan;}
     public Date getAddedDate(){ return this.scanDate; }
-    public Integer getImageId(){return this.imageId;}
+    public String getImageId(){return this.imageId;}
     public String getImageFileName(){return this.imageFileName;}
     public String getProductURL(){return this.productURL;}
     public boolean getIsActive(){return this.isActive;}
@@ -77,7 +77,7 @@ public class ProductTable {
     public void setVegetarian(boolean vegetarian){ this.vegetarian = vegetarian;}
     public void setVegan(boolean vegan){ this.vegan = vegan;}
     public void setAddedDate(Date scanDate){this.scanDate = scanDate;}
-    public void setImageId(Integer imageId){this.imageId = imageId;}
+    public void setImageId(String imageId){this.imageId = imageId;}
     public void setImageFileName(String imageFileName){this.imageFileName = imageFileName;}
     public void setProductURL(String productURL){this.productURL = productURL;}
     public void setActive(boolean isActive){this.isActive = isActive;}

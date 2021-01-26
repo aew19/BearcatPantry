@@ -15,24 +15,34 @@ function popNewItemModal(){
     let request = new XMLHttpRequest();
     document.getElementById("scanItem").style.display = "none";
     scanItem = null
-    if(newItem === null){
-        document.getElementById("newItem").style.display = "block";
-        var barcode = document.getElementById("barcode").value;
-        console.log(barcode);
-        var quantity = document.getElementById("quantity").value;
-        console.log(quantity);
-        // request.open("POST", "http://localhost:8080/newBarcode", true);
-        // request.send(inputVal);
-        // request.onload = () => {
-        //     console.log(request);
-        //     if (request.status === 200){
-        //         console.log("SUCCESS!")
-        //     }
-        // }
-        newItem = true
-    } else {
-        document.getElementById("newItem").style.display = "none";
-        newItem = null
+    var barcode = document.getElementById("itemBarcode").value;
+    console.log(barcode);
+    var quantity = document.getElementById("itemQuantity").value;
+    console.log(quantity);
+    //API Hit
+    getBarcode(barcode).then(
+        data => {
+            if (data != "notFound"){
+                document.getElementById("newItem").style.display = "none";
+            } else{
+                document.getElementById("newItem").style.display = "block";
+            }
+
+        }
+    );
+}
+
+function closePopup(element){
+    document.getElementById(element).style.display = "none";
+}
+
+
+async function getBarcode(barcode){
+    let response = await fetch("http://localhost:8080/items/"+barcode)
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
     }
 }
 
@@ -184,60 +194,60 @@ function loadPantryItems(items){
     }
 }
 
-//Calls API To load Database Information into the table
-let request = new XMLHttpRequest();
-request.open("GET",  "http://localhost:8080/items", true);
-request.onload = function (){
-    let data = JSON.parse(this.response);
-    console.log(data)
-    loadPantryItems(data);
-}
-request.send()
+// //Calls API To load Database Information into the table
+// let request = new XMLHttpRequest();
+// request.open("GET",  "http://localhost:8080/items", true);
+// request.onload = function (){
+//     let data = JSON.parse(this.response);
+//     console.log(data)
+//     loadPantryItems(data);
+// }
+// request.send()
 
 //Dummy Data
 //DELETE ONCE FULLY ON DATABASE
-const items = [
-    {name: "Pasta", quantity: 10, type:"Grains", brand: "Kroger", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"11/09/2020"},
-    {name: "Tomatos", quantity: 20, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:0, bestBuy:"11/10/2020", expiration:"11/10/2020"},
-    {name: "Pasta Sauce", quantity: 5, type:"Grains", brand: "Meijer", vegan: 0, vegetarian:0, bestBuy:"11/09/2020", expiration:"1/20/2020"},
-    {name: "Tomato Paste", quantity: 8, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:0, bestBuy:"11/10/2020", expiration:"12/11/2020"},
-    {name: "Mushrooms", quantity: 7, type:"Grains", brand: "Target", vegan: 0, vegetarian:0, bestBuy:"11/09/2020", expiration:"8/15/2020"},
-    {name: "Eggs", quantity: 12, type:"Vegetable", brand: "Meijer", vegan: 0, vegetarian:1, bestBuy:"11/10/2020", expiration:"12/10/2022"},
-    {name: "Milk", quantity: 16, type:"Grains", brand: "Target", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"7/19/2020"},
-    {name: "Corn", quantity: 20, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2021"},
-    {name: "Black Beans", quantity: 15, type:"Grains", brand: "Kroger", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"6/29/2020"},
-    {name: "Green Beans", quantity: 24, type:"Vegetable", brand: "Kroger", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2022"},
-    {name: "Oranges", quantity: 15, type:"Grains", brand: "Walmart", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"6/29/2020"},
-    {name: "Peaches", quantity: 24, type:"Vegetable", brand: "Meijer", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2022"},
-    {name: "Pears", quantity: 15, type:"Grains", brand: "Kroger", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"6/29/2020"},
-    {name: "Apples", quantity: 24, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2022"},
-    {name: "Pasta", quantity: 10, type:"Grains", brand: "Kroger", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"11/09/2020"},
-    {name: "Tomatos", quantity: 20, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:0, bestBuy:"11/10/2020", expiration:"11/10/2020"},
-    {name: "Pasta Sauce", quantity: 5, type:"Grains", brand: "Meijer", vegan: 0, vegetarian:0, bestBuy:"11/09/2020", expiration:"1/20/2020"},
-    {name: "Tomato Paste", quantity: 8, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:0, bestBuy:"11/10/2020", expiration:"12/11/2020"},
-    {name: "Mushrooms", quantity: 7, type:"Grains", brand: "Target", vegan: 0, vegetarian:0, bestBuy:"11/09/2020", expiration:"8/15/2020"},
-    {name: "Eggs", quantity: 12, type:"Vegetable", brand: "Meijer", vegan: 0, vegetarian:1, bestBuy:"11/10/2020", expiration:"12/10/2022"},
-    {name: "Milk", quantity: 16, type:"Grains", brand: "Target", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"7/19/2020"},
-    {name: "Corn", quantity: 20, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2021"},
-    {name: "Black Beans", quantity: 15, type:"Grains", brand: "Kroger", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"6/29/2020"},
-    {name: "Green Beans", quantity: 24, type:"Vegetable", brand: "Kroger", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2022"},
-    {name: "Oranges", quantity: 15, type:"Grains", brand: "Walmart", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"6/29/2020"},
-    {name: "Peaches", quantity: 24, type:"Vegetable", brand: "Meijer", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2022"},
-    {name: "Pears", quantity: 15, type:"Grains", brand: "Kroger", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"6/29/2020"},
-    {name: "Apples", quantity: 24, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2022"},
-    {name: "Pasta", quantity: 10, type:"Grains", brand: "Kroger", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"11/09/2020"},
-    {name: "Tomatos", quantity: 20, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:0, bestBuy:"11/10/2020", expiration:"11/10/2020"},
-    {name: "Pasta Sauce", quantity: 5, type:"Grains", brand: "Meijer", vegan: 0, vegetarian:0, bestBuy:"11/09/2020", expiration:"1/20/2020"},
-    {name: "Tomato Paste", quantity: 8, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:0, bestBuy:"11/10/2020", expiration:"12/11/2020"},
-    {name: "Mushrooms", quantity: 7, type:"Grains", brand: "Target", vegan: 0, vegetarian:0, bestBuy:"11/09/2020", expiration:"8/15/2020"},
-    {name: "Eggs", quantity: 12, type:"Vegetable", brand: "Meijer", vegan: 0, vegetarian:1, bestBuy:"11/10/2020", expiration:"12/10/2022"},
-    {name: "Milk", quantity: 16, type:"Grains", brand: "Target", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"7/19/2020"},
-    {name: "Corn", quantity: 20, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2021"},
-    {name: "Black Beans", quantity: 15, type:"Grains", brand: "Kroger", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"6/29/2020"},
-    {name: "Green Beans", quantity: 24, type:"Vegetable", brand: "Kroger", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2022"},
-    {name: "Oranges", quantity: 15, type:"Grains", brand: "Walmart", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"6/29/2020"},
-    {name: "Peaches", quantity: 24, type:"Vegetable", brand: "Meijer", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2022"},
-    {name: "Pears", quantity: 15, type:"Grains", brand: "Kroger", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"6/29/2020"},
-    {name: "Apples", quantity: 24, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2022"}
-];
+// const items = [
+//     {name: "Pasta", quantity: 10, type:"Grains", brand: "Kroger", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"11/09/2020"},
+//     {name: "Tomatos", quantity: 20, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:0, bestBuy:"11/10/2020", expiration:"11/10/2020"},
+//     {name: "Pasta Sauce", quantity: 5, type:"Grains", brand: "Meijer", vegan: 0, vegetarian:0, bestBuy:"11/09/2020", expiration:"1/20/2020"},
+//     {name: "Tomato Paste", quantity: 8, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:0, bestBuy:"11/10/2020", expiration:"12/11/2020"},
+//     {name: "Mushrooms", quantity: 7, type:"Grains", brand: "Target", vegan: 0, vegetarian:0, bestBuy:"11/09/2020", expiration:"8/15/2020"},
+//     {name: "Eggs", quantity: 12, type:"Vegetable", brand: "Meijer", vegan: 0, vegetarian:1, bestBuy:"11/10/2020", expiration:"12/10/2022"},
+//     {name: "Milk", quantity: 16, type:"Grains", brand: "Target", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"7/19/2020"},
+//     {name: "Corn", quantity: 20, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2021"},
+//     {name: "Black Beans", quantity: 15, type:"Grains", brand: "Kroger", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"6/29/2020"},
+//     {name: "Green Beans", quantity: 24, type:"Vegetable", brand: "Kroger", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2022"},
+//     {name: "Oranges", quantity: 15, type:"Grains", brand: "Walmart", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"6/29/2020"},
+//     {name: "Peaches", quantity: 24, type:"Vegetable", brand: "Meijer", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2022"},
+//     {name: "Pears", quantity: 15, type:"Grains", brand: "Kroger", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"6/29/2020"},
+//     {name: "Apples", quantity: 24, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2022"},
+//     {name: "Pasta", quantity: 10, type:"Grains", brand: "Kroger", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"11/09/2020"},
+//     {name: "Tomatos", quantity: 20, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:0, bestBuy:"11/10/2020", expiration:"11/10/2020"},
+//     {name: "Pasta Sauce", quantity: 5, type:"Grains", brand: "Meijer", vegan: 0, vegetarian:0, bestBuy:"11/09/2020", expiration:"1/20/2020"},
+//     {name: "Tomato Paste", quantity: 8, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:0, bestBuy:"11/10/2020", expiration:"12/11/2020"},
+//     {name: "Mushrooms", quantity: 7, type:"Grains", brand: "Target", vegan: 0, vegetarian:0, bestBuy:"11/09/2020", expiration:"8/15/2020"},
+//     {name: "Eggs", quantity: 12, type:"Vegetable", brand: "Meijer", vegan: 0, vegetarian:1, bestBuy:"11/10/2020", expiration:"12/10/2022"},
+//     {name: "Milk", quantity: 16, type:"Grains", brand: "Target", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"7/19/2020"},
+//     {name: "Corn", quantity: 20, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2021"},
+//     {name: "Black Beans", quantity: 15, type:"Grains", brand: "Kroger", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"6/29/2020"},
+//     {name: "Green Beans", quantity: 24, type:"Vegetable", brand: "Kroger", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2022"},
+//     {name: "Oranges", quantity: 15, type:"Grains", brand: "Walmart", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"6/29/2020"},
+//     {name: "Peaches", quantity: 24, type:"Vegetable", brand: "Meijer", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2022"},
+//     {name: "Pears", quantity: 15, type:"Grains", brand: "Kroger", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"6/29/2020"},
+//     {name: "Apples", quantity: 24, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2022"},
+//     {name: "Pasta", quantity: 10, type:"Grains", brand: "Kroger", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"11/09/2020"},
+//     {name: "Tomatos", quantity: 20, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:0, bestBuy:"11/10/2020", expiration:"11/10/2020"},
+//     {name: "Pasta Sauce", quantity: 5, type:"Grains", brand: "Meijer", vegan: 0, vegetarian:0, bestBuy:"11/09/2020", expiration:"1/20/2020"},
+//     {name: "Tomato Paste", quantity: 8, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:0, bestBuy:"11/10/2020", expiration:"12/11/2020"},
+//     {name: "Mushrooms", quantity: 7, type:"Grains", brand: "Target", vegan: 0, vegetarian:0, bestBuy:"11/09/2020", expiration:"8/15/2020"},
+//     {name: "Eggs", quantity: 12, type:"Vegetable", brand: "Meijer", vegan: 0, vegetarian:1, bestBuy:"11/10/2020", expiration:"12/10/2022"},
+//     {name: "Milk", quantity: 16, type:"Grains", brand: "Target", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"7/19/2020"},
+//     {name: "Corn", quantity: 20, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2021"},
+//     {name: "Black Beans", quantity: 15, type:"Grains", brand: "Kroger", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"6/29/2020"},
+//     {name: "Green Beans", quantity: 24, type:"Vegetable", brand: "Kroger", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2022"},
+//     {name: "Oranges", quantity: 15, type:"Grains", brand: "Walmart", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"6/29/2020"},
+//     {name: "Peaches", quantity: 24, type:"Vegetable", brand: "Meijer", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2022"},
+//     {name: "Pears", quantity: 15, type:"Grains", brand: "Kroger", vegan: 0, vegetarian:1, bestBuy:"11/09/2020", expiration:"6/29/2020"},
+//     {name: "Apples", quantity: 24, type:"Vegetable", brand: "Walmart", vegan: 1, vegetarian:1, bestBuy:"11/10/2020", expiration:"11/10/2022"}
+// ];
 loadPantryItems(items);

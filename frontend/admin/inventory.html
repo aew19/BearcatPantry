@@ -29,17 +29,17 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Scan Item</h5>
-                    <button type="button" class="close" onclick="popScan()" aria-label="Close">
+                    <button type="button" class="close" onclick="closePopup('scanItem')" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <form class="form-inline">
                         <div style="padding-right:10px; padding-bottom: 10px;"class = "form-group">
-                            <input class="form-control" id="barcode1" placeholder="Item Barcode">
+                            <input class="form-control" id="itemBarcode" placeholder="Item Barcode">
                         </div>
                         <div style="padding-bottom: 10px;"pclass = "form-group">
-                            <input type="number" onkeypress="return event.charCode >= 48" min="1" class="form-control" id="quantity1" placeholder="Quantity">
+                            <input type="number" onkeypress="return event.charCode >= 48" min="1" class="form-control" id="itemQuantity" placeholder="Quantity">
                         </div>
                     </form>
                     <button type="submit" class="btn btn-red" onclick="popNewItemModal()">Submit</button>
@@ -53,7 +53,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Item not recognized please enter the following: </h5>
-                    <button type="button" class="close" onclick="popNewItemModal()" aria-label="Close">
+                    <button type="button" class="close" onclick="closePopup('newItem')" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -69,7 +69,7 @@
                         <div style="padding-right: 10px; padding-bottom: 10px;" class="form-group">
                             <label for="type">Type:</label>
                             <select id="type" name="type">
-                                <option value="Vegtable">Vegtable</option>
+                                <option value="Vegetable">Vegetable</option>
                                 <option value="Grain">Grains</option>
                                 <option value="Fruit">Fruit</option>
                                 <option value="Dairy">Dairy</option>
@@ -85,7 +85,7 @@
                             <label for="vegetarian">Vegan</label>
                         </div>
                         <div style="padding-right: 10px; padding-bottom: 10px;" class="form-group">
-                            <label for="prodImg">Select Image: </label>
+                            <label for="prodImg" accept='image/*'>Select Image: </label>
                             <input type="file" id="prodImg" name="prodImg" accept="image/*">
                         </div>
                         <button type="submit" class="btn btn-red" onclick="popNewItemModal()">Submit</button>
