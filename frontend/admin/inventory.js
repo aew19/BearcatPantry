@@ -26,6 +26,11 @@ function popNewItemModal(){
                 document.getElementById("newItem").style.display = "none";
             } else{
                 document.getElementById("newItem").style.display = "block";
+                var el_barcode = document.getElementById("newItemBarcode");
+                el_barcode.value = barcode;
+                var el_quantity = document.getElementById("newItemQuantity");
+                el_quantity.value = quantity;
+
             }
 
         }
@@ -36,7 +41,7 @@ function closePopup(element){
     document.getElementById(element).style.display = "none";
 }
 
-
+//Calls barcode api endpoint
 async function getBarcode(barcode){
     let response = await fetch("http://localhost:8080/items/"+barcode)
     try{
@@ -51,16 +56,10 @@ function popScan(){
     let request = new XMLHttpRequest();
     if(scanItem === null){
         document.getElementById("scanItem").style.display = "block";
-        // var inputVal = document.getElementById("comment").value;
-        // console.log(inputVal);
-        // request.open("POST", "http://localhost:8080/newBarcode", true);
-        // request.send(inputVal);
-        // request.onload = () => {
-        //     console.log(request);
-        //     if (request.status === 200){
-        //         console.log("SUCCESS!")
-        //     }
-        // }
+        var el_barcode = document.getElementById("itemBarcode")
+        el_barcode.value = null
+        var el_quantity = document.getElementById("itemQuantity")
+        el_quantity.value = null
         scanItem = true
     } else {
         document.getElementById("scanItem").style.display = "none";
@@ -194,15 +193,15 @@ function loadPantryItems(items){
     }
 }
 
-// //Calls API To load Database Information into the table
-// let request = new XMLHttpRequest();
-// request.open("GET",  "http://localhost:8080/items", true);
-// request.onload = function (){
-//     let data = JSON.parse(this.response);
-//     console.log(data)
-//     loadPantryItems(data);
-// }
-// request.send()
+//Calls API To load Database Information into the table
+let request = new XMLHttpRequest();
+request.open("GET",  "http://localhost:8080/items", true);
+request.onload = function (){
+    let data = JSON.parse(this.response);
+    console.log(data)
+    loadPantryItems(data);
+}
+request.send()
 
 //Dummy Data
 //DELETE ONCE FULLY ON DATABASE
