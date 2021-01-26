@@ -1,6 +1,7 @@
 package com.bcpstockerapp.bcp.controller;
 
 import com.bcpstockerapp.bcp.model.InventoryTable;
+import com.bcpstockerapp.bcp.model.ProductTable;
 import com.bcpstockerapp.bcp.model.prodInventoryJoin;
 import com.bcpstockerapp.bcp.repository.InventoryTableRepository;
 import com.bcpstockerapp.bcp.repository.ProductTableRepository;
@@ -51,5 +52,15 @@ public class InventoryTableController {
         } catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+
+    @PutMapping("/updateInventory/{barcodeId}")
+    public @ResponseBody String updateQuantity(@PathVariable(value="barcodeId") String barcodeId,@RequestParam Integer quantity){
+        InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeId);
+        inventory.setQuantity(quantity);
+        inventoryTableRepository.save(inventory);
+        return "Success!";
+
     }
 }

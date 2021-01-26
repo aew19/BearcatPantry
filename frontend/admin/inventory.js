@@ -24,6 +24,20 @@ function popNewItemModal(){
         data => {
             if (data != "notFound"){
                 document.getElementById("newItem").style.display = "none";
+                //Update Quantity
+                getInventory().then(
+                    allInventory=>{
+                        allInventory.forEach(inventory=>{
+                            if (inventory.barcodeId == barcode){
+                                console.log(inventory)
+                                let currQuantity = inventory.quantity + parseInt(quantity);
+                                console.log(currQuantity)
+                                //update based on barcode id
+                                updateInventory(barcode, currQuantity).then(response=> console.log(response))
+                            }
+                        })
+                    }
+                )
             } else{
                 document.getElementById("newItem").style.display = "block";
                 var el_barcode = document.getElementById("newItemBarcode");
@@ -51,6 +65,7 @@ async function getBarcode(barcode){
     }
 }
 
+//JOIN table for the inventory
 async function getInventory(){
     let response = await fetch("http://localhost:8080/inventoryTable/")
     try{
@@ -59,15 +74,30 @@ async function getInventory(){
         return "notFound";
     }
 }
+
+async function updateInventory(barcode, quantity){
+    console.log(barcode)
+   let request = new XMLHttpRequest();
+   request.open("PUT", "http://localhost:8080/updateInventory/"+barcode, true);
+   request.send(parseInt(quantity));
+   request.onload=() => {
+       if (request.status === 200){
+           console.log("SUCCESS!")
+       }
+   }
+}
+
 //Calls API To load Database Information into the table
-function createInventoryTable(){
+async function createInventoryTable(){
     getInventory().then(
         data => {
             if (data != "notFound") {
                 loadPantryItems(data)
             }
+
         }
-    );
+    )
+
 }
 
 //This function pops the scan item modal
@@ -177,28 +207,34 @@ function loadPantryItems(items){
             cell.appendChild(text);
         }
     }
-    //This function is used for the formatting of the table
-    //Right now searching and ordering is on
-    $(function () {
-        $('#pantrytable').DataTable({
-            "pageLength": 15,
-            "lengthChange": true,
-            "searching": true,
-            "ordering": true,
-            "info": false,
-            "autoWidth": true,
-            "paging": true,
-            "pagingType": "full_numbers",
-            "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]],
-            language: {
-                lengthMenu: "Display _MENU_ Items Per Page",
-                searchPlaceholder: "Search Items",
-                search: "",
+}
 
-            },
-        });
+//This function is used for the formatting of the table
+//Right now searching and ordering is on
+function createTableStyle() {
+    $('#pantrytable').DataTable({
+        "pageLength": 15,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": false,
+        "autoWidth": true,
+        "paging": true,
+        "pagingType": "full_numbers",
+        "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]],
+        language: {
+            lengthMenu: "Display _MENU_ Items Per Page",
+            searchPlaceholder: "Search Items",
+            search: "",
+
+        },
     });
 }
+
+
+
+createInventoryTable()
+
 
 
 //Dummy Data
