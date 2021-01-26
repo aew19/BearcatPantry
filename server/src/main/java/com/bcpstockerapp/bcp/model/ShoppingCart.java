@@ -1,4 +1,4 @@
-package main.java.com.bcpstockerapp.bcp.model;
+package com.bcpstockerapp.bcp.model;
 
 public class ShoppingCart {
     private String itemName;
