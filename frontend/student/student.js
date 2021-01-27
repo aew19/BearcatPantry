@@ -3,6 +3,14 @@ $(function(){
     $("#navBarStudent").load("navBarStudent.html");
 });
 
+function addToCart(barcode){
+
+
+    if(itemBarcode=1){
+
+    }
+}
+
 function loadPopularItems(items){
     const table = document.getElementById("popItems");
     items.forEach(item => {
