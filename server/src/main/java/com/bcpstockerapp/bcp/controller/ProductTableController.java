@@ -48,6 +48,7 @@ public class ProductTableController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/items/{barcodeId}")
     public ProductTable getByBarcode(@PathVariable(value="barcodeId") String barcodeId){
         return productTableRepository.findByBarcodeId(barcodeId);

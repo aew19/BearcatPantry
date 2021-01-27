@@ -10,6 +10,82 @@ var newItem = null
 var scanItem = null
 var scanmulti = null
 
+//API FUNCTIONS
+//JOIN table for the inventory
+async function getInventory(){
+    let response = await fetch("http://localhost:8080/inventoryTable/")
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
+//If barcode is found we will update the quantity value
+function updateInventory(barcode, quantity){
+
+}
+//Calls barcode api endpoint
+async function getBarcode(barcode){
+    let response = await fetch("http://localhost:8080/items/"+barcode)
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+//Add new item to database
+//TODO add image
+async function createItem(barcode, quantity, itemName, brand, type, url, isVegetarian, isVegan){
+    //POST to inventory table
+    let data = {'barcodeId':barcode, 'quantity':parseInt(quantity), 'location':""}
+    let formBody =[];
+    for (let key in data){
+        let encodedKey = encodeURIComponent(key);
+        let encodedValue = encodeURIComponent(data[key]);
+        formBody.push(encodedKey+"="+encodedValue);
+    }
+    formBody = formBody.join("&");
+    fetch('http://localhost:8080/inventory', {
+        body: formBody,
+        method:"POST",
+        headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+    }).then(response => response.json())
+        .then(data=> {console.log('Success');})
+        .catch((error)=>{ console.error('Error:', error);});
+
+    //POST to product table
+    let prodData = {'barcodeId':barcode,'productTitle':itemName, 'foodType':type, 'brand':brand}
+    let prodFormBody =[];
+    for (let prodKey in prodData){
+        let encodedProdKey = encodeURIComponent(prodKey);
+        let encodedProdValue = encodeURIComponent(prodData[prodKey]);
+        prodFormBody.push(encodedProdKey+"="+encodedProdValue);
+    }
+    prodFormBody = prodFormBody.join("&");
+    fetch('http://localhost:8080/items', {
+        body: prodFormBody,
+        method:"POST",
+        headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+    }).then(response => response.json())
+        .then(data=> {console.log('Success');})
+        .catch((error)=>{ console.error('Error:', error);});
+}
+
+
+//Calls API function To load Database Information into the table
+async function createInventoryTable(){
+    getInventory().then(
+        data => {
+            if (data != "notFound") {
+                loadPantryItems(data).then(result => createTableStyle())
+            }
+
+        }
+    )
+}
+
+//MODAL FUNCTIONS
 //This function pops the new item modal
 function popNewItemModal(){
     let request = new XMLHttpRequest();
@@ -44,61 +120,18 @@ function popNewItemModal(){
                 el_barcode.value = barcode;
                 var el_quantity = document.getElementById("newItemQuantity");
                 el_quantity.value = quantity;
-
             }
 
         }
     );
 }
 
+//The function can be used universally to close any popup
 function closePopup(element){
     document.getElementById(element).style.display = "none";
 }
 
-//Calls barcode api endpoint
-async function getBarcode(barcode){
-    let response = await fetch("http://localhost:8080/items/"+barcode)
-    try{
-        return await response.json();
-    }catch{
-        return "notFound";
-    }
-}
 
-//JOIN table for the inventory
-async function getInventory(){
-    let response = await fetch("http://localhost:8080/inventoryTable/")
-    try{
-        return await response.json();
-    }catch{
-        return "notFound";
-    }
-}
-
-async function updateInventory(barcode, quantity){
-    console.log(barcode)
-   let request = new XMLHttpRequest();
-   request.open("PUT", "http://localhost:8080/updateInventory/"+barcode, true);
-   request.send(parseInt(quantity));
-   request.onload=() => {
-       if (request.status === 200){
-           console.log("SUCCESS!")
-       }
-   }
-}
-
-//Calls API To load Database Information into the table
-async function createInventoryTable(){
-    getInventory().then(
-        data => {
-            if (data != "notFound") {
-                loadPantryItems(data)
-            }
-
-        }
-    )
-
-}
 
 //This function pops the scan item modal
 function popScan(){
@@ -114,7 +147,6 @@ function popScan(){
         document.getElementById("scanItem").style.display = "none";
         scanItem = null
     }
-
 }
 
 //This function pops the bulk scan modal
@@ -134,6 +166,22 @@ function popMultiScan(){
     }
 }
 
+//On Submit of new item modal create new items
+async function submitNewItem(){
+    var barcode = document.getElementById("newItemBarcode").value;
+    var quantity = document.getElementById("newItemQuantity").value;
+    var itemName = document.getElementById("itemName").value;
+    var itemBrand = document.getElementById("itemBrand").value;
+    var itemType = document.getElementById("type").value;
+    var itemURL = document.getElementById("url").value;
+    var vegan = document.getElementById("vegetarian").value;
+    var vegetarian = document.getElementById("vegan").value;
+    document.getElementById("newItem").style.display = "none";
+    //Call API Endpoint
+    await createItem(barcode, quantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan)
+
+}
+
 //This function is used for exporting data in a table to CSV
 function exportCSV(elem){
     var table = document.getElementById("pantrytable");
@@ -144,69 +192,74 @@ function exportCSV(elem){
     return false;
 }
 
-//This function loads pantry items from data
+//This function formats database data into the columns for the database
+//Helper function
 function loadPantryItems(items){
-    const table = document.getElementById("pantryStock");
-    for (let element of items) {
-        console.log(element)
-        let row = table.insertRow();
+    let loadPromise = function(resolve,reject) {
+        const table = document.getElementById("pantryStock");
+        for (let element of items) {
+            console.log(element)
+            let row = table.insertRow();
 
-        //name
-        let cell = row.insertCell();
-        let text = document.createTextNode(element.productTitle);
-        cell.appendChild(text);
-
-        //quantity
-        cell = row.insertCell();
-        text = document.createTextNode(element.quantity);
-        cell.style.fontWeight = 700;
-        if (element.quantity < 15) {
-            cell.style.backgroundColor = '#ff3823';
-            cell.style.color = '#fff';
-        }
-        else if (element.quantity >= 15 & element.quantity < 45) {
-            cell.style.backgroundColor = '#fefb64';
-        }
-        else if (element.quantity >= 45) {
-            cell.style.backgroundColor = '#92d36e';
-            cell.style.color = '#fff';
-        }
-        cell.appendChild(text);
-
-        //type
-        cell = row.insertCell();
-        text = document.createTextNode(element.foodType);
-        cell.appendChild(text);
-
-        //brand
-        cell = row.insertCell();
-        text = document.createTextNode(element.brand);
-        cell.appendChild(text);
-
-        //Vegetarian or Vegan
-        cell = row.insertCell();
-        if (element.vegan == true){
-            text = document.createTextNode("Vegan");
+            //name
+            let cell = row.insertCell();
+            let text = document.createTextNode(element.productTitle);
             cell.appendChild(text);
-        }
-        else if (element.vegetarian == true){
+
+            //quantity
+            cell = row.insertCell();
+            text = document.createTextNode(element.quantity);
+            cell.style.fontWeight = 700;
+            if (element.quantity < 15) {
+                cell.style.backgroundColor = '#ff3823';
+                cell.style.color = '#fff';
+            }
+            else if (element.quantity >= 15 & element.quantity < 45) {
+                cell.style.backgroundColor = '#fefb64';
+            }
+            else if (element.quantity >= 45) {
+                cell.style.backgroundColor = '#92d36e';
+                cell.style.color = '#fff';
+            }
+            cell.appendChild(text);
+
+            //type
+            cell = row.insertCell();
+            text = document.createTextNode(element.foodType);
+            cell.appendChild(text);
+
+            //brand
+            cell = row.insertCell();
+            text = document.createTextNode(element.brand);
+            cell.appendChild(text);
+
+            //Vegetarian or Vegan
+            cell = row.insertCell();
+            if (element.vegan == true){
+                text = document.createTextNode("Vegan");
+                cell.appendChild(text);
+            }
+            else if (element.vegetarian == true){
                 text = document.createTextNode("Vegetarian");
                 cell.appendChild(text);
-        } else{
-            text = document.createTextNode("Neither");
-            cell.appendChild(text);
-        }
+            } else{
+                text = document.createTextNode("Neither");
+                cell.appendChild(text);
+            }
 
-        //Best Buy Date
-        cell = row.insertCell();
-        if (element.bestBuyDate == null || element.bestBuyDate == ""){
-            text = document.createTextNode("Unknown");
-            cell.appendChild(text);
-        }else{
-            text = document.createTextNode(element.bestBuyDate);
-            cell.appendChild(text);
+            //Best Buy Date
+            cell = row.insertCell();
+            if (element.bestBuyDate == null || element.bestBuyDate == ""){
+                text = document.createTextNode("Unknown");
+                cell.appendChild(text);
+            }else{
+                text = document.createTextNode(element.bestBuyDate);
+                cell.appendChild(text);
+            }
         }
+        resolve("Success");
     }
+    return new Promise(loadPromise);
 }
 
 //This function is used for the formatting of the table
@@ -234,6 +287,7 @@ function createTableStyle() {
 
 
 createInventoryTable()
+
 
 
 

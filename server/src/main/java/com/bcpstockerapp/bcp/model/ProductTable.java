@@ -13,6 +13,7 @@ public class ProductTable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long productId;
+
     private String barcodeId;
     private String productTitle;
     private String foodType;

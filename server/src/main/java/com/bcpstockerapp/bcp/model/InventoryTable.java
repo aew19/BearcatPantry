@@ -31,7 +31,7 @@ public class InventoryTable {
 
     //Getters
     public Long getId(){return this.inventoryId;}
-    public String getBarcodeIdId(){return this.barcodeId;}
+    public String getBarcodeId(){return this.barcodeId;}
     public Integer getQuantity(){return this.quantity;}
     public String getLocation(){return this.location;}
     public Date getDateRecorded(){return this.dateRecorded;}
