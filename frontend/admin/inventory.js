@@ -23,7 +23,23 @@ async function getInventory(){
 
 //If barcode is found we will update the quantity value
 function updateInventory(barcode, quantity){
-
+    //Update inventory table
+    //POST to inventory table
+    let data = {'quantity':parseInt(quantity)}
+    let formBody =[];
+    for (let key in data){
+        let encodedKey = encodeURIComponent(key);
+        let encodedValue = encodeURIComponent(data[key]);
+        formBody.push(encodedKey+"="+encodedValue);
+    }
+    formBody = formBody.join("&");
+    fetch('http://localhost:8080/updateInventory/'+ barcode, {
+        body: formBody,
+        method:"PUT",
+        headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+    }).then(response => response.json())
+        .then(data=> {console.log('Success');})
+        .catch((error)=>{ console.error('Error:', error);});
 }
 //Calls barcode api endpoint
 async function getBarcode(barcode){
@@ -109,7 +125,7 @@ function popNewItemModal(){
                                 let currQuantity = inventory.quantity + parseInt(quantity);
                                 console.log(currQuantity)
                                 //update based on barcode id
-                                updateInventory(barcode, currQuantity).then(response=> console.log(response))
+                                updateInventory(barcode, currQuantity)
                             }
                         })
                     }
