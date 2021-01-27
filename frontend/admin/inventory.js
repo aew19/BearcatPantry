@@ -126,6 +126,7 @@ function popNewItemModal(){
                                 console.log(currQuantity)
                                 //update based on barcode id
                                 updateInventory(barcode, currQuantity)
+                                location.reload()
                             }
                         })
                     }
