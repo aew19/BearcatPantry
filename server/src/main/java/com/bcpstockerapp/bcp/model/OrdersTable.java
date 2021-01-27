@@ -17,6 +17,7 @@ public class OrdersTable {
     private boolean delOrPickUp;
     private Date delDate;
     private String deliveryTime;
+    //Order status -1 decline, 0 pending, 1 confirmed, 2 completed
     private Integer orderStatus;
     private String mNumber;
     private String address;
