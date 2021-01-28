@@ -37,7 +37,7 @@ function updateInventory(barcode, quantity){
         formBody.push(encodedKey+"="+encodedValue);
     }
     formBody = formBody.join("&");
-    fetch(url + '/updateInventory/'+ barcode, {
+    fetch(url + "/updateInventory/"+ barcode, {
         body: formBody,
         method:"PUT",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -76,7 +76,7 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
         formBody.push(encodedKey+"="+encodedValue);
     }
     formBody = formBody.join("&");
-    fetch(url + '/inventory', {
+    fetch(url + "/inventory", {
         body: formBody,
         method:"POST",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
