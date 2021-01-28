@@ -1,9 +1,3 @@
-//GLOBAL VARIABLE FOR TESTING VS LIVE ENVIRONMENT
-//TESTING
-//let api = "localhost:8080"
-//LIVE
-let api = "http://bcpwb1prd01l.ad.uc.edu:8080/web-services"
-
 //This function just loads the navbar onto the page
 $(function(){
     $("#navBarAdmin").load("navBarAdmin.html");
@@ -19,7 +13,7 @@ var scanmulti = null
 //API FUNCTIONS
 //JOIN table for the inventory
 async function getInventory(){
-    let response = await fetch(api+"/inventoryTable/")
+    let response = await fetch("http://localhost:8080/inventoryTable/")
     try{
         return await response.json();
     }catch{
@@ -39,7 +33,7 @@ function updateInventory(barcode, quantity){
         formBody.push(encodedKey+"="+encodedValue);
     }
     formBody = formBody.join("&");
-    fetch(api+'/updateInventory/'+ barcode, {
+    fetch('http://localhost:8080/updateInventory/'+ barcode, {
         body: formBody,
         method:"PUT",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -49,7 +43,7 @@ function updateInventory(barcode, quantity){
 }
 //Calls barcode api endpoint
 async function getBarcode(barcode){
-    let response = await fetch(api+"/items/"+barcode)
+    let response = await fetch("http://localhost:8080/items/"+barcode)
     try{
         return await response.json();
     }catch{
@@ -78,7 +72,7 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
         formBody.push(encodedKey+"="+encodedValue);
     }
     formBody = formBody.join("&");
-    fetch(api+'/inventory', {
+    fetch('http://localhost:8080/inventory', {
         body: formBody,
         method:"POST",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -95,7 +89,7 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
         prodFormBody.push(encodedProdKey+"="+encodedProdValue);
     }
     prodFormBody = prodFormBody.join("&");
-    fetch(api+'/items', {
+    fetch('http://localhost:8080/items', {
         body: prodFormBody,
         method:"POST",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
