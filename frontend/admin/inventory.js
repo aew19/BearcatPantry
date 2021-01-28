@@ -1,3 +1,7 @@
+//Environment
+//url = "http://localhost:8080"
+url = "http://bcpwb1prd01l.ad.uc.edu:8080/web-services"
+
 //This function just loads the navbar onto the page
 $(function(){
     $("#navBarAdmin").load("navBarAdmin.html");
@@ -13,7 +17,7 @@ var scanmulti = null
 //API FUNCTIONS
 //JOIN table for the inventory
 async function getInventory(){
-    let response = await fetch("http://localhost:8080/inventoryTable/")
+    let response = await fetch(url + "/inventoryTable/")
     try{
         return await response.json();
     }catch{
@@ -33,7 +37,7 @@ function updateInventory(barcode, quantity){
         formBody.push(encodedKey+"="+encodedValue);
     }
     formBody = formBody.join("&");
-    fetch('http://localhost:8080/updateInventory/'+ barcode, {
+    fetch(url + '/updateInventory/'+ barcode, {
         body: formBody,
         method:"PUT",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -43,7 +47,7 @@ function updateInventory(barcode, quantity){
 }
 //Calls barcode api endpoint
 async function getBarcode(barcode){
-    let response = await fetch("http://localhost:8080/items/"+barcode)
+    let response = await fetch(url + "/items/"+barcode)
     try{
         return await response.json();
     }catch{
@@ -72,7 +76,7 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
         formBody.push(encodedKey+"="+encodedValue);
     }
     formBody = formBody.join("&");
-    fetch('http://localhost:8080/inventory', {
+    fetch(url + '/inventory', {
         body: formBody,
         method:"POST",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -89,7 +93,7 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
         prodFormBody.push(encodedProdKey+"="+encodedProdValue);
     }
     prodFormBody = prodFormBody.join("&");
-    fetch('http://localhost:8080/items', {
+    fetch(url +'/items', {
         body: prodFormBody,
         method:"POST",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
