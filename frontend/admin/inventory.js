@@ -1,3 +1,9 @@
+//GLOBAL VARIABLE FOR TESTING VS LIVE ENVIRONMENT
+//TESTING
+//let api = "localhost:8080"
+//LIVE
+let api = "http://bcpwb1prd01l.ad.uc.edu:8080/web-services"
+
 //This function just loads the navbar onto the page
 $(function(){
     $("#navBarAdmin").load("navBarAdmin.html");
@@ -13,7 +19,7 @@ var scanmulti = null
 //API FUNCTIONS
 //JOIN table for the inventory
 async function getInventory(){
-    let response = await fetch("http://localhost:8080/inventoryTable/")
+    let response = await fetch(api+"/inventoryTable/")
     try{
         return await response.json();
     }catch{
@@ -33,7 +39,7 @@ function updateInventory(barcode, quantity){
         formBody.push(encodedKey+"="+encodedValue);
     }
     formBody = formBody.join("&");
-    fetch('http://localhost:8080/updateInventory/'+ barcode, {
+    fetch(api+'/updateInventory/'+ barcode, {
         body: formBody,
         method:"PUT",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -43,7 +49,7 @@ function updateInventory(barcode, quantity){
 }
 //Calls barcode api endpoint
 async function getBarcode(barcode){
-    let response = await fetch("http://localhost:8080/items/"+barcode)
+    let response = await fetch(api+"/items/"+barcode)
     try{
         return await response.json();
     }catch{
@@ -53,6 +59,16 @@ async function getBarcode(barcode){
 //Add new item to database
 //TODO add image
 async function createItem(barcode, quantity, itemName, brand, type, url, isVegetarian, isVegan){
+    if (isVegetarian === 'on'){
+        isVegetarian = 1;
+    }else{
+        isVegetarian = 0;
+    }
+    if (isVegan === 'on'){
+        isVegan = 1;
+    }else{
+        isVegan = 0;
+    }
     //POST to inventory table
     let data = {'barcodeId':barcode, 'quantity':parseInt(quantity), 'location':""}
     let formBody =[];
@@ -62,7 +78,7 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
         formBody.push(encodedKey+"="+encodedValue);
     }
     formBody = formBody.join("&");
-    fetch('http://localhost:8080/inventory', {
+    fetch(api+'/inventory', {
         body: formBody,
         method:"POST",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -71,7 +87,7 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
         .catch((error)=>{ console.error('Error:', error);});
 
     //POST to product table
-    let prodData = {'barcodeId':barcode,'productTitle':itemName, 'foodType':type, 'brand':brand}
+    let prodData = {'barcodeId':barcode,'productTitle':itemName, 'foodType':type, 'brand':brand,'vegetarian':isVegetarian, 'vegan':isVegan,'productURL':url,'isActive':1}
     let prodFormBody =[];
     for (let prodKey in prodData){
         let encodedProdKey = encodeURIComponent(prodKey);
@@ -79,7 +95,7 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
         prodFormBody.push(encodedProdKey+"="+encodedProdValue);
     }
     prodFormBody = prodFormBody.join("&");
-    fetch('http://localhost:8080/items', {
+    fetch(api+'/items', {
         body: prodFormBody,
         method:"POST",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
