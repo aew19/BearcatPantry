@@ -41,20 +41,9 @@ function updateInventory(barcode, quantity){
         .then(data=> {console.log('Success');})
         .catch((error)=>{ console.error('Error:', error);});
 }
-//Calls barcode api endpoint
-async function getBarcode(barcode){
-    let response = await fetch("http://localhost:8080/items/"+barcode)
-    try{
-        return await response.json();
-    }catch{
-        return "notFound";
-    }
-}
-//Add new item to database
-//TODO add image
-async function createItem(barcode, quantity, itemName, brand, type, url, isVegetarian, isVegan){
+function addToInventoryTable(barcode, quantity){
     //POST to inventory table
-    let data = {'barcodeId':barcode, 'quantity':parseInt(quantity), 'location':""}
+    let data = {'barcodeId':barcode, 'quantity':parseInt(quantity)}
     let formBody =[];
     for (let key in data){
         let encodedKey = encodeURIComponent(key);
@@ -69,7 +58,22 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
     }).then(response => response.json())
         .then(data=> {console.log('Success');})
         .catch((error)=>{ console.error('Error:', error);});
+}
 
+//Calls barcode api endpoint
+async function getBarcode(barcode){
+    let response = await fetch("http://localhost:8080/items/"+barcode)
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+//Add new item to database
+//TODO add image
+async function createItem(barcode, quantity, itemName, brand, type, url, isVegetarian, isVegan){
+    //POST to inventory table
+    addToInventoryTable(barcode, quantity)
     //POST to product table
     let prodData = {'barcodeId':barcode,'productTitle':itemName, 'foodType':type, 'brand':brand}
     let prodFormBody =[];
@@ -126,6 +130,10 @@ function popNewItemModal(){
                                 console.log(currQuantity)
                                 //update based on barcode id
                                 updateInventory(barcode, currQuantity)
+                                location.reload()
+                            }else{
+                                //insert on inventory table
+                                addToInventoryTable(barcode, quantity)
                                 location.reload()
                             }
                         })
