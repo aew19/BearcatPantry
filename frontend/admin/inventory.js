@@ -1,3 +1,7 @@
+//REPLACE ALL LOCALHOST:8080 WITH
+//bcpwb1prd01l.ad.uc.edu:8080/web-services
+//CHECK to see if you can hit the bcpwb and if not default back to localhost:8080
+
 //This function just loads the navbar onto the page
 $(function(){
     $("#navBarAdmin").load("navBarAdmin.html");
