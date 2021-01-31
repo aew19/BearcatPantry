@@ -7,11 +7,6 @@
     padding: 20px !important;
 }
 
-.scrollingTable {
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
 .grid-top {
     border-top: 1px solid #f5f5f5;
     border-right: 1px solid #f5f5f5;
@@ -106,4 +101,9 @@
 
 .grid-container > div {
     padding: 10px 10px 5px 10px !important;
+}
+
+.grid-container {
+    width: 100%;
+    margin: unset;
 }
