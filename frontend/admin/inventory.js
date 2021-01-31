@@ -1,3 +1,7 @@
+//REPLACE ALL LOCALHOST:8080 WITH
+//bcpwb1prd01l.ad.uc.edu:8080/web-services
+//CHECK to see if you can hit the bcpwb and if not default back to localhost:8080
+
 //This function just loads the navbar onto the page
 $(function(){
     $("#navBarAdmin").load("navBarAdmin.html");
@@ -41,20 +45,9 @@ function updateInventory(barcode, quantity){
         .then(data=> {console.log('Success');})
         .catch((error)=>{ console.error('Error:', error);});
 }
-//Calls barcode api endpoint
-async function getBarcode(barcode){
-    let response = await fetch("http://localhost:8080/items/"+barcode)
-    try{
-        return await response.json();
-    }catch{
-        return "notFound";
-    }
-}
-//Add new item to database
-//TODO add image
-async function createItem(barcode, quantity, itemName, brand, type, url, isVegetarian, isVegan){
+function addToInventoryTable(barcode, quantity){
     //POST to inventory table
-    let data = {'barcodeId':barcode, 'quantity':parseInt(quantity), 'location':""}
+    let data = {'barcodeId':barcode, 'quantity':parseInt(quantity)}
     let formBody =[];
     for (let key in data){
         let encodedKey = encodeURIComponent(key);
@@ -69,7 +62,22 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
     }).then(response => response.json())
         .then(data=> {console.log('Success');})
         .catch((error)=>{ console.error('Error:', error);});
+}
 
+//Calls barcode api endpoint
+async function getBarcode(barcode){
+    let response = await fetch("http://localhost:8080/items/"+barcode)
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+//Add new item to database
+//TODO add image
+async function createItem(barcode, quantity, itemName, brand, type, url, isVegetarian, isVegan){
+    //POST to inventory table
+    addToInventoryTable(barcode, quantity)
     //POST to product table
     let prodData = {'barcodeId':barcode,'productTitle':itemName, 'foodType':type, 'brand':brand}
     let prodFormBody =[];
@@ -126,6 +134,10 @@ function popNewItemModal(){
                                 console.log(currQuantity)
                                 //update based on barcode id
                                 updateInventory(barcode, currQuantity)
+                                location.reload()
+                            }else{
+                                //insert on inventory table
+                                addToInventoryTable(barcode, quantity)
                                 location.reload()
                             }
                         })
@@ -203,7 +215,7 @@ async function submitNewItem(){
 function exportCSV(elem){
     var table = document.getElementById("pantrytable");
     var html = table.outerHTML;
-    var url = 'data:application/vnd.ms-excel,' + escape(html); // Set your html table into url 
+    var url = 'data:application/vnd.ms-excel,' + escape(html); // Set your html table into url
     elem.setAttribute("href", url);
     elem.setAttribute("download", "pantrystock.xls"); // Choose the file name
     return false;
