@@ -11,32 +11,36 @@ public class UsersTable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
-    private int permissions;
+    private String fname;
+    private String lname;
+    private Integer permissions;
     private boolean isActive;
     private Date dateActive;
 
     //Constructors
     public UsersTable(){}
-    public UsersTable(Long id, String name, int permissions, boolean isActive, Date dateActive){
+    public UsersTable(Long id, String fname, String lname, Integer permissions, boolean isActive, Date dateActive){
         this.id = id;
-        this.name = name;
+        this.fname = fname;
+        this.lname = lname;
         this.permissions = permissions;
         this.isActive = isActive;
         this.dateActive = dateActive;
     }
 
     //Getters
-    public Long getId(){return id;}
-    public String getName(){return name;}
-    public int getPermissions(){return permissions;}
-    public boolean getIsActive(){return isActive;}
-    public Date getDateActive(){return dateActive;}
+    public Long getId(){return this.id;}
+    public String getFname(){return this.fname;}
+    public String getLname(){return this.lname;}
+    public Integer getPermissions(){return this.permissions;}
+    public boolean getIsActive(){return this.isActive;}
+    public Date getDateActive(){return this.dateActive;}
 
     //Setters
     public void setId(Long id){this.id = id;}
-    public void setName(String name){this.name = name;}
-    public void setPermissions(int permissions){this.permissions = permissions;}
+    public void setFname(String fname){this.fname = fname;}
+    public void setLname(String lname){this.lname = lname;}
+    public void setPermissions(Integer permissions){this.permissions = permissions;}
     public void setIsActive(boolean isActive){this.isActive = isActive;}
     public void setDateActive(Date dateActive){this.dateActive = dateActive;}
 

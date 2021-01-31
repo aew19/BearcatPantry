@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="js/jquery/jquery-3.1.0.js"></script>
     <script src="https://kit.fontawesome.com/4c3f5e6aba.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../bootstrap.min.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
-    <link rel="stylesheet" href="../global.css">
+    <link rel="stylesheet" href="../global.css" crossorigin="anonymous">
     <title>Inventory</title>
 </head>
 <body>
@@ -47,8 +46,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Scan Item!</h5>
-                    <button type="button" class="close" onclick="popScan()" aria-label="Close">
+                    <h5 class="modal-title">Scan Item</h5>
+                    <button type="button" class="close" onclick="closePopup('scanItem')" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -56,7 +55,7 @@
                     <h6>Please scan the item that you would like added to the Pantry inventory. If applicable, please select an experation date the each item.</h6>
                     <form class="form-inline" style="justify-content: space-evenly;padding-top:1rem">
                         <div style="padding-right:10px; padding-bottom: 10px;"class = "form-group">
-                            <input class="form-control" id="barcode1" placeholder="Scan Item">
+                            <input class="form-control" id="itemBarcode" placeholder="Item Barcode">
                         </div>
                         <div style="padding-bottom: 10px;"pclass = "form-group">
                             <input type="date" id="expirationdate"><label for="expirationdate"></label>

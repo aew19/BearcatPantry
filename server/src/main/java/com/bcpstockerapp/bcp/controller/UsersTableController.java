@@ -21,10 +21,11 @@ public class UsersTableController {
         return usersTableRepository.findAll();
     }
     @PostMapping("/users")
-    public @ResponseBody  String createUser (@RequestParam Long id, String name, int permissions, boolean isActive, Date dateActive) {
+    public @ResponseBody  String createUser (@RequestParam Long id, String fname, String lname, int permissions, boolean isActive, Date dateActive) {
         UsersTable user = new UsersTable();
         user.setId(id);
-        user.setName(name);
+        user.setFname(fname);
+        user.setLname(lname);
         user.setPermissions(permissions);
         user.setIsActive(isActive);
         user.setDateActive(dateActive);

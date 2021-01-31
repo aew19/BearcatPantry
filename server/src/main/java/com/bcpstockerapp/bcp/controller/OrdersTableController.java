@@ -28,20 +28,19 @@ public class OrdersTableController {
     }
 
     @PostMapping("/orders")
-    public @ResponseBody ResponseEntity<String> createOrder(@RequestParam String orderItems, String quantities, Date orderDate, boolean delOrPickUp, Date delDate, int orderStatus, String mNumber, String address, String email, String phoneNumber) {
+    public @ResponseBody ResponseEntity<String> createOrder(@RequestParam Long orderID, Date orderDate, boolean delOrPickUp, Date delDate, String deliveryTime, Integer orderStatus, String mNumber, String address, String address2, String email, String phoneNumber) {
         try{
-            OrdersTable item = new OrdersTable();
-            item.setOrderItems(orderItems);
-            item.setQuantities(quantities);
-            item.setOrderDate(orderDate);
-            item.setDelOrPickUp(delOrPickUp);
-            item.setDelDate(delDate);
-            item.setOrderStatus(orderStatus);
-            item.setMNumber(mNumber);
-            item.setAddress(address);
-            item.setEmail(email);
-            item.setPhoneNumber(phoneNumber);
-            ordersTableRepository.save(item);
+            OrdersTable order = new OrdersTable();
+            order.setOrderDate(orderDate);
+            order.setDelOrPickUp(delOrPickUp);
+            order.setDelDate(delDate);
+            order.setDeliveryTime(deliveryTime);
+            order.setOrderStatus(orderStatus);
+            order.setMNumber(mNumber);
+            order.setAddress(address);
+            order.setEmail(email);
+            order.setPhoneNumber(phoneNumber);
+            ordersTableRepository.save(order);
             return new ResponseEntity<>("Saved!", HttpStatus.CREATED);
         } catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
