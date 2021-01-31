@@ -1,14 +1,14 @@
 let users = [
-    { Select: "", Name: "Karl Dierking", Role: "Volunteer"},
-    { Select: "", Name: "Jake van Meter", Role: "Volunteer"},
-    { Select: "", Name: "Daniel Cummins", Role: "Owner"},
-    { Select: "", Name: "Isaiah Corso-Phinney", Role: "Owner"},
-    { Select: "", Name: "Logan Lindsay", Role: "Supervisor"},
-    { Select: "", Name: "Sivani Alla", Role: "Volunteer"},
-    { Select: "", Name: "Teja Bollimunta", Role: "Volunteer"},
-    { Select: "", Name: "Connor Herbert", Role: "Owner"},
-    { Select: "", Name: "Isaac Smitherman", Role: "Owner"},
-    { Select: "", Name: "Joshua St. Pierre", Role: "Supervisor"}
+    { Name: "Karl Dierking", Role: "Volunteer", Modify: "" },
+    { Name: "Jake van Meter", Role: "Volunteer", Modify: "" },
+    { Name: "Daniel Cummins", Role: "Owner", Modify: "" },
+    { Name: "Isaiah Corso-Phinney", Role: "Owner", Modify: "" },
+    { Name: "Logan Lindsay", Role: "Supervisor", Modify: "" },
+    { Name: "Sivani Alla", Role: "Volunteer", Modify: "" },
+    { Name: "Teja Bollimunta", Role: "Volunteer", Modify: "" },
+    { Name: "Connor Herbert", Role: "Owner", Modify: "" },
+    { Name: "Isaac Smitherman", Role: "Owner", Modify: "" },
+    { Name: "Joshua St. Pierre", Role: "Supervisor", Modify: "" }
 ];
 
 $(function () {
@@ -43,7 +43,7 @@ function generateTable(table, users_data) {
             let cell = row.insertCell();
             let text = document.createTextNode(element[key]);
             if (element[key] == "") {
-                cell.innerHTML = "<input type=\"checkbox\" id=\"checkbox"+counter+"\"><label for=\"checkbox"+counter+"\"></label>";
+                cell.innerHTML = "<div style=\"font-size:1.5rem;color:#e00122;display:inline-block;width:50%;\" id=\"EditBtn"+counter+"\" onclick =\"popEditUser(this.id)\"><i class='fas fa-edit'></i></div><div style=\"font-size:1.5rem;color:#e00122;display:inline-block;width:50%;\" id=\"DeleteBtn"+counter+"\" onclick =\"popDeleteUser(this.id)\"><i class='fas fa-trash'></i></div>";
                 counter++;
             }
             cell.appendChild(text);

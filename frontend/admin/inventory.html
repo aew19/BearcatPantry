@@ -20,92 +20,15 @@
         <h2>Inventory</h2>
         <button class="btn btn-red" onclick = "popScan()">Scan Item</button>
         <button class="btn btn-red" onclick="popMultiScan()">Scan Multiple Items</button>
-        <button class="btn btn-red" onclick="popNewItem()">TEMP NEW ITEM</button>
+        <button class="btn btn-red" onclick="">Delete Item(s)</button>
         <a href='' id = "csv" onClick="exportCSV(this)" class="btn btn-red">Export Information(csv)</a>
         <button class="btn btn-red">Re-count Inventory</button>
-    </div>
-    <!-- Scan Item Modal -->
-    <div class="modal" id="scanItem" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Scan Item!</h5>
-                    <button type="button" class="close" onclick="popScan()" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form class="form-inline">
-                        <div style="padding-right:10px; padding-bottom: 10px;"class = "form-group">
-                            <input class="form-control" id="barcode1" placeholder="Scan Item">
-                        </div>
-                        <div style="padding-bottom: 10px;"pclass = "form-group">
-                            <input type="number" onkeypress="return event.charCode >= 48" min="1" class="form-control" id="quantity1" placeholder="Quantity">
-                        </div>
-                    </form>
-                    <button type="submit" class="btn btn-red" onclick="popNewItemModal()">Submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- New Item Modal -->
-    <div class="modal" id="newItem" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">New Item!</h5>
-                    <button type="button" class="close" onclick="popNewItemModal()" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <h6>This item is new to our system and needs more information before it can be submitted. Please fill out the following items:</h6>
-                    <div class="grid-container">
-                        <form class="form-inline">
-                            <input type="hidden" name="_token" value="">
-                            <div class="item1 form-group">
-                                <input class="form-control" id="name" placeholder="Item Name">
-                            </div>
-                            <div class="item2 form-group">
-                                <input class="form-control" id="quantity" placeholder="Quantity">
-                            </div>
-                            <div class="item3 form-group">
-                                <label for="img">Select Image: </label>
-                                <input type="file" id="prodImg" name="prodImg" accept="image/*">
-                            </div>
-                            <div class="item4 form-group">
-                                <input class="form-control" id="brand" placeholder="Company Name (Brand)">
-                            </div>
-                            <div class="item5 form-group">
-                                <label for="type">Product Type</label>
-                                <select id="type" name="type">
-                                    <option value="Vegtable">Vegetable</option>
-                                    <option value="Grain">Grains</option>
-                                    <option value="Fruit">Fruit</option>
-                                    <option value="Dairy">Dairy</option>
-                                    <option value="Dairy">Beans</option>
-                                </select>
-                            </div>
-                            <div class="item6 form-group">
-                                <input style="padding-right: 14.2rem"class="form-control" id="productURL" placeholder="Product Link (URL)">
-                            </div>
-                            <div class="item7 form-check">
-                                <input type="checkbox" class="form-check-input" id="vegetarian">
-                                <label style="padding-right: 20px;"for="vegetarian">Vegetarian</label>
-                                <input type="checkbox" class="form-check-input" id="vegan">
-                                <label for="vegetarian">Vegan</label>
-                            </div>
-                            <button type="submit" class="btn btn-red" onclick="popNewItemModal()">Submit</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <div style="padding:0px 15px;" class="table-responsive-md">
         <table class = "table table-bordered" id = "pantrytable" width="100%" cellspacing="0">
             <thead style="text-align: center">
                 <tr>
+                    <th scope="col">Select</th>
                     <th scope="col">Item</th>
                     <th scope="col">Quantity</th>
                     <th scope="col">Type</th>
@@ -118,6 +41,34 @@
             <tbody style="text-align: center" id = "pantryStock"></tbody>
         </table>
     </div>
+    <div id="page-mask"></div>
+    <!-- Scan Item Modal -->
+    <div class="modal" id="scanItem" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Scan Item!</h5>
+                    <button type="button" class="close" onclick="popScan()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6>Please scan the item that you would like added to the Pantry inventory. If applicable, please select an experation date the each item.</h6>
+                    <form class="form-inline" style="justify-content: space-evenly;padding-top:1rem">
+                        <div style="padding-right:10px; padding-bottom: 10px;"class = "form-group">
+                            <input class="form-control" id="barcode1" placeholder="Scan Item">
+                        </div>
+                        <div style="padding-bottom: 10px;"pclass = "form-group">
+                            <input type="date" id="expirationdate"><label for="expirationdate"></label>
+                        </div>
+                    </form>
+                    <button type="submit" style="margin: .5rem auto;display:block; width:30%" class="btn btn-red" onclick="popNewItemModal()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- New Item Modal -->
+    <div id="newItemModal"></div>
     <div id="scanMultipleItemsModal"></div>
     <script src="inventory.js"></script>
 </body>
