@@ -67,11 +67,17 @@ public class InventoryTableController {
 
     @PutMapping("/updateInventory/{barcodeId}")
     public String updateQuantity(@PathVariable(value="barcodeId") String barcodeId,@RequestParam Integer quantity){
-        System.out.println("PUT HIT!!");
         InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeId);
         inventory.setQuantity(quantity);
         inventoryTableRepository.save(inventory);
         return "Success!";
 
     }
+
+    @DeleteMapping("deleteInventory/{inventoryId}")
+    public String deleteInventory(@PathVariable(value="inventoryId") Long inventoryId){
+        inventoryTableRepository.deleteById(inventoryId);
+        return "Success!";
+    }
+
 }

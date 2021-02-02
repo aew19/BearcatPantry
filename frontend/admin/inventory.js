@@ -160,16 +160,7 @@ function popNewItemModal(){
     );
 }
 
-// function databaseHit(found, quantity,expiration){
-//     console.log(found)
-//     if (found == 1){
-//         console.log(inventory)
-//         let currQuantity = inventory.quantity + parseInt(quantity);
-//         console.log(currQuantity)
-//         //update based on barcode id
-//         updateInventory(barcode, currQuantity)
-//     }
-// }
+
 
 
 //The function can be used universally to close any popup
@@ -269,6 +260,17 @@ async function submitNewItem(){
 
 }
 
+function deleteItem(){
+    // getInventory().then(
+    //     data => {
+    //        let check = document.getElementById("checkbox"+104);
+    //        console.log(check)
+    //     }
+    // )
+
+}
+
+
 $(function () {
     $('#bulkScanTable').DataTable({
         "pageLength": 10,
@@ -295,15 +297,18 @@ function exportCSV(elem){
 //Helper function
 function loadPantryItems(items){
     let loadPromise = function(resolve,reject) {
+        counter = 0
         const table = document.getElementById("pantryStock");
         for (let element of items) {
             let row = table.insertRow();
 
             //select
+
             let cell = row.insertCell();
-            let text = document.createTextNode(element.barcodeId);
+            cell.innerHTML = "<input type=\"checkbox\" id=\"checkbox"+counter+"\"><label for=\"checkbox"+counter+"\"></label>";
+            counter = counter + 1;
             //changed the id to be the barcode of the item the checkbox is next to
-            cell.innerHTML = "<input type=\"checkbox\" id=\"checkbox"+element.barcodeId+"\"><label for=\"checkbox"+element.barcodeId+"\"></label>";
+            // cell.innerHTML = "<input type=checkbox id=checkbox"+element.id+"><label for=checkbox"+element.id+"></label>";
 
             //name
             cell = row.insertCell();
