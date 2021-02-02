@@ -11,7 +11,7 @@
                 <div class="modal-content" style="width:140%">
                     <div class="modal-header">
                         <h5 class="modal-title">New Item!</h5>
-                        <button type="button" class="close" onclick="popNewItemModal()" aria-label="Close">
+                        <button type="button" class="close" onclick="closePopup('newItem')" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -21,10 +21,10 @@
                             <div class="grid-container">
                                 <input type="hidden" name="_token" value="">
                                 <div class="newmodal1 form-group">
-                                    <input class="form-control" id="name" placeholder="Item Name">
+                                    <input class="form-control" id="itemName" placeholder="Item Name">
                                 </div>
                                 <div class="newmodal2 form-group">
-                                    <input class="form-control" id="quantity" placeholder="Quantity">
+                                    <input class="form-control" id="newItemQuantity" placeholder="Quantity">
                                 </div>
                                 <div class="newmodal3 form-group">
                                     <img id="imgPreview" src="../images/placeholderimage.png"/>
@@ -34,7 +34,7 @@
                                     <input type="file" id="prodImg" accept="image/*">
                                 </div>
                                 <div class="newmodal4 form-group">
-                                    <input class="form-control" id="brand" placeholder="Company Brand">
+                                    <input class="form-control" id="itemBrand" placeholder="Company Brand">
                                 </div>
                                 <div class="newmodal5 form-group">
                                     <select id="type" name="type" class="select">
@@ -57,7 +57,7 @@
                                     <input type="checkbox" class="form-check-input" id="vegan">
                                     <label style="padding-left: .5rem;margin-bottom:unset;" for="vegetarian">Vegan</label>
                                 </div>
-                                <button type="submit" class="newmodal9 btn btn-red" onclick="popNewItemModal()">Submit</button>
+                                <button type="submit" class="newmodal9 btn btn-red" onclick="submitNewItem()">Submit</button>
                             </div>
                         </form>
                     </div>

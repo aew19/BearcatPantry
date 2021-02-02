@@ -11,10 +11,11 @@ $(function(){
     $("#scanMultipleItemsModal").load("scanMultipleItemsModal.html");
 });
 
-//Modal Pop variables
+//Global Variables
 var newItem = null
 var scanItem = null
 var scanmulti = null
+let barcode;
 
 //API FUNCTIONS
 //JOIN table for the inventory
@@ -30,7 +31,6 @@ async function getInventory(){
 //If barcode is found we will update the quantity value
 function updateInventory(barcode, quantity){
     //Update inventory table
-    //POST to inventory table
     let data = {'quantity':parseInt(quantity)}
     let formBody =[];
     for (let key in data){
@@ -47,9 +47,10 @@ function updateInventory(barcode, quantity){
         .then(data=> {console.log('Success');})
         .catch((error)=>{ console.error('Error:', error);});
 }
-function addToInventoryTable(barcode, expiration){
+
+function addToInventoryTable(barcode, quantity, expiration){
     //POST to inventory table
-    let data = {'barcodeId':barcode, 'quantity':1}
+    let data = {'barcodeId':barcode, 'quantity':quantity}
     let formBody =[];
     for (let key in data){
         let encodedKey = encodeURIComponent(key);
@@ -78,6 +79,7 @@ async function getBarcode(barcode){
 //Add new item to database
 //TODO add image
 async function createItem(barcode, quantity, itemName, brand, type, url, isVegetarian, isVegan){
+    console.log(barcode)
     //POST to inventory table
     addToInventoryTable(barcode, quantity)
     //POST to product table
@@ -117,10 +119,12 @@ function popNewItemModal(){
     let request = new XMLHttpRequest();
     document.getElementById("scanItem").style.display = "none";
     scanItem = null
-    var barcode = document.getElementById("itemBarcode").value;
+    barcode = document.getElementById("itemBarcode").value;
     console.log(barcode);
-    var expiration = document.getElementById("expirationDate").value;
+    let expiration = document.getElementById("expirationDate").value;
     console.log(expiration);
+    let quantity = document.getElementById("quantity").value;
+    console.log(quantity);
     //API Hit
     getBarcode(barcode).then(
         data => {
@@ -132,14 +136,14 @@ function popNewItemModal(){
                         allInventory.forEach(inventory=>{
                             if (inventory.barcodeId == barcode){
                                 console.log(inventory)
-                                let currQuantity = inventory.quantity + 1;
+                                let currQuantity = inventory.quantity + parseInt(quantity);
                                 console.log(currQuantity)
                                 //update based on barcode id
                                 updateInventory(barcode, currQuantity)
                                 location.reload()
                             }else{
                                 //insert on inventory table
-                                addToInventoryTable(barcode, expiration)
+                                addToInventoryTable(barcode, quantity, expiration)
                                 location.reload()
                             }
                         })
@@ -147,10 +151,6 @@ function popNewItemModal(){
                 )
             } else{
                 document.getElementById("newItem").style.display = "block";
-                var el_barcode = document.getElementById("newItemBarcode");
-                el_barcode.value = barcode;
-                var el_quantity = document.getElementById("newItemQuantity");
-                el_quantity.value = quantity;
             }
 
         }
@@ -242,14 +242,13 @@ function popNewItem(){
 
 //On Submit of new item modal create new items
 async function submitNewItem(){
-    var barcode = document.getElementById("newItemBarcode").value;
-    var quantity = document.getElementById("newItemQuantity").value;
-    var itemName = document.getElementById("itemName").value;
-    var itemBrand = document.getElementById("itemBrand").value;
-    var itemType = document.getElementById("type").value;
-    var itemURL = document.getElementById("url").value;
-    var vegan = document.getElementById("vegetarian").value;
-    var vegetarian = document.getElementById("vegan").value;
+    let quantity = document.getElementById("newItemQuantity").value;
+    let itemName = document.getElementById("itemName").value;
+    let itemBrand = document.getElementById("itemBrand").value;
+    let itemType = document.getElementById("type").value;
+    let itemURL = document.getElementById("productURL").value;
+    let vegan = document.getElementById("vegetarian").value;
+    let vegetarian = document.getElementById("vegan").value;
     document.getElementById("newItem").style.display = "none";
     //Call API Endpoint
     await createItem(barcode, quantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan)
