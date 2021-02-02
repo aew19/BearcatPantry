@@ -390,9 +390,9 @@ input[type="file"] {
     border: 1px solid #e00122;
 }
 
-img {
+.shopping-image {
     max-width: 152px;
-    max-height: 152 px; 
+    max-height: 152px;
     margin-bottom: 10px;
 }
 

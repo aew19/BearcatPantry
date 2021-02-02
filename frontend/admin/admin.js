@@ -1,11 +1,3 @@
-$(function(){
-    $("#navBarAdmin").load("navBarAdmin.html");
-});
-
-// $(function(){
-//     $("#footer").load("../footer.html");
-// });
-
 function makeTableScroll() {
     var maxRows = 8;
     var table = document.getElementById('inventory_table');
