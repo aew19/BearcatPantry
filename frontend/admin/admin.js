@@ -96,12 +96,12 @@ var editUserModal = null
 function popEditUser(){
     let request = new XMLHttpRequest();
     if(editUserModal === null){
-        document.getElementById("editUserModal").style.display = "block";
+        document.getElementById("editUser").style.display = "block";
         addUserModal = true
         document.getElementById('page-mask').style.position = "fixed";
         document.getElementById('page-mask').style.backgroundColor = "rgba(0,0,0,0.6)";
     } else {
-        document.getElementById("editUserModal").style.display = "none";
+        document.getElementById("editUser").style.display = "none";
         editUserModal = null
         document.getElementById('page-mask').style.position = "unset";
     }
@@ -112,12 +112,12 @@ var addUserModal = null
 function popAddUser(){
     let request = new XMLHttpRequest();
     if(addUserModal === null){
-        document.getElementById("addUserModal").style.display = "block";
+        document.getElementById("addUser").style.display = "block";
         addUserModal = true
         document.getElementById('page-mask').style.position = "fixed";
         document.getElementById('page-mask').style.backgroundColor = "rgba(0,0,0,0.6)";
     } else {
-        document.getElementById("addUserModal").style.display = "none";
+        document.getElementById("addUser").style.display = "none";
         addUserModal = null
         document.getElementById('page-mask').style.position = "unset";
     }
@@ -128,12 +128,12 @@ var delUserModal = null
 function popConfirmDeleteUser(){
     let request = new XMLHttpRequest();
     if(delUserModal === null){
-        document.getElementById("deleteUserModal").style.display = "block";
+        document.getElementById("deleteUser").style.display = "block";
         delUserModal = true
         document.getElementById('page-mask').style.position = "fixed";
         document.getElementById('page-mask').style.backgroundColor = "rgba(0,0,0,0.6)";
     } else {
-        document.getElementById("deleteUserModal").style.display = "none";
+        document.getElementById("deleteUser").style.display = "none";
         delUserModal = null
         document.getElementById('page-mask').style.position = "unset";
     }

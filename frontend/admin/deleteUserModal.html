@@ -6,19 +6,19 @@
 </head>
     <body>
         <!-- Delete User Modal -->
-        <div class="modal" id="deleteUserModal" tabindex="-1" role="dialog">
+        <div class="modal" id="deleteUser" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Delete User</h5>
-                        <button type="button" class="close" onclick="closePopup('deleteUserModal')" aria-label="Close">
+                        <button type="button" class="close" onclick="closePopup('deleteUser')" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body" style="padding-bottom:.5rem">
                         <h6>Are you sure you want to delete the following user?</h6>
                         <button type="submit" style="width:25%;" class="btn btn-green" onclick="deleteUser()">Yes</button>
-                        <button type="submit" style="width:25%;" class="btn btn-red" onclick="closePopup('deleteUserModal')">No</button>
+                        <button type="submit" style="width:25%;" class="btn btn-red" onclick="closePopup('deleteUser')">No</button>
                     </div>
                 </div>
             </div>
