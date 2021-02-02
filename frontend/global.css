@@ -406,7 +406,7 @@ input[type="file"] {
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
-[type="date"] {
+.date-select{
     border: 1px solid #e00122;
     height: 2.85rem;
     padding: .375rem .75rem;

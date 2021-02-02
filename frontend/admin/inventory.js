@@ -47,9 +47,9 @@ function updateInventory(barcode, quantity){
         .then(data=> {console.log('Success');})
         .catch((error)=>{ console.error('Error:', error);});
 }
-function addToInventoryTable(barcode, quantity){
+function addToInventoryTable(barcode, expiration){
     //POST to inventory table
-    let data = {'barcodeId':barcode, 'quantity':parseInt(quantity)}
+    let data = {'barcodeId':barcode, 'quantity':1}
     let formBody =[];
     for (let key in data){
         let encodedKey = encodeURIComponent(key);
@@ -119,8 +119,8 @@ function popNewItemModal(){
     scanItem = null
     var barcode = document.getElementById("itemBarcode").value;
     console.log(barcode);
-    var quantity = document.getElementById("itemQuantity").value;
-    console.log(quantity);
+    var expiration = document.getElementById("expirationDate").value;
+    console.log(expiration);
     //API Hit
     getBarcode(barcode).then(
         data => {
@@ -132,14 +132,14 @@ function popNewItemModal(){
                         allInventory.forEach(inventory=>{
                             if (inventory.barcodeId == barcode){
                                 console.log(inventory)
-                                let currQuantity = inventory.quantity + parseInt(quantity);
+                                let currQuantity = inventory.quantity + 1;
                                 console.log(currQuantity)
                                 //update based on barcode id
                                 updateInventory(barcode, currQuantity)
                                 location.reload()
                             }else{
                                 //insert on inventory table
-                                addToInventoryTable(barcode, quantity)
+                                addToInventoryTable(barcode, expiration)
                                 location.reload()
                             }
                         })
@@ -160,6 +160,7 @@ function popNewItemModal(){
 //The function can be used universally to close any popup
 function closePopup(element){
     document.getElementById(element).style.display = "none";
+    location.reload()
 }
 
 
@@ -169,10 +170,10 @@ function popScan(){
     let request = new XMLHttpRequest();
     if(scanItem === null){
         document.getElementById("scanItem").style.display = "block";
-        var el_barcode = document.getElementById("itemBarcode")
+        let el_barcode = document.getElementById("itemBarcode")
         el_barcode.value = null
-        var el_quantity = document.getElementById("itemQuantity")
-        el_quantity.value = null
+        let el_expiration = document.getElementById("expirationDate")
+        el_expiration.value = null
         scanItem = true
         document.getElementById('page-mask').style.position = "fixed";
     } else {
@@ -282,7 +283,6 @@ function exportCSV(elem){
 function loadPantryItems(items){
     let loadPromise = function(resolve,reject) {
         const table = document.getElementById("pantryStock");
-        var counter = 0;
         for (let element of items) {
             let row = table.insertRow();
 
@@ -290,9 +290,7 @@ function loadPantryItems(items){
             let cell = row.insertCell();
             let text = document.createTextNode(element.barcodeId);
             //changed the id to be the barcode of the item the checkbox is next to
-            cell.innerHTML = "<input type=checkbox id="+text+"><label for="+text+"></label>";
-            // counter++;
-            // cell.appendChild(text);
+            cell.innerHTML = "<input type=\"checkbox\" id=\"checkbox"+element.barcodeId+"\"><label for=\"checkbox"+element.barcodeId+"\"></label>";
 
             //name
             cell = row.insertCell();

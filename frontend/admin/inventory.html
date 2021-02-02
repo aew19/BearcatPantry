@@ -50,13 +50,17 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h6>Please scan the item that you would like added to the Pantry inventory. If applicable, please select an experation date the each item.</h6>
-                    <form class="form-inline" style="justify-content: space-evenly;padding-top:1rem">
-                        <div style="padding-right:10px; padding-bottom: 10px;"class = "form-group">
+                    <h6>Please scan the item that you would like added to the Pantry inventory. If applicable, please select an expiration date for each item.
+                    If multiple items have the same expiration date, enter the quantity you have.</h6>
+                    <form style="justify-content: space-evenly;padding-top:1rem; text-align: center!important;">
+                        <div style="padding-right:10px; padding-bottom: 10px; width: 199px;"class = "form-group">
                             <input class="form-control" id="itemBarcode" placeholder="Item Barcode">
                         </div>
-                        <div style="padding-bottom: 10px;"pclass = "form-group">
-                            <input type="date" id="expirationdate"><label for="expirationdate"></label>
+                        <div style="padding-bottom: 10px;" class = "form-group">
+                            <input class="date-select" type="date" id="expirationDate">
+                        </div>
+                        <div style="padding-bottom: 10px; width: 189px;" class = "form-group">
+                            <input class="form-control" id="quantity" placeholder="Quantity">
                         </div>
                     </form>
                     <button type="submit" style="margin: .5rem auto;display:block; width:30%" class="btn btn-red" onclick="popNewItemModal()">Submit</button>
