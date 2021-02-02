@@ -1,10 +1,9 @@
 package com.bcpstockerapp.bcp.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.annotation.Generated;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -16,7 +15,15 @@ public class InventoryTable {
     private String barcodeId;
     private Integer quantity;
     private String location;
+
+    @Column
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date dateRecorded;
+
+    @Column
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date expirationDate;
 
     //Constructors
