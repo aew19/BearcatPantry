@@ -142,6 +142,7 @@ function popNewItemModal(){
                                     let currQuantity = allInventory[i].quantity + 1;
                                     //update based on barcode id
                                     updateInventory(barcode, currQuantity)
+                                    location.reload()
                                     return;
                                 }
                             }
