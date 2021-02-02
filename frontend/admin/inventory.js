@@ -11,6 +11,10 @@ $(function(){
     $("#scanMultipleItemsModal").load("scanMultipleItemsModal.html");
 });
 
+$(function(){
+    $("#scanItemModal").load("scanItemModal.html");
+});
+
 //Global Variables
 var newItem = null
 var scanItem = null

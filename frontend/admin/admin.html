@@ -19,8 +19,8 @@
     </head>
 
     <body onload="makeTableScroll();">
-
         <div class="grid-container" onload="makeTableScroll();">
+            <div style="background-color: unset;" id="page-mask"></div>
             <div class="item9 grid-top">
                 <h2>Uncompleted Orders</h2>
                 <div class="scrollingTable">
@@ -45,7 +45,6 @@
             </div>
             <div class="item11 grid-bottom">
                 <a href="#" id = "trnCSV" onClick="exportCSV(this)" class="btn btn-red">Export Transactions (csv)</a>
-                <a href="#" id = "" onClick="" class="btn btn-red">Orders Page</a>
             </div>
             <div class="item1 grid-border" id="chart_div"></div>  
             <div class="item2 grid-top">
@@ -60,15 +59,17 @@
                 <div class="scrollingTable">
                     <table class ="table" id="users_table"></table>
                 </div>
+                <div id="deleteUserModal"></div>
+                <div id="editUserModal"></div>
+                <div id="addUserModal"></div>
             </div>
             <div class="item4 grid-bottom">
                 <a href="#" id = "usrCSV" onClick="exportCSV(this)" class="btn btn-red">Export Users (csv)</a>
-                <a href="#" id = "addUsers" onClick="" class="btn btn-red">Add Users</a>
+                <a href="#" id = "addUsers" onClick="popAddUser()" class="btn btn-red">Add User</a>
             </div>
             <div class="item5 grid-bottom">
-                <a href="/BearcatPantry/frontend/admin/inventory.html" id = "" class="btn btn-red">Inventory Page</a>
                 <a href="#" id = "invCSV" onClick="exportCSV(this)" class="btn btn-red">Export Inventory (csv)</a>
-            </div> 
+            </div>
             <div class="item7 grid-border">
                 <h2 style="margin-bottom:2rem">Statistics</h2>
                 <div class="row row-cols-1 row-cols-md-3 text-center">

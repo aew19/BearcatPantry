@@ -43,7 +43,7 @@ function generateTable(table, users_data) {
             let cell = row.insertCell();
             let text = document.createTextNode(element[key]);
             if (element[key] == "") {
-                cell.innerHTML = "<div style=\"font-size:1.5rem;color:#e00122;display:inline-block;width:50%;\" id=\"EditBtn"+counter+"\" onclick =\"popEditUser(this.id)\"><i class='fas fa-edit'></i></div><div style=\"font-size:1.5rem;color:#e00122;display:inline-block;width:50%;\" id=\"DeleteBtn"+counter+"\" onclick =\"popDeleteUser(this.id)\"><i class='fas fa-trash'></i></div>";
+                cell.innerHTML = "<div style=\"font-size:1.5rem;color:#e00122;display:inline-block;width:50%;\" id=\"EditBtn"+counter+"\" onclick =\"popEditUser()\"><i class='fas fa-edit'></i></div><div style=\"font-size:1.5rem;color:#e00122;display:inline-block;width:50%;\" id=\"DeleteBtn"+counter+"\" onclick =\"popConfirmDeleteUser()\"><i class='fas fa-trash'></i></div>";
                 counter++;
             }
             cell.appendChild(text);

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scan Item</title>
+</head>
+<body>
+<!-- Scan Item Modal -->
+<div class="modal" id="scanItem" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Scan Item</h5>
+                <button type="button" class="close" onclick="closePopup('scanItem')" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="text-align: center">
+                <h6>Please scan the item that you would like added to the Pantry inventory. If applicable, please select an expiration date for each item.
+                If multiple items have the same expiration date, enter the quantity you have.</h6>
+                <form style="padding-top:1rem;display: inline-block">
+                    <div style="padding-bottom: 10px;" class = "form-group">
+                        <input class="form-control" id="itemBarcode" placeholder="Item Barcode">
+                    </div>
+                    <div style="padding-bottom: 10px;" class="form-group">
+                        <input class="date-select" type="date" id="expirationDate" style="width: 200px">
+                    </div>
+                    <div style="padding-bottom: 10px;" class = "form-group">
+                        <input class="form-control" id="quantity" placeholder="Quantity">
+                    </div>
+                </form>
+                <button type="submit" style="margin: .5rem auto;display:block; width:30%" class="btn btn-red" onclick="popNewItemModal()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

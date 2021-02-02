@@ -1,3 +1,15 @@
+$(function(){
+    $("#deleteUserModal").load("deleteUserModal.html");
+});
+
+$(function(){
+    $("#editUserModal").load("editUserModal.html");
+});
+
+$(function(){
+    $("#addUserModal").load("addUserModal.html");
+});
+
 function makeTableScroll() {
     var maxRows = 8;
     var table = document.getElementById('inventory_table');
@@ -61,10 +73,83 @@ var closeModal = null
 function popViewTransaction(clicked_id){
     if(closeModal === null){
         document.getElementById("viewTransaction").style.display = "block";
-        closeModal = true
+        closeModal = true;
         document.getElementById("modal-body").innerHTML = clicked_id;
+        document.getElementById('page-mask').style.position = "fixed";
+        document.getElementById('page-mask').style.backgroundColor = "rgba(0,0,0,0.6)";
     } else {
         document.getElementById("viewTransaction").style.display = "none";
-        closeModal = null
+        document.getElementById('page-mask').style.position = "unset";
+        document.getElementById('page-mask').style.backgroundColor = "unset";
+        closeModal = null;
     }
+}
+
+//The function can be used universally to close any popup
+function closePopup(element){
+    document.getElementById(element).style.display = "none";
+    location.reload()
+}
+
+//This function pops the scan item modal
+var editUserModal = null
+function popEditUser(){
+    let request = new XMLHttpRequest();
+    if(editUserModal === null){
+        document.getElementById("editUserModal").style.display = "block";
+        addUserModal = true
+        document.getElementById('page-mask').style.position = "fixed";
+        document.getElementById('page-mask').style.backgroundColor = "rgba(0,0,0,0.6)";
+    } else {
+        document.getElementById("editUserModal").style.display = "none";
+        editUserModal = null
+        document.getElementById('page-mask').style.position = "unset";
+    }
+}
+
+//This function pops the scan item modal
+var addUserModal = null
+function popAddUser(){
+    let request = new XMLHttpRequest();
+    if(addUserModal === null){
+        document.getElementById("addUserModal").style.display = "block";
+        addUserModal = true
+        document.getElementById('page-mask').style.position = "fixed";
+        document.getElementById('page-mask').style.backgroundColor = "rgba(0,0,0,0.6)";
+    } else {
+        document.getElementById("addUserModal").style.display = "none";
+        addUserModal = null
+        document.getElementById('page-mask').style.position = "unset";
+    }
+}
+
+//This function pops the scan item modal
+var delUserModal = null
+function popConfirmDeleteUser(){
+    let request = new XMLHttpRequest();
+    if(delUserModal === null){
+        document.getElementById("deleteUserModal").style.display = "block";
+        delUserModal = true
+        document.getElementById('page-mask').style.position = "fixed";
+        document.getElementById('page-mask').style.backgroundColor = "rgba(0,0,0,0.6)";
+    } else {
+        document.getElementById("deleteUserModal").style.display = "none";
+        delUserModal = null
+        document.getElementById('page-mask').style.position = "unset";
+    }
+}
+
+function deleteUser(user_id) {
+    console.log(user_id);
+    // will have to figure out how to get user id from the modal
+}
+
+function editUser(user_id) {
+    console.log(user_id);
+    // will have to figure out how to get user id from the modal
+}
+
+function addUser(user_id) {
+    console.log(user_id);
+    // will have to figure out how to get user id from the modal
 }
