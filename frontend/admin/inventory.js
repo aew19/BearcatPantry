@@ -1,8 +1,6 @@
 //REPLACE ALL LOCALHOST:8080 WITH
 //bcpwb1prd01l.ad.uc.edu:8080/web-services
 //CHECK to see if you can hit the bcpwb and if not default back to localhost:8080
-
-
 $(function(){
     $("#newItemModal").load("newItemModal.html");
 });
@@ -16,10 +14,11 @@ $(function(){
 });
 
 //Global Variables
-var newItem = null
-var scanItem = null
-var scanmulti = null
+let newItem = null
+let scanItem = null
+let scanmulti = null
 let barcode;
+let expiration;
 
 //API FUNCTIONS
 //JOIN table for the inventory
@@ -53,8 +52,9 @@ function updateInventory(barcode, quantity){
 }
 
 function addToInventoryTable(barcode, quantity, expiration){
+    console.log(expiration)
     //POST to inventory table
-    let data = {'barcodeId':barcode, 'quantity':quantity}
+    let data = {'barcodeId':barcode, 'quantity':quantity,'expirationDate':expiration}
     let formBody =[];
     for (let key in data){
         let encodedKey = encodeURIComponent(key);
@@ -84,8 +84,9 @@ async function getBarcode(barcode){
 //TODO add image
 async function createItem(barcode, quantity, itemName, brand, type, url, isVegetarian, isVegan){
     console.log(barcode)
+    console.log(expiration)
     //POST to inventory table
-    addToInventoryTable(barcode, quantity)
+    addToInventoryTable(barcode, quantity,expiration)
     //POST to product table
     let prodData = {'barcodeId':barcode,'productTitle':itemName, 'foodType':type, 'brand':brand}
     let prodFormBody =[];
@@ -102,6 +103,7 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
     }).then(response => response.json())
         .then(data=> {console.log('Success');})
         .catch((error)=>{ console.error('Error:', error);});
+    location.reload()
 }
 
 
@@ -120,40 +122,41 @@ async function createInventoryTable(){
 //MODAL FUNCTIONS
 //This function pops the new item modal
 function popNewItemModal(){
-    let request = new XMLHttpRequest();
+    //Get the information
     document.getElementById("scanItem").style.display = "none";
     scanItem = null
     barcode = document.getElementById("itemBarcode").value;
-    console.log(barcode);
-    let expiration = document.getElementById("expirationDate").value;
-    console.log(expiration);
-    let quantity = document.getElementById("quantity").value;
-    console.log(quantity);
+    expiration = document.getElementById("expirationDate").value;
+    console.log(expiration)
+    // let quantity = document.getElementById("quantity").value;
     //API Hit
     getBarcode(barcode).then(
         data => {
+            console.log(data)
             if (data != "notFound"){
                 document.getElementById("newItem").style.display = "none";
                 //Update Quantity
                 getInventory().then(
                     allInventory=>{
-                        allInventory.forEach(inventory=>{
-                            if (inventory.barcodeId == barcode){
-                                console.log(inventory)
-                                let currQuantity = inventory.quantity + parseInt(quantity);
-                                console.log(currQuantity)
-                                //update based on barcode id
-                                updateInventory(barcode, currQuantity)
-                                location.reload()
-                            }else{
-                                //insert on inventory table
-                                addToInventoryTable(barcode, quantity, expiration)
-                                location.reload()
+                        for (i = 0; i<allInventory.length; i++){
+                            console.log(allInventory[i])
+                            if (allInventory[i].barcodeId === barcode){
+                                if (allInventory[i].bestBuyDate === expiration){
+                                    //PUT
+                                    let currQuantity = allInventory[i].quantity + 1;
+                                    //update based on barcode id
+                                    updateInventory(barcode, currQuantity)
+                                    location.reload()
+                                    return;
+                                }
                             }
-                        })
+                        }
+                        addToInventoryTable(barcode,1,expiration)
+                        location.reload()
                     }
                 )
-            } else{
+
+            }else{
                 document.getElementById("newItem").style.display = "block";
             }
 
@@ -161,10 +164,13 @@ function popNewItemModal(){
     );
 }
 
+
+
+
 //The function can be used universally to close any popup
 function closePopup(element){
     document.getElementById(element).style.display = "none";
-    location.reload()
+   // location.reload()
 }
 
 
@@ -204,10 +210,9 @@ function popMultiScan(){
 
 function loadBulkScan(bulkitems){
     const table = document.getElementById("bulkScanTable");
-    var counter = 0;
+    let counter = 0;
     for (let element of bulkitems) {
         let row = table.insertRow();
-
         //item #
         let cell = row.insertCell();
         counter++;
@@ -234,7 +239,7 @@ function popNewItem(){
     if(scanmulti === null){
         document.getElementById("newItem").style.display = "block";
         var barcode = document.getElementById("barcode").value;
-        var quantity = document.getElementById("quantity").value;
+        // var quantity = document.getElementById("quantity").value;
 
         newItem = true
     } else {
@@ -246,7 +251,7 @@ function popNewItem(){
 
 //On Submit of new item modal create new items
 async function submitNewItem(){
-    let quantity = document.getElementById("newItemQuantity").value;
+    // let quantity = document.getElementById("newItemQuantity").value;
     let itemName = document.getElementById("itemName").value;
     let itemBrand = document.getElementById("itemBrand").value;
     let itemType = document.getElementById("type").value;
@@ -255,9 +260,20 @@ async function submitNewItem(){
     let vegetarian = document.getElementById("vegan").value;
     document.getElementById("newItem").style.display = "none";
     //Call API Endpoint
-    await createItem(barcode, quantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan)
+    await createItem(barcode, 1, itemName, itemBrand, itemType, itemURL, vegetarian, vegan)
 
 }
+
+function deleteItem(){
+    // getInventory().then(
+    //     data => {
+    //        let check = document.getElementById("checkbox"+104);
+    //        console.log(check)
+    //     }
+    // )
+
+}
+
 
 $(function () {
     $('#bulkScanTable').DataTable({
@@ -285,15 +301,18 @@ function exportCSV(elem){
 //Helper function
 function loadPantryItems(items){
     let loadPromise = function(resolve,reject) {
+        counter = 0
         const table = document.getElementById("pantryStock");
         for (let element of items) {
             let row = table.insertRow();
 
             //select
+
             let cell = row.insertCell();
-            let text = document.createTextNode(element.barcodeId);
+            cell.innerHTML = "<input type=\"checkbox\" id=\"checkbox"+counter+"\"><label for=\"checkbox"+counter+"\"></label>";
+            counter = counter + 1;
             //changed the id to be the barcode of the item the checkbox is next to
-            cell.innerHTML = "<input type=\"checkbox\" id=\"checkbox"+element.barcodeId+"\"><label for=\"checkbox"+element.barcodeId+"\"></label>";
+            // cell.innerHTML = "<input type=checkbox id=checkbox"+element.id+"><label for=checkbox"+element.id+"></label>";
 
             //name
             cell = row.insertCell();
@@ -377,13 +396,6 @@ function createTableStyle() {
     });
 }
 
-
-
-createInventoryTable()
-
-
-
-
 function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -400,23 +412,26 @@ $("#prodImg").change(function() {
     readURL(this);
 });
 
+
+createInventoryTable()
+
 // DELETE ONCE FULLY ON DATABASE
-const bulkitems = [
-    {number: "1", item: "Pasta", expdate: ""},
-    {number: "2", item: "Mushrooms", expdate: ""},
-    {number: "3", item: "Mushrooms", expdate: ""},
-    {number: "4", item: "Mushrooms", expdate: ""},
-    {number: "5", item: "Eggs", expdate: ""},
-    {number: "6", item: "Milk", expdate: ""},
-    {number: "7", item: "Corn", expdate: ""},
-    {number: "8", item: "Black Beans", expdate: ""},
-    {number: "9", item: "Green Beans", expdate: ""},
-    {number: "10", item: "Green Beans", expdate: ""},
-    {number: "11", item: "Green Beans", expdate: ""},
-    {number: "12", item: "Pears", expdate: ""},
-    {number: "13", item: "Apples", expdate: ""},
-    {number: "14", item: "Pinto Beans", expdate: ""},
-    {number: "15", item: "Tomatos", expdate: ""}
-];
+// const bulkitems = [
+//     {number: "1", item: "Pasta", expdate: ""},
+//     {number: "2", item: "Mushrooms", expdate: ""},
+//     {number: "3", item: "Mushrooms", expdate: ""},
+//     {number: "4", item: "Mushrooms", expdate: ""},
+//     {number: "5", item: "Eggs", expdate: ""},
+//     {number: "6", item: "Milk", expdate: ""},
+//     {number: "7", item: "Corn", expdate: ""},
+//     {number: "8", item: "Black Beans", expdate: ""},
+//     {number: "9", item: "Green Beans", expdate: ""},
+//     {number: "10", item: "Green Beans", expdate: ""},
+//     {number: "11", item: "Green Beans", expdate: ""},
+//     {number: "12", item: "Pears", expdate: ""},
+//     {number: "13", item: "Apples", expdate: ""},
+//     {number: "14", item: "Pinto Beans", expdate: ""},
+//     {number: "15", item: "Tomatos", expdate: ""}
+// ];
 
 loadBulkScan(bulkitems);

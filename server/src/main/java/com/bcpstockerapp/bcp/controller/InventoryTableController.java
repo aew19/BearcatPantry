@@ -11,8 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @CrossOrigin
 @RestController
@@ -31,14 +35,18 @@ public class InventoryTableController {
     }
 
     @PostMapping(value="/inventory")
-    public ResponseEntity<String> createInventory(@RequestParam String barcodeId, Integer quantity, String location, Date dateRecorded, Date expirationDate) {
+    public ResponseEntity<String> createInventory(@RequestParam String barcodeId, Integer quantity, String location, Date dateRecorded, String expirationDate) {
         try{
+            System.out.println("ExpirationDate: " + expirationDate);
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date expiration = format.parse(expirationDate);
+            System.out.println(expiration);
             InventoryTable item = new InventoryTable();
             item.setBarcodeId(barcodeId);
             item.setQuantity(quantity);
             item.setDateRecorded(dateRecorded);
             item.setLocation(location);
-            item.setExpirationDate(expirationDate);
+            item.setExpirationDate(expiration);
             inventoryTableRepository.save(item);
             return new ResponseEntity<>("Saved!", HttpStatus.CREATED);
         } catch (Exception e){
@@ -65,4 +73,11 @@ public class InventoryTableController {
         return "Success!";
 
     }
+
+    @DeleteMapping("deleteInventory/{inventoryId}")
+    public String deleteInventory(@PathVariable(value="inventoryId") Long inventoryId){
+        inventoryTableRepository.deleteById(inventoryId);
+        return "Success!";
+    }
+
 }
