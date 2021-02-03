@@ -13,10 +13,20 @@ $(function(){
     $("#scanItemModal").load("scanItemModal.html");
 });
 
+$(function(){
+    $("#recountInventoryModal").load("recountInventoryModal.html");
+});
+
+$(function(){
+    $("#deleteItemModal").load("deleteItemModal.html");
+});
+
 //Global Variables
 let newItem = null
 let scanItem = null
 let scanmulti = null
+let recountInv = null;
+let delItem = null;
 let barcode;
 let expiration;
 
@@ -171,6 +181,7 @@ function popNewItemModal(){
 function closePopup(element){
     document.getElementById(element).style.display = "none";
    // location.reload()
+   document.getElementById('page-mask').style.position = "unset";
 }
 
 
@@ -248,6 +259,33 @@ function popNewItem(){
     }
 }
 
+function popRecountInventory(){
+    let request = new XMLHttpRequest();
+    document.getElementById("scanItem").style.display = "none";
+    if(recountInv === null){
+        document.getElementById("recountInventory").style.display = "block";
+        document.getElementById('page-mask').style.position = "fixed";
+        recountInv = true
+    } else {
+        document.getElementById("recountInventory").style.display = "none";
+        recountInv = null
+        document.getElementById('page-mask').style.position = "unset";
+    }
+}
+
+function recountInventory(){
+    // logic to erase current DB and replace with scanned items
+    document.getElementById("recountInventory").style.display = "none";
+    recountInv = null
+    document.getElementById('page-mask').style.position = "unset";
+}
+
+function popConfirmDeleteItem(){
+    let request = new XMLHttpRequest();
+    document.getElementById("deleteItem").style.display = "block";
+    delItem = true
+    document.getElementById('page-mask').style.position = "fixed";
+}
 
 //On Submit of new item modal create new items
 async function submitNewItem(){
@@ -271,7 +309,9 @@ function deleteItem(){
     //        console.log(check)
     //     }
     // )
-
+    // logic to erase items from DB
+    document.getElementById('deleteItem').style.display = "none";
+    document.getElementById('page-mask').style.position = "unset";
 }
 
 

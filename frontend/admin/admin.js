@@ -123,7 +123,6 @@ function popAddUser(){
     }
 }
 
-//This function pops the scan item modal
 var delUserModal = null
 function popConfirmDeleteUser(){
     let request = new XMLHttpRequest();
