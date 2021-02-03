@@ -427,6 +427,7 @@ input[type="file"] {
 .scrollingTable {
     overflow-y: auto;
     overflow-x: hidden;
+    height: 400px;
 }
 
 #page-mask {
