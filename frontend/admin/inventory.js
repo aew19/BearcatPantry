@@ -28,7 +28,7 @@ let scanmulti = null
 let recountInv = null;
 let delItem = null;
 let barcode;
-let expiration;
+let quantity;
 
 //API FUNCTIONS
 //JOIN table for the inventory
@@ -61,10 +61,9 @@ function updateInventory(barcode, quantity){
         .catch((error)=>{ console.error('Error:', error);});
 }
 
-function addToInventoryTable(barcode, quantity, expiration){
-    console.log(expiration)
+function addToInventoryTable(barcode, quantity){
     //POST to inventory table
-    let data = {'barcodeId':barcode, 'quantity':quantity,'expirationDate':expiration}
+    let data = {'barcodeId':barcode, 'quantity':quantity}
     let formBody =[];
     for (let key in data){
         let encodedKey = encodeURIComponent(key);
@@ -94,9 +93,8 @@ async function getBarcode(barcode){
 //TODO add image
 async function createItem(barcode, quantity, itemName, brand, type, url, isVegetarian, isVegan){
     console.log(barcode)
-    console.log(expiration)
     //POST to inventory table
-    addToInventoryTable(barcode, quantity,expiration)
+    addToInventoryTable(barcode, quantity)
     //POST to product table
     let prodData = {'barcodeId':barcode,'productTitle':itemName, 'foodType':type, 'brand':brand}
     let prodFormBody =[];
@@ -113,9 +111,9 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
     }).then(response => response.json())
         .then(data=> {console.log('Success');})
         .catch((error)=>{ console.error('Error:', error);});
-    location.reload()
-}
 
+
+}
 
 //Calls API function To load Database Information into the table
 async function createInventoryTable(){
@@ -136,9 +134,7 @@ function popNewItemModal(){
     document.getElementById("scanItem").style.display = "none";
     scanItem = null
     barcode = document.getElementById("itemBarcode").value;
-    expiration = document.getElementById("expirationDate").value;
-    console.log(expiration)
-    // let quantity = document.getElementById("quantity").value;
+    quantity = document.getElementById("quantity").value;
     //API Hit
     getBarcode(barcode).then(
         data => {
@@ -151,17 +147,15 @@ function popNewItemModal(){
                         for (i = 0; i<allInventory.length; i++){
                             console.log(allInventory[i])
                             if (allInventory[i].barcodeId === barcode){
-                                if (allInventory[i].bestBuyDate === expiration){
-                                    //PUT
-                                    let currQuantity = allInventory[i].quantity + 1;
-                                    //update based on barcode id
-                                    updateInventory(barcode, currQuantity)
-                                    location.reload()
-                                    return;
-                                }
+                                //PUT
+                                let currQuantity = parseInt(allInventory[i].quantity) + parseInt(quantity);
+                                //update based on barcode id
+                                updateInventory(barcode, currQuantity)
+                                location.reload()
+                                return;
                             }
                         }
-                        addToInventoryTable(barcode,1,expiration)
+                        addToInventoryTable(barcode,quantity)
                         location.reload()
                     }
                 )
@@ -193,8 +187,8 @@ function popScan(){
         document.getElementById("scanItem").style.display = "block";
         let el_barcode = document.getElementById("itemBarcode")
         el_barcode.value = null
-        let el_expiration = document.getElementById("expirationDate")
-        el_expiration.value = null
+        let el_quantity = document.getElementById("quantity")
+        el_quantity.value = null
         scanItem = true
         document.getElementById('page-mask').style.position = "fixed";
     } else {
@@ -235,11 +229,6 @@ function loadBulkScan(bulkitems){
         text = document.createTextNode(element.item);
         cell.appendChild(text);
 
-        //Expiration Date
-        cell = row.insertCell();
-        text = document.createTextNode(element.expdate);
-        cell.innerHTML = "<input type=\"date\" id=\"date"+counter+"\"><label for=\"date"+counter+"\"></label>";
-        cell.appendChild(text);
     }
 }
 
@@ -249,9 +238,6 @@ function popNewItem(){
     document.getElementById("scanItem").style.display = "none";
     if(scanmulti === null){
         document.getElementById("newItem").style.display = "block";
-        var barcode = document.getElementById("barcode").value;
-        // var quantity = document.getElementById("quantity").value;
-
         newItem = true
     } else {
         document.getElementById("newItem").style.display = "none";
@@ -299,6 +285,7 @@ async function submitNewItem(){
     document.getElementById("newItem").style.display = "none";
     //Call API Endpoint
     await createItem(barcode, 1, itemName, itemBrand, itemType, itemURL, vegetarian, vegan)
+    location.reload()
 
 }
 
@@ -341,13 +328,11 @@ function exportCSV(elem){
 //Helper function
 function loadPantryItems(items){
     let loadPromise = function(resolve,reject) {
-        counter = 0
+        let counter = 0
         const table = document.getElementById("pantryStock");
         for (let element of items) {
             let row = table.insertRow();
-
             //select
-
             let cell = row.insertCell();
             cell.innerHTML = "<input type=\"checkbox\" id=\"checkbox"+counter+"\"><label for=\"checkbox"+counter+"\"></label>";
             counter = counter + 1;
@@ -356,7 +341,7 @@ function loadPantryItems(items){
 
             //name
             cell = row.insertCell();
-            text = document.createTextNode(element.productTitle);
+            let text = document.createTextNode(element.productTitle);
             cell.appendChild(text);
 
             //quantity
@@ -399,15 +384,6 @@ function loadPantryItems(items){
                 cell.appendChild(text);
             }
 
-            //Best Buy Date
-            cell = row.insertCell();
-            if (element.bestBuyDate == null || element.bestBuyDate == ""){
-                text = document.createTextNode("Unknown");
-                cell.appendChild(text);
-            }else{
-                text = document.createTextNode(element.bestBuyDate);
-                cell.appendChild(text);
-            }
         }
         resolve("Success");
     }

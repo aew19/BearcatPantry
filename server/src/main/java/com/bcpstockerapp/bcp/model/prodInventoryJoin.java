@@ -5,17 +5,15 @@ import java.util.Date;
 public class prodInventoryJoin {
     private String barcodeId;
     private Integer quantity;
-    private Date bestBuyDate;
     private String productTitle;
     private String foodType;
     private String brand;
     private boolean vegetarian;
     private boolean vegan;
 
-    public prodInventoryJoin(String barcodeId, Integer quantity, Date bestBuyDate, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan) {
+    public prodInventoryJoin(String barcodeId, Integer quantity, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan) {
         this.barcodeId = barcodeId;
         this.quantity = quantity;
-        this.bestBuyDate = bestBuyDate;
         this.productTitle = productTitle;
         this.foodType = foodType;
         this.brand = brand;
@@ -37,14 +35,6 @@ public class prodInventoryJoin {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-    }
-
-    public Date getBestBuyDate() {
-        return bestBuyDate;
-    }
-
-    public void setDateRecorded(Date bestBuyDate) {
-        this.bestBuyDate = bestBuyDate;
     }
 
     public String getProductTitle() {

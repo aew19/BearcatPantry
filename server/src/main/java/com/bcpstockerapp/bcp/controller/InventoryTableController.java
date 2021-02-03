@@ -35,18 +35,13 @@ public class InventoryTableController {
     }
 
     @PostMapping(value="/inventory")
-    public ResponseEntity<String> createInventory(@RequestParam String barcodeId, Integer quantity, String location, Date dateRecorded, String expirationDate) {
+    public ResponseEntity<String> createInventory(@RequestParam String barcodeId, Integer quantity, String location, Date dateRecorded) {
         try{
-            System.out.println("ExpirationDate: " + expirationDate);
-            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            Date expiration = format.parse(expirationDate);
-            System.out.println(expiration);
             InventoryTable item = new InventoryTable();
             item.setBarcodeId(barcodeId);
             item.setQuantity(quantity);
             item.setDateRecorded(dateRecorded);
             item.setLocation(location);
-            item.setExpirationDate(expiration);
             inventoryTableRepository.save(item);
             return new ResponseEntity<>("Saved!", HttpStatus.CREATED);
         } catch (Exception e){
@@ -74,10 +69,24 @@ public class InventoryTableController {
 
     }
 
-    @DeleteMapping("deleteInventory/{inventoryId}")
+    @DeleteMapping("/deleteInventory/{inventoryId}")
     public String deleteInventory(@PathVariable(value="inventoryId") Long inventoryId){
         inventoryTableRepository.deleteById(inventoryId);
         return "Success!";
+    }
+
+    //Statistics API Endpoints
+    @GetMapping("/getUniqueItems")
+    public Integer getUniqueItems(){
+        //We need to get number of entries in database
+        //Filter out matching barcodes
+        //Update counter
+        return 5;
+    }
+    @GetMapping("/getTotalInventory")
+    public Integer getTotalInventory(){
+        //We need to get all of the entries in table and add up all the quantities
+        return 6;
     }
 
 }

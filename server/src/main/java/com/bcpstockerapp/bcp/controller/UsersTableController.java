@@ -58,4 +58,11 @@ public class UsersTableController {
         return "Success";
 
     }
+
+    //Statistic Endpoint
+    @GetMapping("/getTotalUsers")
+    public @ResponseBody Integer getTotalUsers(){
+        //Get all users and count
+       return 5;
+    }
 }
