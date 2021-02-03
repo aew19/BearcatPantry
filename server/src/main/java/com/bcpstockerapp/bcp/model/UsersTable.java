@@ -11,6 +11,7 @@ public class UsersTable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String mNumber;
     private String fname;
     private String lname;
     private Integer permissions;
@@ -19,8 +20,9 @@ public class UsersTable {
 
     //Constructors
     public UsersTable(){}
-    public UsersTable(Long id, String fname, String lname, Integer permissions, boolean isActive, Date dateActive){
+    public UsersTable(Long id, String mNumber, String fname, String lname, Integer permissions, boolean isActive, Date dateActive){
         this.id = id;
+        this.mNumber = mNumber;
         this.fname = fname;
         this.lname = lname;
         this.permissions = permissions;
@@ -30,6 +32,7 @@ public class UsersTable {
 
     //Getters
     public Long getId(){return this.id;}
+    public String getmNumber(){return this.mNumber;}
     public String getFname(){return this.fname;}
     public String getLname(){return this.lname;}
     public Integer getPermissions(){return this.permissions;}
@@ -37,7 +40,7 @@ public class UsersTable {
     public Date getDateActive(){return this.dateActive;}
 
     //Setters
-    public void setId(Long id){this.id = id;}
+    public void setmNumber(String mNumber){this.mNumber = mNumber;}
     public void setFname(String fname){this.fname = fname;}
     public void setLname(String lname){this.lname = lname;}
     public void setPermissions(Integer permissions){this.permissions = permissions;}
