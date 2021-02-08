@@ -284,7 +284,7 @@ async function submitNewItem(){
     let vegetarian = document.getElementById("vegan").value;
     document.getElementById("newItem").style.display = "none";
     //Call API Endpoint
-    await createItem(barcode, 1, itemName, itemBrand, itemType, itemURL, vegetarian, vegan)
+    await createItem(barcode, quantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan)
     location.reload()
 
 }
