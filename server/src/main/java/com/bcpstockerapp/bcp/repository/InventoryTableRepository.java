@@ -13,4 +13,5 @@ public interface InventoryTableRepository extends JpaRepository<InventoryTable, 
     @Query("select new com.bcpstockerapp.bcp.model.prodInventoryJoin(p.barcodeId, i.quantity, p.productTitle, p.foodType, p.brand, p.vegetarian, p.vegan) from ProductTable p, InventoryTable i where p.barcodeId = i.barcodeId")
     public List<prodInventoryJoin> join();
     InventoryTable findByBarcodeId(String barcodeId);
+
 }
