@@ -18,7 +18,6 @@
         <h2>Inventory</h2>
         <button class="btn btn-red" onclick = "popScan()">Scan Item</button>
         <button class="btn btn-red" onclick="popMultiScan()">Scan Multiple Items</button>
-        <button class="btn btn-red" onclick="popConfirmDeleteItem()">Delete Item(s)</button>
         <a href='' id = "csv" onClick="exportCSV(this)" class="btn btn-red">Export Information(csv)</a>
         <button class="btn btn-red" onclick="popRecountInventory()">Recount Inventory</button>
     </div>
@@ -43,6 +42,7 @@
     <div id="scanMultipleItemsModal"></div>
     <div id="recountInventoryModal"></div>
     <div id="deleteItemModal"></div>
+    <div id="editItemModal"></div>
     <script src="inventory.js"></script>
 </body>
 </html>
