@@ -89,6 +89,13 @@ async function getBarcode(barcode){
         return "notFound";
     }
 }
+
+//edit
+function editItem(){
+
+}
+
+
 //Add new item to database
 //TODO add image
 async function createItem(barcode, quantity, itemName, brand, type, url, isVegetarian, isVegan){
@@ -167,8 +174,6 @@ function popNewItemModal(){
         }
     );
 }
-
-
 
 
 //The function can be used universally to close any popup
@@ -267,7 +272,6 @@ function recountInventory(){
 }
 
 function popConfirmDeleteItem(){
-    let request = new XMLHttpRequest();
     document.getElementById("deleteItem").style.display = "block";
     delItem = true
     document.getElementById('page-mask').style.position = "fixed";
@@ -334,8 +338,7 @@ function loadPantryItems(items){
             let row = table.insertRow();
             //select
             let cell = row.insertCell();
-            cell.innerHTML = "<input type=\"checkbox\" id=\"checkbox"+counter+"\"><label for=\"checkbox"+counter+"\"></label>";
-            counter = counter + 1;
+            cell.innerHTML = "<div style=\"font-size:1.5rem;color:#e00122;display:inline-block;width:50%;\" id=\"EditBtn"+counter+"\" onclick =\"popEditUser()\"><i class='fas fa-edit'></i></div>";
             //changed the id to be the barcode of the item the checkbox is next to
             // cell.innerHTML = "<input type=checkbox id=checkbox"+element.id+"><label for=checkbox"+element.id+"></label>";
 

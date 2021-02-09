@@ -11,13 +11,13 @@ $(function(){
 });
 
 function makeTableScroll() {
-    var maxRows = 8;
-    var table = document.getElementById('inventory_table');
-    var wrapper = table.parentNode;
-    var rowsInTable = table.rows.length;
-    var height = 0;
+    let maxRows = 8;
+    let table = document.getElementById('inventory_table');
+    let wrapper = table.parentNode;
+    let rowsInTable = table.rows.length;
+    let height = 0;
     if (rowsInTable > maxRows) {
-        for (var i = 0; i < maxRows; i++) {
+        for (let i = 0; i < maxRows; i++) {
             height += table.rows[i].clientHeight;
         }
         wrapper.style.height = height + "px";
@@ -25,11 +25,10 @@ function makeTableScroll() {
 
     maxRows = 6;
     table = document.getElementById('transactions_table');
-    wrapper = table.parentNode;
     rowsInTable = table.rows.length;
     height = 0;
     if (rowsInTable > maxRows) {
-        for (var i = 0; i < maxRows; i++) {
+        for (let i = 0; i < maxRows; i++) {
             height += table.rows[i].clientHeight;
         }
         wrapper.style.height = height + "px";
@@ -41,7 +40,7 @@ function makeTableScroll() {
     rowsInTable = table.rows.length;
     height = 0;
     if (rowsInTable > maxRows) {
-        for (var i = 0; i < maxRows; i++) {
+        for (let i = 0; i < maxRows; i++) {
             height += table.rows[i].clientHeight;
         }
         wrapper.style.height = height + "px";
@@ -51,25 +50,25 @@ function makeTableScroll() {
 
 function exportCSV(elem){
     if (elem.id == "invCSV") {
-        var table = document.getElementById("inventory_table");
+        let table = document.getElementById("inventory_table");
         elem.setAttribute("download", "pantryinventory.xls");
     }
     else if (elem.id == "usrCSV") {
-        var table = document.getElementById("users_table");
+        let table = document.getElementById("users_table");
         elem.setAttribute("download", "pantryusers.xls");
     }
     else if (elem.id == "trnCSV") {
-        var table = document.getElementById("transactions_table");
+        let table = document.getElementById("transactions_table");
         elem.setAttribute("download", "pantrytransactions.xls");
     }
-    var html = table.outerHTML;
-    var url = 'data:application/vnd.ms-excel,' + escape(html);
+    let html = table.outerHTML;
+    let url = 'data:application/vnd.ms-excel,' + escape(html);
     elem.setAttribute("href", url);
 
     return false;
 }
 
-var closeModal = null
+let closeModal = null
 function popViewTransaction(clicked_id){
     if(closeModal === null){
         document.getElementById("viewTransaction").style.display = "block";
@@ -92,7 +91,7 @@ function closePopup(element){
 }
 
 //This function pops the scan item modal
-var editUserModal = null
+let editUserModal = null
 function popEditUser(){
     let request = new XMLHttpRequest();
     if(editUserModal === null){
@@ -108,7 +107,7 @@ function popEditUser(){
 }
 
 //This function pops the scan item modal
-var addUserModal = null
+let addUserModal = null
 function popAddUser(){
     let request = new XMLHttpRequest();
     if(addUserModal === null){
@@ -123,7 +122,7 @@ function popAddUser(){
     }
 }
 
-var delUserModal = null
+let delUserModal = null
 function popConfirmDeleteUser(){
     let request = new XMLHttpRequest();
     if(delUserModal === null){
