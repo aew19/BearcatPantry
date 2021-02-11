@@ -44,7 +44,7 @@ async function getInventory(){
 }
 
 //If barcode is found we will update the quantity value
-function updateInventory(barcode, quantity){
+function updateInventory(barcode1, quantity){
     //Update inventory table
     let data = {'quantity':parseInt(quantity)}
     let formBody =[];
@@ -54,7 +54,7 @@ function updateInventory(barcode, quantity){
         formBody.push(encodedKey+"="+encodedValue);
     }
     formBody = formBody.join("&");
-    fetch('http://localhost:8080/updateInventory/'+ barcode, {
+    fetch('http://localhost:8080/updateInventory/'+ barcode1, {
         body: formBody,
         method:"PUT",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -333,6 +333,7 @@ async function submitNewItem(){
 
 function editItem(){
     let updateQuantity = parseInt(document.getElementById("newQuantity").value);
+    let currBarcode = document.getElementById("newBarcode").value;
     let itemName = document.getElementById("newItemName").value;
     let itemBrand = document.getElementById("newItemBrand").value;
     let itemType = document.getElementById("newType").value;
@@ -343,12 +344,12 @@ function editItem(){
     console.log(updateQuantity)
     if (updateQuantity === 0){
         //Delete
-        deleteInventory(barcode)
+        deleteInventory(currBarcode)
     }
     else{
         //Update
-        updateInventory(barcode, newquantity)
-        updateProduct(barcode, itemName, itemBrand, itemType, itemURL,vegetarian, vegan)
+        updateInventory(currBarcode, updateQuantity)
+        updateProduct(currBarcode, itemName, itemBrand, itemType, itemURL,vegetarian, vegan)
     }
 }
 

@@ -57,7 +57,6 @@ public class ProductTableController {
 
     @PutMapping("/items/{barcodeId}")
     public String updateProduct(@PathVariable(value="barcodeId") String barcodeId, String productTitle, String brand, String foodType, String productURL, boolean vegetarian, boolean vegan){
-        System.out.println(barcodeId + " " + productTitle + " " + brand + " " + foodType + " " + productURL + " " + vegetarian + " " + vegan);
         ProductTable product = productTableRepository.findByBarcodeId(barcodeId);
         product.setName(productTitle);
         product.setBrand(brand);
