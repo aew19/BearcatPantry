@@ -386,8 +386,6 @@ function loadPantryItems(items){
             let row = table.insertRow();
             //select
             let cell = row.insertCell();
-
-            //TODO: Fix zeros at beginning
             cell.innerHTML = "<button style=\"font-size:1.5rem;color:#e00122;display:inline-block;width:50%; background: none; border: none; outline: none;\" id=\"EditBtn"+counter+"\" onclick =popEditItem("+currentElement+")><i class='fas fa-edit'></i></button>";
             counter++;
             //name
