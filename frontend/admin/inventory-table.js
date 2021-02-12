@@ -1,16 +1,3 @@
-let inventory = [
-    { Item: "Pasta", Quantity: 12},
-    { Item: "Corn", Stock: 12},
-    { Item: "Carrots", Stock: 12},
-    { Item: "Toilet Paper", Stock: 12},
-    { Item: "Black Beans", Stock: 12},
-    { Item: "Green Beans", Stock: 12},
-    { Item: "Chicken Noodle Soup", Stock: 32},
-    { Item: "Pinto Beans", Stock: 54},
-    { Item: "Macaroni", Stock: 60},
-    { Item: "Pasta", Stock: 61}
-];
-
 //API Function to get
 async function getInventory(){
     let response = await fetch("http://localhost:8080/inventoryTable/")
@@ -22,54 +9,75 @@ async function getInventory(){
 }
 
 
-$(function () {
+function createTableStyle() {
     $('#inventory_table').DataTable({
-      "pageLength": 3,
-      "paging": false,
-      "lengthChange": true,
-      "searching": false,
-      "ordering": true,
-      "info": false,
-      "autoWidth": true,
-      "order": ["desc"]
-      });
-});
+        "pageLength": 3,
+        "paging": false,
+        "lengthChange": true,
+        "searching": false,
+        "ordering": true,
+        "info": false,
+        "autoWidth": true,
+        "order": ["desc"]
+    });
+}
 
-function generateTableHead(table) {
+function generateTableHead() {
+    const table = document.getElementById("inventory_table")
     let thead = table.createTHead();
     let row = thead.insertRow();
-    for (let key of inventory_data) {
-        let th = document.createElement("th");
-        let text = document.createTextNode(key);
-        th.appendChild(text);
-        row.appendChild(th);
-    }
+
+    let th = document.createElement("th");
+    let text = document.createTextNode("Item");
+    th.appendChild(text);
+    row.appendChild(th);
+    th = document.createElement("th");
+    text = document.createTextNode("Quantity");
+    th.appendChild(text);
+    row.appendChild(th);
+
 }
 
-function generateTable(table, inventory_data) {
-    for (let element of inventory_data) {
+function generateTable(data) {
+    generateTableHead()
+    const table = document.getElementById("inventory_table")
+    for (let element of data) {
         let row = table.insertRow();
-        for (key in element) {
-            let cell = row.insertCell();
-            let text = document.createTextNode(element[key]);
-            cell.style.fontWeight = 700;
-            if (element[key] < 15) {
-                cell.style.backgroundColor = '#ff3823';
-                cell.style.color = '#fff';
-            }
-            else if (element[key] >= 15 & element[key] < 45) {
-                cell.style.backgroundColor = '#fefb64';
-            }
-            else if (element[key] >= 45) {
-                cell.style.backgroundColor = '#92d36e';
-                cell.style.color = '#fff';
-            }
-            cell.appendChild(text);
+        //name
+        let cell = row.insertCell();
+        let text = document.createTextNode(element.productTitle);
+        cell.appendChild(text);
+        //quantity
+        cell = row.insertCell();
+        text = document.createTextNode(element.quantity);
+        if (element.quantity < 15) {
+            cell.style.backgroundColor = '#ff3823';
+            cell.style.color = '#fff';
         }
+        else if (element.quantity >= 15 & element.quantity < 45) {
+            cell.style.backgroundColor = '#fefb64';
+        }
+        else if (element.quantity >= 45) {
+            cell.style.backgroundColor = '#92d36e';
+            cell.style.color = '#fff';
+        }
+        cell.appendChild(text);
     }
+
 }
 
-let inventory_table = document.getElementById('inventory_table');
-let inventory_data = Object.keys(inventory[0]);
-generateTable(inventory_table, inventory);
-generateTableHead(inventory_table, inventory_data);
+function createInventoryTable(){
+    getInventory().then(
+        data => {
+            if (data != "notFound") {
+                generateTable(data)
+            }
+
+        }
+    )
+    createTableStyle()
+}
+
+
+
+createInventoryTable();
