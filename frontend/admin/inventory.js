@@ -353,15 +353,16 @@ function editItem(){
     let vegetarian = document.getElementById("newVegetarian").checked;
     let vegan = document.getElementById("newVegan").checked;
     document.getElementById("editItem").style.display = "none";
-    console.log(updateQuantity)
     if (updateQuantity === 0){
         //Delete
         deleteInventory(currBarcode)
+        location.reload()
     }
     else{
         //Update
         updateInventory(currBarcode, updateQuantity)
         updateProduct(currBarcode, itemName, itemBrand, itemType, itemURL,vegetarian, vegan)
+        location.reload()
     }
 }
 
