@@ -69,9 +69,10 @@ public class InventoryTableController {
 
     }
 
-    @DeleteMapping("/deleteInventory/{inventoryId}")
-    public String deleteInventory(@PathVariable(value="inventoryId") Long inventoryId){
-        inventoryTableRepository.deleteById(inventoryId);
+    @DeleteMapping("/deleteInventory/{barcodeId}")
+    public String deleteInventory(@PathVariable(value="barcodeId") String barcodeId){
+        InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeId);
+        inventoryTableRepository.delete(inventory);
         return "Success!";
     }
 

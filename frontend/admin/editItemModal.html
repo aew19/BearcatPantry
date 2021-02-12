@@ -5,42 +5,35 @@
     <title>New Item</title>
 </head>
     <body>
-        <!-- New Item Modal -->
-        <div class="modal" id="newItem" tabindex="-1" role="dialog">
+        <!-- Edit Item Modal -->
+        <div class="modal" id="editItem" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content" style="width:140%">
                     <div class="modal-header">
-                        <h5 class="modal-title">New Item!</h5>
-                        <button type="button" class="close" onclick="closePopup('newItem')" aria-label="Close">
+                        <h5 class="modal-title">Edit Item!</h5>
+                        <button type="button" class="close" onclick="closePopup('editItem')" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <h6>This item is new to our system and needs more information before it can be submitted. Please fill out the following items:</h6>
+                        <h6>Change any of the current values: </h6>
                         <form>
                             <div class="grid-container">
                                 <input type="hidden" name="_token" value="">
                                 <div class="newmodal1 form-group">
-                                    <input class="form-control" id="itemName" placeholder="Item Name">
+                                    <input class="form-control" id="newItemName" placeholder="Item Name">
                                 </div>
                                 <div class="newmodal2 form-group">
-                                    <input class="form-control" id="newItemBarcode" disabled="disabled">
+                                    <input class="form-control" id="newBarcode" disabled="disabled">
                                 </div>
                                 <div class = "form-group">
-                                    <input class="form-control" id="newItemQuantity">
-                                </div>
-                                <div class="newmodal3 form-group">
-                                    <img id="imgPreview" src="../images/placeholderimage.png"/>
-                                    <label for="prodImg" class="file-upload">
-                                        Upload Image
-                                    </label>
-                                    <input type="file" id="prodImg" accept="image/*">
+                                    <input class="form-control" id="newQuantity">
                                 </div>
                                 <div class="newmodal4 form-group">
-                                    <input class="form-control" id="itemBrand" placeholder="Company Brand">
+                                    <input class="form-control" id="newItemBrand" placeholder="Company Brand">
                                 </div>
                                 <div class="newmodal5 form-group">
-                                    <select id="type" name="type" class="select">
+                                    <select id="newType" name="type" class="select">
                                         <option value="Default" selected>Product Type</option>
                                         <option value="Vegetable">Vegetable</option>
                                         <option value="Grain">Grains</option>
@@ -50,17 +43,17 @@
                                     </select>
                                 </div>
                                 <div class="newmodal6 form-group">
-                                    <input style="padding-right: 14.2rem"class="form-control" id="productURL" placeholder="Product Link (URL)">
+                                    <input style="padding-right: 14.2rem"class="form-control" id="newProductURL" placeholder="Product Link (URL)">
                                 </div>
                                 <div class="newmodal7 form-check">
-                                    <input type="checkbox" class="form-check-input" id="vegetarian">
-                                    <label style="padding-left: .5rem;margin-bottom:unset;" for="vegetarian">Vegetarian</label>
+                                    <input type="checkbox" class="form-check-input" id="newVegetarian">
+                                    <label style="padding-left: .5rem;margin-bottom:unset;" for="newVegetarian">Vegetarian</label>
                                 </div>
                                 <div class="newmodal8 form-check">
-                                    <input type="checkbox" class="form-check-input" id="vegan">
-                                    <label style="padding-left: .5rem;margin-bottom:unset;" for="vegan">Vegan</label>
+                                    <input type="checkbox" class="form-check-input" id="newVegan">
+                                    <label style="padding-left: .5rem;margin-bottom:unset;" for="newVegan">Vegan</label>
                                 </div>
-                                <button type="submit" class="newmodal9 btn btn-red" onclick="submitNewItem()">Submit</button>
+                                <button type="submit" class="newmodal9 btn btn-red" onclick="editItem()">Submit</button>
                             </div>
                         </form>
                     </div>
