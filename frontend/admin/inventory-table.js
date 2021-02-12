@@ -1,5 +1,5 @@
 let inventory = [
-    { Item: "Pasta", Stock: 12},
+    { Item: "Pasta", Quantity: 12},
     { Item: "Corn", Stock: 12},
     { Item: "Carrots", Stock: 12},
     { Item: "Toilet Paper", Stock: 12},
@@ -10,6 +10,17 @@ let inventory = [
     { Item: "Macaroni", Stock: 60},
     { Item: "Pasta", Stock: 61}
 ];
+
+//API Function to get
+async function getInventory(){
+    let response = await fetch("http://localhost:8080/inventoryTable/")
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
 
 $(function () {
     $('#inventory_table').DataTable({

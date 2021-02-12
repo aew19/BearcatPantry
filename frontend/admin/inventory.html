@@ -18,9 +18,8 @@
         <h2>Inventory</h2>
         <button class="btn btn-red" onclick = "popScan()">Scan Item</button>
         <button class="btn btn-red" onclick="popMultiScan()">Scan Multiple Items</button>
-        <button class="btn btn-red" onclick="">Delete Item(s)</button>
         <a href='' id = "csv" onClick="exportCSV(this)" class="btn btn-red">Export Information(csv)</a>
-        <button class="btn btn-red">Re-count Inventory</button>
+        <button class="btn btn-red" onclick="popRecountInventory()">Recount Inventory</button>
     </div>
     <div style="padding:0px 15px;" class="table-responsive-md">
         <table class = "table table-bordered" id = "pantrytable" width="100%" cellspacing="0">
@@ -32,45 +31,18 @@
                     <th scope="col">Type</th>
                     <th scope="col">Brand</th>
                     <th scope="col">Vegetarian/Vegan</th>
-                    <th scope="col">Best Buy Date</th>
                 </tr>
             </thead>
             <tbody style="text-align: center" id = "pantryStock"></tbody>
         </table>
     </div>
     <div id="page-mask"></div>
-    <!-- Scan Item Modal -->
-    <div class="modal" id="scanItem" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Scan Item</h5>
-                    <button type="button" class="close" onclick="closePopup('scanItem')" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="text-align: center">
-                    <h6>Please scan the item that you would like added to the Pantry inventory. If applicable, please select an expiration date for each item.
-                    If multiple items have the same expiration date, enter the quantity you have.</h6>
-                    <form style="padding-top:1rem;display: inline-block">
-                        <div style="padding-bottom: 10px;" class = "form-group">
-                            <input class="form-control" id="itemBarcode" placeholder="Item Barcode">
-                        </div>
-                        <div style="padding-bottom: 10px;" class="form-group">
-                            <input class="date-select" type="date" id="expirationDate" style="width: 200px">
-                        </div>
-<!--                        <div style="padding-bottom: 10px;" class = "form-group">-->
-<!--                            <input class="form-control" id="quantity" placeholder="Quantity">-->
-<!--                        </div>-->
-                    </form>
-                    <button type="submit" style="margin: .5rem auto;display:block; width:30%" class="btn btn-red" onclick="popNewItemModal()">Submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- New Item Modal -->
+    <div id="scanItemModal"></div>
     <div id="newItemModal"></div>
     <div id="scanMultipleItemsModal"></div>
+    <div id="recountInventoryModal"></div>
+    <div id="deleteItemModal"></div>
+    <div id="editItemModal"></div>
     <script src="inventory.js"></script>
 </body>
 </html>

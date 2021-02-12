@@ -1,5 +1,6 @@
 package com.bcpstockerapp.bcp.controller;
 
+import com.bcpstockerapp.bcp.model.InventoryTable;
 import com.bcpstockerapp.bcp.model.ProductTable;
 import com.bcpstockerapp.bcp.repository.ProductTableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,4 +54,18 @@ public class ProductTableController {
     public ProductTable getByBarcode(@PathVariable(value="barcodeId") String barcodeId){
         return productTableRepository.findByBarcodeId(barcodeId);
     }
+
+    @PutMapping("/items/{barcodeId}")
+    public String updateProduct(@PathVariable(value="barcodeId") String barcodeId, String productTitle, String brand, String foodType, String productURL, boolean vegetarian, boolean vegan){
+        ProductTable product = productTableRepository.findByBarcodeId(barcodeId);
+        product.setName(productTitle);
+        product.setBrand(brand);
+        product.setType(foodType);
+        product.setProductURL(productURL);
+        product.setVegetarian(vegetarian);
+        product.setVegan(vegan);
+        productTableRepository.save(product);
+        return "Success";
+    }
+
 }

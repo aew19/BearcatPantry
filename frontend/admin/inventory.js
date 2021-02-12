@@ -4,17 +4,31 @@
 $(function(){
     $("#newItemModal").load("newItemModal.html");
 });
-
+$(function(){
+    $("#editItemModal").load("editItemModal.html");
+});
 $(function(){
     $("#scanMultipleItemsModal").load("scanMultipleItemsModal.html");
+});
+
+$(function(){
+    $("#scanItemModal").load("scanItemModal.html");
+});
+
+$(function(){
+    $("#recountInventoryModal").load("recountInventoryModal.html");
+});
+
+$(function(){
+    $("#deleteItemModal").load("deleteItemModal.html");
 });
 
 //Global Variables
 let newItem = null
 let scanItem = null
 let scanmulti = null
-let barcode;
-let expiration;
+let recountInv = null;
+let delItem = null;
 
 //API FUNCTIONS
 //JOIN table for the inventory
@@ -28,7 +42,7 @@ async function getInventory(){
 }
 
 //If barcode is found we will update the quantity value
-function updateInventory(barcode, quantity){
+function updateInventory(barcode1, quantity){
     //Update inventory table
     let data = {'quantity':parseInt(quantity)}
     let formBody =[];
@@ -38,7 +52,7 @@ function updateInventory(barcode, quantity){
         formBody.push(encodedKey+"="+encodedValue);
     }
     formBody = formBody.join("&");
-    fetch('http://localhost:8080/updateInventory/'+ barcode, {
+    fetch('http://localhost:8080/updateInventory/'+ barcode1, {
         body: formBody,
         method:"PUT",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -47,10 +61,38 @@ function updateInventory(barcode, quantity){
         .catch((error)=>{ console.error('Error:', error);});
 }
 
-function addToInventoryTable(barcode, quantity, expiration){
-    console.log(expiration)
+//Update product table
+function updateProduct(barcode, itemName, brand, type, url, isVegetarian, isVegan){
+    let data = {'productTitle':itemName, 'brand':brand,'foodType':type, 'productURL':url, 'vegetarian':isVegetarian, 'vegan':isVegan}
+    let formBody =[];
+    for (let key in data){
+        let encodedKey = encodeURIComponent(key);
+        let encodedValue = encodeURIComponent(data[key]);
+        formBody.push(encodedKey+"="+encodedValue);
+    }
+    formBody = formBody.join("&");
+    fetch('http://localhost:8080/items/'+ barcode, {
+        body: formBody,
+        method:"PUT",
+        headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+    }).then(response => response.json())
+        .then(data=> {console.log('Success');})
+        .catch((error)=>{ console.error('Error:', error);});
+}
+
+//Delete item from inventory
+function deleteInventory(barcode){
+    fetch('http://localhost:8080/deleteInventory/'+ barcode, {
+        method:"DELETE",
+        headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+    }).then(response => response.json())
+        .then(data=> {console.log('Success');})
+        .catch((error)=>{ console.error('Error:', error);});
+}
+
+function addToInventoryTable(barcode, quantity){
     //POST to inventory table
-    let data = {'barcodeId':barcode, 'quantity':quantity,'expirationDate':expiration}
+    let data = {'barcodeId':barcode, 'quantity':quantity}
     let formBody =[];
     for (let key in data){
         let encodedKey = encodeURIComponent(key);
@@ -76,15 +118,15 @@ async function getBarcode(barcode){
         return "notFound";
     }
 }
+
 //Add new item to database
 //TODO add image
 async function createItem(barcode, quantity, itemName, brand, type, url, isVegetarian, isVegan){
     console.log(barcode)
-    console.log(expiration)
     //POST to inventory table
-    addToInventoryTable(barcode, quantity,expiration)
+    addToInventoryTable(barcode, quantity)
     //POST to product table
-    let prodData = {'barcodeId':barcode,'productTitle':itemName, 'foodType':type, 'brand':brand}
+    let prodData = {'barcodeId':barcode,'productTitle':itemName, 'foodType':type, 'brand':brand, 'productURL':url, 'vegetarian':isVegetarian, 'vegan':isVegan}
     let prodFormBody =[];
     for (let prodKey in prodData){
         let encodedProdKey = encodeURIComponent(prodKey);
@@ -99,9 +141,9 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
     }).then(response => response.json())
         .then(data=> {console.log('Success');})
         .catch((error)=>{ console.error('Error:', error);});
-    location.reload()
-}
 
+
+}
 
 //Calls API function To load Database Information into the table
 async function createInventoryTable(){
@@ -121,10 +163,8 @@ function popNewItemModal(){
     //Get the information
     document.getElementById("scanItem").style.display = "none";
     scanItem = null
-    barcode = document.getElementById("itemBarcode").value;
-    expiration = document.getElementById("expirationDate").value;
-    console.log(expiration)
-    // let quantity = document.getElementById("quantity").value;
+    let barcode = document.getElementById("itemBarcode").value;
+    let quantity = document.getElementById("quantity").value;
     //API Hit
     getBarcode(barcode).then(
         data => {
@@ -137,44 +177,37 @@ function popNewItemModal(){
                         for (i = 0; i<allInventory.length; i++){
                             console.log(allInventory[i])
                             if (allInventory[i].barcodeId === barcode){
-                                if (allInventory[i].bestBuyDate === expiration){
-                                    //PUT
-                                    let currQuantity = allInventory[i].quantity + 1;
-                                    //update based on barcode id
-                                    updateInventory(barcode, currQuantity)
-                                    return;
-                                }
+                                //PUT
+                                let currQuantity = parseInt(allInventory[i].quantity) + parseInt(quantity);
+                                //update based on barcode id
+                                updateInventory(barcode, currQuantity)
+                                location.reload()
+                                return;
                             }
                         }
-                        addToInventoryTable(barcode,1,expiration)
+                        addToInventoryTable(barcode,quantity)
                         location.reload()
                     }
                 )
 
             }else{
                 document.getElementById("newItem").style.display = "block";
+                let el_barcode = document.getElementById("newItemBarcode");
+                el_barcode.value = barcode;
+                let el_quantity = document.getElementById("newItemQuantity");
+                el_quantity.value = quantity;
             }
 
         }
     );
 }
 
-// function databaseHit(found, quantity,expiration){
-//     console.log(found)
-//     if (found == 1){
-//         console.log(inventory)
-//         let currQuantity = inventory.quantity + parseInt(quantity);
-//         console.log(currQuantity)
-//         //update based on barcode id
-//         updateInventory(barcode, currQuantity)
-//     }
-// }
-
 
 //The function can be used universally to close any popup
 function closePopup(element){
     document.getElementById(element).style.display = "none";
-   // location.reload()
+    location.reload()
+    document.getElementById('page-mask').style.position = "unset";
 }
 
 
@@ -186,8 +219,8 @@ function popScan(){
         document.getElementById("scanItem").style.display = "block";
         let el_barcode = document.getElementById("itemBarcode")
         el_barcode.value = null
-        let el_expiration = document.getElementById("expirationDate")
-        el_expiration.value = null
+        let el_quantity = document.getElementById("quantity")
+        el_quantity.value = null
         scanItem = true
         document.getElementById('page-mask').style.position = "fixed";
     } else {
@@ -228,11 +261,6 @@ function loadBulkScan(bulkitems){
         text = document.createTextNode(element.item);
         cell.appendChild(text);
 
-        //Expiration Date
-        cell = row.insertCell();
-        text = document.createTextNode(element.expdate);
-        cell.innerHTML = "<input type=\"date\" id=\"date"+counter+"\"><label for=\"date"+counter+"\"></label>";
-        cell.appendChild(text);
     }
 }
 
@@ -242,9 +270,6 @@ function popNewItem(){
     document.getElementById("scanItem").style.display = "none";
     if(scanmulti === null){
         document.getElementById("newItem").style.display = "block";
-        var barcode = document.getElementById("barcode").value;
-        // var quantity = document.getElementById("quantity").value;
-
         newItem = true
     } else {
         document.getElementById("newItem").style.display = "none";
@@ -252,20 +277,92 @@ function popNewItem(){
     }
 }
 
+function popRecountInventory(){
+    let request = new XMLHttpRequest();
+    document.getElementById("scanItem").style.display = "none";
+    if(recountInv === null){
+        document.getElementById("recountInventory").style.display = "block";
+        document.getElementById('page-mask').style.position = "fixed";
+        recountInv = true
+    } else {
+        document.getElementById("recountInventory").style.display = "none";
+        recountInv = null
+        document.getElementById('page-mask').style.position = "unset";
+    }
+}
+
+function popEditItem(barcode1, quantity){
+    console.log(barcode1)
+    getBarcode(barcode1).then(
+        data => {
+            document.getElementById("editItem").style.display = "block";
+            document.getElementById("newType").value = data.type;
+            document.getElementById("newBarcode").value = data.barcode;
+            document.getElementById("newItemName").value = data.name;
+            document.getElementById("newQuantity").value = quantity;
+            document.getElementById("newItemBrand").value = data.brand;
+            document.getElementById("newProductURL").value = data.productURL;
+            if (data.vegetarian === true){
+                document.getElementById("newVegetarian").checked = true
+            }
+            if (data.vegan === true){
+                document.getElementById("newVegan").checked = true
+            }
+        })
+
+}
+
+function recountInventory(){
+    // logic to erase current DB and replace with scanned items
+    document.getElementById("recountInventory").style.display = "none";
+    recountInv = null
+    document.getElementById('page-mask').style.position = "unset";
+}
+
+function popConfirmDeleteItem(){
+    document.getElementById("deleteItem").style.display = "block";
+    delItem = true
+    document.getElementById('page-mask').style.position = "fixed";
+}
 
 //On Submit of new item modal create new items
 async function submitNewItem(){
-    // let quantity = document.getElementById("newItemQuantity").value;
+    let newQuantity = document.getElementById("newItemQuantity").value;
+    let barcode = document.getElementById("newItemBarcode").value;
     let itemName = document.getElementById("itemName").value;
     let itemBrand = document.getElementById("itemBrand").value;
     let itemType = document.getElementById("type").value;
     let itemURL = document.getElementById("productURL").value;
-    let vegan = document.getElementById("vegetarian").value;
-    let vegetarian = document.getElementById("vegan").value;
+    let vegan = document.getElementById("vegan").checked;
+    let vegetarian = document.getElementById("vegetarian").checked;
+
     document.getElementById("newItem").style.display = "none";
     //Call API Endpoint
-    await createItem(barcode, 1, itemName, itemBrand, itemType, itemURL, vegetarian, vegan)
+    await createItem(barcode, newQuantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan)
+    location.reload()
 
+}
+
+function editItem(){
+    let updateQuantity = parseInt(document.getElementById("newQuantity").value);
+    let currBarcode = document.getElementById("newBarcode").value;
+    let itemName = document.getElementById("newItemName").value;
+    let itemBrand = document.getElementById("newItemBrand").value;
+    let itemType = document.getElementById("newType").value;
+    let itemURL = document.getElementById("newProductURL").value;
+    let vegetarian = document.getElementById("newVegetarian").checked;
+    let vegan = document.getElementById("newVegan").checked;
+    document.getElementById("editItem").style.display = "none";
+    console.log(updateQuantity)
+    if (updateQuantity === 0){
+        //Delete
+        deleteInventory(currBarcode)
+    }
+    else{
+        //Update
+        updateInventory(currBarcode, updateQuantity)
+        updateProduct(currBarcode, itemName, itemBrand, itemType, itemURL,vegetarian, vegan)
+    }
 }
 
 $(function () {
@@ -296,17 +393,16 @@ function loadPantryItems(items){
     let loadPromise = function(resolve,reject) {
         const table = document.getElementById("pantryStock");
         for (let element of items) {
-            let row = table.insertRow();
+            let currentElement = JSON.stringify(element.barcodeId)
+            //let currentQuantity = JSON.stringify(element.quantity)
 
+            let row = table.insertRow();
             //select
             let cell = row.insertCell();
-            let text = document.createTextNode(element.barcodeId);
-            //changed the id to be the barcode of the item the checkbox is next to
-            cell.innerHTML = "<input type=\"checkbox\" id=\"checkbox"+element.barcodeId+"\"><label for=\"checkbox"+element.barcodeId+"\"></label>";
-
+            cell.innerHTML = "<button style=\"font-size:1.5rem;color:#e00122;display:inline-block;width:50%; background: none; border: none; outline: none;\" id=\"EditBtn\" onclick =popEditItem("+currentElement+","+element.quantity+")><i class='fas fa-edit'></i></button>";
             //name
             cell = row.insertCell();
-            text = document.createTextNode(element.productTitle);
+            let text = document.createTextNode(element.productTitle);
             cell.appendChild(text);
 
             //quantity
@@ -349,15 +445,6 @@ function loadPantryItems(items){
                 cell.appendChild(text);
             }
 
-            //Best Buy Date
-            cell = row.insertCell();
-            if (element.bestBuyDate == null || element.bestBuyDate == ""){
-                text = document.createTextNode("Unknown");
-                cell.appendChild(text);
-            }else{
-                text = document.createTextNode(element.bestBuyDate);
-                cell.appendChild(text);
-            }
         }
         resolve("Success");
     }
@@ -404,24 +491,4 @@ $("#prodImg").change(function() {
 
 
 createInventoryTable()
-
-// DELETE ONCE FULLY ON DATABASE
-// const bulkitems = [
-//     {number: "1", item: "Pasta", expdate: ""},
-//     {number: "2", item: "Mushrooms", expdate: ""},
-//     {number: "3", item: "Mushrooms", expdate: ""},
-//     {number: "4", item: "Mushrooms", expdate: ""},
-//     {number: "5", item: "Eggs", expdate: ""},
-//     {number: "6", item: "Milk", expdate: ""},
-//     {number: "7", item: "Corn", expdate: ""},
-//     {number: "8", item: "Black Beans", expdate: ""},
-//     {number: "9", item: "Green Beans", expdate: ""},
-//     {number: "10", item: "Green Beans", expdate: ""},
-//     {number: "11", item: "Green Beans", expdate: ""},
-//     {number: "12", item: "Pears", expdate: ""},
-//     {number: "13", item: "Apples", expdate: ""},
-//     {number: "14", item: "Pinto Beans", expdate: ""},
-//     {number: "15", item: "Tomatos", expdate: ""}
-// ];
-
-loadBulkScan(bulkitems);
+// loadBulkScan(bulkitems);

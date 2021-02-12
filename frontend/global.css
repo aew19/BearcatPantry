@@ -360,6 +360,8 @@ body {
     display:block !important;
 }
 
+
+.newmodal5,
 .newmodal6 {
     grid-column-start: 1;
     grid-column-end: 3;
@@ -427,6 +429,7 @@ input[type="file"] {
 .scrollingTable {
     overflow-y: auto;
     overflow-x: hidden;
+    height: 400px;
 }
 
 #page-mask {
@@ -436,4 +439,5 @@ input[type="file"] {
     bottom: 0;
     top: 0;
     background-color: rgba(0,0,0,0.6);
+    z-index: 2;
 }

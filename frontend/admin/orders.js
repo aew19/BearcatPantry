@@ -122,8 +122,10 @@ function popViewTransaction(clicked_id){
         document.getElementById("viewOrder").style.display = "block";
         closeModal = true
         document.getElementById("modal-body").innerHTML = clicked_id;
+        document.getElementById('page-mask').style.position = "fixed";
     } else {
         document.getElementById("viewOrder").style.display = "none";
+        document.getElementById('page-mask').style.position = "unset";
         closeModal = null
     }
 }

@@ -21,19 +21,16 @@ public class InventoryTable {
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date dateRecorded;
 
-    @Column
-    @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern="yyyy-MM-dd")
-    private Date expirationDate;
+
 
     //Constructors
     public InventoryTable(){}
-    public InventoryTable(String barcodeId, Integer quantity, String location, Date dateRecorded, Date expirationDate){
+    public InventoryTable(String barcodeId, Integer quantity, String location, Date dateRecorded){
         this.barcodeId = barcodeId;
         this.quantity = quantity;
         this.location = location;
         this.dateRecorded = dateRecorded;
-        this.expirationDate = expirationDate;
+
     }
 
     //Getters
@@ -42,14 +39,13 @@ public class InventoryTable {
     public Integer getQuantity(){return this.quantity;}
     public String getLocation(){return this.location;}
     public Date getDateRecorded(){return this.dateRecorded;}
-    public Date getExpirationDate(){return this.expirationDate;}
+
 
     //Setters
     public void setBarcodeId(String barcodeId){this.barcodeId = barcodeId;}
     public void setQuantity(Integer quantity){this.quantity = quantity;}
     public void setLocation(String location){this.location = location;}
     public void setDateRecorded(Date dateRecorded){this.dateRecorded = dateRecorded;}
-    public void setExpirationDate(Date expirationDate){this.expirationDate = expirationDate;}
 
 
 }

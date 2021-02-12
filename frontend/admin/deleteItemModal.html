@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Item</title>
+</head>
+    <body>
+        <!-- Delete Item Modal -->
+        <div class="modal" id="deleteItem" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete Item</h5>
+                        <button type="button" class="close" onclick="closePopup('deleteItem')" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="padding-bottom:.5rem">
+                        <h6>Are you sure you want to delete the following item(s)?</h6>
+                        <button type="submit" style="width:25%;" class="btn btn-green" onclick="deleteItem()">Yes</button>
+                        <button type="submit" style="width:25%;" class="btn btn-red" onclick="closePopup('deleteItem')">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

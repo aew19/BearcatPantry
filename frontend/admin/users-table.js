@@ -1,57 +1,166 @@
-let users = [
-    { Name: "Karl Dierking", Role: "Volunteer", Modify: "" },
-    { Name: "Jake van Meter", Role: "Volunteer", Modify: "" },
-    { Name: "Daniel Cummins", Role: "Owner", Modify: "" },
-    { Name: "Isaiah Corso-Phinney", Role: "Owner", Modify: "" },
-    { Name: "Logan Lindsay", Role: "Supervisor", Modify: "" },
-    { Name: "Sivani Alla", Role: "Volunteer", Modify: "" },
-    { Name: "Teja Bollimunta", Role: "Volunteer", Modify: "" },
-    { Name: "Connor Herbert", Role: "Owner", Modify: "" },
-    { Name: "Isaac Smitherman", Role: "Owner", Modify: "" },
-    { Name: "Joshua St. Pierre", Role: "Supervisor", Modify: "" }
-];
+function generateUsersTableHead(data) {
+    $(function () {
+        $('#users_table').DataTable({
+          "pageLength": 3,
+          "paging": false,
+          "lengthChange": true,
+          "searching": false,
+          "ordering": true,
+          "info": false,
+          "autoWidth": true,
+          "order": [1, "asc"]
+          });
+    });
+    const table = document.getElementById('users_table');
 
-$(function () {
-    $('#users_table').DataTable({
-      "pageLength": 3,
-      "paging": false,
-      "lengthChange": true,
-      "searching": false,
-      "ordering": true,
-      "info": false,
-      "autoWidth": true,
-      "order": [1, "asc"]
-      });
-});
-
-function generateTableHead(table) {
     let thead = table.createTHead();
     let row = thead.insertRow();
-    for (let key of users_data) {
-        let th = document.createElement("th");
-        let text = document.createTextNode(key);
+    let th = document.createElement("th");
+    let text;
+    
+    if (data.id) {
+        text = document.createTextNode("User ID");
+        th.appendChild(text);
+        th.style.display = "none";
+        row.appendChild(th);
+    }
+
+    th = document.createElement("th");
+    if (data.fname) {
+        text = document.createTextNode("Name");
+        th.appendChild(text);
+        row.appendChild(th);
+    }
+    
+    th = document.createElement("th");
+    if (data.permissions) {
+        if (data.permissions == 1) {
+            text = document.createTextNode("Volunteer");
+        }
+        else if (data.permissions == 2 ) {
+            text = document.createTextNode("Supervisor");
+        }
+        else if (data.permissions == 3 ) {
+            text = document.createTextNode("Owner");
+        }
+        th.appendChild(text);
+        row.appendChild(th);
+    }
+    
+    th = document.createElement("th");
+    if (data.dateActive) { 
+        text = document.createTextNode("Modify");
         th.appendChild(text);
         row.appendChild(th);
     }
 }
 
-function generateTable(table, users_data) {
-    var counter = 0;
-    for (let element of users_data) {
-        let row = table.insertRow();
-        for (key in element) {
-            let cell = row.insertCell();
-            let text = document.createTextNode(element[key]);
-            if (element[key] == "") {
-                cell.innerHTML = "<div style=\"font-size:1.5rem;color:#e00122;display:inline-block;width:50%;\" id=\"EditBtn"+counter+"\" onclick =\"popEditUser(this.id)\"><i class='fas fa-edit'></i></div><div style=\"font-size:1.5rem;color:#e00122;display:inline-block;width:50%;\" id=\"DeleteBtn"+counter+"\" onclick =\"popDeleteUser(this.id)\"><i class='fas fa-trash'></i></div>";
-                counter++;
+function loadUsersTable(users){
+    let loadPromise = function(resolve,reject) {
+        const table = document.getElementById('users_table');
+        for (let element of users) {
+            if (element.isActive == true) {
+                let row = table.insertRow();
+                row.id = element.id;
+
+                //user id
+                cell = row.insertCell();
+                let text = document.createTextNode(element.id);
+                cell.appendChild(text);
+                cell.style.display = "none";
+
+                //first and last name
+                cell = row.insertCell();
+                text = document.createTextNode(element.fname + " " + element.lname);
+                cell.appendChild(text);
+
+                //role
+                cell = row.insertCell();
+                if (element.permissions == 1) {
+                    text = document.createTextNode("Volunteer");
+                }
+                else if (element.permissions == 2 ) {
+                    text = document.createTextNode("Supervisor");
+                }
+                else if (element.permissions == 3 ) {
+                    text = document.createTextNode("Owner");
+                }
+                cell.appendChild(text);
+
+                //modify
+                cell = row.insertCell();
+                text = document.createTextNode("");
+                cell.innerHTML = "<div style=\"font-size:1.5rem;color:#e00122;display:inline-block;width:50%;background: none; border: none; outline: none;\" id=\"EditBtn\" onclick =popEditUser('"+element.id+"','"+element.fname+"','"+element.lname+"','"+element.mNumber+"','"+element.permissions+"')><i class='fas fa-edit'></i></div><div style=\"font-size:1.5rem;color:#e00122;display:inline-block;width:50%;background: none; border: none; outline: none;\" id=\"DeleteBtn\" onclick =popConfirmDeleteUser('"+element.id+"','"+element.fname+"','"+element.lname+"')><i class='fas fa-trash'></i></div>";
+                cell.appendChild(text);
             }
-            cell.appendChild(text);
         }
+        resolve(users[0]);
+    }
+    return new Promise(loadPromise);
+}
+
+//JOIN table for the inventory
+async function getUsers(){
+    let response = await fetch("http://localhost:8080/users/")
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
     }
 }
 
-let users_table = document.getElementById('users_table');
-let users_data = Object.keys(users[0]);
-generateTable(users_table, users);
-generateTableHead(users_table, users_data);
+async function createUsersTable(){
+    getUsers().then(
+        data => {
+            if (data != "notFound") {
+                loadUsersTable(data).then(result => generateUsersTableHead(result));
+            }
+
+        }
+    )
+}
+
+createUsersTable();
+
+//On Submit of new user modal create new user
+async function submitNewUser(){
+    let mNumber = document.getElementById("userMNum").value;
+    let FName = document.getElementById("AddfName").value;
+    let LName = document.getElementById("AddlName").value;
+    let PermissionLevel = document.getElementById("typeUser").value;
+    if (PermissionLevel == "Supervisor") {
+        PermissionLevel = 2;
+    }
+    else if (PermissionLevel == "Owner") {
+        PermissionLevel = 3;
+    }
+    else {
+        PermissionLevel = 1;
+    }
+    let ActiveStatus = 1;
+    document.getElementById("addUser").style.display = "none";
+    document.getElementById('page-mask').style.position = "unset";
+    //Call API Endpoint
+    await addUser(mNumber, FName, LName, PermissionLevel, ActiveStatus);
+    location.reload();
+}
+
+async function addUser(mNumber, FName, LName, PermissionLevel, ActiveStatus){
+    //POST to user table
+    let userData = {'mNumber':mNumber,'fname':FName, 'lname':LName, 'permissions':PermissionLevel, 'isActive':ActiveStatus}
+    let userFormBody =[];
+    for (let userKey in userData){
+        let encodedUserKey = encodeURIComponent(userKey);
+        let encodedUserValue = encodeURIComponent(userData[userKey]);
+        userFormBody.push(encodedUserKey+"="+encodedUserValue);
+    }
+    userFormBody = userFormBody.join("&");
+    
+    fetch('http://localhost:8080/users', {
+        body: userFormBody,
+        method:"POST",
+        headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+    }).then(response => response.json())
+        .then(data=> {console.log('Success');})
+        .catch((error)=>{ console.error('Error:', error);location.reload();});
+}
