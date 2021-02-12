@@ -93,13 +93,30 @@ function closePopup(element){
 
 //This function pops the scan item modal
 var editUserModal = null
-function popEditUser(){
-    let request = new XMLHttpRequest();
+function popEditUser(userID, userFName, userLName, userUCID, permValue){
+    
     if(editUserModal === null){
+        
+        if (permValue == 1) {
+            document.getElementById("typeEditUser").value = "Volunteer";
+        }
+        else if (permValue == 2 ) {
+            document.getElementById("typeEditUser").value = "Supervisor";
+        }
+        else if (permValue == 3 ) {
+            document.getElementById("typeEditUser").value = "Owner";
+        }
+
         document.getElementById("editUser").style.display = "block";
         addUserModal = true
         document.getElementById('page-mask').style.position = "fixed";
         document.getElementById('page-mask').style.backgroundColor = "rgba(0,0,0,0.6)";
+        document.getElementById("editButton").value = userID;
+        document.getElementById("fName").value = userFName;
+        document.getElementById("lName").value = userLName;
+        document.getElementById("userUCID").value = userUCID;
+        document.getElementById("editButton").addEventListener('click', function() {
+            editUser(document.getElementById("editButton").value, document.getElementById("fName").value, document.getElementById("lName").value, document.getElementById("userUCID").value, document.getElementById("typeEditUser").value);}, false);
     } else {
         document.getElementById("editUser").style.display = "none";
         editUserModal = null
@@ -124,13 +141,15 @@ function popAddUser(){
 }
 
 var delUserModal = null
-function popConfirmDeleteUser(){
-    let request = new XMLHttpRequest();
+function popConfirmDeleteUser(userID, userFName, userLName){
+    let request = new XMLHttpRequest();  
     if(delUserModal === null){
         document.getElementById("deleteUser").style.display = "block";
         delUserModal = true
         document.getElementById('page-mask').style.position = "fixed";
         document.getElementById('page-mask').style.backgroundColor = "rgba(0,0,0,0.6)";
+        document.getElementById("delButton").value = userID;
+        document.getElementById("userDisplay").innerHTML = userFName + " " + userLName;
     } else {
         document.getElementById("deleteUser").style.display = "none";
         delUserModal = null
@@ -138,17 +157,57 @@ function popConfirmDeleteUser(){
     }
 }
 
-function deleteUser(user_id) {
-    console.log(user_id);
-    // will have to figure out how to get user id from the modal
+function deleteUser(userID) {
+    closePopup('deleteUser');
+    
+    let userData = {'id':userID };
+    let userFormBody =[];
+    for (let userKey in userData){
+        let encodedUserKey = encodeURIComponent(userKey);
+        let encodedUserValue = encodeURIComponent(userData[userKey]);
+        userFormBody.push(encodedUserKey+"="+encodedUserValue);
+    }
+    userFormBody = userFormBody.join("&");
+    fetch('http://localhost:8080/deleteUser/'+ userID, {
+        body: userFormBody,
+        method:"DELETE",
+        headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+    }).then(response => response.json())
+        .then(data=> {console.log('Success');})
+        .catch((error)=>{ console.error('Error:', error);});
 }
 
-function editUser(user_id) {
-    console.log(user_id);
-    // will have to figure out how to get user id from the modal
-}
+function editUser(userID, FName, LName, mNumber, Permissions ) {
+    //PUT to user table
+    let ActiveStatus = 1;
+    let PermissionLevel;
 
-function addUser(user_id) {
-    console.log(user_id);
-    // will have to figure out how to get user id from the modal
+    if (Permissions == "Volunteer" || Permissions == "Permissions Level") {
+        PermissionLevel = 1;
+    }
+    else if (Permissions == "Supervisor" ) {
+        PermissionLevel = 2;
+    }
+    else if (Permissions == "Owner" ) {
+        PermissionLevel = 3;
+    }
+
+    PermissionLevel = parseInt(PermissionLevel);
+    let userData = {'id':userID,'mNumber':mNumber,'fname':FName, 'lname':LName, 'permission':PermissionLevel, 'isActive':ActiveStatus}
+    let userFormBody =[];
+    for (let userKey in userData){
+        let encodedUserKey = encodeURIComponent(userKey);
+        let encodedUserValue = encodeURIComponent(userData[userKey]);
+        userFormBody.push(encodedUserKey+"="+encodedUserValue);
+    }
+    userFormBody = userFormBody.join("&");
+    console.log(userFormBody);
+    fetch('http://localhost:8080/updateUsers/' + userID, {
+        body: userFormBody, 
+        method:"PUT",
+        headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+    }).then(response => response.json())
+        .then(data=> {console.log('Success');})
+        .catch((error)=>{ console.error('Error:', error);});
+    location.reload();
 }

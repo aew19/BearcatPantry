@@ -17,7 +17,8 @@
                     </div>
                     <div class="modal-body" style="padding-bottom:.5rem">
                         <h6>Are you sure you want to delete the following user?</h6>
-                        <button type="submit" style="width:25%;" class="btn btn-green" onclick="deleteUser()">Yes</button>
+                        <h5 id="userDisplay"></h5>
+                        <button type="submit" id="delButton" style="width:25%;" class="btn btn-green" onclick="deleteUser(this.value)">Yes</button>
                         <button type="submit" style="width:25%;" class="btn btn-red" onclick="closePopup('deleteUser')">No</button>
                     </div>
                 </div>
