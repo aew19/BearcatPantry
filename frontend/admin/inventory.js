@@ -293,13 +293,19 @@ function popRecountInventory(){
     }
 }
 
-function popEditItem(element){
-    document.getElementById("editItem").style.display="block";
-    document.getElementById("newBarcode").value = element.barcodeId;
-    document.getElementById("newItemName").value = element.productTitle;
-    document.getElementById("newQuantity").value = element.quantity;
-    document.getElementById("newItemBrand").value = element.brand;
-    document.getElementById("newProductURL").value = element.productURL;
+function popEditItem(barcode1, quantity){
+    console.log(barcode1)
+    getBarcode(barcode1).then(
+        data => {
+            console.log(data)
+            document.getElementById("editItem").style.display = "block";
+            document.getElementById("newBarcode").value = data.barcode;
+            document.getElementById("newItemName").value = data.name;
+            document.getElementById("newQuantity").value = quantity;
+            document.getElementById("newItemBrand").value = data.brand;
+            document.getElementById("newProductURL").value = data.productURL;
+        })
+
 }
 
 function recountInventory(){
@@ -379,15 +385,15 @@ function exportCSV(elem){
 //Helper function
 function loadPantryItems(items){
     let loadPromise = function(resolve,reject) {
-        let counter = 0
         const table = document.getElementById("pantryStock");
         for (let element of items) {
-            let currentElement = JSON.stringify(element)
+            let currentElement = JSON.stringify(element.barcodeId)
+            //let currentQuantity = JSON.stringify(element.quantity)
+
             let row = table.insertRow();
             //select
             let cell = row.insertCell();
-            cell.innerHTML = "<button style=\"font-size:1.5rem;color:#e00122;display:inline-block;width:50%; background: none; border: none; outline: none;\" id=\"EditBtn"+counter+"\" onclick =popEditItem("+currentElement+")><i class='fas fa-edit'></i></button>";
-            counter++;
+            cell.innerHTML = "<button style=\"font-size:1.5rem;color:#e00122;display:inline-block;width:50%; background: none; border: none; outline: none;\" id=\"EditBtn\" onclick =popEditItem("+currentElement+","+element.quantity+")><i class='fas fa-edit'></i></button>";
             //name
             cell = row.insertCell();
             let text = document.createTextNode(element.productTitle);
@@ -479,4 +485,4 @@ $("#prodImg").change(function() {
 
 
 createInventoryTable()
-loadBulkScan(bulkitems);
+// loadBulkScan(bulkitems);
