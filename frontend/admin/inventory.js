@@ -29,8 +29,6 @@ let scanItem = null
 let scanmulti = null
 let recountInv = null;
 let delItem = null;
-let barcode;
-let quantity;
 
 //API FUNCTIONS
 //JOIN table for the inventory
@@ -128,7 +126,7 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
     //POST to inventory table
     addToInventoryTable(barcode, quantity)
     //POST to product table
-    let prodData = {'barcodeId':barcode,'productTitle':itemName, 'foodType':type, 'brand':brand}
+    let prodData = {'barcodeId':barcode,'productTitle':itemName, 'foodType':type, 'brand':brand, 'productURL':url, 'vegetarian':isVegetarian, 'vegan':isVegan}
     let prodFormBody =[];
     for (let prodKey in prodData){
         let encodedProdKey = encodeURIComponent(prodKey);
@@ -165,8 +163,8 @@ function popNewItemModal(){
     //Get the information
     document.getElementById("scanItem").style.display = "none";
     scanItem = null
-    barcode = document.getElementById("itemBarcode").value;
-    quantity = document.getElementById("quantity").value;
+    let barcode = document.getElementById("itemBarcode").value;
+    let quantity = document.getElementById("quantity").value;
     //API Hit
     getBarcode(barcode).then(
         data => {
@@ -208,8 +206,8 @@ function popNewItemModal(){
 //The function can be used universally to close any popup
 function closePopup(element){
     document.getElementById(element).style.display = "none";
-   // location.reload()
-   document.getElementById('page-mask').style.position = "unset";
+    location.reload()
+    document.getElementById('page-mask').style.position = "unset";
 }
 
 
@@ -297,13 +295,19 @@ function popEditItem(barcode1, quantity){
     console.log(barcode1)
     getBarcode(barcode1).then(
         data => {
-            console.log(data)
             document.getElementById("editItem").style.display = "block";
+            document.getElementById("newType").value = data.type;
             document.getElementById("newBarcode").value = data.barcode;
             document.getElementById("newItemName").value = data.name;
             document.getElementById("newQuantity").value = quantity;
             document.getElementById("newItemBrand").value = data.brand;
             document.getElementById("newProductURL").value = data.productURL;
+            if (data.vegetarian === true){
+                document.getElementById("newVegetarian").checked = true
+            }
+            if (data.vegan === true){
+                document.getElementById("newVegan").checked = true
+            }
         })
 
 }
@@ -323,16 +327,18 @@ function popConfirmDeleteItem(){
 
 //On Submit of new item modal create new items
 async function submitNewItem(){
-    let newquantity = document.getElementById("newItemQuantity").value;
+    let newQuantity = document.getElementById("newItemQuantity").value;
+    let barcode = document.getElementById("newItemBarcode").value;
     let itemName = document.getElementById("itemName").value;
     let itemBrand = document.getElementById("itemBrand").value;
     let itemType = document.getElementById("type").value;
     let itemURL = document.getElementById("productURL").value;
-    let vegan = document.getElementById("vegetarian").value;
-    let vegetarian = document.getElementById("vegan").value;
+    let vegan = document.getElementById("vegan").checked;
+    let vegetarian = document.getElementById("vegetarian").checked;
+
     document.getElementById("newItem").style.display = "none";
     //Call API Endpoint
-    await createItem(barcode, newquantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan)
+    await createItem(barcode, newQuantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan)
     location.reload()
 
 }
@@ -344,8 +350,8 @@ function editItem(){
     let itemBrand = document.getElementById("newItemBrand").value;
     let itemType = document.getElementById("newType").value;
     let itemURL = document.getElementById("newProductURL").value;
-    let vegan = document.getElementById("newVegetarian").value;
-    let vegetarian = document.getElementById("newVegan").value;
+    let vegetarian = document.getElementById("newVegetarian").checked;
+    let vegan = document.getElementById("newVegan").checked;
     document.getElementById("editItem").style.display = "none";
     console.log(updateQuantity)
     if (updateQuantity === 0){
