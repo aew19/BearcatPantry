@@ -57,4 +57,17 @@ public class OrdersTableController {
         }
 
     }
+
+    //Statistics API Endpoints
+    @GetMapping("/getTotalOrders")
+    public Integer getTotalOrders(){
+        List<OrdersTable> orders = ordersTableRepository.findAll();
+        return orders.size();
+    }
+    @GetMapping("/getTotalUncompletedOrders")
+    public Integer getTotalUncompletedOrders(){
+        List<OrdersTable> orders = ordersTableRepository.findAll();
+        // need to add logic to 
+        return orders.size();
+    }
 }

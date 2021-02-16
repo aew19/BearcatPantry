@@ -113,7 +113,6 @@ async function createUsersTable(){
             if (data != "notFound") {
                 loadUsersTable(data).then(result => generateUsersTableHead(result));
             }
-
         }
     )
 }

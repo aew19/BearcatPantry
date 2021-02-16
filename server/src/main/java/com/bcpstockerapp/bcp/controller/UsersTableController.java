@@ -65,7 +65,7 @@ public class UsersTableController {
     //Statistic Endpoint
     @GetMapping("/getTotalUsers")
     public @ResponseBody Integer getTotalUsers(){
-        //Get all users and count
-       return 5;
+        List<UsersTable> users = usersTableRepository.findAll();
+        return users.size();
     }
 }

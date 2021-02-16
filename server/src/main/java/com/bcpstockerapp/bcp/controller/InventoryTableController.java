@@ -77,17 +77,10 @@ public class InventoryTableController {
     }
 
     //Statistics API Endpoints
-    @GetMapping("/getUniqueItems")
-    public Integer getUniqueItems(){
-        //We need to get number of entries in database
-        //Filter out matching barcodes
-        //Update counter
-        return 5;
-    }
     @GetMapping("/getTotalInventory")
     public Integer getTotalInventory(){
-        //We need to get all of the entries in table and add up all the quantities
-        return 6;
+        List<InventoryTable> inventoryCount = inventoryTableRepository.findAll();
+        return inventoryCount.size();
     }
 
 }

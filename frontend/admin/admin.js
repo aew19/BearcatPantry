@@ -209,3 +209,97 @@ function editUser(userID, FName, LName, mNumber, Permissions ) {
         .then(data=> {console.log('Success');location.reload();})
         .catch((error)=>{ console.error('Error:', error);location.reload();});
 }
+
+//API Function to get Total Items
+async function getTotalItems(){
+    let response = await fetch("http://localhost:8080/getUniqueItems/")
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
+//API Function to get Total Inventory
+async function getTotalInventory(){
+    let response = await fetch("http://localhost:8080/getTotalInventory/")
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
+//API Function to get Total Users
+async function getTotalUsers(){
+    let response = await fetch("http://localhost:8080/getTotalUsers/")
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
+//API Function to get Total Uncompleted Orders
+async function getTotalUncompleteOrders(){
+    let response = await fetch("http://localhost:8080/getTotalUncompletedOrders/")
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
+//API Function to get Total Orders
+async function getTotalOrders(){
+    let response = await fetch("http://localhost:8080/getTotalOrders/")
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
+async function SetStatistics(){
+    getTotalItems().then(
+        totalItems => {
+            if (totalItems != "notFound") {
+                document.getElementById("itemsStat").innerHTML = totalItems;
+            }
+        }
+    )
+
+    getTotalInventory().then(
+        totalInventory => {
+            if (totalInventory != "notFound") {
+                document.getElementById("inventoryStat").innerHTML = totalInventory;
+            }
+        }
+    )
+
+    getTotalUsers().then(
+        totalUsers => {
+            if (totalUsers != "notFound") {
+                document.getElementById("usersStat").innerHTML = totalUsers;
+            }
+        }
+    )
+
+    getTotalUncompleteOrders().then(
+        totalUncOrders => {
+            if (totalUncOrders != "notFound") {
+                document.getElementById("uncOrdersStat").innerHTML = totalUncOrders;
+            }
+        }
+    )
+
+    getTotalOrders().then(
+        totalOrders => {
+            if (totalOrders != "notFound") {
+                document.getElementById("ordersStat").innerHTML = totalOrders;
+            }
+        }
+    )
+}
+
+SetStatistics();

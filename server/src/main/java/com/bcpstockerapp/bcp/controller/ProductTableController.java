@@ -68,4 +68,10 @@ public class ProductTableController {
         return "Success";
     }
 
+    // Api call for statistics
+    @GetMapping("/getUniqueItems")
+    public Integer getUniqueItems(){
+        List<ProductTable> product = productTableRepository.findAll();
+        return product.size();
+    }
 }
