@@ -5,6 +5,23 @@
     <title>New Item</title>
 </head>
     <body>
+        <script>
+            $("#prodImg").change(function() {
+                readURL(this);
+            });
+
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $('#imgPreview').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]); // convert to base64 string
+                }
+            }
+        </script>
         <!-- New Item Modal -->
         <div class="modal" id="newItem" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
@@ -34,7 +51,7 @@
                                     <label for="prodImg" class="file-upload">
                                         Upload Image
                                     </label>
-                                    <input type="file" id="prodImg" accept="image/*">
+                                    <input type="file" name="prodImg" id="prodImg" accept="image/*">
                                 </div>
                                 <div class="newmodal4 form-group">
                                     <input class="form-control" id="itemBrand" placeholder="Company Brand">

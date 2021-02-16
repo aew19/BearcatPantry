@@ -340,7 +340,6 @@ async function submitNewItem(){
     //Call API Endpoint
     await createItem(barcode, newQuantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan)
     location.reload()
-
 }
 
 function editItem(){
@@ -473,23 +472,6 @@ function createTableStyle() {
         },
     });
 }
-
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function(e) {
-            $('#imgPreview').attr('src', e.target.result);
-        }
-
-        reader.readAsDataURL(input.files[0]); // convert to base64 string
-    }
-}
-
-$("#prodImg").change(function() {
-    readURL(this);
-});
-
 
 createInventoryTable()
 // loadBulkScan(bulkitems);
