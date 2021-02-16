@@ -51,8 +51,8 @@ public class UsersTableController {
         if (mNumber != null) {
             user.setmNumber(mNumber);
         }
-        //Because is active won't be null coming in
         user.setIsActive(isActive);
+        usersTableRepository.save(user);
         return "Success!";
     }
     @DeleteMapping("/deleteUser/{id}")

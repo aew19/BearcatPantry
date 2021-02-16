@@ -1,17 +1,4 @@
-let inventory = [
-    { Item: "Pasta", Quantity: 12},
-    { Item: "Corn", Stock: 12},
-    { Item: "Carrots", Stock: 12},
-    { Item: "Toilet Paper", Stock: 12},
-    { Item: "Black Beans", Stock: 12},
-    { Item: "Green Beans", Stock: 12},
-    { Item: "Chicken Noodle Soup", Stock: 32},
-    { Item: "Pinto Beans", Stock: 54},
-    { Item: "Macaroni", Stock: 60},
-    { Item: "Pasta", Stock: 61}
-];
-
-//API Function to get
+//API Function to get Inventory Table
 async function getInventory(){
     let response = await fetch("http://localhost:8080/inventoryTable/")
     try{
@@ -21,55 +8,80 @@ async function getInventory(){
     }
 }
 
+function generateInventoryTableHead(data) {
+    /*$('#inventory_table').DataTable({
+        "pageLength": 3,
+        "paging": false,
+        "lengthChange": true,
+        "searching": false,
+        "ordering": true,
+        "info": false,
+        "autoWidth": true,
+        "order": ["desc"]
+    }); Causing issues */
+    const table = document.getElementById('inventory_table');
 
-$(function () {
-    $('#inventory_table').DataTable({
-      "pageLength": 3,
-      "paging": false,
-      "lengthChange": true,
-      "searching": false,
-      "ordering": true,
-      "info": false,
-      "autoWidth": true,
-      "order": ["desc"]
-      });
-});
-
-function generateTableHead(table) {
     let thead = table.createTHead();
     let row = thead.insertRow();
-    for (let key of inventory_data) {
-        let th = document.createElement("th");
-        let text = document.createTextNode(key);
+    let th = document.createElement("th");
+    let text;
+    
+    if (data.productTitle) {
+        text = document.createTextNode("Product Name");
+        th.appendChild(text);
+        row.appendChild(th);
+    }
+
+    th = document.createElement("th");
+    if (data.quantity) {
+        text = document.createTextNode("Quantity");
         th.appendChild(text);
         row.appendChild(th);
     }
 }
 
-function generateTable(table, inventory_data) {
-    for (let element of inventory_data) {
-        let row = table.insertRow();
-        for (key in element) {
-            let cell = row.insertCell();
-            let text = document.createTextNode(element[key]);
+function loadInventoryTable(items){
+    let loadPromise = function(resolve,reject) {
+        const table = document.getElementById('inventory_table');
+        for (let element of items) {
+            let row = table.insertRow();
+
+            //product name
+            cell = row.insertCell();
+            let text = document.createTextNode(element.productTitle);
+            cell.appendChild(text);
+
+            //quantity
+            cell = row.insertCell();
+            text = document.createTextNode(element.quantity);
             cell.style.fontWeight = 700;
-            if (element[key] < 15) {
+            if (element.quantity < 15) {
                 cell.style.backgroundColor = '#ff3823';
                 cell.style.color = '#fff';
             }
-            else if (element[key] >= 15 & element[key] < 45) {
+            else if (element.quantity >= 15 & element.quantity < 45) {
                 cell.style.backgroundColor = '#fefb64';
             }
-            else if (element[key] >= 45) {
+            else if (element.quantity >= 45) {
                 cell.style.backgroundColor = '#92d36e';
                 cell.style.color = '#fff';
             }
             cell.appendChild(text);
         }
+        resolve(items[0]);
     }
+    return new Promise(loadPromise);
 }
 
-let inventory_table = document.getElementById('inventory_table');
-let inventory_data = Object.keys(inventory[0]);
-generateTable(inventory_table, inventory);
-generateTableHead(inventory_table, inventory_data);
+async function createInventoryTable(){
+    getInventory().then(
+        data => {
+            if (data != "notFound") {
+                loadInventoryTable(data).then(result => generateInventoryTableHead(result));
+            }
+
+        }
+    )
+}
+
+createInventoryTable();

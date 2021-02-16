@@ -1,23 +1,21 @@
 function generateUsersTableHead(data) {
-    $(function () {
-        $('#users_table').DataTable({
-          "pageLength": 3,
-          "paging": false,
-          "lengthChange": true,
-          "searching": false,
-          "ordering": true,
-          "info": false,
-          "autoWidth": true,
-          "order": [1, "asc"]
-          });
-    });
-    const table = document.getElementById('users_table');
+    /*$('#users_table').DataTable({
+        "pageLength": 3,
+        "paging": false,
+        "lengthChange": true,
+        "searching": false,
+        "ordering": true,
+        "info": false,
+        "autoWidth": true,
+        "order": [1, "asc"]
+    }); Causing an issue */
 
+    const table = document.getElementById('users_table');
     let thead = table.createTHead();
     let row = thead.insertRow();
     let th = document.createElement("th");
     let text;
-    
+
     if (data.id) {
         text = document.createTextNode("User ID");
         th.appendChild(text);
@@ -99,7 +97,7 @@ function loadUsersTable(users){
     return new Promise(loadPromise);
 }
 
-//JOIN table for the inventory
+//API Call to get users table
 async function getUsers(){
     let response = await fetch("http://localhost:8080/users/")
     try{
@@ -161,6 +159,6 @@ async function addUser(mNumber, FName, LName, PermissionLevel, ActiveStatus){
         method:"POST",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
     }).then(response => response.json())
-        .then(data=> {console.log('Success');})
+        .then(data=> {console.log('Success');location.reload();})
         .catch((error)=>{ console.error('Error:', error);location.reload();});
 }

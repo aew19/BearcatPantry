@@ -87,7 +87,7 @@ function popViewTransaction(clicked_id){
 //The function can be used universally to close any popup
 function closePopup(element){
     document.getElementById(element).style.display = "none";
-    location.reload()
+    document.getElementById('page-mask').style.position = "unset";
 }
 
 //This function pops the scan item modal
@@ -172,8 +172,8 @@ function deleteUser(userID) {
         method:"DELETE",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
     }).then(response => response.json())
-        .then(data=> {console.log('Success');})
-        .catch((error)=>{ console.error('Error:', error);});
+        .then(data=> {console.log('Success');location.reload();})
+        .catch((error)=>{ console.error('Error:', error);location.reload();});
 }
 
 function editUser(userID, FName, LName, mNumber, Permissions ) {
@@ -206,7 +206,6 @@ function editUser(userID, FName, LName, mNumber, Permissions ) {
         method:"PUT",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
     }).then(response => response.json())
-        .then(data=> {console.log('Success');})
-        .catch((error)=>{ console.error('Error:', error);});
-    location.reload();
+        .then(data=> {console.log('Success');location.reload();})
+        .catch((error)=>{ console.error('Error:', error);location.reload();});
 }
