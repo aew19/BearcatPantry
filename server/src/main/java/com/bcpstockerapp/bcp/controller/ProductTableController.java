@@ -1,6 +1,5 @@
 package com.bcpstockerapp.bcp.controller;
 
-import com.bcpstockerapp.bcp.model.InventoryTable;
 import com.bcpstockerapp.bcp.model.ProductTable;
 import com.bcpstockerapp.bcp.repository.ProductTableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,27 +50,40 @@ public class ProductTableController {
     }
 
     @GetMapping("/items/{barcodeId}")
-    public ProductTable getByBarcode(@PathVariable(value="barcodeId") String barcodeId){
-        return productTableRepository.findByBarcodeId(barcodeId);
+    public @ResponseBody ResponseEntity<ProductTable> getByBarcode(@PathVariable(value="barcodeId") String barcodeId){
+        try{
+            return new ResponseEntity<>(productTableRepository.findByBarcodeId(barcodeId), HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @PutMapping("/items/{barcodeId}")
-    public String updateProduct(@PathVariable(value="barcodeId") String barcodeId, String productTitle, String brand, String foodType, String productURL, boolean vegetarian, boolean vegan){
-        ProductTable product = productTableRepository.findByBarcodeId(barcodeId);
-        product.setName(productTitle);
-        product.setBrand(brand);
-        product.setType(foodType);
-        product.setProductURL(productURL);
-        product.setVegetarian(vegetarian);
-        product.setVegan(vegan);
-        productTableRepository.save(product);
-        return "Success";
+    public @ResponseBody ResponseEntity<String> updateProduct(@PathVariable(value="barcodeId") String barcodeId, String productTitle, String brand, String foodType, String productURL, boolean vegetarian, boolean vegan){
+        try{
+            ProductTable product = productTableRepository.findByBarcodeId(barcodeId);
+            product.setName(productTitle);
+            product.setBrand(brand);
+            product.setType(foodType);
+            product.setProductURL(productURL);
+            product.setVegetarian(vegetarian);
+            product.setVegan(vegan);
+            productTableRepository.save(product);
+            return new ResponseEntity<>("Success", HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Api call for statistics
     @GetMapping("/getUniqueItems")
-    public Integer getUniqueItems(){
-        List<ProductTable> product = productTableRepository.findAll();
-        return product.size();
+    public @ResponseBody ResponseEntity<Integer> getUniqueItems(){
+        try{
+            List<ProductTable> product = productTableRepository.findAll();
+            return new ResponseEntity<>(product.size(), HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(0, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

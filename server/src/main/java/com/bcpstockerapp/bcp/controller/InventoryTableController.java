@@ -1,26 +1,20 @@
 package com.bcpstockerapp.bcp.controller;
 
 import com.bcpstockerapp.bcp.model.InventoryTable;
-import com.bcpstockerapp.bcp.model.ProductTable;
 import com.bcpstockerapp.bcp.model.prodInventoryJoin;
 import com.bcpstockerapp.bcp.repository.InventoryTableRepository;
-import com.bcpstockerapp.bcp.repository.ProductTableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 @CrossOrigin
 @RestController
 public class InventoryTableController {
+
     @Autowired
     private InventoryTableRepository inventoryTableRepository;
 
@@ -35,7 +29,7 @@ public class InventoryTableController {
     }
 
     @PostMapping(value="/inventory")
-    public ResponseEntity<String> createInventory(@RequestParam String barcodeId, Integer quantity, String location, Date dateRecorded) {
+    public @ResponseBody ResponseEntity<String> createInventory(@RequestParam String barcodeId, Integer quantity, String location, Date dateRecorded) {
         try{
             InventoryTable item = new InventoryTable();
             item.setBarcodeId(barcodeId);
@@ -50,7 +44,7 @@ public class InventoryTableController {
     }
 
     @GetMapping("/inventoryTable")
-    public ResponseEntity<List<prodInventoryJoin>> joinTable(){
+    public @ResponseBody ResponseEntity<List<prodInventoryJoin>> joinTable(){
         try{
             List<prodInventoryJoin> inventory = inventoryTableRepository.join();
             return new ResponseEntity<>(inventory, HttpStatus.OK);
@@ -61,26 +55,39 @@ public class InventoryTableController {
 
 
     @PutMapping("/updateInventory/{barcodeId}")
-    public String updateQuantity(@PathVariable(value="barcodeId") String barcodeId,@RequestParam Integer quantity){
-        InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeId);
-        inventory.setQuantity(quantity);
-        inventoryTableRepository.save(inventory);
-        return "Success!";
-
+    public @ResponseBody ResponseEntity<String> updateQuantity(@PathVariable(value="barcodeId") String barcodeId,@RequestParam Integer quantity){
+        try{
+            InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeId);
+            inventory.setQuantity(quantity);
+            inventoryTableRepository.save(inventory);
+            return new ResponseEntity<>("Success", HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/deleteInventory/{barcodeId}")
-    public String deleteInventory(@PathVariable(value="barcodeId") String barcodeId){
-        InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeId);
-        inventoryTableRepository.delete(inventory);
-        return "Success!";
+    public @ResponseBody ResponseEntity<String> deleteInventory(@PathVariable(value="barcodeId") String barcodeId){
+        try{
+            InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeId);
+            inventoryTableRepository.delete(inventory);
+            return new ResponseEntity<>("Success", HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     //Statistics API Endpoints
     @GetMapping("/getTotalInventory")
-    public Integer getTotalInventory(){
-        List<InventoryTable> inventoryCount = inventoryTableRepository.findAll();
-        return inventoryCount.size();
+    public @ResponseBody ResponseEntity<Integer> getTotalInventory(){
+        try{
+            List<InventoryTable> inventoryCount = inventoryTableRepository.findAll();
+            return new ResponseEntity<>(inventoryCount.size(), HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(0, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
 }
