@@ -13,6 +13,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 public class OrdersTableController {
+
     @Autowired
     private OrdersTableRepository ordersTableRepository;
 
@@ -28,7 +29,7 @@ public class OrdersTableController {
     }
 
     @PostMapping("/orders")
-    public @ResponseBody ResponseEntity<String> createOrder(@RequestParam Long orderID, Date orderDate, boolean delOrPickUp, Date delDate, String deliveryTime, Integer orderStatus, String mNumber, String address, String address2, String email, String phoneNumber) {
+    public @ResponseBody ResponseEntity<String> createOrder(@RequestParam Date orderDate, boolean delOrPickUp, Date delDate, String deliveryTime, Integer orderStatus, String mNumber, String address, String address2, String email, String phoneNumber) {
         try{
             OrdersTable order = new OrdersTable();
             order.setOrderDate(orderDate);
@@ -60,14 +61,25 @@ public class OrdersTableController {
 
     //Statistics API Endpoints
     @GetMapping("/getTotalOrders")
-    public Integer getTotalOrders(){
-        List<OrdersTable> orders = ordersTableRepository.findAll();
-        return orders.size();
+    public @ResponseBody ResponseEntity<Integer> getTotalOrders(){
+        try{
+            List<OrdersTable> orders = ordersTableRepository.findAll();
+            return new ResponseEntity<>(orders.size(), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(0, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
+
+    //TODO: Add logic for uncompleted orders
     @GetMapping("/getTotalUncompletedOrders")
-    public Integer getTotalUncompletedOrders(){
-        List<OrdersTable> orders = ordersTableRepository.findAll();
-        // need to add logic to 
-        return orders.size();
+    public @ResponseBody ResponseEntity<Integer> getTotalUncompletedOrders(){
+        try{
+            List<OrdersTable> orders = ordersTableRepository.findAll();
+            return new ResponseEntity<>(orders.size(), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(0, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 }
