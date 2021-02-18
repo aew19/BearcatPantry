@@ -2,11 +2,16 @@ package com.bcpstockerapp.bcp.controller;
 
 import com.bcpstockerapp.bcp.model.ProductTable;
 import com.bcpstockerapp.bcp.repository.ProductTableRepository;
+import com.bcpstockerapp.bcp.utilities.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +33,7 @@ public class ProductTableController {
     }
 
     @PostMapping("/items")
-    public @ResponseBody ResponseEntity<String> createItem(@RequestParam String barcodeId, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, Date scanDate, String imageId, String imageFileName, String productURL, boolean isActive) {
+    public @ResponseBody ResponseEntity<String> createItem(@RequestParam String barcodeId, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, Date scanDate, String productURL, boolean isActive) {
         try{
             ProductTable item = new ProductTable();
             item.setBarcode(barcodeId);
@@ -38,8 +43,6 @@ public class ProductTableController {
             item.setVegetarian(vegetarian);
             item.setVegan(vegan);
             item.setAddedDate(scanDate);
-            item.setImageId(imageId);
-            item.setImageFileName(imageFileName);
             item.setProductURL(productURL);
             item.setActive(isActive);
             productTableRepository.save(item);
@@ -74,6 +77,18 @@ public class ProductTableController {
         } catch (Exception e){
             return new ResponseEntity<>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PutMapping("/addImage/{barcodeId}")
+    public @ResponseBody String updateImage(@PathVariable(value="barcodeId") String barcodeId, @RequestParam("image") MultipartFile file) throws IOException{
+        System.out.println("Hit!!!");
+        ProductTable product = productTableRepository.findByBarcodeId(barcodeId);
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        product.setImage(fileName);
+        productTableRepository.save(product);
+        String uploadDir = "productPhotos/" + barcodeId;
+        FileUploadUtil.saveFile(uploadDir, fileName, file);
+        return "Success";
     }
 
     // Api call for statistics

@@ -122,7 +122,6 @@ async function getBarcode(barcode){
 //Add new item to database
 //TODO add image
 async function createItem(barcode, quantity, itemName, brand, type, url, isVegetarian, isVegan){
-    console.log(barcode)
     //POST to inventory table
     addToInventoryTable(barcode, quantity)
     //POST to product table
@@ -142,8 +141,17 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
         .then(data=> {console.log('Success');})
         .catch((error)=>{ console.error('Error:', error);});
 
-
 }
+
+function addImage(barcode, image){
+    fetch('http://localhost:8080/addImage/'+barcode, {
+        body: image,
+        method:"PUT",
+    }).then(response => response.json())
+        .then(data=> {console.log('Success');})
+        .catch((error)=>{ console.error('Error:', error);});
+}
+
 
 //Calls API function To load Database Information into the table
 async function createInventoryTable(){
@@ -168,14 +176,12 @@ function popNewItemModal(){
     //API Hit
     getBarcode(barcode).then(
         data => {
-            console.log(data)
             if (data != "notFound"){
                 document.getElementById("newItem").style.display = "none";
                 //Update Quantity
                 getInventory().then(
                     allInventory=>{
                         for (i = 0; i<allInventory.length; i++){
-                            console.log(allInventory[i])
                             if (allInventory[i].barcodeId === barcode){
                                 //PUT
                                 let currQuantity = parseInt(allInventory[i].quantity) + parseInt(quantity);
@@ -292,7 +298,6 @@ function popRecountInventory(){
 }
 
 function popEditItem(barcode1, quantity){
-    console.log(barcode1)
     getBarcode(barcode1).then(
         data => {
             document.getElementById("editItem").style.display = "block";
@@ -335,11 +340,17 @@ async function submitNewItem(){
     let itemURL = document.getElementById("productURL").value;
     let vegan = document.getElementById("vegan").checked;
     let vegetarian = document.getElementById("vegetarian").checked;
+    let image = document.getElementById("prodImg").files[0];
+
+    let formData = new FormData()
+    formData.append('image', image)
 
     document.getElementById("newItem").style.display = "none";
     //Call API Endpoint
     await createItem(barcode, newQuantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan)
     location.reload()
+    addImage(barcode, formData)
+
 }
 
 function editItem(){
