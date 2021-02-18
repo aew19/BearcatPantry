@@ -81,7 +81,6 @@ public class ProductTableController {
 
     @PutMapping("/addImage/{barcodeId}")
     public @ResponseBody String updateImage(@PathVariable(value="barcodeId") String barcodeId, @RequestParam("image") MultipartFile file) throws IOException{
-        System.out.println("Hit!!!");
         ProductTable product = productTableRepository.findByBarcodeId(barcodeId);
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         product.setImage(fileName);
