@@ -104,8 +104,7 @@ function addToInventoryTable(barcode, quantity){
         body: formBody,
         method:"POST",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-    }).then(response => response.json())
-        .then(data=> {console.log('Success');})
+    }).then(response => console.log("Success"))
         .catch((error)=>{ console.error('Error:', error);});
 }
 
@@ -137,18 +136,17 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
         body: prodFormBody,
         method:"POST",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-    }).then(response => response.json())
-        .then(data=> {addImage(barcode, formData)})
+    }).then(response =>  addImage(barcode, formData))
         .catch((error)=>{ console.error('Error:', error);});
 
 }
 
 function addImage(barcode, image){
+    alert("HIT!!!!!!!")
     fetch('http://localhost:8080/addImage/'+barcode, {
         body: image,
         method:"PUT",
-    }).then(response => response.json())
-        .then(data=> {console.log('Success');})
+    }).then(response => console.log('Success'))
         .catch((error)=>{ console.error('Error:', error);});
 }
 
