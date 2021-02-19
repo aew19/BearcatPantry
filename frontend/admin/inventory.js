@@ -246,6 +246,7 @@ function popCheckout(){
         document.getElementById("checkout").style.display = "block";
         let el_barcode = document.getElementById("checkoutItemBarcode")
         el_barcode.value = null
+        el_barcode.focus()
         divHousing = document.getElementById("checkoutItemList")
 
         checkout = true
@@ -261,16 +262,20 @@ function newLine(){
     // console.log(inputId);
     checkoutCounter += 1;
     let newBarcodeSlot = document.createElement("p");
-    let itemText = document.createTextNode(document.getElementById("checkoutItemBarcode").value);
-    newBarcodeSlot.appendChild(itemText);
-    // newBarcodeSlot.className = "form-control";
-    // newBarcodeSlot.id = "itemBarcode" + checkoutCounter;
-    // newBarcodeSlot.onchange = function(){newLine(newBarcodeSlot.id);};
-    divHousing.appendChild(newBarcodeSlot);
-    document.getElementById("checkoutItemBarcode").value = ""
-    // document.getElementById(inputId).disabled = true;
-
-
+    // let itemText = document.createTextNode(document.getElementById("checkoutItemBarcode").value);
+    let itemText = "";
+    getBarcode(document.getElementById("checkoutItemBarcode").value).then(
+        data => {
+            itemText = data.name;
+            let itemTextNode = document.createTextNode(itemText);
+            newBarcodeSlot.appendChild(itemTextNode);
+            // newBarcodeSlot.className = "form-control";
+            // newBarcodeSlot.id = "itemBarcode" + checkoutCounter;
+            // newBarcodeSlot.onchange = function(){newLine(newBarcodeSlot.id);};
+            divHousing.appendChild(newBarcodeSlot);
+            document.getElementById("checkoutItemBarcode").value = ""
+            // document.getElementById(inputId).disabled = true;
+        })
 }
 
 //This function pops the bulk scan modal
