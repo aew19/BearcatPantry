@@ -121,7 +121,7 @@ async function getBarcode(barcode){
 
 //Add new item to database
 //TODO add image
-async function createItem(barcode, quantity, itemName, brand, type, url, isVegetarian, isVegan){
+async function createItem(barcode, quantity, itemName, brand, type, url, isVegetarian, isVegan, formData){
     //POST to inventory table
     addToInventoryTable(barcode, quantity)
     //POST to product table
@@ -138,7 +138,7 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
         method:"POST",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
     }).then(response => response.json())
-        .then(data=> {console.log('Success');})
+        .then(data=> {addImage(barcode, formData)})
         .catch((error)=>{ console.error('Error:', error);});
 
 }
@@ -347,9 +347,9 @@ async function submitNewItem(){
 
     document.getElementById("newItem").style.display = "none";
     //Call API Endpoint
-    await createItem(barcode, newQuantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan)
+    await createItem(barcode, newQuantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan, formData)
     location.reload()
-    addImage(barcode, formData)
+
 
 }
 

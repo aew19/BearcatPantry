@@ -18,7 +18,6 @@ public class ProductTable {
     private boolean vegetarian;
     private boolean vegan;
     private Date scanDate;
-    @Column(nullable = true, length = 64)
     private String image;
     private String productURL;
     private boolean isActive;
