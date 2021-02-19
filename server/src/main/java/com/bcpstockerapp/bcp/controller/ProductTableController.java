@@ -82,15 +82,6 @@ public class ProductTableController {
 
     @PutMapping("/addImage/{barcodeId}")
     public @ResponseBody String updateImage(@PathVariable(value="barcodeId") String barcodeId, @RequestParam("file") MultipartFile file) throws ServiceException,IllegalStateException, IOException{
-//        System.out.println("HIT!!!");
-//        System.out.println(file);
-//        ProductTable product = productTableRepository.findByBarcodeId(barcodeId);
-//        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-//        System.out.println(fileName);
-//        product.setImage(fileName);
-//        productTableRepository.save(product);
-//        String uploadDir = "productPhotos/" + barcodeId;
-//        FileUploadUtil.saveFile(uploadDir, fileName, file);
         try{
             //Add Image Reference to Database
             ProductTable product = productTableRepository.findByBarcodeId(barcodeId);

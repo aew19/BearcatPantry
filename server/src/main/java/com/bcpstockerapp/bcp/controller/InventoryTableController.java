@@ -53,6 +53,41 @@ public class InventoryTableController {
         }
     }
 
+    @PutMapping("/increaseInventory")
+    public @ResponseBody ResponseEntity<String> increaseInventory(@RequestParam String[] barcodeIds){
+        try{
+            for (int i = 0; i < barcodeIds.length; i++){
+                InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeIds[i]);
+                Integer currentQuantity = inventory.getQuantity();
+                inventory.setQuantity(currentQuantity + 1);
+                inventoryTableRepository.save(inventory);
+            }
+            return new ResponseEntity<>("Success", HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/decreaseInventory")
+    public @ResponseBody ResponseEntity<String> decreaseInventory(@RequestParam String[] barcodeIds){
+        try{
+            for (int i = 0; i < barcodeIds.length; i++){
+                InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeIds[i]);
+                Integer currentQuantity = inventory.getQuantity();
+                if (currentQuantity == 1){
+                    inventoryTableRepository.delete(inventory);
+                }else{
+                    inventory.setQuantity(currentQuantity - 1);
+                    inventoryTableRepository.save(inventory);
+                }
+
+            }
+            return new ResponseEntity<>("Success", HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @PutMapping("/updateInventory/{barcodeId}")
     public @ResponseBody ResponseEntity<String> updateQuantity(@PathVariable(value="barcodeId") String barcodeId,@RequestParam Integer quantity){
