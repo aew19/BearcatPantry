@@ -31,6 +31,7 @@ $(function(){
 let newItem = null
 let scanItem = null
 let checkout = null
+let checkoutItemList = [];
 let scanmulti = null
 let recountInv = null;
 let delItem = null;
@@ -272,19 +273,16 @@ function newScannedItem(){
 
 function newLine(){
     let newBarcodeSlot = document.createElement("p");
-    // let itemText = document.createTextNode(document.getElementById("checkoutItemBarcode").value);
     let itemText = "";
+    checkoutItemList.push(document.getElementById("checkoutItemBarcode").value);
     getBarcode(document.getElementById("checkoutItemBarcode").value).then(
         data => {
             itemText = data.name;
             let itemTextNode = document.createTextNode(itemText);
             newBarcodeSlot.appendChild(itemTextNode);
-            // newBarcodeSlot.className = "form-control";
-            // newBarcodeSlot.id = "itemBarcode" + checkoutCounter;
-            // newBarcodeSlot.onchange = function(){newLine(newBarcodeSlot.id);};
+
             divHousing.appendChild(newBarcodeSlot);
             document.getElementById("checkoutItemBarcode").value = ""
-            // document.getElementById(inputId).disabled = true;
         })
 }
 
