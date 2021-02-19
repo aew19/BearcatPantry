@@ -12,7 +12,7 @@
     <artifactId>demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>bcp</name>
-    <description>Bearcats Pantry Stocker Application</description>
+    <description>Bearcat Pantry Stocker Application</description>
     <packaging>war</packaging>
 
     <properties>
@@ -51,7 +51,7 @@
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-core</artifactId>
-            <version>9.0.33</version>
+            <version>9.0.41</version>
         </dependency>
     </dependencies>
 

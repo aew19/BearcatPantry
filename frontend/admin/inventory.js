@@ -381,12 +381,12 @@ async function submitNewItem(){
     let image = document.getElementById("prodImg").files[0];
 
     let formData = new FormData()
-    formData.append('image', image)
+    formData.append('file', image)
 
     document.getElementById("newItem").style.display = "none";
     //Call API Endpoint
     await addToInventoryTable(barcode, newQuantity)
-    await createItem(barcode, newQuantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan, formData)
+    await createItem(barcode, newQuantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan, image)
     await addImage(barcode,formData)
     location.reload()
 

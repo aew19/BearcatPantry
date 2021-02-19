@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +18,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 public class ProductTableController {
+
     @Autowired
     private ProductTableRepository productTableRepository;
 
@@ -81,15 +81,29 @@ public class ProductTableController {
     }
 
     @PutMapping("/addImage/{barcodeId}")
-    public @ResponseBody String updateImage(@PathVariable(value="barcodeId") String barcodeId, @RequestParam("image") MultipartFile file) throws ServiceException,IllegalStateException, IOException{
-        System.out.println("HIT!!!");
-        ProductTable product = productTableRepository.findByBarcodeId(barcodeId);
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        System.out.println(fileName);
-        product.setImage(fileName);
-        productTableRepository.save(product);
-        String uploadDir = "productPhotos/" + barcodeId;
-        FileUploadUtil.saveFile(uploadDir, fileName, file);
+    public @ResponseBody String updateImage(@PathVariable(value="barcodeId") String barcodeId, @RequestParam("file") MultipartFile file) throws ServiceException,IllegalStateException, IOException{
+//        System.out.println("HIT!!!");
+//        System.out.println(file);
+//        ProductTable product = productTableRepository.findByBarcodeId(barcodeId);
+//        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+//        System.out.println(fileName);
+//        product.setImage(fileName);
+//        productTableRepository.save(product);
+//        String uploadDir = "productPhotos/" + barcodeId;
+//        FileUploadUtil.saveFile(uploadDir, fileName, file);
+        try{
+            //Add Image Reference to Database
+            ProductTable product = productTableRepository.findByBarcodeId(barcodeId);
+            product.setImage(StringUtils.cleanPath(file.getOriginalFilename()));
+            productTableRepository.save(product);
+            //Save Image In Directory
+            byte[] bytes = file.getBytes();
+            String uploadDir = "productPhotos/" + barcodeId;
+            FileUploadUtil.saveFile(uploadDir, StringUtils.cleanPath(file.getOriginalFilename()), file);
+        }catch (IOException e){
+            System.out.println("Error Uploading Image: " + e);
+        }
+
         return "Success";
     }
 
