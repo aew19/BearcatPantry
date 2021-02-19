@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+</head>
+<body>
+<!-- Scan Item Modal -->
+<div class="modal" id="checkout" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Checkout</h5>
+                <button type="button" class="close" onclick="closePopup('checkoutModal')" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="text-align: center">
+                <h6>Please scan all items the customer would like to take home with them! Then press submit to confirm their order and update
+                the inventory!</h6>
+                <form style="padding-top:1rem;display: inline-block">
+                    <div id="itemList" style="padding-bottom: 10px;" class = "form-group">
+
+                    </div>
+                    <div id="initialItem" style="padding-bottom: 10px;" class = "form-group">
+                        <input class="form-control" id="checkoutItemBarcode" placeholder="Item Barcode" onchange="newLine('itemBarcode')">
+                    </div>
+                </form>
+                <button type="submit" style="margin: .5rem auto;display:block; width:30%" class="btn btn-red" onclick="popNewItemModal()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

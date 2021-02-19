@@ -16,6 +16,10 @@ $(function(){
 });
 
 $(function(){
+    $("#checkoutModal").load("checkoutModal.html");
+});
+
+$(function(){
     $("#recountInventoryModal").load("recountInventoryModal.html");
 });
 
@@ -26,9 +30,12 @@ $(function(){
 //Global Variables
 let newItem = null
 let scanItem = null
+let checkout = null
 let scanmulti = null
 let recountInv = null;
 let delItem = null;
+let divHousing = null;
+let checkoutCounter = 0;
 
 //API FUNCTIONS
 //JOIN table for the inventory
@@ -207,6 +214,7 @@ function popNewItemModal(){
 function closePopup(element){
     document.getElementById(element).style.display = "none";
     location.reload()
+    checkoutCounter = 0;
     document.getElementById('page-mask').style.position = "unset";
 }
 
@@ -230,6 +238,40 @@ function popScan(){
     }
 }
 
+//This function pops the checkout modal
+function popCheckout(){
+    let request = new XMLHttpRequest();
+    if(checkout === null){
+        document.getElementById("checkout").style.display = "block";
+        let el_barcode = document.getElementById("checkoutItemBarcode")
+        el_barcode.value = null
+        divHousing = document.getElementById("itemList")
+
+        scanItem = true
+        document.getElementById('page-mask').style.position = "fixed";
+    } else {
+        document.getElementById("checkout").style.display = "none";
+        scanItem = null
+        document.getElementById('page-mask').style.position = "unset";
+    }
+}
+
+function newLine(){
+    // console.log(inputId);
+    checkoutCounter += 1;
+    let newBarcodeSlot = document.createElement("p");
+    let itemText = document.createTextNode(document.getElementById("checkoutItemBarcode").value);
+    newBarcodeSlot.appendChild(itemText);
+    // newBarcodeSlot.className = "form-control";
+    // newBarcodeSlot.id = "itemBarcode" + checkoutCounter;
+    // newBarcodeSlot.onchange = function(){newLine(newBarcodeSlot.id);};
+    divHousing.appendChild(newBarcodeSlot);
+    document.getElementById("checkoutItemBarcode").value = ""
+    // document.getElementById(inputId).disabled = true;
+
+
+}
+
 //This function pops the bulk scan modal
 function popMultiScan(){
     let request = new XMLHttpRequest();
@@ -244,6 +286,7 @@ function popMultiScan(){
         scanmulti = null
     }
 }
+
 
 function loadBulkScan(bulkitems){
     const table = document.getElementById("bulkScanTable");
