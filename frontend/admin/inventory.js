@@ -226,6 +226,7 @@ function popScan(){
     if(scanItem === null){
         document.getElementById("scanItem").style.display = "block";
         let el_barcode = document.getElementById("itemBarcode")
+        el_barcode.focus()
         el_barcode.value = null
         let el_quantity = document.getElementById("quantity")
         el_quantity.value = null
@@ -245,9 +246,9 @@ function popCheckout(){
         document.getElementById("checkout").style.display = "block";
         let el_barcode = document.getElementById("checkoutItemBarcode")
         el_barcode.value = null
-        divHousing = document.getElementById("itemList")
+        divHousing = document.getElementById("checkoutItemList")
 
-        scanItem = true
+        checkout = true
         document.getElementById('page-mask').style.position = "fixed";
     } else {
         document.getElementById("checkout").style.display = "none";

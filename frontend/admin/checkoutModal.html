@@ -19,13 +19,13 @@
                 <h6>Please scan all items the customer would like to take home with them! Then press submit to confirm their order and update
                 the inventory!</h6>
                 <form style="padding-top:1rem;display: inline-block">
-                    <div id="itemList" style="padding-bottom: 10px;" class = "form-group">
-
-                    </div>
+                    <div id="checkoutItemList" style="padding-bottom: 10px;" class = "form-group"></div>
                     <div id="initialItem" style="padding-bottom: 10px;" class = "form-group">
                         <input class="form-control" id="checkoutItemBarcode" placeholder="Item Barcode" onchange="newLine('itemBarcode')">
+                        <input type="text" style="display: none;" />
                     </div>
                 </form>
+<!--                Change the onclick to be an update that updates inventory.-->
                 <button type="submit" style="margin: .5rem auto;display:block; width:30%" class="btn btn-red" onclick="popNewItemModal()">Submit</button>
             </div>
         </div>
