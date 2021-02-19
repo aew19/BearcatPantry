@@ -6,7 +6,7 @@
 </head>
 <body>
 <!-- Scan Item Modal -->
-<div class="modal" id="checkout" tabindex="-1" role="dialog">
+<div class="modal" id="checkout" tabindex="-1" role="dialog" ">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -18,9 +18,9 @@
             <div class="modal-body" style="text-align: center">
                 <h6>Please scan all items the customer would like to take home with them! Then press submit to confirm their order and update
                 the inventory!</h6>
-                <form style="padding-top:1rem;display: inline-block">
-                    <div id="checkoutItemList" style="padding-bottom: 10px;" class = "form-group"></div>
-                    <div id="initialItem" style="padding-bottom: 10px;" class = "form-group">
+                <form style="padding-top:1rem;display: inline-block;">
+                    <div id="checkoutItemList" style="padding-bottom: 10px;overflow-y: auto;max-height: 300px;" class = "form-group"></div>
+                    <div id="initialItem" style="padding-bottom: 10px;padding-top:10px" class = "form-group">
                         <input class="form-control" id="checkoutItemBarcode" placeholder="Item Barcode" onchange="newLine('itemBarcode')">
                         <input type="text" style="display: none;" />
                     </div>
