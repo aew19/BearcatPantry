@@ -85,12 +85,10 @@ function deleteInventory(barcode){
     fetch('http://localhost:8080/deleteInventory/'+ barcode, {
         method:"DELETE",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-    }).then(response => response.json())
-        .then(data=> {console.log('Success');})
-        .catch((error)=>{ console.error('Error:', error);});
+    }).then(response => console.log(response.json()));
 }
 
-function addToInventoryTable(barcode, quantity){
+async function addToInventoryTable(barcode, quantity){
     //POST to inventory table
     let data = {'barcodeId':barcode, 'quantity':quantity}
     let formBody =[];
@@ -100,12 +98,11 @@ function addToInventoryTable(barcode, quantity){
         formBody.push(encodedKey+"="+encodedValue);
     }
     formBody = formBody.join("&");
-    fetch('http://localhost:8080/inventory', {
-        body: formBody,
+    let response = fetch('http://localhost:8080/inventory', {
         method:"POST",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-    }).then(response => console.log("Success"))
-        .catch((error)=>{ console.error('Error:', error);});
+        body: formBody
+    })
 }
 
 //Calls barcode api endpoint
@@ -121,8 +118,6 @@ async function getBarcode(barcode){
 //Add new item to database
 //TODO add image
 async function createItem(barcode, quantity, itemName, brand, type, url, isVegetarian, isVegan, formData){
-    //POST to inventory table
-    addToInventoryTable(barcode, quantity)
     //POST to product table
     let prodData = {'barcodeId':barcode,'productTitle':itemName, 'foodType':type, 'brand':brand, 'productURL':url, 'vegetarian':isVegetarian, 'vegan':isVegan}
     let prodFormBody =[];
@@ -132,22 +127,23 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
         prodFormBody.push(encodedProdKey+"="+encodedProdValue);
     }
     prodFormBody = prodFormBody.join("&");
-    fetch('http://localhost:8080/items', {
+    let response = fetch('http://localhost:8080/items', {
         body: prodFormBody,
         method:"POST",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-    }).then(response =>  addImage(barcode, formData))
-        .catch((error)=>{ console.error('Error:', error);});
+    })
+
+
+
+
 
 }
 
-function addImage(barcode, image){
-    alert("HIT!!!!!!!")
-    fetch('http://localhost:8080/addImage/'+barcode, {
+async function addImage(barcode, image){
+    let response = fetch('http://localhost:8080/addImage/'+barcode, {
         body: image,
         method:"PUT",
-    }).then(response => console.log('Success'))
-        .catch((error)=>{ console.error('Error:', error);});
+    })
 }
 
 
@@ -345,7 +341,9 @@ async function submitNewItem(){
 
     document.getElementById("newItem").style.display = "none";
     //Call API Endpoint
+    await addToInventoryTable(barcode, newQuantity)
     await createItem(barcode, newQuantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan, formData)
+    await addImage(barcode,formData)
     location.reload()
 
 

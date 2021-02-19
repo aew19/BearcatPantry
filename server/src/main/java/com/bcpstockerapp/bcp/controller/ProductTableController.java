@@ -3,6 +3,7 @@ package com.bcpstockerapp.bcp.controller;
 import com.bcpstockerapp.bcp.model.ProductTable;
 import com.bcpstockerapp.bcp.repository.ProductTableRepository;
 import com.bcpstockerapp.bcp.utilities.FileUploadUtil;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -80,10 +81,9 @@ public class ProductTableController {
     }
 
     @PutMapping("/addImage/{barcodeId}")
-    public @ResponseBody String updateImage(@PathVariable(value="barcodeId") String barcodeId, @RequestParam("image") MultipartFile file) throws IOException{
+    public @ResponseBody String updateImage(@PathVariable(value="barcodeId") String barcodeId, @RequestParam("image") MultipartFile file) throws ServiceException,IllegalStateException, IOException{
         System.out.println("HIT!!!");
         ProductTable product = productTableRepository.findByBarcodeId(barcodeId);
-        System.out.print(product);
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         System.out.println(fileName);
         product.setImage(fileName);
