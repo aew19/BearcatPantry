@@ -214,7 +214,6 @@ function popNewItemModal(){
 function closePopup(element){
     document.getElementById(element).style.display = "none";
     location.reload()
-    checkoutCounter = 0;
     document.getElementById('page-mask').style.position = "unset";
 }
 
@@ -241,7 +240,6 @@ function popScan(){
 
 //This function pops the checkout modal
 function popCheckout(){
-    let request = new XMLHttpRequest();
     if(checkout === null){
         document.getElementById("checkout").style.display = "block";
         let el_barcode = document.getElementById("checkoutItemBarcode")
@@ -257,10 +255,22 @@ function popCheckout(){
         document.getElementById('page-mask').style.position = "unset";
     }
 }
+//Function that looks at multiple items button and reads the barcode scanned
+function newScannedItem(){
+    let newScanSlot = document.createElement("p");
+    let scanItemText = "";
+    getBarcode(document.getElementById("multiScanBarcode").value).then(
+        data => {
+            scanItemText = data.name;
+            let itemTextNode = document.createTextNode(scanItemText);
+            newScanSlot.appendChild(itemTextNode);
+            divHousing.appendChild(newScanSlot);
+            document.getElementById("multiScanBarcode").value = ""
+        })
+}
+
 
 function newLine(){
-    // console.log(inputId);
-    checkoutCounter += 1;
     let newBarcodeSlot = document.createElement("p");
     // let itemText = document.createTextNode(document.getElementById("checkoutItemBarcode").value);
     let itemText = "";
@@ -280,42 +290,28 @@ function newLine(){
 
 //This function pops the bulk scan modal
 function popMultiScan(){
-    let request = new XMLHttpRequest();
-    document.getElementById("scanItem").style.display = "none";
     if(scanmulti === null){
-        document.getElementById("multipleItems").style.display = "block";
-        scanmulti = true;
+
+        document.getElementById("bulkScan").style.display="block";
+
+        document.getElementById("bulkScan").style.display = "block";
+        let el_barcode = document.getElementById("multiScanBarcode")
+        el_barcode.value = null
+        el_barcode.focus()
+        divHousing = document.getElementById("multiScanList")
+
+        scanmulti = true
         document.getElementById('page-mask').style.position = "fixed";
     } else {
-        document.getElementById("multipleItems").style.display = "none";
-        document.getElementById('page-mask').style.position = "unset";
+        document.getElementById("bulkScan").style.display = "none";
         scanmulti = null
+        document.getElementById('page-mask').style.position = "unset";
     }
 }
 
-
-function loadBulkScan(bulkitems){
-    const table = document.getElementById("bulkScanTable");
-    let counter = 0;
-    for (let element of bulkitems) {
-        let row = table.insertRow();
-        //item #
-        let cell = row.insertCell();
-        counter++;
-        let text = document.createTextNode(counter);
-        cell.appendChild(text);
-
-        //name
-        cell = row.insertCell();
-        text = document.createTextNode(element.item);
-        cell.appendChild(text);
-
-    }
-}
 
 //This function pops the bulk scan modal
 function popNewItem(){
-    let request = new XMLHttpRequest();
     document.getElementById("scanItem").style.display = "none";
     if(scanmulti === null){
         document.getElementById("newItem").style.display = "block";
@@ -327,7 +323,6 @@ function popNewItem(){
 }
 
 function popRecountInventory(){
-    let request = new XMLHttpRequest();
     document.getElementById("scanItem").style.display = "none";
     if(recountInv === null){
         document.getElementById("recountInventory").style.display = "block";
@@ -542,4 +537,4 @@ function readURL(input) {
 }
 
 createInventoryTable()
-// loadBulkScan(bulkitems);
+
