@@ -41,17 +41,36 @@ a {
     background-color: #1b6ec2;
     border-color: #1861ac;
 }
-.btn-red {
-    color: #fff;
-    background-color: #e00122;
-    border-color: #dc3545;
-    margin: 5px;
-    box-shadow: none !important;
-}
+
 .btn-reject:hover,
 .btn-green:hover,
 .btn-red:hover {
     color: black;
+}
+.btn-red {
+    color: #fff;
+    background-color: #e00122;
+    border-color: #e00122;
+    margin: 5px;
+    box-shadow: none !important;
+}
+.btn-yellow {
+    background-color: #fefb64;
+    border-color: #fefb64;
+    margin: 5px;
+    box-shadow: none !important;
+    font-weight: 600;
+    pointer-events: none;
+    width:100%
+}
+.btn-orange {
+    background-color: #ff6624;
+    border-color: #ff6624;
+    margin: 5px;
+    box-shadow: none !important;
+    font-weight: 600;
+    pointer-events: none;
+    width:100%
 }
 .btn-reject {
     color: #fff;
@@ -230,4 +249,195 @@ body {
     font-size: 1em;
     font-family: sans-serif !important;
     padding: 0px 25px 0px 5px;
+}
+
+.modal-header {
+    background-color: #e00122 !important;
+    color:#fff;
+}
+
+.modal-title {
+    line-height: 1.0;
+    font-size: 1.5rem;
+}
+
+.modal-body {
+    padding: 1rem 1rem 0rem 1rem;
+}
+
+.modal-body h6 {
+    font-weight:normal !important;
+}
+
+.close {
+    color: #fff;
+    text-shadow: 0 1px 0 black;
+    opacity: 1.0;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.form-group {
+    margin-bottom: 0 !important;
+}
+
+.form-check {
+    margin-top: 10px;
+    padding-lefT: unset;
+}
+
+.form-control {
+    padding: 1.375rem .75rem;
+}
+
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+  position: absolute;
+  left: -9999px;
+}
+
+[type="checkbox"]:not(:checked)+label,
+[type="checkbox"]:checked+label {
+    position: relative;
+}
+
+[type="checkbox"]:not(:checked)+label:before,
+[type="checkbox"]:checked+label:before {
+    content: '';
+    position: absolute;
+    left: -22px;
+    top: -5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+    background-color: #e00122;
+}
+
+
+[type="checkbox"]:not(:checked)+label:after,
+[type="checkbox"]:checked+label:after {
+    content: '\2714';
+    position: absolute;
+    left: -18px;
+    font-size: 15px;
+    line-height: 0.8;
+    color: #fff;
+    transition: all .1s;
+}
+
+[type="checkbox"]:not(:checked)+label:after {
+    transform: scale(0);
+}
+
+[type="checkbox"]:checked+label:after {
+    transform: scale(1);
+}
+
+.grid-container {
+    display: grid;
+    grid-column-gap: 10px;
+    padding: 10px;
+    margin: 0 10px 0 10px;
+}
+
+.grid-container > div {
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+}
+
+.newmodal1,
+.newmodal2 {
+    padding-top: 0px !important;
+}
+
+.newmodal3 {
+    grid-row-start: 1;
+    grid-row-end: 5;
+    grid-column-start: 3;
+    grid-column-end: 4;
+    padding-top: 10px !important;
+    border: 1px solid #e00122;
+    display:block !important;
+}
+
+
+.newmodal5,
+.newmodal6 {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.newmodal9 {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    margin-top: 1rem;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.file-upload {
+    position: relative;
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.form-control {
+    border: 1px solid #e00122;
+}
+
+.shopping-image {
+    max-width: 152px;
+    max-height: 152px;
+    margin-bottom: 10px;
+}
+
+.select {
+    width:100%;
+    border: 1px solid #e00122;
+    height: 2.85rem;
+    padding: .375rem .75rem;
+    color: #495057;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.date-select{
+    border: 1px solid #e00122;
+    height: 2.85rem;
+    padding: .375rem .75rem;
+    color: #495057;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.label {
+    padding-left: .5rem;
+}
+
+.form-check [type="checkbox"]:not(:checked)+label:before,
+.form-check [type="checkbox"]:checked+label:before {
+    top: 0px !important;
+}
+
+.scrollingTable {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 400px;
+}
+
+#page-mask {
+    position: unset;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 2;
 }

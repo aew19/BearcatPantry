@@ -1,14 +1,14 @@
 let transactions = [
-    { Date: "11/03/2020", Name: "Karl Dierking", Items: ""},
-    { Date: "11/03/2020", Name: "Jake van Meter", Items: ""},
-    { Date: "11/02/2020", Name: "Daniel Cummins", Items: ""},
-    { Date: "11/02/2020", Name: "Isaiah Corso-Phinney", Items: ""},
-    { Date: "11/01/2020", Name: "Logan Lindsay", Items: ""},
-    { Date: "11/01/2020", Name: "Sivani Alla", Items: ""},
-    { Date: "10/29/2020", Name: "Teja Bollimunta", Items: ""},
-    { Date: "10/29/2020", Name: "Connor Herbert", Items: ""},
-    { Date: "10/27/2020", Name: "Isaac Smitherman", Items: ""},
-    { Date: "10/27/2020", Name: "Joshua St. Pierre", Items: ""}
+    { Date: "11/03/2020", Name: "Karl Dierking", Items: "", Status: 3 },
+    { Date: "11/03/2020", Name: "Jake van Meter", Items: "", Status: 3 },
+    { Date: "11/02/2020", Name: "Daniel Cummins", Items: "", Status: 3 },
+    { Date: "11/02/2020", Name: "Isaiah Corso-Phinney", Items: "", Status: 2 },
+    { Date: "11/01/2020", Name: "Logan Lindsay", Items: "", Status: 3 },
+    { Date: "11/01/2020", Name: "Sivani Alla", Items: "", Status: 2 },
+    { Date: "10/29/2020", Name: "Teja Bollimunta", Items: "", Status: 2 },
+    { Date: "10/29/2020", Name: "Connor Herbert", Items: "", Status: 2 },
+    { Date: "10/27/2020", Name: "Isaac Smitherman", Items: "", Status: 3 },
+    { Date: "10/27/2020", Name: "Joshua St. Pierre", Items: "", Status: 3 }
 ];
 
 $(function () {
@@ -46,7 +46,15 @@ function generateTable(table, transactions_data) {
                 cell.innerHTML = "<input type=\"button\" class=\"btn btn-red\" value=\"See Items\" id=\"Btn"+counter+"\" onclick = \"popViewTransaction(this.id)\">";
                 counter++;
             }
-            cell.appendChild(text);
+            else if (element[key] == 3) {
+                cell.innerHTML = "<input type=\"button\" class=\"btn btn-yellow\" value=\"Ready for Delivery\">";
+            }
+            else if (element[key] == 2) {
+                cell.innerHTML = "<input type=\"button\" class=\"btn btn-orange\" value=\"Ready for Pick-Up\">";
+            }
+            else{
+                cell.appendChild(text);
+            }        
         }
     }
 }

@@ -1,65 +1,62 @@
 let orders = [
-    { Date: "11/04/2020", Name: "Karl Dierking", Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Ashley Wilhelm", Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Daniel Cummins",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Isaiah Corso-Phinney",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Logan Lindsay",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Sivani Alla",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Teja Bollimunta",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Connor Herbert",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Isaac Smitherman",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Joshua St. Pierre",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Teja Bollimunta",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Connor Herbert",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "10/29/2020", Name: "Isaac Smitherman",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "10/28/2020", Name: "Joshua St. Pierre",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Karl Dierking", Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Jake van Meter", Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Daniel Cummins",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Isaiah Corso-Phinney",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Logan Lindsay",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Sivani Alla",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Teja Bollimunta",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Connor Herbert",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Isaac Smitherman",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Joshua St. Pierre",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Teja Bollimunta",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Connor Herbert",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "10/29/2020", Name: "Isaac Smitherman",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "10/28/2020", Name: "Joshua St. Pierre",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Karl Dierking", Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Jake van Meter", Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Daniel Cummins",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Isaiah Corso-Phinney",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Logan Lindsay",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Sivani Alla",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Teja Bollimunta",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Connor Herbert",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Isaac Smitherman",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Joshua St. Pierre",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Teja Bollimunta",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Connor Herbert",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "10/29/2020", Name: "Isaac Smitherman",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "10/28/2020", Name: "Joshua St. Pierre",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Karl Dierking", Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Jake van Meter", Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Daniel Cummins",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Isaiah Corso-Phinney",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Logan Lindsay",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Sivani Alla",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Teja Bollimunta",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Connor Herbert",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Isaac Smitherman",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Joshua St. Pierre",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Teja Bollimunta",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Connor Herbert",  Type: "Pick-up", Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "10/29/2020", Name: "Isaac Smitherman",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "10/28/2020", Name: "Joshua St. Pierre",  Type: "Delivery", Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"}
+    { Date: "11/04/2020", Name: "Karl Dierking", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Ashley Wilhelm", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Daniel Cummins", Email: "lindsaln@mail.uc.edu",  Type: 3, Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Isaiah Corso-Phinney", Email: "lindsaln@mail.uc.edu",  Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Logan Lindsay", Email: "lindsaln@mail.uc.edu",  Type: 2, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Sivani Alla", Email: "lindsaln@mail.uc.edu",  Type: 3, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/03/2020", Name: "Teja Bollimunta", Email: "lindsaln@mail.uc.edu",  Type: 2, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/03/2020", Name: "Connor Herbert", Email: "lindsaln@mail.uc.edu",  Type: 3, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/03/2020", Name: "Isaac Smitherman", Email: "lindsaln@mail.uc.edu",  Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/02/2020", Name: "Joshua St. Pierre", Email: "lindsaln@mail.uc.edu",  Type: 2, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/02/2020", Name: "Teja Bollimunta", Email: "lindsaln@mail.uc.edu",  Type: 2, Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/02/2020", Name: "Connor Herbert", Email: "lindsaln@mail.uc.edu",  Type: 2, Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "10/29/2020", Name: "Isaac Smitherman", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "10/28/2020", Name: "Joshua St. Pierre", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Karl Dierking", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Jake van Meter", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Daniel Cummins", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Isaiah Corso-Phinney", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Logan Lindsay", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Sivani Alla", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/03/2020", Name: "Teja Bollimunta", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/03/2020", Name: "Connor Herbert", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/03/2020", Name: "Isaac Smitherman", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/02/2020", Name: "Joshua St. Pierre", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/02/2020", Name: "Teja Bollimunta", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/02/2020", Name: "Connor Herbert", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "10/29/2020", Name: "Isaac Smitherman", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "10/28/2020", Name: "Joshua St. Pierre", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Karl Dierking", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Jake van Meter", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Daniel Cummins", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Isaiah Corso-Phinney", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Logan Lindsay", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Sivani Alla", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/03/2020", Name: "Teja Bollimunta", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/03/2020", Name: "Connor Herbert", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/03/2020", Name: "Isaac Smitherman", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/02/2020", Name: "Joshua St. Pierre", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/02/2020", Name: "Teja Bollimunta", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/02/2020", Name: "Connor Herbert", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "10/29/2020", Name: "Isaac Smitherman", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "10/28/2020", Name: "Joshua St. Pierre", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Karl Dierking", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Jake van Meter", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Daniel Cummins", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Isaiah Corso-Phinney", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Logan Lindsay", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/04/2020", Name: "Sivani Alla", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/03/2020", Name: "Teja Bollimunta", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/03/2020", Name: "Connor Herbert", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/03/2020", Name: "Isaac Smitherman", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/02/2020", Name: "Joshua St. Pierre", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
+    { Date: "11/02/2020", Name: "Teja Bollimunta", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "11/02/2020", Name: "Connor Herbert", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
+    { Date: "10/29/2020", Name: "Isaac Smitherman", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
+    { Date: "10/28/2020", Name: "Joshua St. Pierre", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"}
 ]
 
-$(function(){
-    $("#navBarAdmin").load("navBarAdmin.html");
-});
 
 $(function () {
     $('#orders_table').DataTable({
@@ -106,6 +103,12 @@ function generateTable(table, orders_data) {
                 cell.innerHTML = "<input type=\"button\" class=\"btn btn-green\" value=\"Confirm\" id=\"ConfirmBtn"+counter+"\" onclick = \"popViewTransaction(this.id)\"><input type=\"button\" class=\"btn btn-reject\" value=\"Decline\" id=\"DenyBtn"+counter+"\" onclick = \"popViewTransaction(this.id)\">";
                 counter++;
             }
+            else if (element[key] == 3) {
+                cell.innerHTML = "<input type=\"button\" class=\"btn btn-yellow\" value=\"Delivery\">";
+            }
+            else if (element[key] == 2) {
+                cell.innerHTML = "<input type=\"button\" class=\"btn btn-orange\" value=\"Pick-Up\">";
+            }
             else {
                 cell.appendChild(text);
             }
@@ -119,8 +122,10 @@ function popViewTransaction(clicked_id){
         document.getElementById("viewOrder").style.display = "block";
         closeModal = true
         document.getElementById("modal-body").innerHTML = clicked_id;
+        document.getElementById('page-mask').style.position = "fixed";
     } else {
         document.getElementById("viewOrder").style.display = "none";
+        document.getElementById('page-mask').style.position = "unset";
         closeModal = null
     }
 }

@@ -2,34 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Scan Multiple Items</title>
 </head>
 <body>
-<!-- Scan Multiple Items Modal -->
-<div class="modal" id="multipleItems" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Scan Items!</h5>
-                <button type="button" class="close" onclick="popMultiScan()" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="form-inline">
-                    <div style="padding-right:10px; padding-bottom: 10px;"class = "form-group">
-                        <input class="form-control" id="barcode" placeholder="Scan Item">
-                    </div>
-                    <div style="padding-bottom: 10px;"pclass = "form-group">
-                        <input type="number" onkeypress="return event.charCode >= 48" min="1" class="form-control" id="quantity" placeholder="Quantity">
-                    </div>
-                </form>
-                <div style="text-align: left;">
-                    <button type="submit" class="btn btn-red" onclick="popMultiScan()">Submit</button>
+<!-- Scan Item Modal -->
+<div class="modal" id="bulkScan" tabindex="-1" role="dialog">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Checkout</h5>
+            <button type="button" class="close" onclick="closePopup('checkoutModal')" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" style="text-align: center">
+            <h6>Scan All Items You wish to add to the database</h6>
+            <form style="padding-top:1rem;display: inline-block;">
+                <div id="multiScanList" style="padding-bottom: 10px;overflow-y: auto;max-height: 300px;" class = "form-group"></div>
+                <div id="initialItem" style="padding-bottom: 10px;padding-top:10px" class = "form-group">
+                    <input class="form-control" id="multiScanBarcode" placeholder="Item Barcode" onchange="newScannedItem()">
+                    <input type="text" style="display: none;" />
                 </div>
-            </div>
+            </form>
+            <!--                Change the onclick to be an update that updates inventory.-->
+            <button type="submit" style="margin: .5rem auto;display:block; width:30%" class="btn btn-red" onclick="bulkUpdateQuantities()">Submit</button>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

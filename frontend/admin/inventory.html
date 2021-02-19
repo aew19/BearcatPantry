@@ -14,108 +14,37 @@
     <title>Inventory</title>
 </head>
 <body>
-    <div id="navBarAdmin"></div>
     <div style="padding: 0px 15px;">
         <h2>Inventory</h2>
         <button class="btn btn-red" onclick = "popScan()">Scan Item</button>
         <button class="btn btn-red" onclick="popMultiScan()">Scan Multiple Items</button>
         <a href='' id = "csv" onClick="exportCSV(this)" class="btn btn-red">Export Information(csv)</a>
-        <button class="btn btn-red">Re-count Inventory</button>
-    </div>
-    <!-- Scan Item Modal -->
-    <div class="modal" id="scanItem" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Scan Item</h5>
-                    <button type="button" class="close" onclick="closePopup('scanItem')" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form class="form-inline">
-                        <div style="padding-right:10px; padding-bottom: 10px;"class = "form-group">
-                            <input class="form-control" id="itemBarcode" placeholder="Item Barcode">
-                        </div>
-                        <div style="padding-bottom: 10px;"pclass = "form-group">
-                            <input type="number" onkeypress="return event.charCode >= 48" min="1" class="form-control" id="itemQuantity" placeholder="Quantity">
-                        </div>
-                    </form>
-                    <button type="submit" class="btn btn-red" onclick="popNewItemModal()">Submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- New Item Modal -->
-    <div class="modal" id="newItem" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Item not recognized please enter the following: </h5>
-                    <button type="button" class="close" onclick="closePopup('newItem')" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form class="form-inline">
-                        <input type="hidden" name="_token" value="">
-                        <div style="padding-right: 10px; padding-bottom: 10px;" class = "form-group">
-                            <input class="form-control" type="text" id="newItemBarcode" disabled="disabled">
-                        </div>
-                        <div style="padding-right: 10px; padding-bottom: 10px;" class = "form-group">
-                            <input class="form-control" type="text" id="newItemQuantity">
-                        </div>
-                        <div style="padding-right: 10px; padding-bottom: 10px;" class = "form-group">
-                            <input class="form-control" id="itemName" placeholder="Item Name">
-                        </div>
-                        <div style="padding-right: 10px; padding-bottom: 10px;" class="form-group">
-                            <input class="form-control" id="itemBrand" placeholder="Brand">
-                        </div>
-                        <div style="padding-right: 10px; padding-bottom: 10px;" class="form-group">
-                            <label for="type">Type:</label>
-                            <select id="type" name="type">
-                                <option value="Vegetable">Vegetable</option>
-                                <option value="Grain">Grains</option>
-                                <option value="Fruit">Fruit</option>
-                                <option value="Dairy">Dairy</option>
-                            </select>
-                        </div>
-                        <div style="padding-right: 10px; padding-bottom: 10px;" class="form-group">
-                            <input class="form-control" id="url" placeholder="Product Link(URL)">
-                        </div>
-                        <div style="padding-right: 10px; padding-bottom: 10px;" class="form-check">
-                            <input type="checkbox" class="form-check-input" id="vegetarian">
-                            <label style="padding-right: 20px;"for="vegetarian">Vegetarian</label>
-                            <input type="checkbox" class="form-check-input" id="vegan">
-                            <label for="vegetarian">Vegan</label>
-                        </div>
-                        <div style="padding-right: 10px; padding-bottom: 10px;" class="form-group">
-                            <label for="prodImg" accept='image/*'>Select Image: </label>
-                            <input type="file" id="prodImg" name="prodImg" accept="image/*">
-                        </div>
-                        <button type="submit" class="btn btn-red" onclick="submitNewItem()">Submit</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <button class="btn btn-red" onclick="popRecountInventory()">Recount Inventory</button>
+        <button class="btn btn-red" style="float: right" onclick = "popCheckout()">Checkout</button>
     </div>
     <div style="padding:0px 15px;" class="table-responsive-md">
         <table class = "table table-bordered" id = "pantrytable" width="100%" cellspacing="0">
             <thead style="text-align: center">
                 <tr>
-                    <th scope="col"></th>
+                    <th scope="col">Select</th>
                     <th scope="col">Item</th>
                     <th scope="col">Quantity</th>
                     <th scope="col">Type</th>
                     <th scope="col">Brand</th>
                     <th scope="col">Vegetarian/Vegan</th>
-                    <th scope="col">Best Buy Date</th>
                 </tr>
             </thead>
             <tbody style="text-align: center" id = "pantryStock"></tbody>
         </table>
     </div>
+    <div id="page-mask"></div>
+    <div id="scanItemModal"></div>
+    <div id="checkoutModal"></div>
+    <div id="newItemModal"></div>
     <div id="scanMultipleItemsModal"></div>
+    <div id="recountInventoryModal"></div>
+    <div id="deleteItemModal"></div>
+    <div id="editItemModal"></div>
     <script src="inventory.js"></script>
 </body>
 </html>

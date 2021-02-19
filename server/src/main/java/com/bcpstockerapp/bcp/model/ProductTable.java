@@ -1,10 +1,7 @@
 package com.bcpstockerapp.bcp.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 
@@ -21,15 +18,14 @@ public class ProductTable {
     private boolean vegetarian;
     private boolean vegan;
     private Date scanDate;
-    private String imageId;
-    private String imageFileName;
+    private String image;
     private String productURL;
     private boolean isActive;
 
 
     //Constructors
     public ProductTable(){}
-    public ProductTable(String barcodeId, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, Date scanDate, String imageId, String imageFileName, String productURL, boolean isActive){
+    public ProductTable(String barcodeId, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, Date scanDate, String image, String productURL, boolean isActive){
         this.barcodeId = barcodeId;
         this.productTitle = productTitle;
         this.foodType = foodType;
@@ -37,8 +33,7 @@ public class ProductTable {
         this.vegetarian = vegetarian;
         this.vegan = vegan;
         this.scanDate = scanDate;
-        this.imageId = imageId;
-        this.imageFileName = imageFileName;
+        this.image = image;
         this.productURL = productURL;
         this.isActive = isActive;
     }
@@ -60,8 +55,7 @@ public class ProductTable {
     public boolean getVegetarian(){ return this.vegetarian;}
     public boolean getVegan(){ return this.vegan;}
     public Date getAddedDate(){ return this.scanDate; }
-    public String getImageId(){return this.imageId;}
-    public String getImageFileName(){return this.imageFileName;}
+    public String getImage(){return this.image;}
     public String getProductURL(){return this.productURL;}
     public boolean getIsActive(){return this.isActive;}
 
@@ -78,8 +72,7 @@ public class ProductTable {
     public void setVegetarian(boolean vegetarian){ this.vegetarian = vegetarian;}
     public void setVegan(boolean vegan){ this.vegan = vegan;}
     public void setAddedDate(Date scanDate){this.scanDate = scanDate;}
-    public void setImageId(String imageId){this.imageId = imageId;}
-    public void setImageFileName(String imageFileName){this.imageFileName = imageFileName;}
+    public void setImage(String image){this.image = image;}
     public void setProductURL(String productURL){this.productURL = productURL;}
     public void setActive(boolean isActive){this.isActive = isActive;}
 }

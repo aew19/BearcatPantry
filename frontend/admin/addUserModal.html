@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add User</title>
+</head>
+    <body>
+        <!-- Add User Modal -->
+        <div class="modal" id="addUser" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add New User</h5>
+                        <button type="button" class="close" onclick="closePopup('addUser')" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h6>Please provide the following information to add a new user, then click submit.</h6>
+                        <form>
+                            <div class="grid-container">
+                                <input type="hidden" name="_token" value="">
+                                <div class="form-group" style="display:inline-flex">
+                                    <input style="height:2.85rem; width:48%; margin-right: 1rem;" class="form-control" id="AddfName" placeholder="First Name">
+                                    <input style="height:2.85rem; width:48%" class="form-control" id="AddlName" placeholder="Last Name">
+                                </div>
+                                <div class="form-group">
+                                    <input style="height:2.85rem" class="form-control" id="userMNum" placeholder="User M# (Ex. M12345678)">
+                                </div>
+                                <div class="form-group">
+                                    <select id="typeUser" name="type" class="select">
+                                        <option value="Default" selected>Permissions Level</option>
+                                        <option value="Volunteer">Volunteer</option>
+                                        <option value="Supervisor">Supervisor</option>
+                                        <option value="Owner">Owner</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input style="height:2.85rem" class="form-control" id="userEmail" placeholder="User Email">
+                                </div>
+                                <button type="submit" style="margin:.5rem auto;display:block;width:30%" class="usermodal9 btn btn-red" onclick="submitNewUser()">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

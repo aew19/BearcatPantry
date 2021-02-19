@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Item</title>
+</head>
+    <body>
+        <!-- New Item Modal -->
+        <div class="modal" id="newItem" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="width:140%">
+                    <div class="modal-header">
+                        <h5 class="modal-title">New Item!</h5>
+                        <button type="button" class="close" onclick="closePopup('newItem')" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h6>This item is new to our system and needs more information before it can be submitted. Please fill out the following items:</h6>
+                        <form>
+                            <div class="grid-container">
+                                <input type="hidden" name="_token" value="">
+                                <div class="newmodal1 form-group">
+                                    <input class="form-control" id="itemName" placeholder="Item Name">
+                                </div>
+                                <div class="newmodal2 form-group">
+                                    <input class="form-control" id="newItemBarcode" disabled="disabled">
+                                </div>
+                                <div class = "form-group">
+                                    <input class="form-control" id="newItemQuantity">
+                                </div>
+                                <div class="newmodal3 form-group">
+                                    <img id="imgPreview" class="shopping-image" src="../images/placeholderimage.png"/>
+                                    <label for="prodImg" class="file-upload">
+                                        Upload Image
+                                    </label>
+                                    <input type="file" name="file" id="prodImg" accept="image/*" onchange="readURL(this)"/>
+                                </div>
+                                <div class="newmodal4 form-group">
+                                    <input class="form-control" id="itemBrand" placeholder="Company Brand">
+                                </div>
+                                <div class="newmodal5 form-group">
+                                    <select id="type" name="type" class="select">
+                                        <option value="Other" disabled selected>Product Type</option>
+                                        <option value="Vegetable">Vegetable</option>
+                                        <option value="Grain">Grains</option>
+                                        <option value="Fruit">Fruit</option>
+                                        <option value="Dairy">Dairy</option>
+                                        <option value="Beans">Beans</option>
+                                    </select>
+                                </div>
+                                <div class="newmodal6 form-group">
+                                    <input style="padding-right: 14.2rem"class="form-control" id="productURL" placeholder="Product Link (URL)">
+                                </div>
+                                <div class="newmodal7 form-check">
+                                    <input type="checkbox" class="form-check-input" id="vegetarian">
+                                    <label style="padding-left: .5rem;margin-bottom:unset;" for="vegetarian">Vegetarian</label>
+                                </div>
+                                <div class="newmodal8 form-check">
+                                    <input type="checkbox" class="form-check-input" id="vegan">
+                                    <label style="padding-left: .5rem;margin-bottom:unset;" for="vegan">Vegan</label>
+                                </div>
+                                <button type="submit" class="newmodal9 btn btn-red" onclick="submitNewItem()">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
