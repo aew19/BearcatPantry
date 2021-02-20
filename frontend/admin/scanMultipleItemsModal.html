@@ -16,7 +16,19 @@
             </button>
         </div>
         <div class="modal-body" style="text-align: center">
-            <h6>Scan All Items You wish to add to the database</h6>
+            <h6>Scan All Items You Wish to Add to Inventory</h6>
+            <div style="padding-bottom: 10px;overflow-y: auto;max-height: 300px;" class="table-responsive-md">
+                <table class = "table table-bordered" style="overflow: auto;" id = "multiItemTable" width="100%" cellspacing="0">
+                    <thead style="text-align: center">
+                    <tr>
+                        <th scope="col">Barcode</th>
+                        <th scope="col">Item</th>
+                        <th scope="col">Unknown Item</th>
+                    </tr>
+                    </thead>
+                    <tbody style="text-align: center;overflow-y:scroll; display:block;" id = "multiItem"></tbody>
+                </table>
+            </div>
             <form style="padding-top:1rem;display: inline-block;">
                 <div id="multiScanList" style="padding-bottom: 10px;overflow-y: auto;max-height: 300px;" class = "form-group"></div>
                 <div id="initialItem" style="padding-bottom: 10px;padding-top:10px" class = "form-group">
@@ -24,7 +36,6 @@
                     <input type="text" style="display: none;" />
                 </div>
             </form>
-            <!--                Change the onclick to be an update that updates inventory.-->
             <button type="submit" style="margin: .5rem auto;display:block; width:30%" class="btn btn-red" onclick="bulkUpdateQuantities()">Submit</button>
         </div>
     </div>

@@ -244,6 +244,17 @@ function popNewItemModal(){
     );
 }
 
+//This function pops the new item modal
+function popNewItem(){
+    alert("Hit")
+    document.getElementById("newItem").style.display = "block";
+    let barcode = document.getElementById("multiScanBarcode").value;
+    let el_barcode = document.getElementById("newItemBarcode");
+    el_barcode.value = barcode;
+    let el_quantity = document.getElementById("newItemQuantity");
+    el_quantity.value = 1;
+}
+
 
 //The function can be used universally to close any popup
 function closePopup(element){
@@ -292,20 +303,47 @@ function popCheckout(){
 }
 //Function that looks at multiple items button and reads the barcode scanned
 function newScannedItem(){
+    const table = document.getElementById("multiItemTable");
     let newScanSlot = document.createElement("p");
     let scanItemText = "";
     bulkScanItemList.push(document.getElementById("multiScanBarcode").value);
-    getBarcode(document.getElementById("multiScanBarcode").value).then(
+    let currentBarcode = document.getElementById("multiScanBarcode").value
+    getBarcode(currentBarcode).then(
         data => {
-            scanItemText = data.name;
-            let itemTextNode = document.createTextNode(scanItemText);
-            newScanSlot.appendChild(itemTextNode);
-            divMulti.appendChild(newScanSlot);
+            if (data === "notFound"){
+                let row = table.insertRow();
+                //barcode
+                let cell = row.insertCell();
+                let text = document.createTextNode(currentBarcode);
+                cell.appendChild(text);
+                //name
+                cell = row.insertCell();
+                text = document.createTextNode("");
+                cell.appendChild(text);
+                //Add to Inventory
+                cell = row.insertCell();
+                cell.innerHTML = "<button class=\"btn btn-red\" id=\"newItemButton\" onclick =popNewItem()>New Item</button>";
+            }else{
+                let row = table.insertRow();
+                //barcode
+                let cell = row.insertCell();
+                let text = document.createTextNode(data.barcode);
+                cell.appendChild(text);
+                //name
+                cell = row.insertCell();
+                text = document.createTextNode(data.name);
+                cell.appendChild(text);
+                //Add to Inventory
+                cell = row.insertCell();
+                text = document.createTextNode("");
+                cell.appendChild(text);
+
+            }
+
+
             document.getElementById("multiScanBarcode").value = ""
         })
 }
-
-
 
 function newLine(){
     let newBarcodeSlot = document.createElement("p");
@@ -325,17 +363,13 @@ function newLine(){
 //This function pops the bulk scan modal
 function popMultiScan(){
     if(scanmulti === null){
-
         document.getElementById("bulkScan").style.display="block";
-
-        document.getElementById("bulkScan").style.display = "block";
+        document.getElementById('page-mask').style.position = "fixed";
         let el_barcode = document.getElementById("multiScanBarcode")
         el_barcode.value = null
         el_barcode.focus()
         divMulti = document.getElementById("multiScanList")
-
         scanmulti = true
-        document.getElementById('page-mask').style.position = "fixed";
     } else {
         document.getElementById("bulkScan").style.display = "none";
         scanmulti = null
