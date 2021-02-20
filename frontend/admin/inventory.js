@@ -373,6 +373,7 @@ function popEditItem(barcode1, quantity){
     getBarcode(barcode1).then(
         data => {
             document.getElementById("editItem").style.display = "block";
+            document.getElementById('page-mask').style.position = "fixed";
             document.getElementById("newType").value = data.type;
             document.getElementById("newBarcode").value = data.barcode;
             document.getElementById("newItemName").value = data.name;
@@ -438,6 +439,7 @@ function editItem(){
     let vegetarian = document.getElementById("newVegetarian").checked;
     let vegan = document.getElementById("newVegan").checked;
     document.getElementById("editItem").style.display = "none";
+    document.getElementById('page-mask').style.position = "unset";
     if (updateQuantity === 0){
         //Delete
         deleteInventory(currBarcode)
