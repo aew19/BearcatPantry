@@ -144,8 +144,12 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
 
 //Add image to item
 async function addImage(barcode, image){
+    console.log(image)
+    let prodFormBody = new FormData();
+    prodFormBody.append('file',image)
     let response = fetch('http://localhost:8080/addImage/'+barcode, {
-        body: image,
+        body: prodFormBody,
+        enctype: "multipart/form-data",
         method:"PUT",
     })
 }
@@ -448,15 +452,15 @@ async function submitNewItem(){
     let vegan = document.getElementById("vegan").checked;
     let vegetarian = document.getElementById("vegetarian").checked;
     let image = document.getElementById("prodImg").files[0];
-
-    let formData = new FormData()
-    formData.append('file', image)
+    // let formData = new FormData()
+    // formData.append('file', image)
 
     document.getElementById("newItem").style.display = "none";
     //Call API Endpoint
     await addToInventoryTable(barcode, newQuantity)
-    await createItem(barcode, newQuantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan, image)
-    await addImage(barcode,formData)
+    await createItem(barcode, newQuantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan, image).then(data=>{
+        addImage(barcode,image)
+    });
     location.reload()
 
 
