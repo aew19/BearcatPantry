@@ -1,5 +1,4 @@
-//REPLACE ALL LOCALHOST:8080 WITH
-//bcpwb1prd01l.ad.uc.edu:8080/web-services
+//TODO REPLACE ALL LOCALHOST:8080 WITH bcpwb1prd01l.ad.uc.edu:8080/web-services
 //CHECK to see if you can hit the bcpwb and if not default back to localhost:8080
 $(function(){
     $("#newItemModal").load("newItemModal.html");
@@ -16,6 +15,10 @@ $(function(){
 });
 
 $(function(){
+    $("#checkoutModal").load("checkoutModal.html");
+});
+
+$(function(){
     $("#recountInventoryModal").load("recountInventoryModal.html");
 });
 
@@ -26,9 +29,15 @@ $(function(){
 //Global Variables
 let newItem = null
 let scanItem = null
+let checkout = null
+let checkoutItemList = [];
 let scanmulti = null
 let recountInv = null;
 let delItem = null;
+let divHousing = null;
+let divMulti = null;
+let bulkScanItemList = [];
+
 
 //API FUNCTIONS
 //JOIN table for the inventory
@@ -85,12 +94,10 @@ function deleteInventory(barcode){
     fetch('http://localhost:8080/deleteInventory/'+ barcode, {
         method:"DELETE",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-    }).then(response => response.json())
-        .then(data=> {console.log('Success');})
-        .catch((error)=>{ console.error('Error:', error);});
+    }).then(response => console.log(response.json()));
 }
 
-function addToInventoryTable(barcode, quantity){
+async function addToInventoryTable(barcode, quantity){
     //POST to inventory table
     let data = {'barcodeId':barcode, 'quantity':quantity}
     let formBody =[];
@@ -100,13 +107,11 @@ function addToInventoryTable(barcode, quantity){
         formBody.push(encodedKey+"="+encodedValue);
     }
     formBody = formBody.join("&");
-    fetch('http://localhost:8080/inventory', {
-        body: formBody,
+    let response = fetch('http://localhost:8080/inventory', {
         method:"POST",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-    }).then(response => response.json())
-        .then(data=> {console.log('Success');})
-        .catch((error)=>{ console.error('Error:', error);});
+        body: formBody
+    })
 }
 
 //Calls barcode api endpoint
@@ -119,12 +124,8 @@ async function getBarcode(barcode){
     }
 }
 
-//Add new item to database
-//TODO add image
+//Add new item to product database
 async function createItem(barcode, quantity, itemName, brand, type, url, isVegetarian, isVegan){
-    console.log(barcode)
-    //POST to inventory table
-    addToInventoryTable(barcode, quantity)
     //POST to product table
     let prodData = {'barcodeId':barcode,'productTitle':itemName, 'foodType':type, 'brand':brand, 'productURL':url, 'vegetarian':isVegetarian, 'vegan':isVegan}
     let prodFormBody =[];
@@ -134,14 +135,61 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
         prodFormBody.push(encodedProdKey+"="+encodedProdValue);
     }
     prodFormBody = prodFormBody.join("&");
-    fetch('http://localhost:8080/items', {
+    let response = fetch('http://localhost:8080/items', {
         body: prodFormBody,
         method:"POST",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-    }).then(response => response.json())
-        .then(data=> {console.log('Success');})
-        .catch((error)=>{ console.error('Error:', error);});
+    })
+}
 
+//Add image to item
+async function addImage(barcode, image){
+    console.log(image)
+    let prodFormBody = new FormData();
+    prodFormBody.append('file',image)
+    let response = fetch('http://localhost:8080/addImage/'+barcode, {
+        body: prodFormBody,
+        enctype: "multipart/form-data",
+        method:"PUT",
+    })
+}
+
+function bulkUpdateQuantities(){
+    document.getElementById("bulkScan").style.display = "none";
+    document.getElementById('page-mask').style.position = "unset";
+    let product = {'barcodeIds':bulkScanItemList}
+    let prodFormBody =[];
+    for (let prodKey in product){
+        let encodedProdKey = encodeURIComponent(prodKey);
+        let encodedProdValue = encodeURIComponent(product[prodKey]);
+        prodFormBody.push(encodedProdKey+"="+encodedProdValue);
+    }
+    prodFormBody = prodFormBody.join("&");
+    let response = fetch('http://localhost:8080/increaseInventory', {
+        body: prodFormBody,
+        method:"PUT",
+        headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+    })
+    location.reload()
+}
+
+function checkoutUpdateQuantities(){
+    document.getElementById("checkout").style.display = "none";
+    document.getElementById('page-mask').style.position = "unset";
+    let product = {'barcodeIds':checkoutItemList}
+    let prodFormBody =[];
+    for (let prodKey in product){
+        let encodedProdKey = encodeURIComponent(prodKey);
+        let encodedProdValue = encodeURIComponent(product[prodKey]);
+        prodFormBody.push(encodedProdKey+"="+encodedProdValue);
+    }
+    prodFormBody = prodFormBody.join("&");
+    let response = fetch('http://localhost:8080/decreaseInventory', {
+        body: prodFormBody,
+        method:"PUT",
+        headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+    })
+    location.reload()
 
 }
 
@@ -168,14 +216,12 @@ function popNewItemModal(){
     //API Hit
     getBarcode(barcode).then(
         data => {
-            console.log(data)
             if (data != "notFound"){
                 document.getElementById("newItem").style.display = "none";
                 //Update Quantity
                 getInventory().then(
                     allInventory=>{
                         for (i = 0; i<allInventory.length; i++){
-                            console.log(allInventory[i])
                             if (allInventory[i].barcodeId === barcode){
                                 //PUT
                                 let currQuantity = parseInt(allInventory[i].quantity) + parseInt(quantity);
@@ -202,6 +248,17 @@ function popNewItemModal(){
     );
 }
 
+//This function pops the new item modal
+function popNewItem(){
+    alert("Hit")
+    document.getElementById("newItem").style.display = "block";
+    let barcode = document.getElementById("multiScanBarcode").value;
+    let el_barcode = document.getElementById("newItemBarcode");
+    el_barcode.value = barcode;
+    let el_quantity = document.getElementById("newItemQuantity");
+    el_quantity.value = 1;
+}
+
 
 //The function can be used universally to close any popup
 function closePopup(element){
@@ -218,6 +275,7 @@ function popScan(){
     if(scanItem === null){
         document.getElementById("scanItem").style.display = "block";
         let el_barcode = document.getElementById("itemBarcode")
+        el_barcode.focus()
         el_barcode.value = null
         let el_quantity = document.getElementById("quantity")
         el_quantity.value = null
@@ -230,43 +288,102 @@ function popScan(){
     }
 }
 
-//This function pops the bulk scan modal
-function popMultiScan(){
-    let request = new XMLHttpRequest();
-    document.getElementById("scanItem").style.display = "none";
-    if(scanmulti === null){
-        document.getElementById("multipleItems").style.display = "block";
-        scanmulti = true;
+//This function pops the checkout modal
+function popCheckout(){
+    if(checkout === null){
+        document.getElementById("checkout").style.display = "block";
+        let el_barcode = document.getElementById("checkoutItemBarcode")
+        el_barcode.value = null
+        el_barcode.focus()
+        divHousing = document.getElementById("checkoutItemList")
+
+        checkout = true
         document.getElementById('page-mask').style.position = "fixed";
     } else {
-        document.getElementById("multipleItems").style.display = "none";
+        document.getElementById("checkout").style.display = "none";
+        scanItem = null
         document.getElementById('page-mask').style.position = "unset";
+    }
+}
+//Function that looks at multiple items button and reads the barcode scanned
+function newScannedItem(){
+    const table = document.getElementById("multiItemTable");
+    let newScanSlot = document.createElement("p");
+    let scanItemText = "";
+    bulkScanItemList.push(document.getElementById("multiScanBarcode").value);
+    let currentBarcode = document.getElementById("multiScanBarcode").value
+    getBarcode(currentBarcode).then(
+        data => {
+            if (data === "notFound"){
+                let row = table.insertRow();
+                //barcode
+                let cell = row.insertCell();
+                let text = document.createTextNode(currentBarcode);
+                cell.appendChild(text);
+                //name
+                cell = row.insertCell();
+                text = document.createTextNode("");
+                cell.appendChild(text);
+                //Add to Inventory
+                cell = row.insertCell();
+                cell.innerHTML = "<button class=\"btn btn-red\" id=\"newItemButton\" onclick =popNewItem()>New Item</button>";
+            }else{
+                let row = table.insertRow();
+                //barcode
+                let cell = row.insertCell();
+                let text = document.createTextNode(data.barcode);
+                cell.appendChild(text);
+                //name
+                cell = row.insertCell();
+                text = document.createTextNode(data.name);
+                cell.appendChild(text);
+                //Add to Inventory
+                cell = row.insertCell();
+                text = document.createTextNode("");
+                cell.appendChild(text);
+
+            }
+
+
+            document.getElementById("multiScanBarcode").value = ""
+        })
+}
+
+function newLine(){
+    let newBarcodeSlot = document.createElement("p");
+    let itemText = "";
+    checkoutItemList.push(document.getElementById("checkoutItemBarcode").value);
+    getBarcode(document.getElementById("checkoutItemBarcode").value).then(
+        data => {
+            itemText = data.name;
+            let itemTextNode = document.createTextNode(itemText);
+            newBarcodeSlot.appendChild(itemTextNode);
+
+            divHousing.appendChild(newBarcodeSlot);
+            document.getElementById("checkoutItemBarcode").value = ""
+        })
+}
+
+//This function pops the bulk scan modal
+function popMultiScan(){
+    if(scanmulti === null){
+        document.getElementById("bulkScan").style.display="block";
+        document.getElementById('page-mask').style.position = "fixed";
+        let el_barcode = document.getElementById("multiScanBarcode")
+        el_barcode.value = null
+        el_barcode.focus()
+        divMulti = document.getElementById("multiScanList")
+        scanmulti = true
+    } else {
+        document.getElementById("bulkScan").style.display = "none";
         scanmulti = null
+        document.getElementById('page-mask').style.position = "unset";
     }
 }
 
-function loadBulkScan(bulkitems){
-    const table = document.getElementById("bulkScanTable");
-    let counter = 0;
-    for (let element of bulkitems) {
-        let row = table.insertRow();
-        //item #
-        let cell = row.insertCell();
-        counter++;
-        let text = document.createTextNode(counter);
-        cell.appendChild(text);
-
-        //name
-        cell = row.insertCell();
-        text = document.createTextNode(element.item);
-        cell.appendChild(text);
-
-    }
-}
 
 //This function pops the bulk scan modal
 function popNewItem(){
-    let request = new XMLHttpRequest();
     document.getElementById("scanItem").style.display = "none";
     if(scanmulti === null){
         document.getElementById("newItem").style.display = "block";
@@ -278,7 +395,6 @@ function popNewItem(){
 }
 
 function popRecountInventory(){
-    let request = new XMLHttpRequest();
     document.getElementById("scanItem").style.display = "none";
     if(recountInv === null){
         document.getElementById("recountInventory").style.display = "block";
@@ -292,10 +408,10 @@ function popRecountInventory(){
 }
 
 function popEditItem(barcode1, quantity){
-    console.log(barcode1)
     getBarcode(barcode1).then(
         data => {
             document.getElementById("editItem").style.display = "block";
+            document.getElementById('page-mask').style.position = "fixed";
             document.getElementById("newType").value = data.type;
             document.getElementById("newBarcode").value = data.barcode;
             document.getElementById("newItemName").value = data.name;
@@ -335,13 +451,22 @@ async function submitNewItem(){
     let itemURL = document.getElementById("productURL").value;
     let vegan = document.getElementById("vegan").checked;
     let vegetarian = document.getElementById("vegetarian").checked;
+    let image = document.getElementById("prodImg").files[0];
+    // let formData = new FormData()
+    // formData.append('file', image)
 
     document.getElementById("newItem").style.display = "none";
     //Call API Endpoint
-    await createItem(barcode, newQuantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan)
+    await addToInventoryTable(barcode, newQuantity)
+    await createItem(barcode, newQuantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan, image).then(data=>{
+        addImage(barcode,image)
+    });
     location.reload()
+
+
 }
 
+//Pops the edit item modal
 function editItem(){
     let updateQuantity = parseInt(document.getElementById("newQuantity").value);
     let currBarcode = document.getElementById("newBarcode").value;
@@ -352,6 +477,7 @@ function editItem(){
     let vegetarian = document.getElementById("newVegetarian").checked;
     let vegan = document.getElementById("newVegan").checked;
     document.getElementById("editItem").style.display = "none";
+    document.getElementById('page-mask').style.position = "unset";
     if (updateQuantity === 0){
         //Delete
         deleteInventory(currBarcode)
@@ -365,23 +491,11 @@ function editItem(){
     }
 }
 
-$(function () {
-    $('#bulkScanTable').DataTable({
-        "pageLength": 10,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": false,
-        "info": false,
-        "autoWidth": true,
-        "paging": false
-    });
-});
-
 //This function is used for exporting data in a table to CSV
 function exportCSV(elem){
-    var table = document.getElementById("pantrytable");
-    var html = table.outerHTML;
-    var url = 'data:application/vnd.ms-excel,' + escape(html); // Set your html table into url
+    let table = document.getElementById("pantrytable");
+    let html = table.outerHTML;
+    let url = 'data:application/vnd.ms-excel,' + escape(html); // Set your html table into url
     elem.setAttribute("href", url);
     elem.setAttribute("download", "pantrystock.xls"); // Choose the file name
     return false;
@@ -473,5 +587,17 @@ function createTableStyle() {
     });
 }
 
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            $('#imgPreview').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]); // convert to base64 string
+    }
+}
+
 createInventoryTable()
-// loadBulkScan(bulkitems);
+

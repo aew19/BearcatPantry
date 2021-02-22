@@ -2,17 +2,23 @@ package com.bcpstockerapp.bcp.controller;
 
 import com.bcpstockerapp.bcp.model.ProductTable;
 import com.bcpstockerapp.bcp.repository.ProductTableRepository;
+import com.bcpstockerapp.bcp.utilities.FileUploadUtil;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
 @CrossOrigin
 @RestController
 public class ProductTableController {
+
     @Autowired
     private ProductTableRepository productTableRepository;
 
@@ -28,7 +34,7 @@ public class ProductTableController {
     }
 
     @PostMapping("/items")
-    public @ResponseBody ResponseEntity<String> createItem(@RequestParam String barcodeId, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, Date scanDate, String imageId, String imageFileName, String productURL, boolean isActive) {
+    public @ResponseBody ResponseEntity<String> createItem(@RequestParam String barcodeId, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, Date scanDate, String productURL, boolean isActive) {
         try{
             ProductTable item = new ProductTable();
             item.setBarcode(barcodeId);
@@ -38,8 +44,6 @@ public class ProductTableController {
             item.setVegetarian(vegetarian);
             item.setVegan(vegan);
             item.setAddedDate(scanDate);
-            item.setImageId(imageId);
-            item.setImageFileName(imageFileName);
             item.setProductURL(productURL);
             item.setActive(isActive);
             productTableRepository.save(item);
@@ -74,6 +78,24 @@ public class ProductTableController {
         } catch (Exception e){
             return new ResponseEntity<>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PutMapping("/addImage/{barcodeId}")
+    public @ResponseBody String updateImage(@PathVariable(value="barcodeId") String barcodeId, MultipartFile file) throws ServiceException,IllegalStateException, IOException{
+        try{
+            //Add Image Reference to Database
+            ProductTable product = productTableRepository.findByBarcodeId(barcodeId);
+            product.setImage(StringUtils.cleanPath(file.getOriginalFilename()));
+            productTableRepository.save(product);
+            //Save Image In Directory
+            byte[] bytes = file.getBytes();
+            String uploadDir = "productPhotos/" + barcodeId;
+            FileUploadUtil.saveFile(uploadDir, StringUtils.cleanPath(file.getOriginalFilename()), file);
+        }catch (IOException e){
+            System.out.println("Error Uploading Image: " + e);
+        }
+
+        return "Success";
     }
 
     // Api call for statistics
