@@ -47,7 +47,7 @@ function generateUsersTableHead(data) {
     
     th = document.createElement("th");
     if (data.dateActive) { 
-        text = document.createTextNode("Modify");
+        text = document.createTextNode("Modify User");
         th.appendChild(text);
         row.appendChild(th);
     }
@@ -88,7 +88,7 @@ function loadUsersTable(users){
                 //modify
                 cell = row.insertCell();
                 text = document.createTextNode("");
-                cell.innerHTML = "<div style=\"font-size:1.5rem;color:#e00122;display:inline-block;width:50%;background: none; border: none; outline: none;\" id=\"EditBtn\" onclick =popEditUser('"+element.id+"','"+element.fname+"','"+element.lname+"','"+element.mNumber+"','"+element.permissions+"')><i class='fas fa-edit'></i></div><div style=\"font-size:1.5rem;color:#e00122;display:inline-block;width:50%;background: none; border: none; outline: none;\" id=\"DeleteBtn\" onclick =popConfirmDeleteUser('"+element.id+"','"+element.fname+"','"+element.lname+"')><i class='fas fa-trash'></i></div>";
+                cell.innerHTML = "<a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditUser('"+element.id+"','"+element.fname+"','"+element.lname+"','"+element.mNumber+"','"+element.permissions+"')><i class='fas fa-edit'></i></a><a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteUser('"+element.id+"','"+element.fname+"','"+element.lname+"')><i class='fas fa-trash'></i></a>";
                 cell.appendChild(text);
             }
         }

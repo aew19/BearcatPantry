@@ -17,8 +17,14 @@
     <body onload="makeTableScroll();">
         <div class="grid-container" onload="makeTableScroll();">
             <div style="background-color: unset;" id="page-mask"></div>
-            <div class="item9 grid-top">
-                <h2>Uncompleted Orders</h2>
+            <div class="item9 grid-border">
+                <div>
+                    <h2 style="float:left">UNCOMPLETED ORDERS</h2>
+                    <a href="#" style="float:right" id = "trnCSV" onClick="exportCSV(this)" class="btn btn-red"><i class="fas fa-file-export">  Export Data</i></a>
+                </div>                    
+                <div style="clear: both;">
+                    <hr style="height:2px;height:1px;border-width:0;background-color:#e00122">
+                </div>
                 <div class="scrollingTable">
                     <table class ="table" id="transactions_table"></table>
                 </div>
@@ -27,7 +33,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Transaction</h5>
+                                <h5 class="modal-title">Order Details</h5>
                                 <button type="button" class="close" onclick="popViewTransaction()" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -39,18 +45,35 @@
                     </div>
                 </div>
             </div>
-            <div class="item11 grid-bottom">
-                <a href="#" id = "trnCSV" onClick="exportCSV(this)" class="btn btn-red">Export Transactions (csv)</a>
-            </div>
-            <div class="item1 grid-border" id="chart_div"></div>  
-            <div class="item2 grid-top">
-                <h2>Inventory</h2>
+            <div class="item1 grid-border">
+                <h2 style="float:left;">STUDENT VISITS PER MONTH</h2>
+                <a style="float:right" href="#" id = "studentvisitsCSV" onClick="exportCSV(this)" class="btn btn-red"><i class="fas fa-file-export">  Export Data</i></a>
+                <div style="clear: both;">
+                    <hr style="height:2px;height:1px;border-width:0;background-color:#e00122">
+                </div>
+                <div id="chart_div"></div>
+            </div>  
+            <div class="item2 grid-border">
+                <div>
+                    <h2 style="float:left;">INVENTORY</h2>
+                    <a style="float:right" href="#" id = "invCSV" onClick="exportCSV(this)" class="btn btn-red"><i class="fas fa-file-export">  Export Data</i></a>
+                </div>
+                <div style="clear: both;">
+                    <hr style="height:2px;height:1px;border-width:0;background-color:#e00122">
+                </div>
                 <div class="scrollingTable">
                     <table class ="table" id="inventory_table"></table>
                 </div>
             </div>
-            <div class="item3 grid-top">
-                <h2>Users</h2>
+            <div class="item3 grid-border">
+                <div>
+                    <h2 style="float:left;">USERS</h2>
+                    <a style="float:right" href="#" id = "addUsers" onClick="popAddUser()" class="btn btn-red"><i class="fas fa-user-plus">  Add User</i></a>
+                    <a style="float:right" href="#" id = "usrCSV" onClick="exportCSV(this)" class="btn btn-red"><i class="fas fa-file-export"> Export Data</i></a>
+                </div>
+                <div style="clear: both;">
+                    <hr style="height:2px;height:1px;border-width:0;background-color:#e00122">
+                </div>
                 <div class="scrollingTable">
                     <table class ="table" id="users_table"></table>
                 </div>
@@ -58,15 +81,13 @@
                 <div id="editUserModal"></div>
                 <div id="addUserModal"></div>
             </div>
-            <div class="item4 grid-bottom">
-                <a href="#" id = "usrCSV" onClick="exportCSV(this)" class="btn btn-red">Export Users (csv)</a>
-                <a href="#" id = "addUsers" onClick="popAddUser()" class="btn btn-red">Add User</a>
-            </div>
-            <div class="item5 grid-bottom">
-                <a href="#" id = "invCSV" onClick="exportCSV(this)" class="btn btn-red">Export Inventory (csv)</a>
-            </div>
             <div class="item7 grid-border">
-                <h2 style="margin-bottom:2rem">Statistics</h2>
+                <div>
+                    <h2 style="float:left">STATISTICS</h2>
+                </div>
+                <div style="clear: both;">
+                    <hr style="height:2px;height:1px;border-width:0;background-color:#e00122">
+                </div>
                 <div class="row row-cols-1 row-cols-md-3 text-center">
                     <div class="col">
                       <div class="card mb-4 shadow-sm">
@@ -128,6 +149,7 @@
         </div>
     </body>
     <script src="admin.js"></script>
+    <script src="myExcelXML.js"></script>
     <script src="users-table.js"></script>
     <script src="transactions-table.js"></script>
     <script src="inventory-table.js"></script>

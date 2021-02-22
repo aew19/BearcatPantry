@@ -45,7 +45,7 @@ a {
 .btn-reject:hover,
 .btn-green:hover,
 .btn-red:hover {
-    color: black;
+    color: #ddd;
 }
 .btn-red {
     color: #fff;
@@ -391,7 +391,7 @@ input[type="file"] {
 .form-control {
     border: 1px solid #e00122;
 }
-
+#imgPreview,
 .shopping-image {
     max-width: 152px;
     max-height: 152px;
@@ -440,4 +440,122 @@ input[type="file"] {
     top: 0;
     background-color: rgba(0,0,0,0.6);
     z-index: 2;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    margin: 1rem 0 0 0;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+
+.shadow-sm {
+    width:75%;
+    margin-bottom: 1rem;
+}
+
+.card-img-top {
+    width:unset;
+    align-self: center;
+}
+
+.shopping {
+    padding-right: unset;
+    padding-left: unset;
+    max-width: 16%;
+}
+
+.shoppingcontainer {
+    max-width: 100%;
+    padding-right: unset;
+    padding-left: unset;
+}
+
+.shoppingtitle {
+    text-align: center;
+}
+
+.btn-sm:hover {
+    color: #ddd;
+    background-color: #e00122;
+    border-color: #e00122;
+}
+
+.btn-sm {
+    color: #fff;
+    background-color: #e00122;
+    border-color: #e00122;
+}
+
+.shoppinglink:link {
+    text-decoration: none;
+    color:blue;
+}
+  
+.shoppinglink:visited {
+    text-decoration: none;
+}
+
+.shoppinglink:hover {
+    text-decoration: underline;
+}
+
+.shoppinglink:active {
+    text-decoration: underline;
+}
+
+.shoppingrow {
+    justify-content: center;
+    margin-right: unset;
+    margin-left: unset;
+}
+
+.shoppingcard {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.navbar {
+    background-color: #e00122;
+}
+
+#menu-toggle {
+    border: 0;
+    background: transparent;
+    height: 55px;
+    position: absolute;
+    float: right;
+    width: 70px;
+    right: 20%;
+}
+
+.svg-menu {
+    fill: #fff;
+    outline: 0 !important;
+    height: 40px;
+}
+
+#myLinks {
+    display: none;
+    min-width: 300%;
+}
+
+#menu-toggle:hover {
+    background-color: #b8011c;
+}
+
+#myLinks a {
+    background-color: #e00122;
+    color: #fff;
+    padding: 5px 10px;
+    display: block;
 }

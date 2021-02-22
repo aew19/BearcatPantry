@@ -59,6 +59,26 @@ function generateTable(table, transactions_data) {
     }
 }
 
+//API Call to get student visits data
+async function getStudentVisits(){
+    let response = await fetch("http://localhost:8080/orders/")
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
+//API Call to get orders data
+async function getOrders(){
+    let response = await fetch("http://localhost:8080/orders/")
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
 let transactions_table = document.getElementById('transactions_table');
 let transactions_data = Object.keys(transactions[0]);
 generateTable(transactions_table, transactions);

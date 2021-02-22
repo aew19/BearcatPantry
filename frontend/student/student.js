@@ -20,3 +20,12 @@ const items = [
     {name: "Tomatos", quantity: 20, type:"Vegtable", brand: "Walmart", vegOrVeg: "Vegan", bestBuy:"11/10/2020", expiration:"11/10/2020"}
 ];
 loadPopularItems(items);
+
+function showNavBar() {
+    var x = document.getElementById("myLinks");
+    if (x.style.display === "inline-block") {
+      x.style.display = "none";
+    } else {
+      x.style.display = "inline-block";
+    }
+}

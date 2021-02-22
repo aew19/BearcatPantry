@@ -1,48 +1,423 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="https://kit.fontawesome.com/4c3f5e6aba.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/BearcatPantry/frontend/bootstrap.min.css">
-    <link rel="stylesheet" href="/BearcatPantry/frontend/global.css">
-    <title>Student Page</title>
-</head>
-<body style="overflow-y: hidden">
-    <div style="height: 100vh;position: relative;">
-        <div>
-            <a href="#" class="btn btn-red">Categories</a>
-        </div>
-        <div id="popItemsSection">
-            <div class="items-divs">
-                <div class="horizontal-div">
-                    <a href="/BearcatPantry/frontend/admin/inventory.html"><button id="popItem1" class="image-Button"><img class="item-display" src="/BearcatPantry/frontend/images/axeDeo.jpg"/></button></a>
-                    <button class="add-to-cart-button">Add to Cart</button>
-                </div>
-                <div class="horizontal-div">
-                    <a href="/BearcatPantry/frontend/admin/inventory.html"><button id="popItem2" class="image-Button"><img class="item-display" src="/BearcatPantry/frontend/images/tacoShells.jpg"/></button></a>
-                    <button class="add-to-cart-button">Add to Cart</button>
-                </div>
-                <div class="horizontal-div">
-                    <a href="/BearcatPantry/frontend/admin/inventory.html"><button id="popItem3" class="image-Button"><img class="item-display" src="/BearcatPantry/frontend/images/cannedCorn.jpg"/></button></a>
-                    <button class="add-to-cart-button">Add to Cart</button>
-                </div>
-                <div class="horizontal-div">
-                    <a href="/BearcatPantry/frontend/admin/inventory.html"><button id="newItem1" class="image-Button"><img class="item-display" src="/BearcatPantry/frontend/images/axeDeo.jpg"/></button></a>
-                    <button class="add-to-cart-button">Add to Cart</button>
-                </div>
-                <div class="horizontal-div">
-                    <a href="/BearcatPantry/frontend/admin/inventory.html"><button id="newItem2" class="image-Button"><img class="item-display" src="/BearcatPantry/frontend/images/cannedCorn.jpg"/></button></a>
-                    <button class="add-to-cart-button">Add to Cart</button>
-                </div>
-                <div class="horizontal-div">
-                    <a href="/BearcatPantry/frontend/admin/inventory.html"><button id="newItem3" class="image-Button"><img class="item-display" src="/BearcatPantry/frontend/images/tacoShells.jpg"/></button></a>
-                    <button class="add-to-cart-button">Add to Cart</button>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="Add to Cartport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="https://kit.fontawesome.com/4c3f5e6aba.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="../bootstrap.min.css">
+        <link rel="stylesheet" href="../global.css" crossorigin="anonymous">
+        <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/album/">
+        <title>Student Page</title>
+    </head>
+    <body>
+        <header>
+            <div class="collapse" id="navbarHeader">
+                <div class="container">
+                    <div class="row">
+                    <div class="col-sm-8 col-md-7 py-4">
+                        <h4 class="text-white">About</h4>
+                        <p class="text-muted">Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>
+                    </div>
+                    <div class="col-sm-4 offset-md-1 py-4">
+                        <h4 class="text-white">Contact</h4>
+                        <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Follow on Twitter</a></li>
+                        <li><a href="#" class="text-white">Like on Facebook</a></li>
+                        <li><a href="#" class="text-white">Email me</a></li>
+                        </ul>
+                    </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-<script src="student.js"></script>
-</body>
+            <div class="navbar navbar-dark">
+                <div class="container">
+                    <a href="#" class="navbar-brand d-flex align-items-center">
+                    <!-- Add functionality to go to homepage with click-->
+                    <strong>Bearcats Pantry Stocker Application</strong>
+                    </a>
+                    <button id="menu-toggle" onclick="showNavBar()" class="toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="global-nav" aria-label="Expand Menu" data-speed="100" data-group="header-toggles">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="svg svg-menu" viewBox="0 0 100 100">
+                            <title>menu</title>
+                            <g data-name="Layer 2">
+                                <rect x="12" y="28" width="76" height="4"></rect>
+                                <rect x="12" y="48" width="76" height="4"></rect>
+                                <rect x="12" y="68" width="76" height="4"></rect>
+                            </g>
+                        </svg>
+                        <div id="myLinks">
+                            <a href="http://localhost:8000/frontend/admin/inventory.html">Inventory</a>
+                            <a href="http://localhost:8000/frontend/admin/admin.html">Admin Dashboard</a>
+                            <a href="http://localhost:8000/frontend/admin/orders.html">Orders</a>
+                            <a href="http://localhost:8000/frontend/student/checkout.html">Checkout</a>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            
+        </header>
+        <main class="shoppingsection">
+            <section class="py-5 text-center container">
+                <div class="row shoppingheader py-lg-5">
+                    <div class="col-lg-6 col-md-8 mx-auto">
+                        <h1 class="fw-light">Bearcats Pantry Stocker Application</h1>
+                        <p class="lead text-muted">Welcome to the Bearcat Pantry Stocker Application! Please view the pantry's inventory and add items to your cart. All items are FREE but an intake-from is required.<p>
+                        <a target="_blank" href="https://www.google.com/maps/place/Stratford%20building%2016/@39.1311791,-84.5218392,21z/_data=!4m5!3m4!1s0x8841b38aa27f16bb_0xec1404aa42df6d21!8m2!3d39.1311552!4d-84.5217416" class="btn btn-red my-2">Find the Pantry!</a>
+                        <a target="_blank" href="https://www.uc.edu/campus-life/dean-of-students/bearcats-pantry.html" class="btn btn-red my-2">Learn More!</a>
+                        </p>
+                    </div>
+                </div>
+                </section>
+                <div class="album py-5 bg-light">
+                    <div class="container shoppingcontainer">
+                    <div class="row shoppingrow row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                        <div class="col shopping">
+                            <div class="card shadow-sm shoppingcard">
+                                <svg class="bd-placeholder-img card-img-top" width="152" height="152" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image href="../images/152image3.png" height="152" width="152"/></svg>
+                                <div class="card-body">
+                                    <h5 class="shoppingtitle">Strawberries</h5>
+                                    <p class="card-text">Kroger <br>
+                                        <a class="shoppinglink" href="https://www.kroger.com/p/coca-cola-soda/0004900002468" target="_blank">More Info</a>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                        </div>
+                                        <small class="text-muted">Vegetables</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col shopping">
+                            <div class="card shadow-sm shoppingcard">
+                                <svg class="bd-placeholder-img card-img-top" width="152" height="152" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image href="../images/152image5.png" height="152" width="152"/></svg>
+                                <div class="card-body">
+                                    <h5 class="shoppingtitle">Bread</h5>
+                                    <p class="card-text">Kroger <br>
+                                        <a class="shoppinglink" href="https://www.kroger.com/p/coca-cola-soda/0004900002468" target="_blank">More Info</a>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                        </div>
+                                        <small class="text-muted">Vegetables</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col shopping">
+                            <div class="card shadow-sm shoppingcard">
+                                <svg class="bd-placeholder-img card-img-top" width="152" height="152" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image href="../images/152image.jpg" height="152" width="152"/></svg>
+                                <div class="card-body">
+                                    <h5 class="shoppingtitle">Bacon</h5>
+                                    <p class="card-text">Walmart <br>
+                                        <a class="shoppinglink" href="https://www.kroger.com/p/coca-cola-soda/0004900002468" target="_blank">More Info</a>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                        </div>
+                                        <small class="text-muted">Fruits</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col shopping">
+                            <div class="card shadow-sm shoppingcard">
+                                <svg class="bd-placeholder-img card-img-top" width="152" height="152" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image href="../images/152image7.png" height="152" width="152"/></svg>
+                                <div class="card-body">
+                                    <h5 class="shoppingtitle">Cheese</h5>
+                                    <p class="card-text">Meijer <br>
+                                        <a class="shoppinglink" href="https://www.kroger.com/p/coca-cola-soda/0004900002468" target="_blank">More Info</a>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                        </div>
+                                        <small class="text-muted">Grains</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col shopping">
+                            <div class="card shadow-sm shoppingcard">
+                                <svg class="bd-placeholder-img card-img-top" width="152" height="152" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image href="../images/152image8.png" height="152" width="152"/></svg>
+                    
+                                <div class="card-body">
+                                    <h5 class="shoppingtitle">Apples</h5>
+                                    <p class="card-text">Kroger <br>
+                                        <a class="shoppinglink" href="https://www.kroger.com/p/coca-cola-soda/0004900002468" target="_blank">More Info</a>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                        </div>
+                                        <small class="text-muted">Dairy</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col shopping">
+                            <div class="card shadow-sm shoppingcard">
+                                <svg class="bd-placeholder-img card-img-top" width="152" height="152" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image href="../images/152image7.png" height="152" width="152"/></svg>
+                                <div class="card-body">
+                                    <h5 class="shoppingtitle">Cheese</h5>
+                                    <p class="card-text">Meijer <br>
+                                            <a class="shoppinglink" href="https://www.kroger.com/p/coca-cola-soda/0004900002468" target="_blank">More Info</a>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                                        
+                                        </div>
+                                        <small class="text-muted">Beans</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col shopping">
+                            <div class="card shadow-sm shoppingcard">
+                                <svg class="bd-placeholder-img card-img-top" width="152" height="152" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image href="../images/152image6.png" height="152" width="152"/></svg>
+                                <div class="card-body">
+                                    <h5 class="shoppingtitle">Eggs</h5>
+                                    <p class="card-text">Kroger <br>
+                                        <a class="shoppinglink" href="https://www.kroger.com/p/coca-cola-soda/0004900002468" target="_blank">More Info</a>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                                        </div>
+                                        <small class="text-muted">Vegetables</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col shopping">
+                        <div class="card shadow-sm shoppingcard">
+                            <svg class="bd-placeholder-img card-img-top" width="152" height="152" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image href="../images/152image2.png" height="152" width="152"/></svg>
+                            <div class="card-body">
+                                <h5 class="shoppingtitle">Coca-Cola</h5>
+                                <p class="card-text">Walmart <br>
+                                    <a class="shoppinglink" href="https://www.kroger.com/p/coca-cola-soda/0004900002468" target="_blank">More Info</a>
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                                    </div>
+                                    <small class="text-muted">Fruits</small>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="col shopping">
+                            <div class="card shadow-sm shoppingcard">
+                                <svg class="bd-placeholder-img card-img-top" width="152" height="152" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image href="../images/152image.jpg" height="152" width="152"/></svg>
+                                <div class="card-body">
+                                    <h5 class="shoppingtitle">Bacon</h5>
+                                    <p class="card-text">Meijer <br>
+                                        <a class="shoppinglink" href="https://www.kroger.com/p/coca-cola-soda/0004900002468" target="_blank">More Info</a>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                                        </div>
+                                        <small class="text-muted">Beans</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col shopping">
+                            <div class="card shadow-sm shoppingcard">
+                                <svg class="bd-placeholder-img card-img-top" width="152" height="152" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image href="../images/152image2.png" height="152" width="152"/></svg>
+                                <div class="card-body">
+                                    <h5 class="shoppingtitle">Eggs
+                                    </h5>
+                                    <p class="card-text">Kroger <br>
+                                        <a class="shoppinglink" href="https://www.kroger.com/p/coca-cola-soda/0004900002468" target="_blank">More Info</a>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                        </div>
+                                        <small class="text-muted">Vegetables</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col shopping">
+                            <div class="card shadow-sm shoppingcard">
+                                <svg class="bd-placeholder-img card-img-top" width="152" height="152" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image href="../images/152image.jpg" height="152" width="152"/></svg>
+                                <div class="card-body">
+                                    <h5 class="shoppingtitle">Bacon</h5>
+                                    <p class="card-text">Walmart <br>
+                                        <a class="shoppinglink" href="https://www.kroger.com/p/coca-cola-soda/0004900002468" target="_blank">More Info</a>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                        </div>
+                                        <small class="text-muted">Fruits</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col shopping">
+                            <div class="card shadow-sm shoppingcard">
+                                <svg class="bd-placeholder-img card-img-top" width="152" height="152" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image href="../images/152image5.png" height="152" width="152"/></svg>
+                                <div class="card-body">
+                                    <h5 class="shoppingtitle">Bread</h5>
+                                    <p class="card-text">Meijer <br>
+                                        <a class="shoppinglink" href="https://www.kroger.com/p/coca-cola-soda/0004900002468" target="_blank">More Info</a>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                        </div>
+                                        <small class="text-muted">Grains</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col shopping">
+                            <div class="card shadow-sm shoppingcard">
+                                <svg class="bd-placeholder-img card-img-top" width="152" height="152" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image href="../images/152image4.png" height="152" width="152"/></svg>
+                                <div class="card-body">
+                                    <h5 class="shoppingtitle">Water</h5>
+                                    <p class="card-text">Kroger <br>
+                                        <a class="shoppinglink" href="https://www.kroger.com/p/coca-cola-soda/0004900002468" target="_blank">More Info</a>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                        </div>
+                                        <small class="text-muted">Vegetables</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col shopping">
+                            <div class="card shadow-sm shoppingcard">
+                                <svg class="bd-placeholder-img card-img-top" width="152" height="152" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image href="../images/152image3.png" height="152" width="152"/></svg>
+                                <div class="card-body">
+                                    <h5 class="shoppingtitle">Strawberries</h5>
+                                    <p class="card-text">Walmart <br>
+                                        <a class="shoppinglink" href="https://www.kroger.com/p/coca-cola-soda/0004900002468" target="_blank">More Info</a>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                        </div>
+                                        <small class="text-muted">Fruits</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col shopping">
+                            <div class="card shadow-sm shoppingcard">
+                                <svg class="bd-placeholder-img card-img-top" width="152" height="152" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image href="../images/152image3.png" height="152" width="152"/></svg>
+                                <div class="card-body">
+                                    <h5 class="shoppingtitle">Strawberries</h5>
+                                    <p class="card-text">Meijer <br>
+                                        <a class="shoppinglink" href="https://www.kroger.com/p/coca-cola-soda/0004900002468" target="_blank">More Info</a>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                        </div>
+                                        <small class="text-muted">Grains</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col shopping">
+                            <div class="card shadow-sm shoppingcard">
+                                <svg class="bd-placeholder-img card-img-top" width="152" height="152" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image href="../images/152image6.png" height="152" width="152"/></svg>
+                                <div class="card-body">
+                                    <h5 class="shoppingtitle">Eggs</h5>
+                                    <p class="card-text">Kroger <br>
+                                        <a class="shoppinglink" href="https://www.kroger.com/p/coca-cola-soda/0004900002468" target="_blank">More Info</a>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                        </div>
+                                        <small class="text-muted">Vegetables</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col shopping">
+                            <div class="card shadow-sm shoppingcard">
+                                <svg class="bd-placeholder-img card-img-top" width="152" height="152" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image href="../images/152image.jpg" height="152" width="152"/></svg>
+                                <div class="card-body">
+                                    <h5 class="shoppingtitle">Bacon</h5>
+                                    <p class="card-text">Walmart <br>
+                                        <a class="shoppinglink" href="https://www.kroger.com/p/coca-cola-soda/0004900002468" target="_blank">More Info</a>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                        </div>
+                                        <small class="text-muted">Fruits</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col shopping">
+                            <div class="card shadow-sm shoppingcard">
+                                <svg class="bd-placeholder-img card-img-top" width="152" height="152" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image href="../images/152image4.png" height="152" width="152"/></svg>
+                                <div class="card-body">
+                                    <h5 class="shoppingtitle">Water</h5>
+                                    <p class="card-text">Meijer <br>
+                                        <a class="shoppinglink" href="https://www.kroger.com/p/coca-cola-soda/0004900002468" target="_blank">More Info</a>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                        </div>
+                                        <small class="text-muted">Grains</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col shopping">
+                            <div class="card shadow-sm shoppingcard">
+                                <svg class="bd-placeholder-img card-img-top" width="152" height="152" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image href="../images/152image6.png" height="152" width="152"/></svg>
+                                <div class="card-body">
+                                    <h5 class="shoppingtitle">Eggs</h5>
+                                    <p class="card-text">Kroger <br>
+                                        <a class="shoppinglink" href="https://www.kroger.com/p/coca-cola-soda/0004900002468" target="_blank">More Info</a>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                        </div>
+                                        <small class="text-muted">Vegetables</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col shopping">
+                            <div class="card shadow-sm shoppingcard">
+                                <svg class="bd-placeholder-img card-img-top" width="152" height="152" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image href="../images/152image.jpg" height="152" width="152"/></svg>
+                                <div class="card-body">
+                                    <h5 class="shoppingtitle">Bacon</h5>
+                                    <p class="card-text">Walmart <br>
+                                        <a class="shoppinglink" href="https://www.kroger.com/p/coca-cola-soda/0004900002468" target="_blank">More Info</a>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                        </div>
+                                        <small class="text-muted">Fruits</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <script src="student.js"></script>
+    </body>
 </html>

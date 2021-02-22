@@ -83,7 +83,11 @@ public class InventoryTableController {
     public @ResponseBody ResponseEntity<Integer> getTotalInventory(){
         try{
             List<InventoryTable> inventoryCount = inventoryTableRepository.findAll();
-            return new ResponseEntity<>(inventoryCount.size(), HttpStatus.OK);
+            int totalInv = 0;
+            for (int i = 0; i < inventoryCount.size(); i++) {
+                totalInv += inventoryCount.get(i).getQuantity();
+            }
+            return new ResponseEntity<>(totalInv, HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(0, HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -47,23 +47,51 @@ function makeTableScroll() {
     }
 }
 
-
 function exportCSV(elem){
     if (elem.id == "invCSV") {
-        let table = document.getElementById("inventory_table");
-        elem.setAttribute("download", "pantryinventory.xls");
+        getInventory().then(
+            Inventory => {
+                if (Inventory != "notFound") {
+                    var myInventoryXML = new myExcelXML(Inventory);
+                    myInventoryXML.fileName = "PantryInventory";
+                    myInventoryXML.downLoad();
+                }
+            }
+        )
     }
     else if (elem.id == "usrCSV") {
-        let table = document.getElementById("users_table");
-        elem.setAttribute("download", "pantryusers.xls");
+        getUsers().then(
+            Users => {
+                if (Users != "notFound") {
+                    var myUsersXML = new myExcelXML(Users);
+                    myUsersXML.fileName = "PantryUsers";
+                    myUsersXML.downLoad();
+                }
+            }
+        )
     }
     else if (elem.id == "trnCSV") {
-        let table = document.getElementById("transactions_table");
-        elem.setAttribute("download", "pantrytransactions.xls");
+        getOrders().then(
+            Orders => {
+                if (Orders != "notFound") {
+                    var myTransactionsXML = new myExcelXML(Orders);
+                    myTransactionsXML.fileName = "PantryOrders";
+                    myTransactionsXML.downLoad();
+                }
+            }
+        )
     }
-    let html = table.outerHTML;
-    let url = 'data:application/vnd.ms-excel,' + escape(html);
-    elem.setAttribute("href", url);
+    else if (elem.id == "studentvisitsCSV") {
+        getStudentVisits().then(
+            Visits => {
+                if (Visits != "notFound") {
+                    var myStudentVisitsXML = new myExcelXML(Visits);
+                    myStudentVisitsXML.fileName = "PantryUsers";
+                    myStudentVisitsXML.downLoad();
+                }
+            }
+        )
+    }
 
     return false;
 }
@@ -120,6 +148,7 @@ function popEditUser(userID, userFName, userLName, userUCID, permValue){
         document.getElementById("editUser").style.display = "none";
         editUserModal = null
         document.getElementById('page-mask').style.position = "unset";
+        document.getElementById('page-mask').style.backgroundColor = "unset";
     }
 }
 
@@ -136,6 +165,7 @@ function popAddUser(){
         document.getElementById("addUser").style.display = "none";
         addUserModal = null
         document.getElementById('page-mask').style.position = "unset";
+        document.getElementById('page-mask').style.backgroundColor = "unset";
     }
 }
 
@@ -153,6 +183,7 @@ function popConfirmDeleteUser(userID, userFName, userLName){
         document.getElementById("deleteUser").style.display = "none";
         delUserModal = null
         document.getElementById('page-mask').style.position = "unset";
+        document.getElementById('page-mask').style.backgroundColor = "unset";
     }
 }
 
