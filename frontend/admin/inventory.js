@@ -248,25 +248,12 @@ function popNewItemModal(){
     );
 }
 
-//This function pops the new item modal
-function popNewItem(){
-    alert("Hit")
-    document.getElementById("newItem").style.display = "block";
-    let barcode = document.getElementById("multiScanBarcode").value;
-    let el_barcode = document.getElementById("newItemBarcode");
-    el_barcode.value = barcode;
-    let el_quantity = document.getElementById("newItemQuantity");
-    el_quantity.value = 1;
-}
-
-
 //The function can be used universally to close any popup
 function closePopup(element){
     document.getElementById(element).style.display = "none";
     location.reload()
     document.getElementById('page-mask').style.position = "unset";
 }
-
 
 
 //This function pops the scan item modal
@@ -326,7 +313,7 @@ function newScannedItem(){
                 cell.appendChild(text);
                 //Add to Inventory
                 cell = row.insertCell();
-                cell.innerHTML = "<button class=\"btn btn-red\" id=\"newItemButton\" onclick =popNewItem()>New Item</button>";
+                cell.innerHTML = "<button class=\"btn btn-red\" id=\"newItemButton\" onclick=''>New Item</button>";
             }else{
                 let row = table.insertRow();
                 //barcode
