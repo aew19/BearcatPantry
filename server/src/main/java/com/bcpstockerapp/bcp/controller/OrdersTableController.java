@@ -18,68 +18,42 @@ public class OrdersTableController {
     private OrdersTableRepository ordersTableRepository;
 
     @GetMapping("/orders")
-    public @ResponseBody ResponseEntity<List<OrdersTable>> getAllOrders(){
-        try{
-            List<OrdersTable> orders = ordersTableRepository.findAll();
-            return new ResponseEntity<>(orders, HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
+    public @ResponseBody List<OrdersTable> getAllOrders(){
+        return  ordersTableRepository.findAll();
     }
 
     @PostMapping("/orders")
-    public @ResponseBody ResponseEntity<String> createOrder(@RequestParam Date orderDate, boolean delOrPickUp, Date delDate, String deliveryTime, Integer orderStatus, String mNumber, String address, String address2, String email, String phoneNumber) {
-        try{
-            OrdersTable order = new OrdersTable();
-            order.setOrderDate(orderDate);
-            order.setDelOrPickUp(delOrPickUp);
-            order.setDelDate(delDate);
-            order.setDeliveryTime(deliveryTime);
-            order.setOrderStatus(orderStatus);
-            order.setMNumber(mNumber);
-            order.setAddress(address);
-            order.setEmail(email);
-            order.setPhoneNumber(phoneNumber);
-            ordersTableRepository.save(order);
-            return new ResponseEntity<>("Saved!", HttpStatus.CREATED);
-        } catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public @ResponseBody String createOrder(@RequestParam Date orderDate, boolean delOrPickUp, Date delDate, String deliveryTime, Integer orderStatus, String mNumber, String address, String address2, String email, String phoneNumber) {
+        OrdersTable order = new OrdersTable();
+        order.setOrderDate(orderDate);
+        order.setDelOrPickUp(delOrPickUp);
+        order.setDelDate(delDate);
+        order.setDeliveryTime(deliveryTime);
+        order.setOrderStatus(orderStatus);
+        order.setMNumber(mNumber);
+        order.setAddress(address);
+        order.setEmail(email);
+        order.setPhoneNumber(phoneNumber);
+        ordersTableRepository.save(order);
+        return "Saved!";
     }
 
     @GetMapping("/orders/{orderID}")
-    public @ResponseBody ResponseEntity<OrdersTable> findByOrderID(@PathVariable(value="orderID") int orderID){
-        try{
-            OrdersTable item = ordersTableRepository.findByOrderID(orderID);
-            return new ResponseEntity<>(item, HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
+    public @ResponseBody OrdersTable findByOrderID(@PathVariable(value="orderID") int orderID){
+        return ordersTableRepository.findByOrderID(orderID);
     }
 
     //Statistics API Endpoints
     @GetMapping("/getTotalOrders")
-    public @ResponseBody ResponseEntity<Integer> getTotalOrders(){
-        try{
-            List<OrdersTable> orders = ordersTableRepository.findAll();
-            return new ResponseEntity<>(orders.size(), HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(0, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
+    public @ResponseBody Integer getTotalOrders(){
+        List<OrdersTable> orders = ordersTableRepository.findAll();
+        return orders.size();
     }
 
     //TODO: Add logic for uncompleted orders
     @GetMapping("/getTotalUncompletedOrders")
-    public @ResponseBody ResponseEntity<Integer> getTotalUncompletedOrders(){
-        try{
-            List<OrdersTable> orders = ordersTableRepository.findAll();
-            return new ResponseEntity<>(orders.size(), HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(0, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
+    public @ResponseBody Integer getTotalUncompletedOrders(){
+        List<OrdersTable> orders = ordersTableRepository.findAll();
+        return orders.size();
     }
 }

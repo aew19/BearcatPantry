@@ -1,4 +1,4 @@
-//TODO REPLACE ALL LOCALHOST:8080 WITH bcpwb1prd01l.ad.uc.edu:8080/web-services
+//TODO REPLACE ALL LOCALHOST:8080 WITH https://bcpwb1prd01l.ad.uc.edu:8443/web-services/items
 //CHECK to see if you can hit the bcpwb and if not default back to localhost:8080
 $(function(){
     $("#newItemModal").load("newItemModal.html");
@@ -65,9 +65,15 @@ function updateInventory(barcode1, quantity){
         body: formBody,
         method:"PUT",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-    }).then(response => response.json())
-        .then(data=> {console.log('Success');})
-        .catch((error)=>{ console.error('Error:', error);});
+    })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log('Request Succeeded', data)
+        })
+        .catch(function(error){
+            console.log('Request Failed', error)
+        });
 }
 
 //Update product table
@@ -84,9 +90,15 @@ function updateProduct(barcode, itemName, brand, type, url, isVegetarian, isVega
         body: formBody,
         method:"PUT",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-    }).then(response => response.json())
-        .then(data=> {console.log('Success');})
-        .catch((error)=>{ console.error('Error:', error);});
+    })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log('Request Succeeded', data)
+        })
+        .catch(function(error){
+            console.log('Request Failed', error)
+        });
 }
 
 //Delete item from inventory
@@ -107,11 +119,19 @@ async function addToInventoryTable(barcode, quantity){
         formBody.push(encodedKey+"="+encodedValue);
     }
     formBody = formBody.join("&");
-    let response = fetch('http://localhost:8080/inventory', {
+    fetch('http://localhost:8080/inventory', {
         method:"POST",
-        headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+        headers:{'Content-Type': 'application/x-www-form-urlencoded'},
         body: formBody
     })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log('Request Succeeded', data)
+        })
+        .catch(function(error){
+            console.log('Request Failed', error)
+        });
 }
 
 //Calls barcode api endpoint
@@ -125,7 +145,7 @@ async function getBarcode(barcode){
 }
 
 //Add new item to product database
-async function createItem(barcode, quantity, itemName, brand, type, url, isVegetarian, isVegan){
+async function createItem(barcode, quantity, itemName, brand, type, url, isVegetarian, isVegan, image){
     //POST to product table
     let prodData = {'barcodeId':barcode,'productTitle':itemName, 'foodType':type, 'brand':brand, 'productURL':url, 'vegetarian':isVegetarian, 'vegan':isVegan}
     let prodFormBody =[];
@@ -135,23 +155,38 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
         prodFormBody.push(encodedProdKey+"="+encodedProdValue);
     }
     prodFormBody = prodFormBody.join("&");
-    let response = fetch('http://localhost:8080/items', {
+    fetch('http://localhost:8080/items', {
         body: prodFormBody,
         method:"POST",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
     })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log('Request Succeeded', data)
+        })
+        .catch(function(error){
+            console.log('Request Failed', error)
+        });
 }
 
 //Add image to item
 async function addImage(barcode, image){
-    console.log(image)
     let prodFormBody = new FormData();
     prodFormBody.append('file',image)
-    let response = fetch('http://localhost:8080/addImage/'+barcode, {
+    fetch('http://localhost:8080/addImage/'+barcode, {
         body: prodFormBody,
         enctype: "multipart/form-data",
         method:"PUT",
     })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log('Request Succeeded', data)
+        })
+        .catch(function(error){
+            console.log('Request Failed', error)
+        });
 }
 
 function bulkUpdateQuantities(){
@@ -170,6 +205,14 @@ function bulkUpdateQuantities(){
         method:"PUT",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
     })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log('Request Succeeded', data)
+        })
+        .catch(function(error){
+            console.log('Request Failed', error)
+        });
     location.reload()
 }
 
@@ -189,6 +232,14 @@ function checkoutUpdateQuantities(){
         method:"PUT",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
     })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log('Request Succeeded', data)
+        })
+        .catch(function(error){
+            console.log('Request Failed', error)
+        });
     location.reload()
 
 }
@@ -439,16 +490,23 @@ async function submitNewItem(){
     let vegan = document.getElementById("vegan").checked;
     let vegetarian = document.getElementById("vegetarian").checked;
     let image = document.getElementById("prodImg").files[0];
-    // let formData = new FormData()
-    // formData.append('file', image)
 
     document.getElementById("newItem").style.display = "none";
     //Call API Endpoint
     await addToInventoryTable(barcode, newQuantity)
-    await createItem(barcode, newQuantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan, image).then(data=>{
-        addImage(barcode,image)
-    });
+    await createItem(barcode, newQuantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan, image)
+    sleep(1000);
+    await addImage(barcode,image)
+    //See if image made it
+    getBarcode(barcode).then(data=>{
+        //If not retry the insert
+        if (data.image === null) {
+            addImage(barcode,image)
+        }
+    })
     location.reload()
+
+
 
 
 }
@@ -597,6 +655,29 @@ function showNavBar() {
     } else {
       x.style.display = "block";
     }
+}
+
+//Error handling for status
+function status(response) {
+    if (response.status >= 200 && response.status < 300) {
+        return Promise.resolve(response)
+    } else {
+        return Promise.reject(new Error(response.statusText))
+    }
+}
+
+//Returns the json of the response
+function json(response) {
+    return response.json()
+}
+
+//Pause function
+function sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+        currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
 }
 
 createInventoryTable()

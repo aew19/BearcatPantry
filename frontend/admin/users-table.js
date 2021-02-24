@@ -170,7 +170,29 @@ async function addUser(mNumber, FName, LName, PermissionLevel, ActiveStatus){
         body: userFormBody,
         method:"POST",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-    }).then(response => response.json())
-        .then(data=> {console.log('Success');location.reload();})
-        .catch((error)=>{ console.error('Error:', error);location.reload();});
+    })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log('Request Succeeded', data)
+            location.reload()
+        })
+        .catch(function(error){
+            console.log('Request Failed', error)
+            location.reload()
+        });
+}
+
+//Error handling for status
+function status(response) {
+    if (response.status >= 200 && response.status < 300) {
+        return Promise.resolve(response)
+    } else {
+        return Promise.reject(new Error(response.statusText))
+    }
+}
+
+//Returns the json of the response
+function json(response) {
+    return response.json()
 }
