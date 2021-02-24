@@ -241,6 +241,15 @@ function editUser(userID, FName, LName, mNumber, Permissions ) {
         .catch((error)=>{ console.error('Error:', error);location.reload();});
 }
 
+function showNavBar() {
+    var x = document.getElementById("myLinks");
+    if (x.style.display === "block") {
+      x.style.display = "none";
+    } else {
+      x.style.display = "block";
+    }
+}
+
 //API Function to get Total Items
 async function getTotalItems(){
     let response = await fetch("http://localhost:8080/getUniqueItems/")

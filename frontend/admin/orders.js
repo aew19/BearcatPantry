@@ -130,6 +130,16 @@ function popViewTransaction(clicked_id){
     }
 }
 
+function showNavBar() {
+    var x = document.getElementById("myLinks");
+    if (x.style.display === "block") {
+      x.style.display = "none";
+    } else {
+      x.style.display = "block";
+    }
+}
+
+// needs updated to new export
 function exportCSV(elem){
     var table = document.getElementById("orders_table");
     var html = table.outerHTML;

@@ -480,11 +480,15 @@ function editItem(){
 
 //This function is used for exporting data in a table to CSV
 function exportCSV(elem){
-    let table = document.getElementById("pantrytable");
-    let html = table.outerHTML;
-    let url = 'data:application/vnd.ms-excel,' + escape(html); // Set your html table into url
-    elem.setAttribute("href", url);
-    elem.setAttribute("download", "pantrystock.xls"); // Choose the file name
+    getInventory().then(
+        Inventory => {
+            if (Inventory != "notFound") {
+                var myInventoryXML = new myExcelXML(Inventory);
+                myInventoryXML.fileName = "PantryInventory";
+                myInventoryXML.downLoad();
+            }
+        }
+    )
     return false;
 }
 
@@ -498,9 +502,9 @@ function loadPantryItems(items){
             //let currentQuantity = JSON.stringify(element.quantity)
 
             let row = table.insertRow();
-            //select
+            //modify item
             let cell = row.insertCell();
-            cell.innerHTML = "<button style=\"font-size:1.5rem;color:#e00122;display:inline-block;width:50%; background: none; border: none; outline: none;\" id=\"EditBtn\" onclick =popEditItem("+currentElement+","+element.quantity+")><i class='fas fa-edit'></i></button>";
+            cell.innerHTML = "<a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditItem("+currentElement+","+element.quantity+")><i class='fas fa-edit'></i></a><a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteItem('')><i class='fas fa-trash'></i></a>";
             //name
             cell = row.insertCell();
             let text = document.createTextNode(element.productTitle);
@@ -586,5 +590,13 @@ function readURL(input) {
     }
 }
 
-createInventoryTable()
+function showNavBar() {
+    var x = document.getElementById("myLinks");
+    if (x.style.display === "block") {
+      x.style.display = "none";
+    } else {
+      x.style.display = "block";
+    }
+}
 
+createInventoryTable()

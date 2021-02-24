@@ -16,29 +16,61 @@
         <title>Orders</title>
     </head>
     <body>
-        <div id="page-mask"></div>
-        <div style="padding: 0px 15px;">
-            <h2>Orders</h2>
-            <a href='' id = "csv" onClick="exportCSV(this)" style="margin: 10px 0px" class="btn btn-red">Export Information(csv)</a>
-        </div>
-        <div class="modal" id="viewOrder" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Order Details</h5>
-                        <button type="button" class="close" onclick="popViewTransaction()" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="modal-body">
-                        <b>Item 1</b>
+        <header>
+            <div class="navbar navbar-dark">
+                <div style="max-width: unset" class="container">
+                    <a href="#" class="navbar-brand d-flex align-items-center">
+                    <!-- Add functionality to go to homepage with click-->
+                    <strong>Bearcats Pantry Stocker Application</strong>
+                    </a>
+                    <button id="menu-toggle" onclick="showNavBar()" class="toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="global-nav" aria-label="Expand Menu" data-speed="100" data-group="header-toggles">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="svg svg-menu" viewBox="0 0 100 100">
+                            <title>menu</title>
+                            <g data-name="Layer 2">
+                                <rect x="12" y="28" width="76" height="4"></rect>
+                                <rect x="12" y="48" width="76" height="4"></rect>
+                                <rect x="12" y="68" width="76" height="4"></rect>
+                            </g>
+                        </svg>
+                        <div id="myLinks">
+                            <a href="http://localhost:8000/frontend/student/student.html">Shopping</a>
+                            <a href="http://localhost:8000/frontend/admin/admin.html">Admin Dashboard</a>
+                            <a href="http://localhost:8000/frontend/admin/inventory.html">Inventory</a>
+                            <a href="http://localhost:8000/frontend/student/checkout.html">Checkout</a>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </header>
+        <div class="inventory-container inventory-border">
+            <div id="page-mask"></div>
+            <div>
+                <h2 style="float:left">ORDERS</h2>
+                <a href='' id = "csv" onClick="exportCSV(this)" style="float:right" class="btn btn-red"><i class="fas fa-file-export">   Export Data</i></a>
+            </div>
+            <div style="clear: both;">
+                <hr style="height:2px;height:1px;border-width:0;background-color:#e00122">
+            </div>
+            <div class="modal" id="viewOrder" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Order Details</h5>
+                            <button type="button" class="close" onclick="popViewTransaction()" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="modal-body">
+                            <b>Item 1</b>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div style="padding:0px 15px;">
-            <table class ="table table-bordered" id="orders_table"></table>
+            <div style="padding:0px 15px;">
+                <table class ="table table-bordered" id="orders_table"></table>
+            </div>
         </div>
     </body>
     <script src="orders.js"></script>
+    <script src="myExcelXML.js"></script>
 </html>
