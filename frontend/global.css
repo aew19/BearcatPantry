@@ -531,11 +531,34 @@ input[type="file"] {
 #menu-toggle {
     border: 0;
     background: transparent;
-    height: 55px;
+    height: 56px;
+    position: absolute;
+    width: 70px;
+    right: 20%;
+    outline:none;
+    border-left: 1px solid #fff;
+    border-right: 1px solid #fff;
+}
+
+#shopping-cart {
+    border: 0;
+    background: transparent;
+    height: 56px;
     position: absolute;
     float: right;
     width: 70px;
-    right: 20%;
+    right: 23.6%;
+    outline:none;
+    color: #fff;
+    border-left: 1px solid #fff;
+    font-size: 1.6rem;
+}
+
+
+#shopping-cart i {
+    position: relative;
+    left: -5%;
+    top: -3%
 }
 
 .svg-menu {
@@ -547,15 +570,38 @@ input[type="file"] {
 #myLinks {
     display: none;
     min-width: 300%;
+    position:inherit;
+    margin-top: 8px;
+    text-align: left;
+    right: 1%;
 }
 
+#menu-toggle:focus,
+#shopping-cart:hover,
 #menu-toggle:hover {
-    background-color: #b8011c;
+    background-color: #b8011c !important;
 }
 
 #myLinks a {
     background-color: #e00122;
     color: #fff;
-    padding: 5px 10px;
+    padding: 9px 10px;
     display: block;
+    border-top: 1px solid #fff;
+}
+
+#myLinks a:hover {
+    background-color: #fff;
+    color: #e00122;
+}
+
+.shoppingheader {
+    background-color: #fff;
+}
+
+#shoppingmain {
+    background-image: url('./images/campus.jpe');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed;
 }

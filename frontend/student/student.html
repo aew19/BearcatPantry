@@ -12,30 +12,15 @@
     </head>
     <body>
         <header>
-            <div class="collapse" id="navbarHeader">
-                <div class="container">
-                    <div class="row">
-                    <div class="col-sm-8 col-md-7 py-4">
-                        <h4 class="text-white">About</h4>
-                        <p class="text-muted">Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>
-                    </div>
-                    <div class="col-sm-4 offset-md-1 py-4">
-                        <h4 class="text-white">Contact</h4>
-                        <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">Follow on Twitter</a></li>
-                        <li><a href="#" class="text-white">Like on Facebook</a></li>
-                        <li><a href="#" class="text-white">Email me</a></li>
-                        </ul>
-                    </div>
-                    </div>
-                </div>
-            </div>
             <div class="navbar navbar-dark">
                 <div class="container">
                     <a href="#" class="navbar-brand d-flex align-items-center">
                     <!-- Add functionality to go to homepage with click-->
                     <strong>Bearcats Pantry Stocker Application</strong>
                     </a>
+                    <button id="shopping-cart" onclick="checkout()" class="toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="global-nav" aria-label="Expand Menu" data-speed="100" data-group="header-toggles">
+                        <i id="navShoppingCart" class="fas fa-shopping-cart"></i>
+                    </button>
                     <button id="menu-toggle" onclick="showNavBar()" class="toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="global-nav" aria-label="Expand Menu" data-speed="100" data-group="header-toggles">
                         <svg xmlns="http://www.w3.org/2000/svg" class="svg svg-menu" viewBox="0 0 100 100">
                             <title>menu</title>
@@ -54,20 +39,21 @@
                     </button>
                 </div>
             </div>
-            
         </header>
-        <main class="shoppingsection">
-            <section class="py-5 text-center container">
-                <div class="row shoppingheader py-lg-5">
-                    <div class="col-lg-6 col-md-8 mx-auto">
-                        <h1 class="fw-light">Bearcats Pantry Stocker Application</h1>
-                        <p class="lead text-muted">Welcome to the Bearcat Pantry Stocker Application! Please view the pantry's inventory and add items to your cart. All items are FREE but an intake-from is required.<p>
-                        <a target="_blank" href="https://www.google.com/maps/place/Stratford%20building%2016/@39.1311791,-84.5218392,21z/_data=!4m5!3m4!1s0x8841b38aa27f16bb_0xec1404aa42df6d21!8m2!3d39.1311552!4d-84.5217416" class="btn btn-red my-2">Find the Pantry!</a>
-                        <a target="_blank" href="https://www.uc.edu/campus-life/dean-of-students/bearcats-pantry.html" class="btn btn-red my-2">Learn More!</a>
-                        </p>
+        <main>
+            <div id="shoppingmain">
+                <section class="py-5 text-center container">
+                    <div class="row shoppingheader py-lg-5">
+                        <div class="col-lg-6 col-md-8 mx-auto">
+                            <h1 class="fw-light">Bearcats Pantry Stocker Application</h1>
+                            <p class="lead text-muted">Welcome to the Bearcat Pantry Stocker Application! Please view the pantry's inventory and add items to your cart. All items are FREE but an intake-from is required.<p>
+                            <a target="_blank" href="https://www.google.com/maps/place/Stratford%20building%2016/@39.1311791,-84.5218392,21z/_data=!4m5!3m4!1s0x8841b38aa27f16bb_0xec1404aa42df6d21!8m2!3d39.1311552!4d-84.5217416" class="btn btn-red my-2">Find the Pantry!</a>
+                            <a target="_blank" href="https://www.uc.edu/campus-life/dean-of-students/bearcats-pantry.html" class="btn btn-red my-2">Learn More!</a>
+                            </p>
+                        </div>
                     </div>
-                </div>
                 </section>
+            </div>
                 <div class="album py-5 bg-light">
                     <div class="container shoppingcontainer">
                     <div class="row shoppingrow row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -81,7 +67,7 @@
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                         </div>
                                         <small class="text-muted">Vegetables</small>
                                     </div>
@@ -98,7 +84,7 @@
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                         </div>
                                         <small class="text-muted">Vegetables</small>
                                     </div>
@@ -115,7 +101,7 @@
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                         </div>
                                         <small class="text-muted">Fruits</small>
                                     </div>
@@ -132,7 +118,7 @@
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                         </div>
                                         <small class="text-muted">Grains</small>
                                     </div>
@@ -150,7 +136,7 @@
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                         </div>
                                         <small class="text-muted">Dairy</small>
                                     </div>
@@ -237,7 +223,7 @@
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                         </div>
                                         <small class="text-muted">Vegetables</small>
                                     </div>
@@ -254,7 +240,7 @@
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                         </div>
                                         <small class="text-muted">Fruits</small>
                                     </div>
@@ -271,7 +257,7 @@
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                         </div>
                                         <small class="text-muted">Grains</small>
                                     </div>
@@ -288,7 +274,7 @@
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                         </div>
                                         <small class="text-muted">Vegetables</small>
                                     </div>
@@ -305,7 +291,7 @@
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                         </div>
                                         <small class="text-muted">Fruits</small>
                                     </div>
@@ -322,7 +308,7 @@
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                         </div>
                                         <small class="text-muted">Grains</small>
                                     </div>
@@ -339,7 +325,7 @@
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                         </div>
                                         <small class="text-muted">Vegetables</small>
                                     </div>
@@ -356,7 +342,7 @@
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                         </div>
                                         <small class="text-muted">Fruits</small>
                                     </div>
@@ -373,7 +359,7 @@
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                         </div>
                                         <small class="text-muted">Grains</small>
                                     </div>
@@ -390,7 +376,7 @@
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                         </div>
                                         <small class="text-muted">Vegetables</small>
                                     </div>
@@ -407,7 +393,7 @@
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                         </div>
                                         <small class="text-muted">Fruits</small>
                                     </div>

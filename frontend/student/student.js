@@ -23,9 +23,13 @@ loadPopularItems(items);
 
 function showNavBar() {
     var x = document.getElementById("myLinks");
-    if (x.style.display === "inline-block") {
+    if (x.style.display === "block") {
       x.style.display = "none";
     } else {
-      x.style.display = "inline-block";
+      x.style.display = "block";
     }
+}
+
+function checkout() {
+    window.open("http://localhost:8000/frontend/student/checkout.html", '_self');
 }
