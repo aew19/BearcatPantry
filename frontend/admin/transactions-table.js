@@ -11,18 +11,26 @@ let transactions = [
     { Date: "10/27/2020", Name: "Joshua St. Pierre", Items: "", Status: 3 }
 ];
 
-$(function () {
+//This function is used for the formatting of the table
+//Right now searching and ordering is on
+function createOrdersTableStyle() {
     $('#transactions_table').DataTable({
-      "pageLength": 3,
-      "paging": false,
-      "lengthChange": true,
-      "searching": false,
-      "ordering": true,
-      "info": false,
-      "autoWidth": true,
-      "order": [0, "desc"]
-      });
-});
+        "pageLength": 3,
+        "lengthChange": true,
+        "searching": false,
+        "ordering": true,
+        "info": false,
+        "autoWidth": false,
+        "paging": false,
+        "pagingType": "full_numbers",
+        "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]],
+        language: {
+            lengthMenu: "Display _MENU_ Items Per Page",
+            searchPlaceholder: "Search Items",
+            search: "",
+        },
+    });
+}
 
 function generateTableHead(table) {
     let thead = table.createTHead();
@@ -83,3 +91,4 @@ let transactions_table = document.getElementById('transactions_table');
 let transactions_data = Object.keys(transactions[0]);
 generateTable(transactions_table, transactions);
 generateTableHead(transactions_table, transactions_data);
+createOrdersTableStyle();

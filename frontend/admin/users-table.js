@@ -1,14 +1,25 @@
-function generateUsersTableHead(data) {
-    /*$('#users_table').DataTable({
+//This function is used for the formatting of the table
+//Right now searching and ordering is on
+function createUserTableStyle() {
+    $('#users_table').DataTable({
         "pageLength": 3,
-        "paging": false,
         "lengthChange": true,
         "searching": false,
         "ordering": true,
         "info": false,
-        "autoWidth": true,
-        "order": [1, "asc"]
-    }); Causing an issue */
+        "autoWidth": false,
+        "paging": false,
+        "pagingType": "full_numbers",
+        "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]],
+        language: {
+            lengthMenu: "Display _MENU_ Items Per Page",
+            searchPlaceholder: "Search Items",
+            search: "",
+        },
+    });
+}
+
+function generateUsersTableHead(data) {
 
     const table = document.getElementById('users_table');
     let thead = table.createTHead();
@@ -51,6 +62,8 @@ function generateUsersTableHead(data) {
         th.appendChild(text);
         row.appendChild(th);
     }
+
+    createUserTableStyle();
 }
 
 function loadUsersTable(users){

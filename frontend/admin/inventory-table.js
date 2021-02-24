@@ -1,3 +1,24 @@
+//This function is used for the formatting of the table
+//Right now searching and ordering is on
+function createInventoryTableStyle() {
+    $('#inventory_table').DataTable({
+        "pageLength": 3,
+        "lengthChange": true,
+        "searching": false,
+        "ordering": true,
+        "info": false,
+        "autoWidth": false,
+        "paging": false,
+        "pagingType": "full_numbers",
+        "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]],
+        language: {
+            lengthMenu: "Display _MENU_ Items Per Page",
+            searchPlaceholder: "Search Items",
+            search: "",
+        },
+    });
+}
+
 //API Function to get Inventory Table
 async function getInventory(){
     let response = await fetch("http://localhost:8080/inventoryTable/")
@@ -9,16 +30,6 @@ async function getInventory(){
 }
 
 function generateInventoryTableHead(data) {
-    /*$('#inventory_table').DataTable({
-        "pageLength": 3,
-        "paging": false,
-        "lengthChange": true,
-        "searching": false,
-        "ordering": true,
-        "info": false,
-        "autoWidth": true,
-        "order": ["desc"]
-    }); Causing issues */
     const table = document.getElementById('inventory_table');
 
     let thead = table.createTHead();
@@ -38,6 +49,8 @@ function generateInventoryTableHead(data) {
         th.appendChild(text);
         row.appendChild(th);
     }
+
+    createInventoryTableStyle();
 }
 
 function loadInventoryTable(items){
