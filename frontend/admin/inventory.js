@@ -1,5 +1,30 @@
 //TODO REPLACE ALL LOCALHOST:8080 WITH https://bcpwb1prd01l.ad.uc.edu:8443/web-services/items
 //CHECK to see if you can hit the bcpwb and if not default back to localhost:8080
+
+let env="";
+let url = "";
+let posturl = '';
+
+//Reads the environment and sets the correct API URL
+async function loadEnv(){
+    fetch("../environment.json").then(response=>response.json())
+        .then(json=>{
+            env=json.env
+            if (env === "dev"){
+                url = "http://localhost:8080/"
+                posturl = 'http://localhost:8080/'
+            }else{
+                url = "https://bcpwb1prd01l.ad.uc.edu:8443/web-services/"
+                posturl = 'https://bcpwb1prd01l.ad.uc.edu:8443/web-services/'
+            }
+            createInventoryTable()
+        })
+        .catch(err => console.log("Error reading Environment"))
+}
+
+
+
+
 $(function(){
     $("#newItemModal").load("newItemModal.html");
 });
@@ -42,7 +67,7 @@ let bulkScanItemList = [];
 //API FUNCTIONS
 //JOIN table for the inventory
 async function getInventory(){
-    let response = await fetch("http://localhost:8080/inventoryTable/")
+    let response = await fetch(url + "inventoryTable/")
     try{
         return await response.json();
     }catch{
@@ -61,7 +86,7 @@ function updateInventory(barcode1, quantity){
         formBody.push(encodedKey+"="+encodedValue);
     }
     formBody = formBody.join("&");
-    fetch('http://localhost:8080/updateInventory/'+ barcode1, {
+    fetch(posturl + 'updateInventory/'+ barcode1, {
         body: formBody,
         method:"PUT",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -86,7 +111,7 @@ function updateProduct(barcode, itemName, brand, type, url, isVegetarian, isVega
         formBody.push(encodedKey+"="+encodedValue);
     }
     formBody = formBody.join("&");
-    fetch('http://localhost:8080/items/'+ barcode, {
+    fetch(posturl + 'items/'+ barcode, {
         body: formBody,
         method:"PUT",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -103,7 +128,7 @@ function updateProduct(barcode, itemName, brand, type, url, isVegetarian, isVega
 
 //Delete item from inventory
 function deleteInventory(barcode){
-    fetch('http://localhost:8080/deleteInventory/'+ barcode, {
+    fetch(posturl+'deleteInventory/'+ barcode, {
         method:"DELETE",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
     }).then(response => console.log(response.json()));
@@ -119,7 +144,7 @@ async function addToInventoryTable(barcode, quantity){
         formBody.push(encodedKey+"="+encodedValue);
     }
     formBody = formBody.join("&");
-    fetch('http://localhost:8080/inventory', {
+    fetch(posturl+'inventory', {
         method:"POST",
         headers:{'Content-Type': 'application/x-www-form-urlencoded'},
         body: formBody
@@ -136,7 +161,7 @@ async function addToInventoryTable(barcode, quantity){
 
 //Calls barcode api endpoint
 async function getBarcode(barcode){
-    let response = await fetch("http://localhost:8080/items/"+barcode)
+    let response = await fetch(url + "items/"+barcode)
     try{
         return await response.json();
     }catch{
@@ -155,7 +180,7 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
         prodFormBody.push(encodedProdKey+"="+encodedProdValue);
     }
     prodFormBody = prodFormBody.join("&");
-    fetch('http://localhost:8080/items', {
+    fetch(posturl + 'items', {
         body: prodFormBody,
         method:"POST",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -174,7 +199,7 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
 async function addImage(barcode, image){
     let prodFormBody = new FormData();
     prodFormBody.append('file',image)
-    fetch('http://localhost:8080/addImage/'+barcode, {
+    fetch(posturl + 'addImage/'+barcode, {
         body: prodFormBody,
         enctype: "multipart/form-data",
         method:"PUT",
@@ -200,7 +225,7 @@ function bulkUpdateQuantities(){
         prodFormBody.push(encodedProdKey+"="+encodedProdValue);
     }
     prodFormBody = prodFormBody.join("&");
-    let response = fetch('http://localhost:8080/increaseInventory', {
+    let response = fetch(posturl + '/increaseInventory', {
         body: prodFormBody,
         method:"PUT",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -227,7 +252,7 @@ function checkoutUpdateQuantities(){
         prodFormBody.push(encodedProdKey+"="+encodedProdValue);
     }
     prodFormBody = prodFormBody.join("&");
-    let response = fetch('http://localhost:8080/decreaseInventory', {
+    let response = fetch(posturl + 'decreaseInventory', {
         body: prodFormBody,
         method:"PUT",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -680,4 +705,7 @@ function sleep(milliseconds) {
     } while (currentDate - date < milliseconds);
 }
 
-createInventoryTable()
+loadEnv()
+
+
+

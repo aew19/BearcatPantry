@@ -112,7 +112,7 @@ function loadUsersTable(users){
 
 //API Call to get users table
 async function getUsers(){
-    let response = await fetch("http://localhost:8080/users/")
+    let response = await fetch(url + "users/")
     try{
         return await response.json();
     }catch{
@@ -130,7 +130,6 @@ async function createUsersTable(){
     )
 }
 
-createUsersTable();
 
 //On Submit of new user modal create new user
 async function submitNewUser(){
@@ -166,7 +165,7 @@ async function addUser(mNumber, FName, LName, PermissionLevel, ActiveStatus){
     }
     userFormBody = userFormBody.join("&");
     
-    fetch('http://localhost:8080/users', {
+    fetch(posturl + '/users', {
         body: userFormBody,
         method:"POST",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},

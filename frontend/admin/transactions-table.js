@@ -69,7 +69,7 @@ function generateTable(table, transactions_data) {
 
 //API Call to get student visits data
 async function getStudentVisits(){
-    let response = await fetch("http://localhost:8080/orders/")
+    let response = await fetch(url + "/orders/")
     try{
         return await response.json();
     }catch{
@@ -79,7 +79,7 @@ async function getStudentVisits(){
 
 //API Call to get orders data
 async function getOrders(){
-    let response = await fetch("http://localhost:8080/orders/")
+    let response = await fetch(url+"/orders/")
     try{
         return await response.json();
     }catch{

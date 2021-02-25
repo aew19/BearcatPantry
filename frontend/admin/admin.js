@@ -10,6 +10,33 @@ $(function(){
     $("#addUserModal").load("addUserModal.html");
 });
 
+let env="";
+let url = "";
+let posturl = '';
+//Reads the environment and sets the correct API URL
+async function loadEnv(){
+    fetch("../environment.json").then(response=>response.json())
+        .then(json=>{
+            env=json.env
+            if (env === "dev"){
+                url = "http://localhost:8080/"
+                posturl = 'http://localhost:8080/'
+            }else{
+                url = "https://bcpwb1prd01l.ad.uc.edu:8443/web-services/"
+                posturl = 'https://bcpwb1prd01l.ad.uc.edu:8443/web-services/'
+            }
+            //Crate the components of the admin page here
+            SetStatistics()
+            createInventoryTable();
+            createUsersTable();
+            let orders_table = document.getElementById('orders_table');
+            let orders_data = Object.keys(orders[0]);
+            generateTable(orders_table, orders);
+            generateTableHead(orders_table, orders_data);
+        })
+        .catch(err => console.log("Error reading Environment"))
+}
+
 function makeTableScroll() {
     let maxRows = 8;
     let table = document.getElementById('inventory_table');
@@ -198,7 +225,7 @@ function deleteUser(userID) {
         userFormBody.push(encodedUserKey+"="+encodedUserValue);
     }
     userFormBody = userFormBody.join("&");
-    fetch('http://localhost:8080/deleteUser/'+ userID, {
+    fetch(posturl + '/deleteUser/'+ userID, {
         body: userFormBody,
         method:"DELETE",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -232,7 +259,7 @@ function editUser(userID, FName, LName, mNumber, Permissions ) {
     }
     userFormBody = userFormBody.join("&");
     console.log(userFormBody);
-    fetch('http://localhost:8080/updateUsers/' + userID, {
+    fetch(posturl + '/updateUsers/' + userID, {
         body: userFormBody, 
         method:"PUT",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -252,7 +279,7 @@ function showNavBar() {
 
 //API Function to get Total Items
 async function getTotalItems(){
-    let response = await fetch("http://localhost:8080/getUniqueItems/")
+    let response = await fetch(url + "/getUniqueItems/")
     try{
         return await response.json();
     }catch{
@@ -262,7 +289,7 @@ async function getTotalItems(){
 
 //API Function to get Total Inventory
 async function getTotalInventory(){
-    let response = await fetch("http://localhost:8080/getTotalInventory/")
+    let response = await fetch(url + "/getTotalInventory/")
     try{
         return await response.json();
     }catch{
@@ -272,7 +299,7 @@ async function getTotalInventory(){
 
 //API Function to get Total Users
 async function getTotalUsers(){
-    let response = await fetch("http://localhost:8080/getTotalUsers/")
+    let response = await fetch(url + "/getTotalUsers/")
     try{
         return await response.json();
     }catch{
@@ -282,7 +309,7 @@ async function getTotalUsers(){
 
 //API Function to get Total Uncompleted Orders
 async function getTotalUncompleteOrders(){
-    let response = await fetch("http://localhost:8080/getTotalUncompletedOrders/")
+    let response = await fetch(url + "/getTotalUncompletedOrders/")
     try{
         return await response.json();
     }catch{
@@ -292,7 +319,7 @@ async function getTotalUncompleteOrders(){
 
 //API Function to get Total Orders
 async function getTotalOrders(){
-    let response = await fetch("http://localhost:8080/getTotalOrders/")
+    let response = await fetch(url + "/getTotalOrders/")
     try{
         return await response.json();
     }catch{
@@ -342,4 +369,4 @@ async function SetStatistics(){
     )
 }
 
-SetStatistics();
+loadEnv()
