@@ -618,21 +618,6 @@ function loadPantryItems(items){
             cell = row.insertCell();
             text = document.createTextNode(element.brand);
             cell.appendChild(text);
-
-            //Vegetarian or Vegan
-            cell = row.insertCell();
-            if (element.vegan == true){
-                text = document.createTextNode("Vegan");
-                cell.appendChild(text);
-            }
-            else if (element.vegetarian == true){
-                text = document.createTextNode("Vegetarian");
-                cell.appendChild(text);
-            } else{
-                text = document.createTextNode("Neither");
-                cell.appendChild(text);
-            }
-
         }
         resolve("Success");
     }
