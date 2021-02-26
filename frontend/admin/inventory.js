@@ -270,6 +270,7 @@ function checkoutUpdateQuantities(){
             console.log('Request Failed', error)
         });
     location.reload()
+    rowCount = 0;
 
 }
 
@@ -425,6 +426,7 @@ function newScannedItem(){
         data => {
             if (data === "notFound"){
                 popUnknownItemModal(currentBarcode)
+                document.getElementById("multiScanBarcode").value = "";
             }else{
                 let row = table.insertRow();
                 //name
@@ -437,29 +439,50 @@ function newScannedItem(){
                 cell.appendChild(text);
                 //Delete Button
                 cell = row.insertCell();
-                cell.innerHTML ="<a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteItem('')><i class='fas fa-trash'></i></a>";
-
+                cell.innerHTML ="<a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"DeleteBtn\" onclick =deleteTableEntryMulti(this)><i class='fas fa-trash'></i></a>";
+                document.getElementById("multiScanBarcode").value = "";
 
             }
 
-
-            document.getElementById("multiScanBarcode").value = ""
         })
 }
 
+let rowCount = 0;
+
 function newLine(){
+    const table = document.getElementById("checkoutTable");
     let newBarcodeSlot = document.createElement("p");
     let itemText = "";
     checkoutItemList.push(document.getElementById("checkoutItemBarcode").value);
-    getBarcode(document.getElementById("checkoutItemBarcode").value).then(
+    let currBarcode = document.getElementById("checkoutItemBarcode").value;
+    console.log(currBarcode)
+    getBarcode(currBarcode).then(
         data => {
-            itemText = data.name;
-            let itemTextNode = document.createTextNode(itemText);
-            newBarcodeSlot.appendChild(itemTextNode);
-
-            divHousing.appendChild(newBarcodeSlot);
-            document.getElementById("checkoutItemBarcode").value = ""
+            let row = table.insertRow();
+            //name
+            let cell = row.insertCell();
+            let text = document.createTextNode(data.name);
+            cell.appendChild(text);
+            //brand
+            cell = row.insertCell();
+            text = document.createTextNode(data.brand);
+            cell.appendChild(text);
+            //Delete Button
+            cell = row.insertCell();
+            cell.innerHTML ="<a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"DeleteBtn\" onclick='deleteTableEntryCheckout(this)'><i class='fas fa-trash'></i></a>";
+            document.getElementById("checkoutItemBarcode").value = "";
         })
+
+}
+
+function deleteTableEntryCheckout(row){
+    let i = row.parentNode.parentNode.rowIndex;
+    document.getElementById("checkoutTable").deleteRow(i);
+}
+
+function deleteTableEntryMulti(row){
+    let i = row.parentNode.parentNode.rowIndex;
+    document.getElementById("multiItemTable").deleteRow(i);
 }
 
 //This function pops the bulk scan modal

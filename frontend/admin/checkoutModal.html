@@ -5,7 +5,7 @@
     <title>Checkout</title>
 </head>
 <body>
-<!-- Scan Item Modal -->
+<!--Checkout Modal -->
 <div class="modal" id="checkout" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -18,14 +18,25 @@
             <div class="modal-body" style="text-align: center">
                 <h6>Please scan all items the customer would like to take home with them! Then press submit to confirm their order and update
                 the inventory!</h6>
+                <div style="padding-bottom: 10px;padding-top: 10px;overflow-y: auto;max-height: 300px;" class="table-responsive-md">
+                    <table class = "table table-bordered" style="overflow: auto;" id = "checkoutTable" width="100%" cellspacing="0">
+                        <thead style="text-align: center">
+                        <tr>
+                            <th scope="col">Item Name</th>
+                            <th scope="col">Brand</th>
+                            <th scope="col">Remove</th>
+                        </tr>
+                        </thead>
+                        <tbody style="text-align: center;overflow-y:scroll; display:block;" id = "multiItem"></tbody>
+                    </table>
+                </div>
                 <form style="padding-top:1rem;display: inline-block;">
                     <div id="checkoutItemList" style="padding-bottom: 10px;overflow-y: auto;max-height: 300px;" class = "form-group"></div>
                     <div id="initialItem" style="padding-bottom: 10px;padding-top:10px" class = "form-group">
-                        <input class="form-control" id="checkoutItemBarcode" placeholder="Item Barcode" autocomplete="off" onchange="newLine('')">
+                        <input class="form-control" id="checkoutItemBarcode" placeholder="Item Barcode" onchange="newLine()">
                         <input type="text" style="display: none;" />
                     </div>
                 </form>
-<!--                Change the onclick to be an update that updates inventory.-->
                 <button type="submit" style="margin: .5rem auto;display:block; width:30%" class="btn btn-red" onclick="checkoutUpdateQuantities()">Submit</button>
             </div>
         </div>
