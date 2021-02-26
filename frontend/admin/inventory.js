@@ -135,15 +135,7 @@ function deleteInventory(barcode){
     fetch(posturl+'deleteInventory/'+ barcode, {
         method:"DELETE",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-    })
-        .then(status)
-        .then(json)
-        .then(function(data){
-            console.log('Request Succeeded', data)
-        })
-        .catch(function(error){
-            console.log('Request Failed', error)
-        });
+    }).then(response => console.log(response.json()));
 }
 
 async function addToInventoryTable(barcode, quantity){
@@ -335,7 +327,6 @@ function popNewItemModal(){
         }
     );
 }
-
 //If bulk scan does not find item then we ask them to enter item
 function popUnknownItemModal(barcode){
     document.getElementById("unknownItem").style.display = "block";
@@ -363,7 +354,7 @@ async function submitUnknownItem(){
     document.getElementById("unknownItem").style.display = "none";
     //Call API Endpoint
     await createItem(barcode, quantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan, image)
-    sleep(1000);
+    // sleep(1000);
     await addImage(barcode,image)
     //See if image made it
     getBarcode(barcode).then(data=>{
@@ -379,7 +370,6 @@ async function submitUnknownItem(){
 }
 
 
-//The function can be used universally to close any popup
 //The function can be used universally to close any popup
 function closePopup(element){
     document.getElementById(element).style.display = "none";
@@ -427,6 +417,8 @@ function popCheckout(){
 //Function that looks at multiple items button and reads the barcode scanned
 function newScannedItem(){
     const table = document.getElementById("multiItemTable");
+    let newScanSlot = document.createElement("p");
+    let scanItemText = "";
     bulkScanItemList.push(document.getElementById("multiScanBarcode").value);
     let currentBarcode = document.getElementById("multiScanBarcode").value
     getBarcode(currentBarcode).then(
@@ -445,7 +437,7 @@ function newScannedItem(){
                 cell.appendChild(text);
                 //Delete Button
                 cell = row.insertCell();
-                cell.innerHTML ="<a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteItem('"+data.barcode+"','"+element.name+"','"+element.brand+"')><i class='fas fa-trash'></i></a>";
+                cell.innerHTML ="<a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteItem('')><i class='fas fa-trash'></i></a>";
 
 
             }
@@ -541,12 +533,10 @@ function recountInventory(){
     document.getElementById('page-mask').style.position = "unset";
 }
 
-function popConfirmDeleteItem(barcode, name, brand){
+function popConfirmDeleteItem(){
     document.getElementById("deleteItem").style.display = "block";
     delItem = true
     document.getElementById('page-mask').style.position = "fixed";
-    document.getElementById("removeItem").value = barcode;
-    document.getElementById("itemDisplay").innerHTML = brand + " " + name;
 }
 
 //On Submit of new item modal create new items
@@ -565,10 +555,8 @@ async function submitNewItem(){
     //Call API Endpoint
     await addToInventoryTable(barcode, newQuantity)
     await createItem(barcode, newQuantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan, image)
-    location.reload()
     sleep(1000);
     await addImage(barcode,image)
-    sleep(300);
     //See if image made it
     getBarcode(barcode).then(data=>{
         //If not retry the insert
@@ -576,18 +564,11 @@ async function submitNewItem(){
             addImage(barcode,image)
         }
     })
-
-
-
-
-
-}
-
-//Deletes item
-function deleteItem(barcode){
-    document.getElementById("deleteItem").style.display = "none";
-    deleteInventory(barcode)
     location.reload()
+
+
+
+
 }
 
 //Pops the edit item modal
@@ -641,7 +622,7 @@ function loadPantryItems(items){
             let row = table.insertRow();
             //modify item
             let cell = row.insertCell();
-            cell.innerHTML = "<a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditItem("+currentElement+","+element.quantity+")><i class='fas fa-edit'></i></a><a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteItem('"+element.barcodeId+"','"+element.productTitle+"','"+element.brand+"')><i class='fas fa-trash'></i></a>";
+            cell.innerHTML = "<a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditItem("+currentElement+","+element.quantity+")><i class='fas fa-edit'></i></a><a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteItem('')><i class='fas fa-trash'></i></a>";
             //name
             cell = row.insertCell();
             let text = document.createTextNode(element.productTitle);
