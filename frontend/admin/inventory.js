@@ -367,6 +367,13 @@ async function submitUnknownItem(){
     closeUnknownItemPopUp();
     document.getElementById("multiScanBarcode").value = barcode;
     newScannedItem();
+    itemName = document.getElementById("unknownItemName").value = "";
+    itemBrand = document.getElementById("unknownItemBrand").value = "";
+    itemType = document.getElementById("unknownItemType").value = "";
+    itemURL = document.getElementById("unknownItemProductURL").value = "";
+    vegan = document.getElementById("unknownItemVegan").checked = false;
+    vegetarian = document.getElementById("unknownItemVegetarian").checked = false;
+    //image = document.getElementById("unknownItemProdImg").files[0];
 }
 
 
@@ -687,6 +694,18 @@ function readURL(input) {
 
         reader.onload = function(e) {
             $('#imgPreview').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]); // convert to base64 string
+    }
+}
+
+function readUnknownURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            $('#unknownItemImgPreview').attr('src', e.target.result);
         }
 
         reader.readAsDataURL(input.files[0]); // convert to base64 string
