@@ -563,10 +563,19 @@ function recountInventory(){
     document.getElementById('page-mask').style.position = "unset";
 }
 
-function popConfirmDeleteItem(){
+function popConfirmDeleteItem(barcode, name, brand){
     document.getElementById("deleteItem").style.display = "block";
     delItem = true
     document.getElementById('page-mask').style.position = "fixed";
+    document.getElementById("removeItem").value = barcode;
+    document.getElementById("itemDisplay").innerHTML = brand + " " + name;
+}
+
+//Deletes item
+function deleteItem(barcode){
+    document.getElementById("deleteItem").style.display = "none";
+    deleteInventory(barcode)
+    location.reload()
 }
 
 //On Submit of new item modal create new items
@@ -652,7 +661,7 @@ function loadPantryItems(items){
             let row = table.insertRow();
             //modify item
             let cell = row.insertCell();
-            cell.innerHTML = "<a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditItem("+currentElement+","+element.quantity+")><i class='fas fa-edit'></i></a><a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteItem('')><i class='fas fa-trash'></i></a>";
+            cell.innerHTML = "<a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditItem("+currentElement+","+element.quantity+")><i class='fas fa-edit'></i></a><a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteItem('"+element.barcodeId+"','"+element.productTitle+"','"+element.brand+"')><i class='fas fa-trash'></i></a>";
             //name
             cell = row.insertCell();
             let text = document.createTextNode(element.productTitle);
