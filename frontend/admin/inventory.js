@@ -324,6 +324,14 @@ function popNewItemModal(){
     );
 }
 
+//If bulk scan does not find item then we ask them to enter item
+function popUnkownItemModal(barcode){
+    document.getElementById("newItem").style.display = "block";
+    let el_barcode = document.getElementById("newItemBarcode");
+    el_barcode.value = barcode;
+}
+
+
 //The function can be used universally to close any popup
 function closePopup(element){
     document.getElementById(element).style.display = "none";
@@ -378,32 +386,21 @@ function newScannedItem(){
     getBarcode(currentBarcode).then(
         data => {
             if (data === "notFound"){
-                let row = table.insertRow();
-                //barcode
-                let cell = row.insertCell();
-                let text = document.createTextNode(currentBarcode);
-                cell.appendChild(text);
-                //name
-                cell = row.insertCell();
-                text = document.createTextNode("");
-                cell.appendChild(text);
-                //Add to Inventory
-                cell = row.insertCell();
-                cell.innerHTML = "<button class=\"btn btn-red\" id=\"newItemButton\" onclick=''>New Item</button>";
+                popUnkownItemModal(currentBarcode)
             }else{
                 let row = table.insertRow();
-                //barcode
-                let cell = row.insertCell();
-                let text = document.createTextNode(data.barcode);
-                cell.appendChild(text);
                 //name
-                cell = row.insertCell();
-                text = document.createTextNode(data.name);
+                let cell = row.insertCell();
+                let text = document.createTextNode(data.name);
                 cell.appendChild(text);
-                //Add to Inventory
+                //brand
                 cell = row.insertCell();
-                text = document.createTextNode("");
+                text = document.createTextNode(data.brand);
                 cell.appendChild(text);
+                //Delete Button
+                cell = row.insertCell();
+                cell.innerHTML ="<a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteItem('')><i class='fas fa-trash'></i></a>";
+
 
             }
 
