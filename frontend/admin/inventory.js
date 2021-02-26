@@ -51,6 +51,10 @@ $(function(){
     $("#deleteItemModal").load("deleteItemModal.html");
 });
 
+$(function(){
+    $("#unknownItemModal").load("unknownItemModal.html");
+});
+
 //Global Variables
 let newItem = null
 let scanItem = null
@@ -333,13 +337,49 @@ function popNewItemModal(){
 }
 
 //If bulk scan does not find item then we ask them to enter item
-function popUnkownItemModal(barcode){
-    document.getElementById("newItem").style.display = "block";
-    let el_barcode = document.getElementById("newItemBarcode");
-    el_barcode.value = barcode;
+function popUnknownItemModal(barcode){
+    document.getElementById("unknownItem").style.display = "block";
+    document.getElementById("unknownItemBarcode").value = barcode;
+    document.getElementById("bulkScan").style.display = "none";
+}
+
+//The function can be used specifically for bulk scan issues
+function closeUnknownItemPopUp(){
+    document.getElementById("unknownItem").style.display = "none";
+    document.getElementById("bulkScan").style.display = "block";
+}
+
+async function submitUnknownItem(){
+    let quantity = document.getElementById("unknownItemQuantity").value;
+    let barcode = document.getElementById("unknownItemBarcode").value;
+    let itemName = document.getElementById("unknownItemName").value;
+    let itemBrand = document.getElementById("unknownItemBrand").value;
+    let itemType = document.getElementById("unknownItemType").value;
+    let itemURL = document.getElementById("unknownItemProductURL").value;
+    let vegan = document.getElementById("unknownItemVegan").checked;
+    let vegetarian = document.getElementById("unknownItemVegetarian").checked;
+    let image = document.getElementById("unknownItemProdImg").files[0];
+
+    document.getElementById("unknownItem").style.display = "none";
+    //Call API Endpoint
+    await createItem(barcode, quantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan, image)
+    sleep(1000);
+    await addImage(barcode,image)
+    //See if image made it
+    getBarcode(barcode).then(data=>{
+        //If not retry the insert
+        if (data.image === null) {
+            addImage(barcode,image)
+        }
+    })
+    sleep(1000);
+    closeUnknownItemPopUp();
+    document.getElementById("multiScanBarcode").value = barcode;
+    newScannedItem();
 }
 
 
+//The function can be used universally to close any popup
 //The function can be used universally to close any popup
 function closePopup(element){
     document.getElementById(element).style.display = "none";
@@ -387,14 +427,12 @@ function popCheckout(){
 //Function that looks at multiple items button and reads the barcode scanned
 function newScannedItem(){
     const table = document.getElementById("multiItemTable");
-    let newScanSlot = document.createElement("p");
-    let scanItemText = "";
     bulkScanItemList.push(document.getElementById("multiScanBarcode").value);
     let currentBarcode = document.getElementById("multiScanBarcode").value
     getBarcode(currentBarcode).then(
         data => {
             if (data === "notFound"){
-                popUnkownItemModal(currentBarcode)
+                popUnknownItemModal(currentBarcode)
             }else{
                 let row = table.insertRow();
                 //name
