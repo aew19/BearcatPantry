@@ -355,7 +355,7 @@ async function submitUnknownItem(){
     document.getElementById("unknownItem").style.display = "none";
     //Call API Endpoint
     await createItem(barcode, quantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan, image)
-    // sleep(1000);
+    sleep(1000);
     await addImage(barcode,image)
     //See if image made it
     getBarcode(barcode).then(data=>{
@@ -563,12 +563,17 @@ function recountInventory(){
     document.getElementById('page-mask').style.position = "unset";
 }
 
-function popConfirmDeleteItem(barcode, name, brand){
-    document.getElementById("deleteItem").style.display = "block";
-    delItem = true
-    document.getElementById('page-mask').style.position = "fixed";
-    document.getElementById("removeItem").value = barcode;
-    document.getElementById("itemDisplay").innerHTML = brand + " " + name;
+function popConfirmDeleteItem(barcode1){
+    getBarcode(barcode1).then(
+        data => {
+            document.getElementById("deleteItem").style.display = "block";
+            delItem = true
+            document.getElementById('page-mask').style.position = "fixed";
+            document.getElementById("removeItem").value = barcode1;
+            document.getElementById("itemDisplay").innerHTML = data.brand + " " + data.name;
+        })
+
+
 }
 
 //Deletes item
@@ -598,6 +603,7 @@ async function submitNewItem(){
     await addImage(barcode,image)
     //See if image made it
     getBarcode(barcode).then(data=>{
+        console.log(data.image)
         //If not retry the insert
         if (data.image === null) {
             addImage(barcode,image)
@@ -661,7 +667,8 @@ function loadPantryItems(items){
             let row = table.insertRow();
             //modify item
             let cell = row.insertCell();
-            cell.innerHTML = "<a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditItem("+currentElement+","+element.quantity+")><i class='fas fa-edit'></i></a><a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteItem('"+element.barcodeId+"','"+element.productTitle+"','"+element.brand+"')><i class='fas fa-trash'></i></a>";
+            console.log(element.productTitle)
+            cell.innerHTML = "<a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditItem("+currentElement+","+element.quantity+")><i class='fas fa-edit'></i></a><a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteItem("+element.barcodeId+")><i class='fas fa-trash'></i></a>";
             //name
             cell = row.insertCell();
             let text = document.createTextNode(element.productTitle);
