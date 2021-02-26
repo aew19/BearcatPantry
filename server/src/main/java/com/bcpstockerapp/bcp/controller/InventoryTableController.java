@@ -42,9 +42,19 @@ public class InventoryTableController {
     public @ResponseBody String increaseInventory(@RequestParam String[] barcodeIds){
         for (String barcodeId : barcodeIds) {
             InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeId);
-            Integer currentQuantity = inventory.getQuantity();
-            inventory.setQuantity(currentQuantity + 1);
-            inventoryTableRepository.save(inventory);
+            if (inventory == null){
+                //If not in inventory table add it to the table
+                InventoryTable item = new InventoryTable();
+                item.setBarcodeId(barcodeId);
+                item.setQuantity(1);
+                inventoryTableRepository.save(item);
+            }else{
+                //Otherwise increase current inventory by 1
+                Integer currentQuantity = inventory.getQuantity();
+                inventory.setQuantity(currentQuantity + 1);
+                inventoryTableRepository.save(inventory);
+            }
+
         }
         return "done";
     }
