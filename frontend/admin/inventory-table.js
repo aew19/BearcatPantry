@@ -1,3 +1,4 @@
+
 //This function is used for the formatting of the table
 //Right now searching and ordering is on
 function createInventoryTableStyle() {
@@ -21,7 +22,7 @@ function createInventoryTableStyle() {
 
 //API Function to get Inventory Table
 async function getInventory(){
-    let response = await fetch("http://localhost:8080/inventoryTable/")
+    let response = await fetch(url+"/inventoryTable/")
     try{
         return await response.json();
     }catch{
@@ -97,4 +98,3 @@ async function createInventoryTable(){
     )
 }
 
-createInventoryTable();

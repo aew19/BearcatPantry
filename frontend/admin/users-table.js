@@ -112,7 +112,7 @@ function loadUsersTable(users){
 
 //API Call to get users table
 async function getUsers(){
-    let response = await fetch("http://localhost:8080/users/")
+    let response = await fetch(url + "users/")
     try{
         return await response.json();
     }catch{
@@ -130,7 +130,6 @@ async function createUsersTable(){
     )
 }
 
-createUsersTable();
 
 //On Submit of new user modal create new user
 async function submitNewUser(){
@@ -166,11 +165,33 @@ async function addUser(mNumber, FName, LName, PermissionLevel, ActiveStatus){
     }
     userFormBody = userFormBody.join("&");
     
-    fetch('http://localhost:8080/users', {
+    fetch(posturl + '/users', {
         body: userFormBody,
         method:"POST",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-    }).then(response => response.json())
-        .then(data=> {console.log('Success');location.reload();})
-        .catch((error)=>{ console.error('Error:', error);location.reload();});
+    })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log('Request Succeeded', data)
+            location.reload()
+        })
+        .catch(function(error){
+            console.log('Request Failed', error)
+            location.reload()
+        });
+}
+
+//Error handling for status
+function status(response) {
+    if (response.status >= 200 && response.status < 300) {
+        return Promise.resolve(response)
+    } else {
+        return Promise.reject(new Error(response.statusText))
+    }
+}
+
+//Returns the json of the response
+function json(response) {
+    return response.json()
 }

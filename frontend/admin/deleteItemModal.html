@@ -15,10 +15,10 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body" style="padding-bottom:.5rem">
+                    <div class="modal-body" style="padding-bottom:.5rem; text-align: center;">
                         <h6>Are you sure you want to delete the following item(s)?</h6>
                         <h5 id="itemDisplay"></h5>
-                        <button type="submit" id="delButton" style="width:25%;" class="btn btn-green" onclick="deleteItem(this.value)">Yes</button>
+                        <button id="removeItem" type="submit" style="width:25%;" class="btn btn-green" onclick="deleteItem(this.value)">Yes</button>
                         <button type="submit" style="width:25%;" class="btn btn-red" onclick="closePopup('deleteItem')">No</button>
                     </div>
                 </div>

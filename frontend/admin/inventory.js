@@ -1,5 +1,30 @@
-//TODO REPLACE ALL LOCALHOST:8080 WITH bcpwb1prd01l.ad.uc.edu:8080/web-services
+//TODO REPLACE ALL LOCALHOST:8080 WITH https://bcpwb1prd01l.ad.uc.edu:8443/web-services/items
 //CHECK to see if you can hit the bcpwb and if not default back to localhost:8080
+
+let env="";
+let url = "";
+let posturl = '';
+
+//Reads the environment and sets the correct API URL
+async function loadEnv(){
+    fetch("../environment.json").then(response=>response.json())
+        .then(json=>{
+            env=json.env
+            if (env === "dev"){
+                url = "http://localhost:8080/"
+                posturl = 'http://localhost:8080/'
+            }else{
+                url = "https://bcpwb1prd01l.ad.uc.edu:8443/web-services/"
+                posturl = 'https://bcpwb1prd01l.ad.uc.edu:8443/web-services/'
+            }
+            createInventoryTable()
+        })
+        .catch(err => console.log("Error reading Environment"))
+}
+
+
+
+
 $(function(){
     $("#newItemModal").load("newItemModal.html");
 });
@@ -26,6 +51,10 @@ $(function(){
     $("#deleteItemModal").load("deleteItemModal.html");
 });
 
+$(function(){
+    $("#unknownItemModal").load("unknownItemModal.html");
+});
+
 //Global Variables
 let newItem = null
 let scanItem = null
@@ -42,7 +71,7 @@ let bulkScanItemList = [];
 //API FUNCTIONS
 //JOIN table for the inventory
 async function getInventory(){
-    let response = await fetch("http://localhost:8080/inventoryTable/")
+    let response = await fetch(url + "inventoryTable/")
     try{
         return await response.json();
     }catch{
@@ -61,13 +90,19 @@ function updateInventory(barcode1, quantity){
         formBody.push(encodedKey+"="+encodedValue);
     }
     formBody = formBody.join("&");
-    fetch('http://localhost:8080/updateInventory/'+ barcode1, {
+    fetch(posturl + 'updateInventory/'+ barcode1, {
         body: formBody,
         method:"PUT",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-    }).then(response => response.json())
-        .then(data=> {console.log('Success');})
-        .catch((error)=>{ console.error('Error:', error);});
+    })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log('Request Succeeded', data)
+        })
+        .catch(function(error){
+            console.log('Request Failed', error)
+        });
 }
 
 //Update product table
@@ -80,18 +115,24 @@ function updateProduct(barcode, itemName, brand, type, url, isVegetarian, isVega
         formBody.push(encodedKey+"="+encodedValue);
     }
     formBody = formBody.join("&");
-    fetch('http://localhost:8080/items/'+ barcode, {
+    fetch(posturl + 'items/'+ barcode, {
         body: formBody,
         method:"PUT",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-    }).then(response => response.json())
-        .then(data=> {console.log('Success');})
-        .catch((error)=>{ console.error('Error:', error);});
+    })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log('Request Succeeded', data)
+        })
+        .catch(function(error){
+            console.log('Request Failed', error)
+        });
 }
 
 //Delete item from inventory
 function deleteInventory(barcode){
-    fetch('http://localhost:8080/deleteInventory/'+ barcode, {
+    fetch(posturl+'deleteInventory/'+ barcode, {
         method:"DELETE",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
     }).then(response => console.log(response.json()));
@@ -107,16 +148,24 @@ async function addToInventoryTable(barcode, quantity){
         formBody.push(encodedKey+"="+encodedValue);
     }
     formBody = formBody.join("&");
-    let response = fetch('http://localhost:8080/inventory', {
+    fetch(posturl+'inventory', {
         method:"POST",
-        headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+        headers:{'Content-Type': 'application/x-www-form-urlencoded'},
         body: formBody
     })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log('Request Succeeded', data)
+        })
+        .catch(function(error){
+            console.log('Request Failed', error)
+        });
 }
 
 //Calls barcode api endpoint
 async function getBarcode(barcode){
-    let response = await fetch("http://localhost:8080/items/"+barcode)
+    let response = await fetch(url + "items/"+barcode)
     try{
         return await response.json();
     }catch{
@@ -125,7 +174,7 @@ async function getBarcode(barcode){
 }
 
 //Add new item to product database
-async function createItem(barcode, quantity, itemName, brand, type, url, isVegetarian, isVegan){
+async function createItem(barcode, quantity, itemName, brand, type, url, isVegetarian, isVegan, image){
     //POST to product table
     let prodData = {'barcodeId':barcode,'productTitle':itemName, 'foodType':type, 'brand':brand, 'productURL':url, 'vegetarian':isVegetarian, 'vegan':isVegan}
     let prodFormBody =[];
@@ -135,23 +184,38 @@ async function createItem(barcode, quantity, itemName, brand, type, url, isVeget
         prodFormBody.push(encodedProdKey+"="+encodedProdValue);
     }
     prodFormBody = prodFormBody.join("&");
-    let response = fetch('http://localhost:8080/items', {
+    fetch(posturl + 'items', {
         body: prodFormBody,
         method:"POST",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
     })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log('Request Succeeded', data)
+        })
+        .catch(function(error){
+            console.log('Request Failed', error)
+        });
 }
 
 //Add image to item
 async function addImage(barcode, image){
-    console.log(image)
     let prodFormBody = new FormData();
     prodFormBody.append('file',image)
-    let response = fetch('http://localhost:8080/addImage/'+barcode, {
+    fetch(posturl + 'addImage/'+barcode, {
         body: prodFormBody,
         enctype: "multipart/form-data",
         method:"PUT",
     })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log('Request Succeeded', data)
+        })
+        .catch(function(error){
+            console.log('Request Failed', error)
+        });
 }
 
 function bulkUpdateQuantities(){
@@ -165,11 +229,19 @@ function bulkUpdateQuantities(){
         prodFormBody.push(encodedProdKey+"="+encodedProdValue);
     }
     prodFormBody = prodFormBody.join("&");
-    let response = fetch('http://localhost:8080/increaseInventory', {
+    let response = fetch(posturl + '/increaseInventory', {
         body: prodFormBody,
         method:"PUT",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
     })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log('Request Succeeded', data)
+        })
+        .catch(function(error){
+            console.log('Request Failed', error)
+        });
     location.reload()
 }
 
@@ -184,12 +256,21 @@ function checkoutUpdateQuantities(){
         prodFormBody.push(encodedProdKey+"="+encodedProdValue);
     }
     prodFormBody = prodFormBody.join("&");
-    let response = fetch('http://localhost:8080/decreaseInventory', {
+    let response = fetch(posturl + 'decreaseInventory', {
         body: prodFormBody,
         method:"PUT",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
     })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log('Request Succeeded', data)
+        })
+        .catch(function(error){
+            console.log('Request Failed', error)
+        });
     location.reload()
+    rowCount = 0;
 
 }
 
@@ -247,6 +328,55 @@ function popNewItemModal(){
         }
     );
 }
+//If bulk scan does not find item then we ask them to enter item
+function popUnknownItemModal(barcode){
+    document.getElementById("unknownItem").style.display = "block";
+    document.getElementById("unknownItemBarcode").value = barcode;
+    document.getElementById("bulkScan").style.display = "none";
+}
+
+//The function can be used specifically for bulk scan issues
+function closeUnknownItemPopUp(){
+    document.getElementById("unknownItem").style.display = "none";
+    document.getElementById("bulkScan").style.display = "block";
+}
+
+async function submitUnknownItem(){
+    let quantity = document.getElementById("unknownItemQuantity").value;
+    let barcode = document.getElementById("unknownItemBarcode").value;
+    let itemName = document.getElementById("unknownItemName").value;
+    let itemBrand = document.getElementById("unknownItemBrand").value;
+    let itemType = document.getElementById("unknownItemType").value;
+    let itemURL = document.getElementById("unknownItemProductURL").value;
+    let vegan = document.getElementById("unknownItemVegan").checked;
+    let vegetarian = document.getElementById("unknownItemVegetarian").checked;
+    let image = document.getElementById("unknownItemProdImg").files[0];
+
+    document.getElementById("unknownItem").style.display = "none";
+    //Call API Endpoint
+    await createItem(barcode, quantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan, image)
+    sleep(1000);
+    await addImage(barcode,image)
+    //See if image made it
+    getBarcode(barcode).then(data=>{
+        //If not retry the insert
+        if (data.image === null) {
+            addImage(barcode,image)
+        }
+    })
+    sleep(1000);
+    closeUnknownItemPopUp();
+    document.getElementById("multiScanBarcode").value = barcode;
+    newScannedItem();
+    itemName = document.getElementById("unknownItemName").value = "";
+    itemBrand = document.getElementById("unknownItemBrand").value = "";
+    itemType = document.getElementById("unknownItemType").value = "";
+    itemURL = document.getElementById("unknownItemProductURL").value = "";
+    vegan = document.getElementById("unknownItemVegan").checked = false;
+    vegetarian = document.getElementById("unknownItemVegetarian").checked = false;
+    //image = document.getElementById("unknownItemProdImg").files[0];
+}
+
 
 //The function can be used universally to close any popup
 function closePopup(element){
@@ -302,53 +432,64 @@ function newScannedItem(){
     getBarcode(currentBarcode).then(
         data => {
             if (data === "notFound"){
-                let row = table.insertRow();
-                //barcode
-                let cell = row.insertCell();
-                let text = document.createTextNode(currentBarcode);
-                cell.appendChild(text);
-                //name
-                cell = row.insertCell();
-                text = document.createTextNode("");
-                cell.appendChild(text);
-                //Add to Inventory
-                cell = row.insertCell();
-                cell.innerHTML = "<button class=\"btn btn-red\" id=\"newItemButton\" onclick=''>New Item</button>";
+                popUnknownItemModal(currentBarcode)
+                document.getElementById("multiScanBarcode").value = "";
             }else{
                 let row = table.insertRow();
-                //barcode
-                let cell = row.insertCell();
-                let text = document.createTextNode(data.barcode);
-                cell.appendChild(text);
                 //name
-                cell = row.insertCell();
-                text = document.createTextNode(data.name);
+                let cell = row.insertCell();
+                let text = document.createTextNode(data.name);
                 cell.appendChild(text);
-                //Add to Inventory
+                //brand
                 cell = row.insertCell();
-                text = document.createTextNode("");
+                text = document.createTextNode(data.brand);
                 cell.appendChild(text);
+                //Delete Button
+                cell = row.insertCell();
+                cell.innerHTML ="<a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"DeleteBtn\" onclick =deleteTableEntryMulti(this)><i class='fas fa-trash'></i></a>";
+                document.getElementById("multiScanBarcode").value = "";
 
             }
 
-
-            document.getElementById("multiScanBarcode").value = ""
         })
 }
 
+let rowCount = 0;
+
 function newLine(){
+    const table = document.getElementById("checkoutTable");
     let newBarcodeSlot = document.createElement("p");
     let itemText = "";
     checkoutItemList.push(document.getElementById("checkoutItemBarcode").value);
-    getBarcode(document.getElementById("checkoutItemBarcode").value).then(
+    let currBarcode = document.getElementById("checkoutItemBarcode").value;
+    console.log(currBarcode)
+    getBarcode(currBarcode).then(
         data => {
-            itemText = data.name;
-            let itemTextNode = document.createTextNode(itemText);
-            newBarcodeSlot.appendChild(itemTextNode);
-
-            divHousing.appendChild(newBarcodeSlot);
-            document.getElementById("checkoutItemBarcode").value = ""
+            let row = table.insertRow();
+            //name
+            let cell = row.insertCell();
+            let text = document.createTextNode(data.name);
+            cell.appendChild(text);
+            //brand
+            cell = row.insertCell();
+            text = document.createTextNode(data.brand);
+            cell.appendChild(text);
+            //Delete Button
+            cell = row.insertCell();
+            cell.innerHTML ="<a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"DeleteBtn\" onclick='deleteTableEntryCheckout(this)'><i class='fas fa-trash'></i></a>";
+            document.getElementById("checkoutItemBarcode").value = "";
         })
+
+}
+
+function deleteTableEntryCheckout(row){
+    let i = row.parentNode.parentNode.rowIndex;
+    document.getElementById("checkoutTable").deleteRow(i);
+}
+
+function deleteTableEntryMulti(row){
+    let i = row.parentNode.parentNode.rowIndex;
+    document.getElementById("multiItemTable").deleteRow(i);
 }
 
 //This function pops the bulk scan modal
@@ -422,10 +563,24 @@ function recountInventory(){
     document.getElementById('page-mask').style.position = "unset";
 }
 
-function popConfirmDeleteItem(){
-    document.getElementById("deleteItem").style.display = "block";
-    delItem = true
-    document.getElementById('page-mask').style.position = "fixed";
+function popConfirmDeleteItem(barcode1){
+    getBarcode(barcode1).then(
+        data => {
+            document.getElementById("deleteItem").style.display = "block";
+            delItem = true
+            document.getElementById('page-mask').style.position = "fixed";
+            document.getElementById("removeItem").value = barcode1;
+            document.getElementById("itemDisplay").innerHTML = data.brand + " " + data.name;
+        })
+
+
+}
+
+//Deletes item
+function deleteItem(barcode){
+    document.getElementById("deleteItem").style.display = "none";
+    deleteInventory(barcode)
+    location.reload()
 }
 
 //On Submit of new item modal create new items
@@ -439,16 +594,24 @@ async function submitNewItem(){
     let vegan = document.getElementById("vegan").checked;
     let vegetarian = document.getElementById("vegetarian").checked;
     let image = document.getElementById("prodImg").files[0];
-    // let formData = new FormData()
-    // formData.append('file', image)
 
     document.getElementById("newItem").style.display = "none";
     //Call API Endpoint
     await addToInventoryTable(barcode, newQuantity)
-    await createItem(barcode, newQuantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan, image).then(data=>{
-        addImage(barcode,image)
-    });
+    await createItem(barcode, newQuantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan, image)
+    sleep(1000);
+    await addImage(barcode,image)
+    //See if image made it
+    getBarcode(barcode).then(data=>{
+        console.log(data.image)
+        //If not retry the insert
+        if (data.image === null) {
+            addImage(barcode,image)
+        }
+    })
     location.reload()
+
+
 
 
 }
@@ -504,7 +667,8 @@ function loadPantryItems(items){
             let row = table.insertRow();
             //modify item
             let cell = row.insertCell();
-            cell.innerHTML = "<a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditItem("+currentElement+","+element.quantity+")><i class='fas fa-edit'></i></a><a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteItem('')><i class='fas fa-trash'></i></a>";
+            console.log(element.productTitle)
+            cell.innerHTML = "<a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditItem("+currentElement+","+element.quantity+")><i class='fas fa-edit'></i></a><a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteItem("+element.barcodeId+")><i class='fas fa-trash'></i></a>";
             //name
             cell = row.insertCell();
             let text = document.createTextNode(element.productTitle);
@@ -535,21 +699,6 @@ function loadPantryItems(items){
             cell = row.insertCell();
             text = document.createTextNode(element.brand);
             cell.appendChild(text);
-
-            //Vegetarian or Vegan
-            cell = row.insertCell();
-            if (element.vegan == true){
-                text = document.createTextNode("Vegan");
-                cell.appendChild(text);
-            }
-            else if (element.vegetarian == true){
-                text = document.createTextNode("Vegetarian");
-                cell.appendChild(text);
-            } else{
-                text = document.createTextNode("Neither");
-                cell.appendChild(text);
-            }
-
         }
         resolve("Success");
     }
@@ -590,6 +739,18 @@ function readURL(input) {
     }
 }
 
+function readUnknownURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            $('#unknownItemImgPreview').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]); // convert to base64 string
+    }
+}
+
 function showNavBar() {
     var x = document.getElementById("myLinks");
     if (x.style.display === "block") {
@@ -599,4 +760,30 @@ function showNavBar() {
     }
 }
 
-createInventoryTable()
+//Error handling for status
+function status(response) {
+    if (response.status >= 200 && response.status < 300) {
+        return Promise.resolve(response)
+    } else {
+        return Promise.reject(new Error(response.statusText))
+    }
+}
+
+//Returns the json of the response
+function json(response) {
+    return response.json()
+}
+
+//Pause function
+function sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+        currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+}
+
+loadEnv()
+
+
+

@@ -16,14 +16,14 @@
             </button>
         </div>
         <div class="modal-body" style="text-align: center">
-            <h6>Scan All Items You Wish to Add to Inventory</h6>
-            <div style="padding-bottom: 10px;overflow-y: auto;max-height: 300px;" class="table-responsive-md">
+            <h6>Scan the items You would like added to the inventory.</h6>
+            <div style="padding-bottom: 10px;padding-top: 10px;overflow-y: auto;max-height: 300px;" class="table-responsive-md">
                 <table class = "table table-bordered" style="overflow: auto;" id = "multiItemTable" width="100%" cellspacing="0">
                     <thead style="text-align: center">
                     <tr>
-                        <th scope="col">Barcode</th>
-                        <th scope="col">Item</th>
-                        <th scope="col">Unknown Item</th>
+                        <th scope="col">Item Name</th>
+                        <th scope="col">Brand</th>
+                        <th scope="col">Remove</th>
                     </tr>
                     </thead>
                     <tbody style="text-align: center;overflow-y:scroll; display:block;" id = "multiItem"></tbody>
@@ -32,7 +32,7 @@
             <form style="padding-top:1rem;display: inline-block;">
                 <div id="multiScanList" style="padding-bottom: 10px;overflow-y: auto;max-height: 300px;" class = "form-group"></div>
                 <div id="initialItem" style="padding-bottom: 10px;padding-top:10px" class = "form-group">
-                    <input class="form-control" id="multiScanBarcode" placeholder="Item Barcode" onchange="newScannedItem()">
+                    <input class="form-control" id="multiScanBarcode" placeholder="Item Barcode" autocomplete="off" onchange="newScannedItem()">
                     <input type="text" style="display: none;" />
                 </div>
             </form>

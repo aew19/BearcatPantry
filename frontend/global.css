@@ -534,7 +534,7 @@ input[type="file"] {
     height: 56px;
     position: absolute;
     width: 70px;
-    right: 20%;
+    right: 0%;
     outline:none;
     border-left: 1px solid #fff;
     border-right: 1px solid #fff;
@@ -547,7 +547,7 @@ input[type="file"] {
     position: absolute;
     float: right;
     width: 70px;
-    right: 23.6%;
+    right: 4.5%;
     outline:none;
     color: #fff;
     border-left: 1px solid #fff;

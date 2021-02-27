@@ -4,9 +4,8 @@ import com.bcpstockerapp.bcp.model.InventoryTable;
 import com.bcpstockerapp.bcp.model.prodInventoryJoin;
 import com.bcpstockerapp.bcp.repository.InventoryTableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
+
 
 import java.util.Date;
 import java.util.List;
@@ -19,114 +18,87 @@ public class InventoryTableController {
     private InventoryTableRepository inventoryTableRepository;
 
     @GetMapping("/inventory")
-    public @ResponseBody ResponseEntity<List<InventoryTable>> getAllInventory(){
-        try{
-            List<InventoryTable> inventory = inventoryTableRepository.findAll();
-            return new ResponseEntity<>(inventory, HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public @ResponseBody List<InventoryTable> getAllInventory(){
+        return inventoryTableRepository.findAll();
+
     }
 
     @PostMapping(value="/inventory")
-    public @ResponseBody ResponseEntity<String> createInventory(@RequestParam String barcodeId, Integer quantity, String location, Date dateRecorded) {
-        try{
-            InventoryTable item = new InventoryTable();
-            item.setBarcodeId(barcodeId);
-            item.setQuantity(quantity);
-            item.setDateRecorded(dateRecorded);
-            item.setLocation(location);
-            inventoryTableRepository.save(item);
-            return new ResponseEntity<>("Saved!", HttpStatus.CREATED);
-        } catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public @ResponseBody InventoryTable createInventory(@RequestParam String barcodeId, Integer quantity, String location, Date dateRecorded) {
+        InventoryTable item = new InventoryTable();
+        item.setBarcodeId(barcodeId);
+        item.setQuantity(quantity);
+        item.setDateRecorded(dateRecorded);
+        item.setLocation(location);
+        return inventoryTableRepository.save(item);
     }
 
     @GetMapping("/inventoryTable")
-    public @ResponseBody ResponseEntity<List<prodInventoryJoin>> joinTable(){
-        try{
-            List<prodInventoryJoin> inventory = inventoryTableRepository.join();
-            return new ResponseEntity<>(inventory, HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public @ResponseBody List<prodInventoryJoin> joinTable(){
+        return inventoryTableRepository.join();
     }
 
     @PutMapping("/increaseInventory")
-    public @ResponseBody ResponseEntity<String> increaseInventory(@RequestParam String[] barcodeIds){
-        try{
-            for (int i = 0; i < barcodeIds.length; i++){
-                InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeIds[i]);
+    public @ResponseBody String increaseInventory(@RequestParam String[] barcodeIds){
+        for (String barcodeId : barcodeIds) {
+            InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeId);
+            if (inventory == null){
+                //If not in inventory table add it to the table
+                InventoryTable item = new InventoryTable();
+                item.setBarcodeId(barcodeId);
+                item.setQuantity(1);
+                inventoryTableRepository.save(item);
+            }else{
+                //Otherwise increase current inventory by 1
                 Integer currentQuantity = inventory.getQuantity();
                 inventory.setQuantity(currentQuantity + 1);
                 inventoryTableRepository.save(inventory);
             }
-            return new ResponseEntity<>("Success", HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+
         }
+        return "done";
     }
 
     @PutMapping("/decreaseInventory")
-    public @ResponseBody ResponseEntity<String> decreaseInventory(@RequestParam String[] barcodeIds){
-        try{
-            for (int i = 0; i < barcodeIds.length; i++){
-                InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeIds[i]);
-                Integer currentQuantity = inventory.getQuantity();
-                if (currentQuantity == 1){
-                    inventoryTableRepository.delete(inventory);
-                }else{
-                    inventory.setQuantity(currentQuantity - 1);
-                    inventoryTableRepository.save(inventory);
-                }
-
+    public @ResponseBody String decreaseInventory(@RequestParam String[] barcodeIds){
+        for (String barcodeId : barcodeIds) {
+            InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeId);
+            Integer currentQuantity = inventory.getQuantity();
+            if (currentQuantity == 1) {
+                inventoryTableRepository.delete(inventory);
+            } else {
+                inventory.setQuantity(currentQuantity - 1);
+                inventoryTableRepository.save(inventory);
             }
-            return new ResponseEntity<>("Success", HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+
         }
+        return "done";
     }
 
 
     @PutMapping("/updateInventory/{barcodeId}")
-    public @ResponseBody ResponseEntity<String> updateQuantity(@PathVariable(value="barcodeId") String barcodeId,@RequestParam Integer quantity){
-        try{
-            InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeId);
-            inventory.setQuantity(quantity);
-            inventoryTableRepository.save(inventory);
-            return new ResponseEntity<>("Success", HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public @ResponseBody InventoryTable updateQuantity(@PathVariable(value="barcodeId") String barcodeId,@RequestParam Integer quantity){
+        InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeId);
+        inventory.setQuantity(quantity);
+        return inventoryTableRepository.save(inventory);
     }
 
     @DeleteMapping("/deleteInventory/{barcodeId}")
-    public @ResponseBody ResponseEntity<String> deleteInventory(@PathVariable(value="barcodeId") String barcodeId){
-        try{
-            InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeId);
-            inventoryTableRepository.delete(inventory);
-            return new ResponseEntity<>("Success", HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public @ResponseBody String deleteInventory(@PathVariable(value="barcodeId") String barcodeId){
+        InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeId);
+        inventoryTableRepository.delete(inventory);
+        return "Success";
 
     }
 
     //Statistics API Endpoints
     @GetMapping("/getTotalInventory")
-    public @ResponseBody ResponseEntity<Integer> getTotalInventory(){
-        try{
-            List<InventoryTable> inventoryCount = inventoryTableRepository.findAll();
-            int totalInv = 0;
-            for (int i = 0; i < inventoryCount.size(); i++) {
-                totalInv += inventoryCount.get(i).getQuantity();
-            }
-            return new ResponseEntity<>(totalInv, HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>(0, HttpStatus.INTERNAL_SERVER_ERROR);
+    public @ResponseBody Integer getTotalInventory() {
+        List<InventoryTable> inventoryCount = inventoryTableRepository.findAll();
+        int totalInv = 0;
+        for (InventoryTable inventoryTable : inventoryCount) {
+            totalInv += inventoryTable.getQuantity();
         }
-
+        return totalInv;
     }
-
 }

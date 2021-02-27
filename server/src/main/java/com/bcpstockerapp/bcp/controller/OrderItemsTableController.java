@@ -17,13 +17,8 @@ public class OrderItemsTableController {
     private OrderItemsRepository orderItemsRepository;
 
     @GetMapping("/orderItems")
-    public @ResponseBody ResponseEntity<List<OrderItemsTable>> getAllOrderItems(){
-        try{
-            List<OrderItemsTable> orderItems = orderItemsRepository.findAll();
-            return new ResponseEntity<>(orderItems, HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public @ResponseBody List<OrderItemsTable> getAllOrderItems(){
+        return orderItemsRepository.findAll();
     }
 
 }
