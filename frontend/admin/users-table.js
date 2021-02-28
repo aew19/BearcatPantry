@@ -102,6 +102,7 @@ function loadUsersTable(users){
                 cell = row.insertCell();
                 text = document.createTextNode("");
                 cell.innerHTML = "<a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditUser('"+element.id+"','"+element.fname+"','"+element.lname+"','"+element.mNumber+"','"+element.permissions+"')><i class='fas fa-edit'></i></a><a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteUser('"+element.id+"','"+element.fname+"','"+element.lname+"')><i class='fas fa-trash'></i></a>";
+                //cell.innerHTML = "<a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditUser('"+element.id+"')><i class='fas fa-edit'></i></a><a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteUser('"+element.id+"','"+element.fname+"','"+element.lname+"')><i class='fas fa-trash'></i></a>";
                 cell.appendChild(text);
             }
         }
@@ -133,7 +134,12 @@ async function createUsersTable(){
 
 //On Submit of new user modal create new user
 async function submitNewUser(){
-    let mNumber = document.getElementById("userMNum").value;
+    let mNumber = document.getElementById("userMNum").value.toUpperCase();
+
+    if (!mNumber.includes("M")) {
+        mNumber = "M" + mNumber;
+    }
+
     let FName = document.getElementById("AddfName").value;
     let LName = document.getElementById("AddlName").value;
     let PermissionLevel = document.getElementById("typeUser").value;

@@ -143,6 +143,7 @@ function popViewTransaction(clicked_id){
 function closePopup(element){
     document.getElementById(element).style.display = "none";
     document.getElementById('page-mask').style.position = "unset";
+    document.getElementById('page-mask').style.backgroundColor = "unset";
 }
 
 //This function pops the scan item modal
@@ -177,6 +178,57 @@ function popEditUser(userID, userFName, userLName, userUCID, permValue){
         document.getElementById('page-mask').style.position = "unset";
         document.getElementById('page-mask').style.backgroundColor = "unset";
     }
+}
+
+//This function pops the scan item modal
+/*var editUserModal = null
+function popEditUser(userID){
+    getUserByID(userID).then(
+        userdata => {
+            if(editUserModal === null){
+                
+                if (userdata.PermissionLevel == 1) {
+                    document.getElementById("typeEditUser").value = "Volunteer";
+                }
+                else if (userdata.PermissionLevel == 2 ) {
+                    document.getElementById("typeEditUser").value = "Supervisor";
+                }
+                else if (userdata.PermissionLevel == 3 ) {
+                    document.getElementById("typeEditUser").value = "Owner";
+                }
+
+                document.getElementById("editUser").style.display = "block";
+                addUserModal = true
+                document.getElementById('page-mask').style.position = "fixed";
+                document.getElementById('page-mask').style.backgroundColor = "rgba(0,0,0,0.6)";
+                document.getElementById("editButton").value = userID;
+                document.getElementById("fName").value = userdata.fname;
+                document.getElementById("lName").value = userdata.lname;
+                document.getElementById("userUCID").value = userdata.mNumber;
+            } else {
+                document.getElementById("editUser").style.display = "none";
+                editUserModal = null
+                document.getElementById('page-mask').style.position = "unset";
+                document.getElementById('page-mask').style.backgroundColor = "unset";
+            }
+        }
+    )
+}*/
+
+function submitEditUser() {
+    let userMNumber = document.getElementById("userUCID").value.toUpperCase();
+    if (!userMNumber.includes("M")) {
+        userMNumber = "M" + userMNumber;
+    }
+    editUser(
+        document.getElementById("editButton").value,
+        document.getElementById("fName").value,
+        document.getElementById("lName").value,
+        userMNumber,
+        document.getElementById("typeEditUser").value
+    );
+
+    //function to send email with new email: document.getElementById("userEditEmail").value
 }
 
 //This function pops the scan item modal
@@ -320,6 +372,15 @@ async function getTotalUncompleteOrders(){
 //API Function to get Total Orders
 async function getTotalOrders(){
     let response = await fetch(url + "/getTotalOrders/")
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
+async function getUserByID(id){
+    let response = await fetch(url + "users/"+id)
     try{
         return await response.json();
     }catch{

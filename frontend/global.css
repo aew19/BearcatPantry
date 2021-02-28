@@ -547,13 +547,30 @@ input[type="file"] {
     position: absolute;
     float: right;
     width: 70px;
-    right: 4.5%;
+    right: 3.5%;
     outline:none;
     color: #fff;
     border-left: 1px solid #fff;
     font-size: 1.6rem;
 }
 
+@media (max-width: 1400px) {
+    #shopping-cart {
+        right: 4.5%;
+    }
+}
+
+@media (max-width: 1200px) {
+    #shopping-cart {
+        right: 5.5%;
+    }
+}
+
+@media (max-width: 1000px) {
+    #shopping-cart {
+        right: 6.5%;
+    }
+}
 
 #shopping-cart i {
     position: relative;

@@ -23,6 +23,11 @@ public class UsersTableController {
         return usersTableRepository.findAll();
     }
 
+    @GetMapping("/users/{id}")
+    public @ResponseBody UsersTable getByID(@PathVariable(value="id") Long id){
+        return usersTableRepository.findByid(id);
+    }
+
     @PostMapping("/users")
     public @ResponseBody String createUser (@RequestParam String mNumber, String fname, String lname, Integer permissions, boolean isActive) {
         UsersTable user = new UsersTable();
