@@ -31,5 +31,5 @@ function showNavBar() {
 }
 
 function checkout() {
-    window.open("http://localhost:8000/frontend/student/checkout.html", '_self');
+    window.open("checkout.html", '_self');
 }
