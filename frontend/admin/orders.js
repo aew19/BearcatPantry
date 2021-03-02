@@ -57,6 +57,9 @@ let orders = [
     { Date: "10/28/2020", Name: "Joshua St. Pierre", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"}
 ]
 
+$(function(){
+    $("#navbar").load("adminNavBar.html");
+});
 
 $(function () {
     $('#orders_table').DataTable({
