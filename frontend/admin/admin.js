@@ -10,6 +10,10 @@ $(function(){
     $("#addUserModal").load("addUserModal.html");
 });
 
+$(function(){
+    $("#navbar").load("adminNavBar.html");
+});
+
 let env="";
 let url = "";
 let posturl = '';

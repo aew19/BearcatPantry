@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NavBar</title>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://kit.fontawesome.com/4c3f5e6aba.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../bootstrap.min.css">
+    <link rel="stylesheet" href="./admin.css">
+    <link rel="stylesheet" href="../global.css">
+</head>
+<body>
+<div class="navbar navbar-dark">
+    <div style="max-width: unset" class="container">
+        <a href="#" class="navbar-brand d-flex align-items-center">
+            <!-- Add functionality to go to homepage with click-->
+            <strong>Bearcats Pantry Stocker Application</strong>
+        </a>
+        <button id="menu-toggle" onclick="showNavBar()" class="toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="global-nav" aria-label="Expand Menu" data-speed="100" data-group="header-toggles">
+            <svg xmlns="http://www.w3.org/2000/svg" class="svg svg-menu" viewBox="0 0 100 100">
+                <title>menu</title>
+                <g data-name="Layer 2">
+                    <rect x="12" y="28" width="76" height="4"></rect>
+                    <rect x="12" y="48" width="76" height="4"></rect>
+                    <rect x="12" y="68" width="76" height="4"></rect>
+                </g>
+            </svg>
+            <div id="myLinks">
+                <a href="http://localhost:8000/frontend/admin/inventory.html">Inventory</a>
+                <a href="http://localhost:8000/frontend/student/student.html">Shopping</a>
+                <a href="http://localhost:8000/frontend/admin/orders.html">Orders</a>
+                <a href="http://localhost:8000/frontend/student/checkout.html">Checkout</a>
+            </div>
+        </button>
+    </div>
+</div>
+</body>
+</html>

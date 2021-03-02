@@ -55,6 +55,10 @@ $(function(){
     $("#unknownItemModal").load("unknownItemModal.html");
 });
 
+$(function(){
+    $("#navbar").load("adminNavBar.html");
+});
+
 //Global Variables
 let newItem = null
 let scanItem = null
