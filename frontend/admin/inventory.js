@@ -374,11 +374,11 @@ async function submitUnknownItem(){
     newScannedItem();
     itemName = document.getElementById("unknownItemName").value = "";
     itemBrand = document.getElementById("unknownItemBrand").value = "";
-    itemType = document.getElementById("unknownItemType").value = "";
+    itemType = document.getElementById("unknownItemType").value = "Other";
     itemURL = document.getElementById("unknownItemProductURL").value = "";
     vegan = document.getElementById("unknownItemVegan").checked = false;
     vegetarian = document.getElementById("unknownItemVegetarian").checked = false;
-    //image = document.getElementById("unknownItemProdImg").files[0];
+    image = document.getElementById("unknownItemImgPreview").src = "../images/placeholderimage.png";
 }
 
 
