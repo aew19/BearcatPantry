@@ -148,40 +148,6 @@ function closePopup(element){
 
 //This function pops the scan item modal
 var editUserModal = null
-function popEditUser(userID, userFName, userLName, userUCID, permValue){
-    
-    if(editUserModal === null){
-        
-        if (permValue == 1) {
-            document.getElementById("typeEditUser").value = "Volunteer";
-        }
-        else if (permValue == 2 ) {
-            document.getElementById("typeEditUser").value = "Supervisor";
-        }
-        else if (permValue == 3 ) {
-            document.getElementById("typeEditUser").value = "Owner";
-        }
-
-        document.getElementById("editUser").style.display = "block";
-        addUserModal = true
-        document.getElementById('page-mask').style.position = "fixed";
-        document.getElementById('page-mask').style.backgroundColor = "rgba(0,0,0,0.6)";
-        document.getElementById("editButton").value = userID;
-        document.getElementById("fName").value = userFName;
-        document.getElementById("lName").value = userLName;
-        document.getElementById("userUCID").value = userUCID;
-        document.getElementById("editButton").addEventListener('click', function() {
-            editUser(document.getElementById("editButton").value, document.getElementById("fName").value, document.getElementById("lName").value, document.getElementById("userUCID").value, document.getElementById("typeEditUser").value);}, false);
-    } else {
-        document.getElementById("editUser").style.display = "none";
-        editUserModal = null
-        document.getElementById('page-mask').style.position = "unset";
-        document.getElementById('page-mask').style.backgroundColor = "unset";
-    }
-}
-
-//This function pops the scan item modal
-/*var editUserModal = null
 function popEditUser(userID){
     getUserByID(userID).then(
         userdata => {
@@ -213,7 +179,7 @@ function popEditUser(userID){
             }
         }
     )
-}*/
+}
 
 function submitEditUser() {
     let userMNumber = document.getElementById("userUCID").value.toUpperCase();
@@ -268,8 +234,12 @@ function popConfirmDeleteUser(userID, userFName, userLName){
 
 function deleteUser(userID) {
     closePopup('deleteUser');
-    
-    let userData = {'id':userID };
+    let ActiveStatus = 0;
+    /*let mNumber="M101";
+    let FName="Test";
+    let LName="Lindsay2";
+    let PermissionLevel = 3;*/
+    let userData = {'id':userID,'mNumber':mNumber,'fname':FName, 'lname':LName, 'permission':PermissionLevel, 'isActive':ActiveStatus}
     let userFormBody =[];
     for (let userKey in userData){
         let encodedUserKey = encodeURIComponent(userKey);
@@ -277,9 +247,10 @@ function deleteUser(userID) {
         userFormBody.push(encodedUserKey+"="+encodedUserValue);
     }
     userFormBody = userFormBody.join("&");
-    fetch(posturl + '/deleteUser/'+ userID, {
-        body: userFormBody,
-        method:"DELETE",
+    console.log(userFormBody);
+    fetch(posturl + '/updateUsers/' + userID, {
+        body: userFormBody, 
+        method:"PUT",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
     }).then(response => response.json())
         .then(data=> {console.log('Success');location.reload();})
@@ -380,7 +351,7 @@ async function getTotalOrders(){
 }
 
 async function getUserByID(id){
-    let response = await fetch(url + "users/"+id)
+    let response = await fetch(url + "/users/"+id)
     try{
         return await response.json();
     }catch{
