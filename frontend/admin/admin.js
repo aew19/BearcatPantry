@@ -204,7 +204,6 @@ function submitEditUser() {
 //This function pops the scan item modal
 let addUserModal = null
 function popAddUser(){
-    let request = new XMLHttpRequest();
     if(addUserModal === null){
         document.getElementById("addUser").style.display = "block";
         addUserModal = true
@@ -219,21 +218,23 @@ function popAddUser(){
 }
 
 var delUserModal = null
-function popConfirmDeleteUser(userID, userFName, userLName){
-    let request = new XMLHttpRequest();  
-    if(delUserModal === null){
-        document.getElementById("deleteUser").style.display = "block";
-        delUserModal = true
-        document.getElementById('page-mask').style.position = "fixed";
-        document.getElementById('page-mask').style.backgroundColor = "rgba(0,0,0,0.6)";
-        document.getElementById("delButton").value = userID;
-        document.getElementById("userDisplay").innerHTML = userFName + " " + userLName;
-    } else {
-        document.getElementById("deleteUser").style.display = "none";
-        delUserModal = null
-        document.getElementById('page-mask').style.position = "unset";
-        document.getElementById('page-mask').style.backgroundColor = "unset";
-    }
+function popConfirmDeleteUser(userID){
+    getUserByID(userID).then(
+        userdata => {
+            if (delUserModal === null) {
+                document.getElementById("deleteUser").style.display = "block";
+                delUserModal = true
+                document.getElementById('page-mask').style.position = "fixed";
+                document.getElementById('page-mask').style.backgroundColor = "rgba(0,0,0,0.6)";
+                document.getElementById("delButton").value = userID;
+                document.getElementById("userDisplay").innerHTML = userdata.fname + " " + userdata.lname;
+            } else {
+                document.getElementById("deleteUser").style.display = "none";
+                delUserModal = null
+                document.getElementById('page-mask').style.position = "unset";
+                document.getElementById('page-mask').style.backgroundColor = "unset";
+            }
+        });
 }
 
 function deleteUser(userID) {

@@ -101,8 +101,7 @@ function loadUsersTable(users){
                 //modify
                 cell = row.insertCell();
                 text = document.createTextNode("");
-                //cell.innerHTML = "<a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditUser('"+element.id+"','"+element.fname+"','"+element.lname+"','"+element.mNumber+"','"+element.permissions+"')><i class='fas fa-edit'></i></a><a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteUser('"+element.id+"','"+element.fname+"','"+element.lname+"')><i class='fas fa-trash'></i></a>";
-                cell.innerHTML = "<a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditUser("+element.id+")><i class='fas fa-edit'></i></a><a style=\"display:inline-block;width:15%;\" class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteUser('"+element.id+"','"+element.fname+"','"+element.lname+"')><i class='fas fa-trash'></i></a>";
+                cell.innerHTML = "<a class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditUser("+element.id+")><i class='fas fa-edit'></i></a><a class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteUser("+element.id+")><i class='fas fa-trash'></i></a>";
                 cell.appendChild(text);
             }
         }
