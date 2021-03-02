@@ -25,7 +25,8 @@ public class UsersTableController {
 
     @GetMapping("/users/{id}")
     public @ResponseBody UsersTable getByID(@PathVariable(value="id") Long id){
-        return usersTableRepository.findByid(id);
+        UsersTable user = usersTableRepository.findByid(id);
+        return user;
     }
 
     @PostMapping("/users")
