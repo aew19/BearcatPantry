@@ -630,6 +630,7 @@ function editItem(){
     let itemURL = document.getElementById("newProductURL").value;
     let vegetarian = document.getElementById("newVegetarian").checked;
     let vegan = document.getElementById("newVegan").checked;
+    let image = document.getElementById("editImg").files[0];
     document.getElementById("editItem").style.display = "none";
     document.getElementById('page-mask').style.position = "unset";
     if (updateQuantity === 0){
@@ -641,6 +642,7 @@ function editItem(){
         //Update
         updateInventory(currBarcode, updateQuantity)
         updateProduct(currBarcode, itemName, itemBrand, itemType, itemURL,vegetarian, vegan)
+        addImage(currBarcode, image)
         location.reload()
     }
 }
@@ -748,6 +750,18 @@ function readUnknownURL(input) {
 
         reader.onload = function(e) {
             $('#unknownItemImgPreview').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]); // convert to base64 string
+    }
+}
+
+function readEditUrl(input){
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            $('#editImgPreview').attr('src', e.target.result);
         }
 
         reader.readAsDataURL(input.files[0]); // convert to base64 string

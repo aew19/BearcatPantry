@@ -21,16 +21,23 @@
                             <div class="grid-container">
                                 <input type="hidden" name="_token" value="">
                                 <div style="padding-bottom: 10px;"  class="newmodal1 form-group">
-                                    <input class="form-control" id="newItemName" placeholder="Item Name">
+                                    <input class="form-control" id="newItemName" autocomplete="off" placeholder="Item Name">
                                 </div>
                                 <div style="padding-bottom: 10px;" class="newmodal2 form-group">
                                     <input class="form-control" id="newBarcode" disabled="disabled">
                                 </div>
                                 <div style="padding-bottom: 10px;" class = "form-group">
-                                    <input class="form-control" id="newQuantity">
+                                    <input class="form-control" autocomplete="off" id="newQuantity">
+                                </div>
+                                <div class="newmodal3 form-group">
+                                    <img id="editImgPreview" class="shopping-image" src="../images/placeholderimage.png"/>
+                                    <label for="editImg" class="file-upload">
+                                        Upload Image
+                                    </label>
+                                    <input type="file" name="file" id="editImg" accept="image/*" onchange="readEditUrl(this)"/>
                                 </div>
                                 <div style="padding-bottom: 10px;" class="newmodal4 form-group">
-                                    <input class="form-control" id="newItemBrand" placeholder="Company Brand">
+                                    <input class="form-control" id="newItemBrand" autocomplete="off" placeholder="Company Brand">
                                 </div>
                                 <div style="padding-bottom: 10px;" class="newmodal5 form-group">
                                     <select id="newType" name="type" class="select">
@@ -43,7 +50,7 @@
                                     </select>
                                 </div>
                                 <div style="padding-bottom: 10px;" class="newmodal6 form-group">
-                                    <input style="padding-right: 14.2rem"class="form-control" id="newProductURL" placeholder="Product Link (URL)">
+                                    <input style="padding-right: 14.2rem"class="form-control" autocomplete="off" id="newProductURL" placeholder="Product Link (URL)">
                                 </div>
                                 <div style="padding-bottom: 10px;" class="newmodal7 form-check">
                                     <input type="checkbox" class="form-check-input" id="newVegetarian">
