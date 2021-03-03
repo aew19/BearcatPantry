@@ -671,7 +671,6 @@ function loadPantryItems(items){
             let row = table.insertRow();
             //modify item
             let cell = row.insertCell();
-            console.log(element.productTitle)
             cell.innerHTML = "<a class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditItem("+currentElement+","+element.quantity+")><i class='fas fa-edit'></i></a><a class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteItem("+element.barcodeId+")><i class='fas fa-trash'></i></a>";
             //name
             cell = row.insertCell();
