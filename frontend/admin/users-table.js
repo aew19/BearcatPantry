@@ -200,3 +200,21 @@ function status(response) {
 function json(response) {
     return response.json()
 }
+
+
+fetch("../environment.json").then(response=>response.json())
+    .then(json=>{
+        env=json.env
+        if (env === "dev"){
+            url = "http://localhost:8080/"
+            posturl = 'http://localhost:8080/'
+        }else{
+            url = "https://bcpwb1prd01l.ad.uc.edu:8443/web-services/"
+            posturl = 'https://bcpwb1prd01l.ad.uc.edu:8443/web-services/'
+        }
+        //Crate the components of the admin page here
+        createUsersTable()
+
+    })
+    .catch(err => console.log("Error reading Environment"))
+

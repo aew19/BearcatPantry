@@ -152,3 +152,7 @@ function exportCSV(elem){
     return false;
 }
 
+let orders_table = document.getElementById('orders_table');
+let orders_data = Object.keys(orders[0]);
+generateTable(orders_table, orders);
+generateTableHead(orders_table, orders_data);
