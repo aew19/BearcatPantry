@@ -277,6 +277,20 @@ function checkoutUpdateQuantities(){
     rowCount = 0;
 
 }
+//Removes image when editing the image in the folder
+async function deleteImage(barcode){
+    fetch(posturl+'deleteImage/'+ barcode, {
+        method:"DELETE",
+        headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+    })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log("Folder Deleted", data)
+        }).catch(function (error){
+            console.log("Request Failed", error)
+    });
+}
 
 //Calls API function To load Database Information into the table
 async function createInventoryTable(){
@@ -642,8 +656,16 @@ function editItem(){
         //Update
         updateInventory(currBarcode, updateQuantity)
         updateProduct(currBarcode, itemName, itemBrand, itemType, itemURL,vegetarian, vegan)
-        addImage(currBarcode, image)
-        location.reload()
+        //Check to see if image is being updated
+        if (image != undefined){
+            deleteImage(currBarcode).then(()=>{
+                sleep(600)
+                addImage(currBarcode, image).then(r => console.log(r))
+            })
+        }
+
+
+        //location.reload()
     }
 }
 

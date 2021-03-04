@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
+import java.io.File;
 
 @CrossOrigin
 @RestController
@@ -84,6 +88,20 @@ public class ProductTableController {
     public @ResponseBody Integer getUniqueItems(){
         List<ProductTable> product = productTableRepository.findAll();
         return product.size();
+    }
+
+    //Deletes image in folder if image is changing
+    @DeleteMapping("/deleteImage/{barcodeId}")
+    public @ResponseBody String deleteImage(@PathVariable(value="barcodeId") String barcodeId) throws IOException{
+        if (!Files.exists(Paths.get("productPhotos/"+barcodeId))){
+            return "No Folder for Item";
+        }else{
+            for (File file: Paths.get("productPhotos/"+barcodeId).toFile().listFiles()){
+                file.delete();
+            }
+            Files.delete(Paths.get("productPhotos/"+barcodeId));
+            return "success";
+        }
     }
 
 }
