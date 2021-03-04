@@ -24,12 +24,10 @@ public class InventoryTableController {
     }
 
     @PostMapping(value="/inventory")
-    public @ResponseBody InventoryTable createInventory(@RequestParam String barcodeId, Integer quantity, String location, Date dateRecorded) {
+    public @ResponseBody InventoryTable createInventory(@RequestParam String barcodeId, Integer quantity) {
         InventoryTable item = new InventoryTable();
         item.setBarcodeId(barcodeId);
         item.setQuantity(quantity);
-        item.setDateRecorded(dateRecorded);
-        item.setLocation(location);
         return inventoryTableRepository.save(item);
     }
 

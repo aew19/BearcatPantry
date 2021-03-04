@@ -30,7 +30,7 @@ public class ProductTableController {
     }
 
     @PostMapping("/items")
-    public @ResponseBody ProductTable createItem(@RequestParam String barcodeId, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, Date scanDate, String productURL, boolean isActive) {
+    public @ResponseBody ProductTable createItem(@RequestParam String barcodeId, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, Date scanDate, String productURL) {
         ProductTable item = new ProductTable();
         item.setBarcode(barcodeId);
         item.setName(productTitle);
@@ -40,7 +40,6 @@ public class ProductTableController {
         item.setVegan(vegan);
         item.setAddedDate(scanDate);
         item.setProductURL(productURL);
-        item.setActive(isActive);
         return productTableRepository.save(item);
 
     }

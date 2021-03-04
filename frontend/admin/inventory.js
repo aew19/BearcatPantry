@@ -628,10 +628,6 @@ async function submitNewItem(){
         }
     })
     location.reload()
-
-
-
-
 }
 
 //Pops the edit item modal

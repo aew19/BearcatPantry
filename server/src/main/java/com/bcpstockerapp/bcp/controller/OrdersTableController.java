@@ -23,7 +23,7 @@ public class OrdersTableController {
     }
 
     @PostMapping("/orders")
-    public @ResponseBody String createOrder(@RequestParam Date orderDate, boolean delOrPickUp, Date delDate, String deliveryTime, Integer orderStatus, String mNumber, String address, String address2, String email, String phoneNumber) {
+    public @ResponseBody String createOrder(@RequestParam Date orderDate, boolean delOrPickUp, Date delDate, String deliveryTime, Integer orderStatus, String mNumber, String fName, String lName, String address, String address2,String email, String phoneNumber) {
         OrdersTable order = new OrdersTable();
         order.setOrderDate(orderDate);
         order.setDelOrPickUp(delOrPickUp);
@@ -31,7 +31,10 @@ public class OrdersTableController {
         order.setDeliveryTime(deliveryTime);
         order.setOrderStatus(orderStatus);
         order.setMNumber(mNumber);
+        order.setFName(fName);
+        order.setLName(lName);
         order.setAddress(address);
+        order.setAddress2(address2);
         order.setEmail(email);
         order.setPhoneNumber(phoneNumber);
         ordersTableRepository.save(order);

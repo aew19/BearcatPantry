@@ -20,12 +20,11 @@ public class ProductTable {
     private Date scanDate;
     private String image;
     private String productURL;
-    private boolean isActive;
 
 
     //Constructors
     public ProductTable(){}
-    public ProductTable(String barcodeId, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, Date scanDate, String image, String productURL, boolean isActive){
+    public ProductTable(String barcodeId, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, Date scanDate, String image, String productURL){
         this.barcodeId = barcodeId;
         this.productTitle = productTitle;
         this.foodType = foodType;
@@ -35,7 +34,6 @@ public class ProductTable {
         this.scanDate = scanDate;
         this.image = image;
         this.productURL = productURL;
-        this.isActive = isActive;
     }
 
     //Getters
@@ -57,7 +55,6 @@ public class ProductTable {
     public Date getAddedDate(){ return this.scanDate; }
     public String getImage(){return this.image;}
     public String getProductURL(){return this.productURL;}
-    public boolean getIsActive(){return this.isActive;}
 
 
     //Setters
@@ -74,6 +71,5 @@ public class ProductTable {
     public void setAddedDate(Date scanDate){this.scanDate = scanDate;}
     public void setImage(String image){this.image = image;}
     public void setProductURL(String productURL){this.productURL = productURL;}
-    public void setActive(boolean isActive){this.isActive = isActive;}
 }
 
