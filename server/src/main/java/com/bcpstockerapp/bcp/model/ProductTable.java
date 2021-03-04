@@ -17,21 +17,19 @@ public class ProductTable {
     private String brand;
     private boolean vegetarian;
     private boolean vegan;
-    private Date scanDate;
     private String image;
     private String productURL;
 
 
     //Constructors
     public ProductTable(){}
-    public ProductTable(String barcodeId, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, Date scanDate, String image, String productURL){
+    public ProductTable(String barcodeId, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, String image, String productURL){
         this.barcodeId = barcodeId;
         this.productTitle = productTitle;
         this.foodType = foodType;
         this.brand = brand;
         this.vegetarian = vegetarian;
         this.vegan = vegan;
-        this.scanDate = scanDate;
         this.image = image;
         this.productURL = productURL;
     }
@@ -52,7 +50,6 @@ public class ProductTable {
     }
     public boolean getVegetarian(){ return this.vegetarian;}
     public boolean getVegan(){ return this.vegan;}
-    public Date getAddedDate(){ return this.scanDate; }
     public String getImage(){return this.image;}
     public String getProductURL(){return this.productURL;}
 
@@ -68,7 +65,6 @@ public class ProductTable {
     }
     public void setVegetarian(boolean vegetarian){ this.vegetarian = vegetarian;}
     public void setVegan(boolean vegan){ this.vegan = vegan;}
-    public void setAddedDate(Date scanDate){this.scanDate = scanDate;}
     public void setImage(String image){this.image = image;}
     public void setProductURL(String productURL){this.productURL = productURL;}
 }

@@ -466,7 +466,6 @@ function newScannedItem(){
                 cell = row.insertCell();
                 cell.innerHTML ="<a class=\"btn btn-red\" id=\"DeleteBtn\" onclick =deleteTableEntryMulti(this)><i class='fas fa-trash'></i></a>";
                 document.getElementById("multiScanBarcode").value = "";
-
             }
 
         })
@@ -659,9 +658,6 @@ function editItem(){
                 addImage(currBarcode, image).then(r => console.log(r))
             })
         }
-
-
-        //location.reload()
     }
 }
 
