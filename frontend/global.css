@@ -470,7 +470,6 @@ input[type="file"] {
 .shopping {
     padding-right: unset;
     padding-left: unset;
-    max-width: 16%;
 }
 
 .shoppingcontainer {
@@ -522,6 +521,9 @@ input[type="file"] {
     width: 90%;
     margin-left: auto;
     margin-right: auto;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    height: 400px;
 }
 
 .navbar {

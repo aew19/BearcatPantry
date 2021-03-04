@@ -58,30 +58,42 @@ function newShoppingItem(){
             console.log(element)
             divhousing = document.getElementById("itemsOuterContainer")
             let largestOuterDiv = document.createElement("div")
+            largestOuterDiv.style.float = "left"
+            largestOuterDiv.style.width = "25%"
+
             let columnStyleDiv = document.createElement("div")
             columnStyleDiv.className = "col shopping"
             largestOuterDiv.appendChild(columnStyleDiv)
+
             let cardDiv = document.createElement("div")
             cardDiv.className = "card shadow-sm shoppingcard"
             columnStyleDiv.appendChild(cardDiv)
             cardDiv.innerHTML = "<svg class=\"bd-placeholder-img card-img-top\" width=\"152\" height=\"152\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"Placeholder: Thumbnail\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\"><image href=\"../../productPhotos/"+element.barcodeId+"/"+element.image+"\" height=\"152\" width=\"152\"/></svg>"
+
             let cardBody = document.createElement("div")
             cardBody.className = "card-body"
             cardDiv.appendChild(cardBody)
+
             let cardTitle = document.createElement("h5")
             cardTitle.innerHTML = "<h5 class=\"shoppingtitle\">"+element.productTitle+"</h5>"
             cardBody.appendChild(cardTitle)
+
             let cardLink = document.createElement("p")
             cardLink.innerHTML = "<p class=\"card-text\">"+element.brand+"<br> <a class=\"shoppinglink\" href=\""+element.productURL+"\" target=\"_blank\">More Info</a></p>"
             cardBody.appendChild(cardLink)
+
             let buttonDiv = document.createElement("div")
+            buttonDiv.style.bottom = "0"
             cardBody.appendChild(buttonDiv)
+
             let styledButtonDiv = document.createElement("div")
             styledButtonDiv.className = "btn-group"
             styledButtonDiv.innerHTML = "<button type=\"button\" class=\"btn btn-sm btn-outline-secondary\" onclick=\"\"><i class=\"fas fa-cart-plus\"></i> Add to Cart</button>"
             buttonDiv.appendChild(styledButtonDiv)
+
             let productTypeDiv = document.createElement("div")
             productTypeDiv.innerHTML = "<small class=\"text-muted\">"+element.foodType+"</small>"
+            productTypeDiv.style.bottom = "0"
             buttonDiv.appendChild(productTypeDiv)
             divhousing.appendChild(largestOuterDiv)
         }
