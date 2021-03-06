@@ -152,13 +152,13 @@ function popEditUser(userID){
         userdata => {
             if(editUserModal === null){
                 
-                if (userdata.PermissionLevel == 1) {
+                if (userdata.permissions == 1) {
                     document.getElementById("typeEditUser").value = "Volunteer";
                 }
-                else if (userdata.PermissionLevel == 2 ) {
+                else if (userdata.permissions == 2 ) {
                     document.getElementById("typeEditUser").value = "Supervisor";
                 }
-                else if (userdata.PermissionLevel == 3 ) {
+                else if (userdata.permissions == 3 ) {
                     document.getElementById("typeEditUser").value = "Owner";
                 }
 
@@ -229,32 +229,34 @@ function popConfirmDeleteUser(userID){
                 document.getElementById('page-mask').style.position = "unset";
                 document.getElementById('page-mask').style.backgroundColor = "unset";
             }
-        });
+        }
+    );
 }
 
 function deleteUser(userID) {
     closePopup('deleteUser');
-    let ActiveStatus = 0;
-    /*let mNumber="M101";
-    let FName="Test";
-    let LName="Lindsay2";
-    let PermissionLevel = 3;*/
-    let userData = {'id':userID,'mNumber':mNumber,'fname':FName, 'lname':LName, 'permission':PermissionLevel, 'isActive':ActiveStatus}
-    let userFormBody =[];
-    for (let userKey in userData){
-        let encodedUserKey = encodeURIComponent(userKey);
-        let encodedUserValue = encodeURIComponent(userData[userKey]);
-        userFormBody.push(encodedUserKey+"="+encodedUserValue);
-    }
-    userFormBody = userFormBody.join("&");
-    console.log(userFormBody);
-    fetch(posturl + '/updateUsers/' + userID, {
-        body: userFormBody, 
-        method:"PUT",
-        headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-    }).then(response => response.json())
-        .then(data=> {console.log('Success');location.reload();})
-        .catch((error)=>{ console.error('Error:', error);location.reload();});
+    getUserByID(userID).then(
+        userdata => {
+            let ActiveStatus = 0;
+            let userData = {'id':userID,'mNumber':userdata.mNumber,'fname':userdata.fname, 'lname':userdata.lname, 'permission':userdata.permissions, 'isActive':ActiveStatus}
+            let userFormBody =[];
+            for (let userKey in userData){
+                let encodedUserKey = encodeURIComponent(userKey);
+                let encodedUserValue = encodeURIComponent(userData[userKey]);
+                userFormBody.push(encodedUserKey+"="+encodedUserValue);
+            }
+            userFormBody = userFormBody.join("&");
+            console.log(userFormBody);
+            fetch(posturl + '/updateUsers/' + userID, {
+                body: userFormBody, 
+                method:"PUT",
+                headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+            }).then(response => response.json())
+                .then(data=> {console.log('Success');location.reload();})
+                .catch((error)=>{ console.error('Error:', error);location.reload();});           
+        }
+    );
+        
 }
 
 function editUser(userID, FName, LName, mNumber, Permissions ) {
