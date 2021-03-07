@@ -56,7 +56,7 @@ $(function(){
 });
 
 $(function(){
-    $("#navbar").load("adminNavBar.html");
+    $("#navbar").load("NavBar.html");
 });
 
 //Global Variables

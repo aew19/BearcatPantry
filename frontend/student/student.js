@@ -1,3 +1,7 @@
+$(function(){
+    $("#navbar").load("../admin/NavBar.html");
+});
+
 //GLOBAL VARIABLES
 let divhousing = "";
 

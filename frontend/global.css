@@ -4,8 +4,24 @@ a.navbar-brand {
     word-break: break-all;
 }
 
+nav, ul, li {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
 #red-nav {
+    position: relative;
+    z-index: 2;
     background: #e00122;
+}
+
+.component.header #red-nav > div {
+    padding: 0;
+    height: 70px;
 }
 
 #red-nav > div a#logo {
@@ -20,6 +36,20 @@ a.navbar-brand {
     position: relative;
 }
 
+.component.header #red-nav > div a#logo .svg.svg-logo {
+    width: auto;
+    max-width: 260px;
+    height: 40px;
+}
+
+.component.header * {
+    outline: 0 !important;
+}
+
+.component.header #red-nav > div a#logo:hover, .component.header #red-nav > div a#logo:focus {
+    background: #b8011c;
+}
+
 #red-nav > div a#logo .svg.svg-logo * {
     fill: #fff;
 }
@@ -30,6 +60,126 @@ a.navbar-brand {
     height: 40px;
 }
 
+#red-nav > div a#logo .svg.svg-logo * {
+    fill: #fff;
+}
+
+#unitname {
+    background: #b8011c;
+    height: 40px;
+    line-height: 40px;
+    overflow: hidden;
+}
+
+#unitname a {
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.container-fluid {
+    max-width: 1170px;
+    position: relative;
+}
+
+#white-nav {
+    display: block;
+    background: #fff;
+    height: 30px;
+}
+
+#white-nav > div {
+    padding: 0px;
+}
+
+.component.header #white-nav > div nav > ul {
+    margin-left: 0px;
+}
+
+#white-nav > div nav > ul > li {
+    float: left;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+#white-nav a {
+    font-size: .7em;
+    color: #e00122;
+    border: none;
+    line-height: 30px;
+    padding: 0 15px !important;
+    font-weight: normal !important;
+    border-top: 0 !important;
+    white-space: nowrap;
+}
+
+.component {
+    font-size: 18px;
+    line-height: 1.6;
+    letter-spacing: 0.3px;
+    font-weight: 300;
+}
+
+.affix-top {
+    position: relative;
+    z-index: 10;
+}
+
+.component.header {
+    box-shadow: 0px 1px 1px 0px #333;
+}
+
+.component.header {
+    width: 100%;
+}
+
+.component.header #white-nav a {
+    padding: 10px;
+    display: block;
+    border-top: 1px solid #e00122;
+}
+
+.component.header #white-nav a:hover, .component.header #white-nav a:focus, .component.header #white-nav a[aria-expanded=true] {
+    background: #b8011c;
+    color: #fff;
+    text-decoration: none;
+}
+
+.component.header #white-nav a:hover, .component.header #white-nav a:focus {
+    background: #e00122;
+}
+
+.component.header #white-nav a[aria-current=page], .component.header #white-nav a:hover, .component.header #white-nav a:focus {
+    background: #e00122;
+    color: #fff;
+}
+
+button#shopping-cart {
+    right: 50px;
+    border-left: 1px solid #fff;
+    border-right: 1px solid #fff;
+}
+
+button.toggle {
+    top: 0;
+    border: 0;
+    background: transparent;
+    max-width: 100px;
+    height: 70px;
+    display: block;
+    line-height: 0.8;
+    z-index: 2;
+    position: absolute;
+    width: 70px;
+    float: right;
+}
+
+button.toggle .fas {
+    color: #fff;
+    font-size: 27px;
+}
 
 /* Provide sufficient contrast against white background */
 a {
@@ -540,44 +690,6 @@ input[type="file"] {
     outline:none;
     border-left: 1px solid #fff;
     border-right: 1px solid #fff;
-}
-
-#shopping-cart {
-    border: 0;
-    background: transparent;
-    height: 56px;
-    position: absolute;
-    float: right;
-    width: 70px;
-    right: 3.5%;
-    outline:none;
-    color: #fff;
-    border-left: 1px solid #fff;
-    font-size: 1.6rem;
-}
-
-@media (max-width: 1400px) {
-    #shopping-cart {
-        right: 4.5%;
-    }
-}
-
-@media (max-width: 1200px) {
-    #shopping-cart {
-        right: 5.5%;
-    }
-}
-
-@media (max-width: 1000px) {
-    #shopping-cart {
-        right: 6.5%;
-    }
-}
-
-#shopping-cart i {
-    position: relative;
-    left: -5%;
-    top: -3%
 }
 
 .svg-menu {

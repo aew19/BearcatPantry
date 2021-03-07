@@ -58,7 +58,7 @@ let orders = [
 ]
 
 $(function(){
-    $("#navbar").load("adminNavBar.html");
+    $("#navbar").load("NavBar.html");
 });
 
 $(function () {
