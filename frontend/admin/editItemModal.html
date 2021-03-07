@@ -21,26 +21,26 @@
                             <div class="grid-container">
                                 <input type="hidden" name="_token" value="">
                                 <div style="padding-bottom: 10px;"  class="newmodal1 form-group">
-                                    <input class="form-control" id="newItemName" autocomplete="off" placeholder="Item Name">
+                                    <input class="form-control" id="newItemName" autocomplete="off" placeholder="Item Name" minlength="2" maxlength="20" pattern="[A-Za-z\s]{1,32}" required>
                                 </div>
                                 <div style="padding-bottom: 10px;" class="newmodal2 form-group">
-                                    <input class="form-control" id="newBarcode" disabled="disabled">
+                                    <input class="form-control" id="newBarcode" disabled="disabled" required>
                                 </div>
                                 <div style="padding-bottom: 10px;" class = "form-group">
-                                    <input class="form-control" autocomplete="off" id="newQuantity">
+                                    <input type="number" class="form-control" autocomplete="off" id="newQuantity" required pattern="[0-9]" min="1" max="250">
                                 </div>
                                 <div class="newmodal3 form-group">
                                     <img id="editImgPreview" class="shopping-image" src="../images/placeholderimage.png"/>
                                     <label for="editImg" class="file-upload">
                                         Upload Image
                                     </label>
-                                    <input type="file" name="file" id="editImg" accept="image/*" onchange="readEditUrl(this)"/>
+                                    <input type="file" name="file" id="editImg" accept="image/*" required onchange="readEditUrl(this)"/>
                                 </div>
                                 <div style="padding-bottom: 10px;" class="newmodal4 form-group">
-                                    <input class="form-control" id="newItemBrand" autocomplete="off" placeholder="Company Brand">
+                                    <input class="form-control" id="newItemBrand" autocomplete="off" required minlength="2" maxlength="20" pattern="[A-Za-z\s]{1,32}" placeholder="Company Brand">
                                 </div>
                                 <div style="padding-bottom: 10px;" class="newmodal5 form-group">
-                                    <select id="newType" name="type" class="select">
+                                    <select id="newType" name="type" class="select" required>
                                         <option value="Other" disabled selected>Product Type</option>
                                         <option value="Vegetable">Vegetable</option>
                                         <option value="Grain">Grains</option>
@@ -50,7 +50,7 @@
                                     </select>
                                 </div>
                                 <div style="padding-bottom: 10px;" class="newmodal6 form-group">
-                                    <input style="padding-right: 14.2rem"class="form-control" autocomplete="off" id="newProductURL" placeholder="Product Link (URL)">
+                                    <input style="padding-right: 14.2rem"class="form-control" autocomplete="off" id="newProductURL" required minlength="2" maxlength="100" pattern="https?://.+"  placeholder="Product Link (URL)">
                                 </div>
                                 <div style="padding-bottom: 10px;" class="newmodal7 form-check">
                                     <input type="checkbox" class="form-check-input" id="newVegetarian">
@@ -61,6 +61,7 @@
                                     <label style="padding-left: .5rem;margin-bottom:unset;" for="newVegan">Vegan</label>
                                 </div>
                                 <button type="submit" class="newmodal9 btn btn-red" onclick="editItem()">Submit</button>
+                                <h6 style="display:none" id="EditwarningText"><strong>*Please fill out ALL fields before proceeding.</strong></h6>
                             </div>
                         </form>
                     </div>

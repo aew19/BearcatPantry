@@ -19,14 +19,15 @@
                         <h6>Please scan the item that you would like added to the Pantry inventory. If applicable, please select an expiration date for each item.
                         If multiple items have the same expiration date, enter the quantity you have.</h6>
                         <form style="padding-top:1rem;display: inline-block">
-                            <div style="padding-bottom: 10px;float:left" class = "form-group">
+                            <div style="padding-bottom: 10px;display: inline-block" class = "form-group">
                                 <input class="form-control" id="itemBarcode" autocomplete="off" placeholder="Item Barcode">
                             </div>
-                            <div style="padding-left: 10px;float:right" class="form-group">
-                                <input class="form-control" id="quantity" id="quantity" autocomplete="off" placeholder="Quantity">
+                            <div style="padding-left: 10px;display: inline-block" class="form-group">
+                                <input type="number" style="margin-right:3rem;" class="form-control" id="quantity" id="quantity" autocomplete="off" placeholder="Quantity" pattern="[0-9]" min="1" max="250">
                             </div>
                         </form>
                         <button type="submit" style="margin: .5rem auto;display:block; width:30%" class="btn btn-red" onclick="popNewItemModal()">Submit</button>
+                        <h6 style="float:left;display:none" id="warningText"><strong>*Please fill out ALL fields before proceeding.</strong></h6>
                     </div>
                 </div>
             </div>

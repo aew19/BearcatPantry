@@ -308,43 +308,48 @@ async function createInventoryTable(){
 //This function pops the new item modal
 function popNewItemModal(){
     //Get the information
-    document.getElementById("scanItem").style.display = "none";
-    scanItem = null
     let barcode = document.getElementById("itemBarcode").value;
     let quantity = document.getElementById("quantity").value;
-    //API Hit
-    getBarcode(barcode).then(
-        data => {
-            if (data != "notFound"){
-                document.getElementById("newItem").style.display = "none";
-                //Update Quantity
-                getInventory().then(
-                    allInventory=>{
-                        for (i = 0; i<allInventory.length; i++){
-                            if (allInventory[i].barcodeId === barcode){
-                                //PUT
-                                let currQuantity = parseInt(allInventory[i].quantity) + parseInt(quantity);
-                                //update based on barcode id
-                                updateInventory(barcode, currQuantity)
-                                location.reload()
-                                return;
+    if (barcode == "" || quantity == "") {
+        document.getElementById("warningText").style.display = "block";
+    }
+    else {
+        document.getElementById("scanItem").style.display = "none";
+        scanItem = null    
+        //API Hit
+        getBarcode(barcode).then(
+            data => {
+                if (data != "notFound"){
+                    document.getElementById("newItem").style.display = "none";
+                    //Update Quantity
+                    getInventory().then(
+                        allInventory=>{
+                            for (i = 0; i<allInventory.length; i++){
+                                if (allInventory[i].barcodeId === barcode){
+                                    //PUT
+                                    let currQuantity = parseInt(allInventory[i].quantity) + parseInt(quantity);
+                                    //update based on barcode id
+                                    updateInventory(barcode, currQuantity)
+                                    location.reload()
+                                    return;
+                                }
                             }
+                            addToInventoryTable(barcode,quantity)
+                            location.reload()
                         }
-                        addToInventoryTable(barcode,quantity)
-                        location.reload()
-                    }
-                )
+                    )
 
-            }else{
-                document.getElementById("newItem").style.display = "block";
-                let el_barcode = document.getElementById("newItemBarcode");
-                el_barcode.value = barcode;
-                let el_quantity = document.getElementById("newItemQuantity");
-                el_quantity.value = quantity;
+                }else{
+                    document.getElementById("newItem").style.display = "block";
+                    let el_barcode = document.getElementById("newItemBarcode");
+                    el_barcode.value = barcode;
+                    let el_quantity = document.getElementById("newItemQuantity");
+                    el_quantity.value = quantity;
+                }
+
             }
-
-        }
-    );
+        );
+    }
 }
 //If bulk scan does not find item then we ask them to enter item
 function popUnknownItemModal(barcode){
@@ -611,22 +616,26 @@ async function submitNewItem(){
     let vegan = document.getElementById("vegan").checked;
     let vegetarian = document.getElementById("vegetarian").checked;
     let image = document.getElementById("prodImg").files[0];
-
-    document.getElementById("newItem").style.display = "none";
-    //Call API Endpoint
-    await addToInventoryTable(barcode, newQuantity)
-    await createItem(barcode, newQuantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan, image)
-    sleep(1000);
-    await addImage(barcode,image)
-    //See if image made it
-    getBarcode(barcode).then(data=>{
-        console.log(data.image)
-        //If not retry the insert
-        if (data.image === null) {
-            addImage(barcode,image)
-        }
-    })
-    location.reload()
+    if (newQuantity == "" || barcode == "" || itemName == "" || itemBrand == "" || itemType == "" || itemURL == "" || image == null) {
+        document.getElementById("NewwarningText").style.display = "block";
+    }
+    else {
+        document.getElementById("newItem").style.display = "none";
+        //Call API Endpoint
+        await addToInventoryTable(barcode, newQuantity)
+        await createItem(barcode, newQuantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan, image)
+        sleep(1000);
+        await addImage(barcode,image)
+        //See if image made it
+        getBarcode(barcode).then(data=>{
+            console.log(data.image)
+            //If not retry the insert
+            if (data.image === null) {
+                addImage(barcode,image)
+            }
+        })
+        location.reload()
+    }
 }
 
 //Pops the edit item modal
@@ -640,23 +649,28 @@ function editItem(){
     let vegetarian = document.getElementById("newVegetarian").checked;
     let vegan = document.getElementById("newVegan").checked;
     let image = document.getElementById("editImg").files[0];
-    document.getElementById("editItem").style.display = "none";
-    document.getElementById('page-mask').style.position = "unset";
-    if (updateQuantity === 0){
-        //Delete
-        deleteInventory(currBarcode)
-        location.reload()
+    if (updateQuantity == "" || currBarcode == "" || itemName == "" || itemBrand == "" || itemType == "" || itemURL == "" || image == null) {
+        document.getElementById("EditwarningText").style.display = "block";
     }
-    else{
-        //Update
-        updateInventory(currBarcode, updateQuantity)
-        updateProduct(currBarcode, itemName, itemBrand, itemType, itemURL,vegetarian, vegan)
-        //Check to see if image is being updated
-        if (image != undefined){
-            deleteImage(currBarcode).then(()=>{
-                sleep(600)
-                addImage(currBarcode, image).then(r => console.log(r))
-            })
+    else {
+        document.getElementById("editItem").style.display = "none";
+        document.getElementById('page-mask').style.position = "unset";
+        if (updateQuantity === 0){
+            //Delete
+            deleteInventory(currBarcode)
+            location.reload()
+        }
+        else{
+            //Update
+            updateInventory(currBarcode, updateQuantity)
+            updateProduct(currBarcode, itemName, itemBrand, itemType, itemURL,vegetarian, vegan)
+            //Check to see if image is being updated
+            if (image != undefined){
+                deleteImage(currBarcode).then(()=>{
+                    sleep(600)
+                    addImage(currBarcode, image).then(r => console.log(r))
+                })
+            }
         }
     }
 }
