@@ -450,7 +450,6 @@ function newScannedItem(){
     const table = document.getElementById("multiItemTable");
     let newScanSlot = document.createElement("p");
     let scanItemText = "";
-    bulkScanItemList.push(document.getElementById("multiScanBarcode").value);
     let currentBarcode = document.getElementById("multiScanBarcode").value
     getBarcode(currentBarcode).then(
         data => {
@@ -458,6 +457,7 @@ function newScannedItem(){
                 popUnknownItemModal(currentBarcode)
                 document.getElementById("multiScanBarcode").value = "";
             }else{
+                bulkScanItemList.push(document.getElementById("multiScanBarcode").value);
                 let row = table.insertRow();
                 //name
                 let cell = row.insertCell();
