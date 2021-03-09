@@ -600,6 +600,7 @@ function popConfirmDeleteItem(barcode1){
 
 //Deletes item
 function deleteItem(barcode){
+    console.log(barcode)
     document.getElementById("deleteItem").style.display = "none";
     deleteInventory(barcode)
     location.reload()
@@ -701,7 +702,7 @@ function loadPantryItems(items){
             let row = table.insertRow();
             //modify item
             let cell = row.insertCell();
-            cell.innerHTML = "<a class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditItem("+currentElement+","+element.quantity+")><i class='fas fa-edit'></i></a><a class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteItem("+element.barcodeId+")><i class='fas fa-trash'></i></a>";
+            cell.innerHTML = "<a class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditItem("+currentElement+","+element.quantity+")><i class='fas fa-edit'></i></a><a class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteItem("+currentElement+")><i class='fas fa-trash'></i></a>";
             //name
             cell = row.insertCell();
             let text = document.createTextNode(element.productTitle);
