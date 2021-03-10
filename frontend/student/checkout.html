@@ -1,87 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Checkout</title>
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="https://kit.fontawesome.com/4c3f5e6aba.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../bootstrap.min.css">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
-    <link rel="stylesheet" href="../global.css">
-</head>
-<body>
-    <form style="padding: 20px;">
-        <div class="form-row">
-            <div class="form-group">
-                <label class="col-form-label col-form-label-lg">Contact Information:</label>
-            </div>
+  <head>
+      <meta charset="UTF-8">
+      <title>Checkout</title>
+      <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src="https://kit.fontawesome.com/4c3f5e6aba.js" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="../bootstrap.min.css">
+      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+      <link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+      <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+      <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+      <link rel="stylesheet" href="../global.css">
+  </head>
+  <header>
+      <div id="navbar"></div>
+  </header>
+  <body class="bg-light">
+    <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="../images/UClogo.png" alt="" width="72" height="57">
+        <h2>CHECKOUT</h2>
+        <p class="lead text-muted">Please provide the below information to complete the checkout form.</p>
+    </div>
+    <div class="row g-3">
+        <div class="col-md-5 col-lg-4 order-md-last">
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted" style="font-style: italic;">YOUR CART</span>
+            <span class="badge bg-secondary rounded-pill" style="font-style: italic;">3</span>
+          </h4>
+          <ul class="list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between lh-sm">
+              <div>
+                <h6 class="my-0">Canned Corn</h6>
+                <small class="text-muted">Kroger</small>
+              </div>
+              <a class="btn btn-red" id="CheckoutDeleteBtn" onclick="removeItemInCart()"><i class="fas fa-trash" aria-hidden="true"></i></a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between lh-sm">
+              <div>
+                <h6 class="my-0">Green Beans</h6>
+                <small class="text-muted">Meijer</small>
+              </div>
+              <a class="btn btn-red" id="CheckoutDeleteBtn" onclick="removeItemInCart()"><i class="fas fa-trash" aria-hidden="true"></i></a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between lh-sm">
+              <div>
+                <h6 class="my-0">Pasta</h6>
+                <small class="text-muted">Walmart</small>
+              </div>
+              <a class="btn btn-red" id="CheckoutDeleteBtn" onclick="removeItemInCart()"><i class="fas fa-trash" aria-hidden="true"></i></a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Total</span>
+              <strong style="font-style: italic;">FREE</strong>
+            </li>
+          </ul>
+  
         </div>
-        <div class="form-row">
-            <div class="form-group" style="padding-right:5px">
-                <input type="email" class="form-control" id="fname" placeholder="First Name">
-            </div>
-            <div class="form-group">
-                <input type="email" class="form-control" id="lname" placeholder="Last Name">
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group" style="padding-right:5px">
-                <input type="email" class="form-control" id="email" placeholder="Email">
-            </div>
-            <div class="form-group" style="padding-right:5px">
-                <input class="form-control" id="phone" placeholder="Phone">
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group">
-                <input class="form-control" id="mNumber" placeholder="M#">
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group">
-                <select id="delivOrPick" class="form-control">
-                    <option selected>Delivery</option>
-                    <option>Pickup</option>
+        <div class="col-md-7 col-lg-8">
+            <form class="needs-validation" autocomplete="off" onsubmit="submitOrder()" novalidate>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="checkoutFirstName" placeholder="First Name" required>
+                <div class="invalid-feedback">
+                  Valid first name is required.
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="checkoutLastName" placeholder="Last Name" required>
+                <div class="invalid-feedback">
+                  Valid last name is required.
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="input-group has-validation">
+                    <input type="text" class="form-control" id="checkoutMNumber" placeholder="M-Number (M12345789)" required>  
+                <div class="invalid-feedback">
+                    Your M-Number is required.
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 ">
+                <input type="email" class="form-control" id="checkoutUserEmail" placeholder="Email" required>  
+                <div class="invalid-feedback">
+                  Please enter a valid email address for shipping updates.
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="checkoutPhoneNumber" placeholder="Phone Number (123)-456-7890" required>
+                <div class="invalid-feedback">
+                  Valid Phone Number is required.
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="checkoutAddress" placeholder="Address" required>
+                <div class="invalid-feedback">
+                  Please enter your address.
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="checkoutCity" placeholder="City" required>
+                <div class="invalid-feedback">
+                  Please enter your city.
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="checkoutSuite" placeholder="Apartment, Suite, etc.">
+              </div>
+              <div class="col-md-3">
+                <input type="text" class="form-control" id="checkoutZip" placeholder="Zip Code" required>
+                <div class="invalid-feedback">
+                  Zip code required.
+                </div>
+              </div>
+              <div class="col-md-3">
+                <select id="delivOrPick" name="type" class="select" required>
+                  <option disabled selected>Method</option>
+                  <option>Delivery</option>
+                  <option>Pickup</option>
                 </select>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group">
-                <label class="col-form-label col-form-label-lg">Shipping Address:</label>
-            </div>
+                <div class="invalid-feedback">
+                  Please enter your preferred pick-up method.
+                </div>
+              </div>
 
-        </div>
-        <div class="form-row">
-            <div class="form-group">
-                <input class="form-control" id="address" placeholder="Address">
+
+
+              <div class="col-sm-6">
+                <label for="checkoutDay" class="form-label">Best Delivery Day</label>
+                <input class="form-control" type="date" id="checkoutDay" placeholder="Day" required>
+                <div class="invalid-feedback">
+                  Valid Date is required.
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label for="checkoutTime" class="form-label">Best Delivery Time</label>
+                <select id="checkoutTime" name="type" class="select" required>
+                  <option disabled selected>Time</option>
+                  <option>8am-12pm</option>
+                  <option>12pm-4pm</option>
+              </select>
+                <div class="invalid-feedback">
+                  Valid Delivery Time is required.
+                </div>
+              </div>
             </div>
+            <hr class="my-4">
+            <button class="w-100 btn btn-red btn-lg" type="submit">Checkout</button>
+          </form>
         </div>
-        <div class="form-row">
-            <div class="form-group">
-                <input class="form-control" id="apartment" placeholder="Apartment, suite, etc.">
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group">
-                <label class="col-form-label col-form-label-lg">Best Delivery Time:</label>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group">
-                <input class="form-control" type="date" id="day" placeholder="Day">
-            </div>
-            <div class="form-group" style="padding-left: 5px;">
-                <select id="time" class="form-control">
-                    <option selected>8am-12pm</option>
-                    <option>12pm-4pm</option>
-                </select>
-            </div>
-        </div>
-        <button type="submit" class="btn btn-red">Submit Order</button>
-    </form>
+      </div>
+  </body>
 <script src="checkout.js"></script>
-</body>
 </html>
