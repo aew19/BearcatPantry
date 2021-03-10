@@ -450,7 +450,6 @@ function newScannedItem(){
     const table = document.getElementById("multiItemTable");
     let newScanSlot = document.createElement("p");
     let scanItemText = "";
-    bulkScanItemList.push(document.getElementById("multiScanBarcode").value);
     let currentBarcode = document.getElementById("multiScanBarcode").value
     getBarcode(currentBarcode).then(
         data => {
@@ -458,6 +457,7 @@ function newScannedItem(){
                 popUnknownItemModal(currentBarcode)
                 document.getElementById("multiScanBarcode").value = "";
             }else{
+                bulkScanItemList.push(document.getElementById("multiScanBarcode").value);
                 let row = table.insertRow();
                 //name
                 let cell = row.insertCell();
@@ -544,19 +544,6 @@ function popNewItem(){
     }
 }
 
-function popRecountInventory(){
-    document.getElementById("scanItem").style.display = "none";
-    if(recountInv === null){
-        document.getElementById("recountInventory").style.display = "block";
-        document.getElementById('page-mask').style.position = "fixed";
-        recountInv = true
-    } else {
-        document.getElementById("recountInventory").style.display = "none";
-        recountInv = null
-        document.getElementById('page-mask').style.position = "unset";
-    }
-}
-
 function popEditItem(barcode1, quantity){
     getBarcode(barcode1).then(
         data => {
@@ -594,12 +581,11 @@ function popConfirmDeleteItem(barcode1){
             document.getElementById("removeItem").value = barcode1;
             document.getElementById("itemDisplay").innerHTML = data.brand + " " + data.name;
         })
-
-
 }
 
 //Deletes item
 function deleteItem(barcode){
+    console.log(barcode)
     document.getElementById("deleteItem").style.display = "none";
     deleteInventory(barcode)
     location.reload()
@@ -628,9 +614,8 @@ async function submitNewItem(){
         await addImage(barcode,image)
         //See if image made it
         getBarcode(barcode).then(data=>{
-            console.log(data.image)
             //If not retry the insert
-            if (data.image === null) {
+            if (data === null) {
                 addImage(barcode,image)
             }
         })
@@ -701,7 +686,7 @@ function loadPantryItems(items){
             let row = table.insertRow();
             //modify item
             let cell = row.insertCell();
-            cell.innerHTML = "<a class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditItem("+currentElement+","+element.quantity+")><i class='fas fa-edit'></i></a><a class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteItem("+element.barcodeId+")><i class='fas fa-trash'></i></a>";
+            cell.innerHTML = "<a class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditItem("+currentElement+","+element.quantity+")><i class='fas fa-edit'></i></a><a class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteItem("+currentElement+")><i class='fas fa-trash'></i></a>";
             //name
             cell = row.insertCell();
             let text = document.createTextNode(element.productTitle);
