@@ -544,19 +544,6 @@ function popNewItem(){
     }
 }
 
-function popRecountInventory(){
-    document.getElementById("scanItem").style.display = "none";
-    if(recountInv === null){
-        document.getElementById("recountInventory").style.display = "block";
-        document.getElementById('page-mask').style.position = "fixed";
-        recountInv = true
-    } else {
-        document.getElementById("recountInventory").style.display = "none";
-        recountInv = null
-        document.getElementById('page-mask').style.position = "unset";
-    }
-}
-
 function popEditItem(barcode1, quantity){
     getBarcode(barcode1).then(
         data => {
@@ -594,8 +581,6 @@ function popConfirmDeleteItem(barcode1){
             document.getElementById("removeItem").value = barcode1;
             document.getElementById("itemDisplay").innerHTML = data.brand + " " + data.name;
         })
-
-
 }
 
 //Deletes item
@@ -629,9 +614,8 @@ async function submitNewItem(){
         await addImage(barcode,image)
         //See if image made it
         getBarcode(barcode).then(data=>{
-            console.log(data.image)
             //If not retry the insert
-            if (data.image === null) {
+            if (data === null) {
                 addImage(barcode,image)
             }
         })
