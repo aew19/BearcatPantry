@@ -441,7 +441,7 @@ function popCheckout(){
         document.getElementById('page-mask').style.position = "fixed";
     } else {
         document.getElementById("checkout").style.display = "none";
-        scanItem = null
+        checkout = null
         document.getElementById('page-mask').style.position = "unset";
     }
 }

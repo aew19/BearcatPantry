@@ -73,7 +73,6 @@ function newShoppingItem(){
             cardBody.appendChild(cardLink)
 
             let buttonDiv = document.createElement("div")
-            buttonDiv.style.bottom = "0"
             cardBody.appendChild(buttonDiv)
 
             let styledButtonDiv = document.createElement("div")
@@ -83,8 +82,16 @@ function newShoppingItem(){
 
             let productTypeDiv = document.createElement("div")
             productTypeDiv.innerHTML = "<small class=\"text-muted\">"+element.foodType+"</small>"
-            productTypeDiv.style.bottom = "0"
             buttonDiv.appendChild(productTypeDiv)
+            let dietTypeDiv = document.createElement("div")
+            let dietStatus = "";
+            if (element.vegan == true){
+                dietStatus = "Vegan"
+            } else if(element.vegetarian == true){
+                dietStatus = "Vegetarian"
+            }
+            dietTypeDiv.innerHTML ="<small class=\"text-muted\">"+dietStatus+"</small>"
+            buttonDiv.appendChild(dietTypeDiv)
             divhousing.appendChild(largestOuterDiv)
         }
 
