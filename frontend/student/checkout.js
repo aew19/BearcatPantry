@@ -25,6 +25,23 @@ function populateCart(){
     barcodes.forEach(barcode =>{
         getBarcode(barcode).then(data =>{
             console.log(data)
+            let currentElement = JSON.stringify(data.barcodeId)
+            console.log(data)
+            let listHousing = document.getElementById("itemList")
+            let item = document.createElement("li")
+            item.className = "list-group-item d-flex justify-content-between lh-sm"
+            let storageDiv = document.createElement("div")
+            let itemName = document.createElement("h6")
+            itemName.innerHTML = "<h6 class=\"my-0\">"+data.name+"</h6>"
+            storageDiv.appendChild(itemName)
+            let itemBrand = document.createElement("small")
+            itemBrand.innerHTML="<small class=\"text-muted\">"+data.brand+"</small>"
+            storageDiv.appendChild(itemBrand)
+            let btnDeleteItem = document.createElement("a")
+            btnDeleteItem.innerHTML = "<a class=\"btn btn-red\" id=\"CheckoutDeleteBtn\" onclick=\"removeItemInCart()\"><i class=\"fas fa-trash\" aria-hidden=\"true\"></i></a>"
+            item.appendChild(storageDiv)
+            item.appendChild(btnDeleteItem)
+            listHousing.appendChild(item)
         })
     })
     //get cart items

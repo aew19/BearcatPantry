@@ -17,7 +17,7 @@
   </header>
   <body class="bg-light">
     <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="../images/UClogo.png" alt="" width="72" height="57">
+        <img class="d-block mx-auto mb-4" src="../images/UClogo.png" alt="" >
         <h2>CHECKOUT</h2>
         <p class="lead text-muted">Please provide the below information to complete the checkout form.</p>
     </div>
@@ -27,33 +27,11 @@
             <span class="text-muted" style="font-style: italic;">YOUR CART</span>
             <span class="badge bg-secondary rounded-pill" style="font-style: italic;">3</span>
           </h4>
-          <ul class="list-group mb-3">
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-              <div>
-                <h6 class="my-0">Canned Corn</h6>
-                <small class="text-muted">Kroger</small>
-              </div>
-              <a class="btn btn-red" id="CheckoutDeleteBtn" onclick="removeItemInCart()"><i class="fas fa-trash" aria-hidden="true"></i></a>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-              <div>
-                <h6 class="my-0">Green Beans</h6>
-                <small class="text-muted">Meijer</small>
-              </div>
-              <a class="btn btn-red" id="CheckoutDeleteBtn" onclick="removeItemInCart()"><i class="fas fa-trash" aria-hidden="true"></i></a>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-              <div>
-                <h6 class="my-0">Pasta</h6>
-                <small class="text-muted">Walmart</small>
-              </div>
-              <a class="btn btn-red" id="CheckoutDeleteBtn" onclick="removeItemInCart()"><i class="fas fa-trash" aria-hidden="true"></i></a>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Total</span>
-              <strong style="font-style: italic;">FREE</strong>
-            </li>
-          </ul>
+          <div id="divItemContainer" style="overflow-y: auto;max-height: 300px;">
+            <ul id="itemList" class="list-group mb-3">
+
+            </ul>
+          </div>
   
         </div>
         <div class="col-md-7 col-lg-8">
