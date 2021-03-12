@@ -48,11 +48,8 @@ function populateCart(){
             item.className = "list-group-item d-flex justify-content-between lh-sm"
             let storageDiv = document.createElement("div")
             let itemName = document.createElement("h6")
-            itemName.innerHTML = "<h6 class=\"my-0\">"+data.name+"</h6>"
+            itemName.innerHTML = "<small class=\"text-muted\">"+data.brand+"</small> <h6 class=\"my-0\">"+data.name+"</h6>"
             storageDiv.appendChild(itemName)
-            let itemBrand = document.createElement("small")
-            itemBrand.innerHTML="<small class=\"text-muted\">"+data.brand+"</small>"
-            storageDiv.appendChild(itemBrand)
             let btnDeleteItem = document.createElement("a")
             btnDeleteItem.innerHTML = "<a class=\"btn btn-red\" id=\"CheckoutDeleteBtn\" onclick=removeItemInCart("+currentElement+")><i class=\"fas fa-trash\" aria-hidden=\"true\"></i></a>"
             item.appendChild(storageDiv)
