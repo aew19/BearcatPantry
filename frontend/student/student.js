@@ -6,30 +6,15 @@ $(function(){
 let divhousing = "";
 
 
-
-
 function addToCart(barcode){
-
-
-    if(itemBarcode=1){
-
+    let items = sessionStorage.getItem('cart')
+    if (items === null){
+        sessionStorage.setItem('cart', barcode)
+    } else {
+        items = items +'::' + barcode
+        sessionStorage.setItem('cart', items)
     }
 }
-
-function loadPopularItems(items){
-    const table = document.getElementById("popItems");
-    items.forEach(item => {
-        let row = table.insertRow();
-        let name = row.insertCell(0);
-        name.innerHTML = item.name;
-    });
-}
-
-// const items = [
-//     {name: "Pasta", quantity: 10, type:"Grains", brand: "Kroger", vegOrVeg: "Vegetarian", bestBuy:"11/09/2020", expiration:"11/09/2020"},
-//     {name: "Tomatos", quantity: 20, type:"Vegtable", brand: "Walmart", vegOrVeg: "Vegan", bestBuy:"11/10/2020", expiration:"11/10/2020"}
-// ];
-// loadPopularItems(items);
 
 function showNavBar() {
     var x = document.getElementById("myLinks");
@@ -59,6 +44,7 @@ async function getInventory(){
 function newShoppingItem(){
     getInventory().then(data =>{
         for (let element of data) {
+            let currentElement = JSON.stringify(element.barcodeId)
             console.log(element)
             divhousing = document.getElementById("itemsOuterContainer")
             let largestOuterDiv = document.createElement("div")
@@ -92,7 +78,7 @@ function newShoppingItem(){
 
             let styledButtonDiv = document.createElement("div")
             styledButtonDiv.className = "btn-group"
-            styledButtonDiv.innerHTML = "<button type=\"button\" class=\"btn btn-sm btn-outline-secondary\" onclick=\"\"><i class=\"fas fa-cart-plus\"></i> Add to Cart</button>"
+            styledButtonDiv.innerHTML = "<button type=\"button\" class=\"btn btn-sm btn-outline-secondary\" onclick=addToCart("+currentElement+")><i class=\"fas fa-cart-plus\"></i> Add to Cart</button>"
             buttonDiv.appendChild(styledButtonDiv)
 
             let productTypeDiv = document.createElement("div")
@@ -120,3 +106,4 @@ fetch("../environment.json").then(response=>response.json())
     })
     .catch(err => console.log("Error reading Environment"))
 
+let myStorage = window.sessionStorage;
