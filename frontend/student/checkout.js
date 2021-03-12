@@ -6,8 +6,16 @@ function submitOrder() {
     //Hit orders post
 }
 
-function removeItemInCart(itemId) {
-
+function removeItemInCart(barcode) {
+    let cart = sessionStorage.getItem('cart')
+    let cartArray = cart.split("::")
+    let index = cartArray.indexOf(barcode)
+    if (index > -1){
+        cartArray.splice(index,1);
+    }
+    let newCart = cartArray.join("::")
+    sessionStorage.setItem('cart',newCart)
+    location.reload()
 }
 
 async function getBarcode(barcode){
@@ -21,12 +29,20 @@ async function getBarcode(barcode){
 
 function populateCart(){
     let items = sessionStorage.getItem('cart')
+    if (items === ""){
+        sessionStorage.removeItem('cart')
+        return;
+    }
     let barcodes = items.split('::')
     barcodes.forEach(barcode =>{
+        if (barcode=== ""){
+            return;
+        }
         getBarcode(barcode).then(data =>{
-            console.log(data)
-            let currentElement = JSON.stringify(data.barcodeId)
-            console.log(data)
+            if (data === undefined){
+                return;
+            }
+            let currentElement = JSON.stringify(barcode)
             let listHousing = document.getElementById("itemList")
             let item = document.createElement("li")
             item.className = "list-group-item d-flex justify-content-between lh-sm"
@@ -38,14 +54,12 @@ function populateCart(){
             itemBrand.innerHTML="<small class=\"text-muted\">"+data.brand+"</small>"
             storageDiv.appendChild(itemBrand)
             let btnDeleteItem = document.createElement("a")
-            btnDeleteItem.innerHTML = "<a class=\"btn btn-red\" id=\"CheckoutDeleteBtn\" onclick=\"removeItemInCart()\"><i class=\"fas fa-trash\" aria-hidden=\"true\"></i></a>"
+            btnDeleteItem.innerHTML = "<a class=\"btn btn-red\" id=\"CheckoutDeleteBtn\" onclick=removeItemInCart("+currentElement+")><i class=\"fas fa-trash\" aria-hidden=\"true\"></i></a>"
             item.appendChild(storageDiv)
             item.appendChild(btnDeleteItem)
             listHousing.appendChild(item)
         })
     })
-    //get cart items
-    //then format them
 }
 let url ="";
 let posturl = "";
