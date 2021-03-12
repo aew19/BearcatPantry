@@ -34,6 +34,7 @@ function populateCart(){
         return;
     }
     let barcodes = items.split('::')
+    let test = document.getElementById("itemCount").innerHTML=barcodes.length
     barcodes.forEach(barcode =>{
         if (barcode=== ""){
             return;
