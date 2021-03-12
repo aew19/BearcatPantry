@@ -7,7 +7,6 @@ function submitOrder() {
 }
 
 function removeItemInCart(barcode) {
-    console.log(sessionStorage)
     let cart = sessionStorage.getItem('cart')
     let cartArray = cart.split("::")
     let index = cartArray.indexOf(barcode)
@@ -15,9 +14,7 @@ function removeItemInCart(barcode) {
         cartArray.splice(index,1);
     }
     let newCart = cartArray.join("::")
-    console.log(newCart)
     sessionStorage.setItem('cart',newCart)
-    console.log(sessionStorage)
     location.reload()
 }
 
@@ -32,8 +29,6 @@ async function getBarcode(barcode){
 
 function populateCart(){
     let items = sessionStorage.getItem('cart')
-    console.log("HITTTT!!!")
-    console.log(items)
     if (items === ""){
         sessionStorage.removeItem('cart')
         return;
@@ -48,7 +43,6 @@ function populateCart(){
                 return;
             }
             let currentElement = JSON.stringify(barcode)
-            console.log(data)
             let listHousing = document.getElementById("itemList")
             let item = document.createElement("li")
             item.className = "list-group-item d-flex justify-content-between lh-sm"
