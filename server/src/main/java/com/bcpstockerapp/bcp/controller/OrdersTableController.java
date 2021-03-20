@@ -2,11 +2,15 @@ package com.bcpstockerapp.bcp.controller;
 
 import com.bcpstockerapp.bcp.model.OrdersTable;
 import com.bcpstockerapp.bcp.repository.OrdersTableRepository;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -23,11 +27,16 @@ public class OrdersTableController {
     }
 
     @PostMapping("/orders")
-    public @ResponseBody String createOrder(@RequestParam Date orderDate, boolean delOrPickUp, Date delDate, String deliveryTime, Integer orderStatus, String mNumber, String fName, String lName, String address, String address2,String email, String phoneNumber) {
+    public @ResponseBody String createOrder(@RequestParam boolean delOrPickUp, String delDate, String deliveryTime, Integer orderStatus, String mNumber, String fName, String lName, String address, String address2, String email, String phoneNumber) {
+        System.out.println("Delivery Date: "+delDate);
+        System.out.println("Delivery Time: " + deliveryTime);
         OrdersTable order = new OrdersTable();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate orderDate = LocalDate.now();
         order.setOrderDate(orderDate);
         order.setDelOrPickUp(delOrPickUp);
-        order.setDelDate(delDate);
+        LocalDate deliveryDate = LocalDate.parse(delDate, dtf);
+        order.setDelDate(deliveryDate);
         order.setDeliveryTime(deliveryTime);
         order.setOrderStatus(orderStatus);
         order.setMNumber(mNumber);

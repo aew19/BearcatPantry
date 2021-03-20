@@ -3,6 +3,7 @@ package com.bcpstockerapp.bcp.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -11,10 +12,11 @@ public class OrdersTable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderID;
-
-    private Date orderDate;
+    @Column
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalDate orderDate;
     private boolean delOrPickUp;
-    private Date delDate;
+    private LocalDate delDate;
     private String deliveryTime;
     //Order status -1 decline, 0 pending, 1 confirmed, 2 completed
     private Integer orderStatus;
@@ -30,7 +32,7 @@ public class OrdersTable {
 
     //Constructors
     public OrdersTable(){}
-    public OrdersTable(Long orderID, Date orderDate, boolean delOrPickUp, Date delDate, String deliveryTime, Integer orderStatus, String mNumber, String fName, String lName, String address, String address2, String email, String phoneNumber){
+    public OrdersTable(Long orderID, LocalDate orderDate, boolean delOrPickUp, LocalDate delDate, String deliveryTime, Integer orderStatus, String mNumber, String fName, String lName, String address, String address2, String email, String phoneNumber){
         this.orderID = orderID;
         this.orderDate = orderDate;
         this.delOrPickUp = delOrPickUp;
@@ -48,12 +50,9 @@ public class OrdersTable {
 
     //Getters
     public Long getOrderId(){ return this.orderID; }
-    @Column
-    @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern="yyyy-MM-dd")
-    public Date getOrderDate(){ return this.orderDate; }
+    public LocalDate getOrderDate(){ return this.orderDate; }
     public boolean getDelOrPickUp(){ return this.delOrPickUp; }
-    public Date getDelDate(){ return this.delDate; }
+    public LocalDate getDelDate(){ return this.delDate; }
     public String getDeliveryTime(){return this.deliveryTime;}
     public Integer getOrderStatus(){ return this.orderStatus; }
     public String getMNumber(){ return this.mNumber; }
@@ -66,9 +65,9 @@ public class OrdersTable {
 
 
     //Setters
-    public void setOrderDate(Date orderDate){ this.orderDate = orderDate; }
+    public void setOrderDate(LocalDate orderDate){ this.orderDate = orderDate; }
     public void setDelOrPickUp(boolean delOrPickUp){ this.delOrPickUp = delOrPickUp; }
-    public void setDelDate(Date delDate){ this.delDate = delDate; }
+    public void setDelDate(LocalDate delDate){ this.delDate = delDate; }
     public void setDeliveryTime(String deliveryTime){this.deliveryTime = deliveryTime;}
     public void setOrderStatus(Integer orderStatus){ this.orderStatus = orderStatus; }
     public void setMNumber(String mNumber){ this.mNumber = mNumber; }

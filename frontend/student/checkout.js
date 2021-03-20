@@ -2,10 +2,57 @@ $(function(){
     $("#navbar").load("../admin/NavBar.html");
 });
 
+//Todo Add Date Logic
+//Post to the orders table
+//address 2 serves as apartment number
+function addToOrders(fName, lName, mNumber, email, address, address2, method,phoneNumber, deliveryDate, deliveryTime){
+    //POST to product table
+    let isDelivery = false;
+    if (method === 'Delivery'){
+        isDelivery = true;
+    }
+    let orderData = {'fName':fName,'lName':lName, 'address':address, 'address2':address2, 'delOrPickUp':isDelivery, 'email':email, 'phoneNumber':phoneNumber, 'orderStatus':0, 'delDate': deliveryDate, 'deliveryTime':deliveryTime}
+    let orderFormBody =[];
+    for (let orderKey in orderData){
+        let encodedProdKey = encodeURIComponent(orderKey);
+        let encodedProdValue = encodeURIComponent(orderData[orderKey]);
+        orderFormBody.push(encodedProdKey+"="+encodedProdValue);
+    }
+    orderFormBody = orderFormBody.join("&");
+    fetch(posturl + 'orders', {
+        body: orderFormBody,
+        method:"POST",
+        headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+    })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log('Request Succeeded', data)
+        })
+        .catch(function(error){
+            console.log('Request Failed', error)
+        });
+}
+//On submit get all the orders information
 function submitOrder() {
-    //Hit orders post
+    //Get the information to send to orders post
+    let fName = document.getElementById("checkoutFirstName").value
+    let lName = document.getElementById("checkoutLastName").value
+    let mNumber = document.getElementById("checkoutMNumber").value
+    let email = document.getElementById("checkoutUserEmail").value
+    let address2 = document.getElementById("checkoutSuite").value
+    let address = document.getElementById("checkoutAddress").value
+    let method = document.getElementById("delivOrPick").value
+    let phoneNumber = document.getElementById("checkoutPhoneNumber").value
+    let deliveryDate = document.getElementById("checkoutDay").value
+    let deliveryTime = document.getElementById("checkoutTime").value
+    addToOrders(fName, lName, mNumber, email, address, address2, method,phoneNumber, deliveryDate, deliveryTime)
+    sessionStorage.removeItem('cart')
+    document.getElementById("itemCount").innerHTML=0;
+    location.reload()
 }
 
+//Removes an item out of cart
 function removeItemInCart(barcode) {
     let cart = sessionStorage.getItem('cart')
     let cartArray = cart.split("::")
@@ -18,6 +65,7 @@ function removeItemInCart(barcode) {
     location.reload()
 }
 
+//Get the item information by barcode
 async function getBarcode(barcode){
     let response = await fetch(url + "items/"+barcode)
     try{
@@ -27,14 +75,17 @@ async function getBarcode(barcode){
     }
 }
 
+//populates the cart
 function populateCart(){
     let items = sessionStorage.getItem('cart')
-    if (items === ""){
+    if (items === "" || items === null){
         sessionStorage.removeItem('cart')
+        document.getElementById("itemCount").innerHTML = 0
         return;
     }
+
     let barcodes = items.split('::')
-    let test = document.getElementById("itemCount").innerHTML=barcodes.length
+    document.getElementById("itemCount").innerHTML=barcodes.length
     barcodes.forEach(barcode =>{
         if (barcode=== ""){
             return;
@@ -59,6 +110,20 @@ function populateCart(){
         })
     })
 }
+//Error handling for status
+function status(response) {
+    if (response.status >= 200 && response.status < 300) {
+        return Promise.resolve(response)
+    } else {
+        return Promise.reject(new Error(response.statusText))
+    }
+}
+
+//Returns the json of the response
+function json(response) {
+    return response.json()
+}
+
 let url ="";
 let posturl = "";
 fetch("../environment.json").then(response=>response.json())

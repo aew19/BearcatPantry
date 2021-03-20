@@ -35,7 +35,7 @@
   
         </div>
         <div class="col-md-7 col-lg-8">
-            <form class="needs-validation" autocomplete="off" onsubmit="submitOrder()" novalidate>
+            <form class="needs-validation" autocomplete="off" novalidate>
             <div class="row g-3">
               <div class="col-sm-6">
                 <input type="text" class="form-control" id="checkoutFirstName" placeholder="First Name" required>
@@ -100,12 +100,9 @@
                   Please enter your preferred pick-up method.
                 </div>
               </div>
-
-
-
               <div class="col-sm-6">
                 <label for="checkoutDay" class="form-label">Best Delivery Day</label>
-                <input class="form-control" type="date" id="checkoutDay" placeholder="Day" required>
+                <input class="form-control" type="Date" id="checkoutDay" placeholder="Day" required>
                 <div class="invalid-feedback">
                   Valid Date is required.
                 </div>
@@ -123,7 +120,7 @@
               </div>
             </div>
             <hr class="my-4">
-            <button class="w-100 btn btn-red btn-lg" type="submit">Checkout</button>
+            <button class="w-100 btn btn-red btn-lg" type="submit" onclick="submitOrder()">Checkout</button>
           </form>
         </div>
       </div>
