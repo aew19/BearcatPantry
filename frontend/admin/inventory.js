@@ -14,8 +14,8 @@ async function loadEnv(){
                 url = "http://localhost:8080/"
                 posturl = 'http://localhost:8080/'
             }else{
-                url = "https://bcpwb1prd01l.ad.uc.edu:8443/web-services/"
-                posturl = 'https://bcpwb1prd01l.ad.uc.edu:8443/web-services/'
+                url = "https://bearcatspantry.uc.edu:8080/web-services/"
+                posturl = 'https://bearcatspantry.uc.edu:8080/web-services/'
             }
             createInventoryTable()
         })
