@@ -383,29 +383,34 @@ async function submitUnknownItem(){
         vegan = true;
     }
 
-    document.getElementById("unknownItem").style.display = "none";
-    //Call API Endpoint
-    await createItem(barcode, quantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan, image)
-    sleep(1000);
-    await addImage(barcode,image)
-    //See if image made it
-    getBarcode(barcode).then(data=>{
-        //If not retry the insert
-        if (data.image === null) {
-            addImage(barcode,image)
-        }
-    })
-    sleep(1000);
-    closeUnknownItemPopUp();
-    document.getElementById("multiScanBarcode").value = barcode;
-    newScannedItem();
-    itemName = document.getElementById("unknownItemName").value = "";
-    itemBrand = document.getElementById("unknownItemBrand").value = "";
-    itemType = document.getElementById("unknownItemType").value = "Other";
-    itemURL = document.getElementById("unknownItemProductURL").value = "";
-    vegan = document.getElementById("unknownItemVegan").value = "false";
-    vegetarian = document.getElementById("unknownItemVegetarian").value = "false";
-    image = document.getElementById("unknownItemImgPreview").src = "../images/placeholderimage.png";
+    if (quantity == "" || barcode == "" || itemName == "" || itemBrand == "" || itemType == "" || itemURL == "" || image == null) {
+        document.getElementById("UnknownwarningText").style.display = "block";
+    }
+    else {
+        document.getElementById("unknownItem").style.display = "none";
+        //Call API Endpoint
+        await createItem(barcode, quantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan, image)
+        sleep(1000);
+        await addImage(barcode,image)
+        //See if image made it
+        getBarcode(barcode).then(data=>{
+            //If not retry the insert
+            if (data.image === null) {
+                addImage(barcode,image)
+            }
+        })
+        sleep(1000);
+        closeUnknownItemPopUp();
+        document.getElementById("multiScanBarcode").value = barcode;
+        newScannedItem();
+        itemName = document.getElementById("unknownItemName").value = "";
+        itemBrand = document.getElementById("unknownItemBrand").value = "";
+        itemType = document.getElementById("unknownItemType").value = "Other";
+        itemURL = document.getElementById("unknownItemProductURL").value = "";
+        vegan = document.getElementById("unknownItemVegan").value = "false";
+        vegetarian = document.getElementById("unknownItemVegetarian").value = "false";
+        image = document.getElementById("unknownItemImgPreview").src = "../images/placeholderimage.png";
+    }
 }
 
 

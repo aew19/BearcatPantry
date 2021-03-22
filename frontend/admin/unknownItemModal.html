@@ -17,30 +17,30 @@
             </div>
             <div class="modal-body">
                 <h6>This item is new to our system and needs more information before it can be submitted. Please fill out the following items:</h6>
-                <form>
+                <form autocomplete="off">
                     <div class="grid-container">
                         <input type="hidden" name="_token" value="">
                         <div class="newmodal1 form-group">
-                            <input class="form-control" id="unknownItemName" autocomplete="off" placeholder="Item Name">
+                            <input class="form-control" id="unknownItemName" autocomplete="off" autocomplete="off" required minlength="2" maxlength="20" pattern="[A-Za-z\s]{1,32}" placeholder="Item Name">
                         </div>
                         <div class="newmodal2 form-group">
-                            <input class="form-control" id="unknownItemBarcode" disabled="disabled">
+                            <input class="form-control" id="unknownItemBarcode" disabled="disabled" required>
                         </div>
                         <div class = "form-group">
-                            <input class="form-control" autocomplete="off" id="unknownItemQuantity" value="1" disabled="disabled">
+                            <input class="form-control" autocomplete="off" id="unknownItemQuantity" value="1" disabled="disabled" required pattern="[0-9]" min="1" max="250">
                         </div>
                         <div class="newmodal3 form-group">
                             <img id="unknownItemImgPreview" class="shopping-image" src="../images/placeholderimage.png"/>
                             <label for="unknownItemProdImg" class="file-upload">
                                 Upload Image
                             </label>
-                            <input type="file" name="file" id="unknownItemProdImg" accept="image/*" onchange="readUnknownURL(this)"/>
+                            <input type="file" name="file" id="unknownItemProdImg" accept="image/*" required onchange="readUnknownURL(this)"/>
                         </div>
                         <div class="newmodal4 form-group">
-                            <input class="form-control" id="unknownItemBrand" autocomplete="off" placeholder="Company Brand">
+                            <input class="form-control" id="unknownItemBrand" autocomplete="off" required minlength="2" maxlength="20" pattern="[A-Za-z\s]{1,32}" placeholder="Company Brand">
                         </div>
                         <div class="newmodal5 form-group">
-                            <select id="unknownItemType" name="type" class="select">
+                            <select id="unknownItemType" name="type" required class="select">
                                 <option value="Other" disabled selected>Product Type</option>
                                 <option value="Vegetable">Vegetable</option>
                                 <option value="Grain">Grains</option>
@@ -50,7 +50,7 @@
                             </select>
                         </div>
                         <div class="newmodal6 form-group">
-                            <input style="padding-right: 14.2rem"class="form-control" autocomplete="off" id="unknownItemProductURL" placeholder="Product Link (URL)">
+                            <input style="padding-right: 14.2rem"class="form-control" autocomplete="off" id="unknownItemProductURL" placeholder="Product Link (URL)" minlength="2" maxlength="100" pattern="https?://.+" required>
                         </div>
                         <div class="newmodal7 form-check">
                             <label for="unknownItemVegetarian">Vegetarian?</label>
@@ -66,7 +66,8 @@
                                 <option value="true">Yes</option>
                             </select>
                         </div>
-                        <button type="button" class="newmodal9 btn btn-red" onclick="submitUnknownItem()">Submit</button>
+                        <button type="submit" class="newmodal9 btn btn-red" onclick="submitUnknownItem()">Submit</button>
+                        <h6 style="display:none" id="UnknownwarningText"><strong>*Please fill out ALL fields before proceeding.</strong></h6>
                     </div>
                 </form>
             </div>
