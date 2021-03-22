@@ -371,9 +371,17 @@ async function submitUnknownItem(){
     let itemBrand = document.getElementById("unknownItemBrand").value;
     let itemType = document.getElementById("unknownItemType").value;
     let itemURL = document.getElementById("unknownItemProductURL").value;
-    let vegan = document.getElementById("unknownItemVegan").checked;
-    let vegetarian = document.getElementById("unknownItemVegetarian").checked;
+    let vegan = false;
+    let vegetarian = false;
     let image = document.getElementById("unknownItemProdImg").files[0];
+
+    if (document.getElementById("unknownItemVegetarian").value == "true") {
+        vegetarian = true;
+    }
+
+    if (document.getElementById("unknownItemVegan").value == "true") {
+        vegan = true;
+    }
 
     document.getElementById("unknownItem").style.display = "none";
     //Call API Endpoint
@@ -395,8 +403,8 @@ async function submitUnknownItem(){
     itemBrand = document.getElementById("unknownItemBrand").value = "";
     itemType = document.getElementById("unknownItemType").value = "Other";
     itemURL = document.getElementById("unknownItemProductURL").value = "";
-    vegan = document.getElementById("unknownItemVegan").checked = false;
-    vegetarian = document.getElementById("unknownItemVegetarian").checked = false;
+    vegan = document.getElementById("unknownItemVegan").value = "false";
+    vegetarian = document.getElementById("unknownItemVegetarian").value = "false";
     image = document.getElementById("unknownItemImgPreview").src = "../images/placeholderimage.png";
 }
 
@@ -566,10 +574,10 @@ function popEditItem(barcode1, quantity){
             document.getElementById("newItemBrand").value = data.brand;
             document.getElementById("newProductURL").value = data.productURL;
             if (data.vegetarian === true){
-                document.getElementById("newVegetarian").checked = true
+                document.getElementById("newVegetarian").value = "true";
             }
             if (data.vegan === true){
-                document.getElementById("newVegan").checked = true
+                document.getElementById("newVegan").value = "true";
             }
         })
 
@@ -609,9 +617,18 @@ async function submitNewItem(){
     let itemBrand = document.getElementById("itemBrand").value;
     let itemType = document.getElementById("type").value;
     let itemURL = document.getElementById("productURL").value;
-    let vegan = document.getElementById("vegan").checked;
-    let vegetarian = document.getElementById("vegetarian").checked;
+    let vegan = false;
+    let vegetarian = false;
     let image = document.getElementById("prodImg").files[0];
+
+    if (document.getElementById("vegetarian").value == "true") {
+        vegetarian = true;
+    }
+
+    if (document.getElementById("vegan").value == "true") {
+        vegan = true;
+    }
+
     if (newQuantity == "" || barcode == "" || itemName == "" || itemBrand == "" || itemType == "" || itemURL == "" || image == null) {
         document.getElementById("NewwarningText").style.display = "block";
     }
@@ -641,9 +658,19 @@ function editItem(){
     let itemBrand = document.getElementById("newItemBrand").value;
     let itemType = document.getElementById("newType").value;
     let itemURL = document.getElementById("newProductURL").value;
-    let vegetarian = document.getElementById("newVegetarian").checked;
-    let vegan = document.getElementById("newVegan").checked;
+    let vegetarian = false;
+    let vegan = false;
     let image = document.getElementById("editImg").files[0];
+
+    if (document.getElementById("newVegetarian").value == "true") {
+        vegetarian = true;
+    }
+
+    if (document.getElementById("newVegan").value == "true") {
+        vegan = true;
+    }
+
+
     if (updateQuantity == "" || currBarcode == "" || itemName == "" || itemBrand == "" || itemType == "" || itemURL == "" || image == null) {
         document.getElementById("EditwarningText").style.display = "block";
     }

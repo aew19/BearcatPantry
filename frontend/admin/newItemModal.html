@@ -53,12 +53,18 @@
                                     <input style="padding-right: 14.2rem"class="form-control" autocomplete="off" id="productURL" placeholder="Product Link (URL)" minlength="2" maxlength="100" pattern="https?://.+" required>
                                 </div>
                                 <div class="newmodal7 form-check">
-                                    <input type="checkbox" class="form-check-input" id="vegetarian">
-                                    <label style="padding-left: .5rem;margin-bottom:unset;" for="vegetarian">Vegetarian</label>
+                                    <label for="vegetarian">Vegetarian?</label>
+                                    <select style="width: 40%;margin-left: .5rem;" id="vegetarian" name="type" required class="select">
+                                        <option value="false" selected>No</option>
+                                        <option value="true">Yes</option>
+                                    </select>
                                 </div>
                                 <div class="newmodal8 form-check">
-                                    <input type="checkbox" class="form-check-input" id="vegan">
-                                    <label style="padding-left: .5rem;margin-bottom:unset;" for="vegan">Vegan</label>
+                                    <label for="vegan">Vegan?</label>
+                                    <select style="width: 40%;margin-left: .5rem;" id="vegan" name="type" required class="select">
+                                        <option value="false" selected>No</option>
+                                        <option value="true">Yes</option>
+                                    </select>
                                 </div>
                                 <button type="submit" class="newmodal9 btn btn-red" onclick="submitNewItem()">Submit</button>
                                 <h6 style="display:none" id="NewwarningText"><strong>*Please fill out ALL fields before proceeding.</strong></h6>
