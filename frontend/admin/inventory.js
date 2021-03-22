@@ -417,7 +417,6 @@ async function submitUnknownItem(){
 //The function can be used universally to close any popup
 function closePopup(element){
     document.getElementById(element).style.display = "none";
-    location.reload()
     document.getElementById('page-mask').style.position = "unset";
 }
 
