@@ -133,8 +133,9 @@ fetch("../environment.json").then(response=>response.json())
             url = "http://localhost:8080/"
             posturl = 'http://localhost:8080/'
         }else{
-            url = "https://bearcatspantry.uc.edu:8080/web-services/"
-            posturl = 'https://bearcatspantry.uc.edu:8080/web-services/'
+            //https does not work because SSL cert. Changing to http
+            url = "http://bearcatspantry.uc.edu:8080/web-services/"
+            posturl = 'http://bearcatspantry.uc.edu:8080/web-services/'
         }
         populateCart()
     })
