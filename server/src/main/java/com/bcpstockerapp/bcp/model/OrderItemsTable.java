@@ -12,27 +12,27 @@ public class OrderItemsTable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderItemID;
     private Long orderId;
-    private Long inventoryId;
+    private String barcodeId;
     private Integer itemQuantity;
 
     //Constructors
     public OrderItemsTable(){};
-    public OrderItemsTable(Long orderItemID, Long orderId, Long inventoryId, Integer itemQuantity){
+    public OrderItemsTable(Long orderItemID, Long orderId, String barcodeId, Integer itemQuantity){
         this.orderItemID = orderItemID;
         this.orderId = orderId;
-        this.inventoryId = inventoryId;
+        this.barcodeId = barcodeId;
         this.itemQuantity = itemQuantity;
     }
 
     //Getters
     public Long getOrderItemID(){return this.orderItemID;}
     public Long getOrderId(){return this.orderId;}
-    public Long getInventoryId(){return this.inventoryId;}
+    public String getBarcodeId(){return this.barcodeId;}
     public Integer getItemQuantity(){return this.itemQuantity;}
 
     //Setters
     public void setOrderId(Long orderId){this.orderId = orderId;}
-    public void setInventoryId(Long inventoryId){this.inventoryId = inventoryId;}
+    public void setBarcodeId(String barcodeId){this.barcodeId = barcodeId;}
     public void setItemQuantity(Integer itemQuantity){this.itemQuantity = itemQuantity;}
 
 }

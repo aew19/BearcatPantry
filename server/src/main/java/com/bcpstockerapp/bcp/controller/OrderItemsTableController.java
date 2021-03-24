@@ -13,12 +13,12 @@ import java.util.List;
 @RestController
 public class OrderItemsTableController {
 
-    @Autowired
-    private OrderItemsRepository orderItemsRepository;
-
-    @GetMapping("/orderItems")
-    public @ResponseBody List<OrderItemsTable> getAllOrderItems(){
-        return orderItemsRepository.findAll();
-    }
+//    @Autowired
+//    private OrderItemsRepository orderItemsRepository;
+//
+//    @GetMapping("/orderItems")
+//    public @ResponseBody List<OrderItemsTable> getAllOrderItems(){
+//        return orderItemsRepository.findAll();
+//    }
 
 }

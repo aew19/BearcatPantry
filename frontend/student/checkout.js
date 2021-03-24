@@ -11,7 +11,9 @@ function addToOrders(fName, lName, mNumber, email, address, address2, method,pho
     if (method === 'Delivery'){
         isDelivery = true;
     }
-    let orderData = {'fName':fName,'lName':lName, 'address':address, 'address2':address2, 'delOrPickUp':isDelivery, 'email':email, 'phoneNumber':phoneNumber, 'orderStatus':0, 'delDate': deliveryDate, 'deliveryTime':deliveryTime}
+    let cart = sessionStorage.getItem('cart')
+    let cartArray = cart.split("::")
+    let orderData = {'fName':fName,'lName':lName, 'address':address, 'address2':address2, 'delOrPickUp':isDelivery, 'email':email, 'phoneNumber':phoneNumber, 'orderStatus':0, 'delDate': deliveryDate, 'deliveryTime':deliveryTime, 'barcodes':cartArray}
     let orderFormBody =[];
     for (let orderKey in orderData){
         let encodedProdKey = encodeURIComponent(orderKey);
