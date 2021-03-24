@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
+import com.bcpstockerapp.bcp.gmail.api.SendEmail;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -47,6 +48,18 @@ public class OrdersTableController {
         order.setEmail(email);
         order.setPhoneNumber(phoneNumber);
         ordersTableRepository.save(order);
+
+        String method;
+        if (delOrPickUp) {
+            method = "Delivery";
+        }
+        else {
+            method = "Pickup";
+        }
+        SendEmail Email = new SendEmail();
+        String subject = "BCP Pantry & Resource Center Order Received";
+        String body = "Hello " + fName + ", \n\nThank you for placing an order with the BCP Pantry and Resource Center. Your order has been recieved with the following details:\n\n - Name: " + fName + " " + lName + "\n - Delivery Date: " + delDate + "\n - Delivery Time: " + deliveryTime + "\n - Method: " + method + "\n - Address: " + address + "\n - Email: " + email + "\n - Phone Number: " + phoneNumber + "\n\nOur volunteers are currently processing your order and you should recieve a confirmation email shortly.\n\n Thank you for utilizing the BCP Pantry and Resource Center! \n\n - BCP Pantry and Resource Center Team\n\nPlease reach out to BearcatsPantry@ucmail.uc.edu with any questions or concerns.";
+        Email.SendEmail(email, subject, body);
         return "Saved!";
     }
 

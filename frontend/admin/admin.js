@@ -191,10 +191,9 @@ function submitEditUser() {
         document.getElementById("fName").value,
         document.getElementById("lName").value,
         userMNumber,
-        document.getElementById("typeEditUser").value
+        document.getElementById("typeEditUser").value,
+        document.getElementById("userEditEmail").email
     );
-
-    //function to send email with new email: document.getElementById("userEditEmail").value
 }
 
 //This function pops the scan item modal
@@ -239,7 +238,7 @@ function deleteUser(userID) {
     getUserByID(userID).then(
         userdata => {
             let ActiveStatus = 0;
-            let userData = {'id':userID,'mNumber':userdata.mNumber,'fname':userdata.fname, 'lname':userdata.lname, 'permission':userdata.permissions, 'isActive':ActiveStatus}
+            let userData = {'id':userID,'mNumber':userdata.mNumber,'fname':userdata.fname, 'lname':userdata.lname, 'permission':userdata.permissions, 'isActive':ActiveStatus, 'email':""}
             let userFormBody =[];
             for (let userKey in userData){
                 let encodedUserKey = encodeURIComponent(userKey);
@@ -260,7 +259,7 @@ function deleteUser(userID) {
         
 }
 
-function editUser(userID, FName, LName, mNumber, Permissions ) {
+function editUser(userID, FName, LName, mNumber, Permissions, email) {
     //PUT to user table
     let ActiveStatus = 1;
     let PermissionLevel;
@@ -276,7 +275,7 @@ function editUser(userID, FName, LName, mNumber, Permissions ) {
     }
 
     PermissionLevel = parseInt(PermissionLevel);
-    let userData = {'id':userID,'mNumber':mNumber,'fname':FName, 'lname':LName, 'permission':PermissionLevel, 'isActive':ActiveStatus}
+    let userData = {'id':userID,'mNumber':mNumber,'fname':FName, 'lname':LName, 'permission':PermissionLevel, 'isActive':ActiveStatus, 'email':email}
     let userFormBody =[];
     for (let userKey in userData){
         let encodedUserKey = encodeURIComponent(userKey);

@@ -2,6 +2,7 @@ package com.bcpstockerapp.bcp.controller;
 
 import com.bcpstockerapp.bcp.model.UsersTable;
 import com.bcpstockerapp.bcp.repository.UsersTableRepository;
+import com.bcpstockerapp.bcp.gmail.api.SendEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class UsersTableController {
     }
 
     @PostMapping("/users")
-    public @ResponseBody String createUser (@RequestParam String mNumber, String fname, String lname, Integer permissions, boolean isActive) {
+    public @ResponseBody String createUser (@RequestParam String mNumber, String fname, String lname, Integer permissions, boolean isActive, String email) {
         UsersTable user = new UsersTable();
         user.setmNumber(mNumber);
         user.setFname(fname);
@@ -39,11 +40,17 @@ public class UsersTableController {
         user.setIsActive(isActive);
         user.setDateActive(new Date());
         usersTableRepository.save(user);
+
+        SendEmail Email = new SendEmail();
+        String subject = "BCP Pantry & Resource Center Account Activated";
+        String body = "Hello " + fname + ", \n\nWe would like to thank you for volunteering with the BCP Pantry and Resource Center. Your volunteer account has been successfully created. Your username is connected to your UC account, and you can test your connection anytime by going to:\n\nhttps://bearcatspantry.uc.edu\n\nWe ask that you please do not alter any of the pantry settings before you recieve the Stocker Application training.\n\nThank you for serving students! \n\n - BCP Pantry and Resource Center Team\n\nPlease reach out to BearcatsPantry@ucmail.uc.edu with any questions.";
+        Email.SendEmail(email, subject, body);
+        
         return "Success";
     }
 
     @PutMapping("/updateUsers/{id}")
-    public @ResponseBody String updateUser(@PathVariable(value="id") Long id, @RequestParam Integer permission, String mNumber, boolean isActive, String fname, String lname) {
+    public @ResponseBody String updateUser(@PathVariable(value="id") Long id, @RequestParam Integer permission, String mNumber, boolean isActive, String fname, String lname, String email) {
         UsersTable user = usersTableRepository.findByid(id);
         if (permission != null) {
             user.setPermissions(permission);
@@ -59,6 +66,12 @@ public class UsersTableController {
         }
         user.setIsActive(isActive);
         usersTableRepository.save(user);
+
+        SendEmail Email = new SendEmail();
+        String subject = "BCP Pantry & Resource Center Account Activated";
+        String body = "Hello " + fname + ", \n\nWe would like to thank you for volunteering with the BCP Pantry and Resource Center. Your volunteer account has been successfully created. Your username is connected to your UC account, and you can test your connection anytime by going to:\n\nhttps://bearcatspantry.uc.edu\n\nWe ask that you please do not alter any of the pantry settings before you recieve the Stocker Application training.\n\nThank you for serving students! \n\n - BCP Pantry and Resource Center Team\n\nPlease reach out to BearcatsPantry@ucmail.uc.edu with any questions.";
+        Email.SendEmail(email, subject, body);
+        
         return "Successful";
     }
 

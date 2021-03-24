@@ -141,6 +141,7 @@ async function submitNewUser(){
 
     let FName = document.getElementById("AddfName").value;
     let LName = document.getElementById("AddlName").value;
+    let email = document.getElementById("userAddEmail").value;
     let PermissionLevel = document.getElementById("typeUser").value;
     if (PermissionLevel == "Supervisor") {
         PermissionLevel = 2;
@@ -155,13 +156,13 @@ async function submitNewUser(){
     document.getElementById("addUser").style.display = "none";
     document.getElementById('page-mask').style.position = "unset";
     //Call API Endpoint
-    await addUser(mNumber, FName, LName, PermissionLevel, ActiveStatus);
+    await addUser(mNumber, FName, LName, PermissionLevel, ActiveStatus, email);
     location.reload();
 }
 
-async function addUser(mNumber, FName, LName, PermissionLevel, ActiveStatus){
+async function addUser(mNumber, FName, LName, PermissionLevel, ActiveStatus, Email){
     //POST to user table
-    let userData = {'mNumber':mNumber,'fname':FName, 'lname':LName, 'permissions':PermissionLevel, 'isActive':ActiveStatus}
+    let userData = {'mNumber':mNumber,'fname':FName, 'lname':LName, 'permissions':PermissionLevel, 'isActive':ActiveStatus, 'email':Email}
     let userFormBody =[];
     for (let userKey in userData){
         let encodedUserKey = encodeURIComponent(userKey);
