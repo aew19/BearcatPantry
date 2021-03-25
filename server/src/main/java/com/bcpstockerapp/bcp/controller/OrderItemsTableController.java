@@ -16,7 +16,7 @@ public class OrderItemsTableController {
 //    @Autowired
 //    private OrderItemsRepository orderItemsRepository;
 //
-//    @GetMapping("/orderItems")
+//    @GetMapping("/orderItems/{orderId}")
 //    public @ResponseBody List<OrderItemsTable> getAllOrderItems(){
 //        return orderItemsRepository.findAll();
 //    }

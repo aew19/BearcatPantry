@@ -1,67 +1,12 @@
-let orders = [
-    { Date: "11/04/2020", Name: "Karl Dierking", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Ashley Wilhelm", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Daniel Cummins", Email: "lindsaln@mail.uc.edu",  Type: 3, Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Isaiah Corso-Phinney", Email: "lindsaln@mail.uc.edu",  Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Logan Lindsay", Email: "lindsaln@mail.uc.edu",  Type: 2, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Sivani Alla", Email: "lindsaln@mail.uc.edu",  Type: 3, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Teja Bollimunta", Email: "lindsaln@mail.uc.edu",  Type: 2, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Connor Herbert", Email: "lindsaln@mail.uc.edu",  Type: 3, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Isaac Smitherman", Email: "lindsaln@mail.uc.edu",  Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Joshua St. Pierre", Email: "lindsaln@mail.uc.edu",  Type: 2, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Teja Bollimunta", Email: "lindsaln@mail.uc.edu",  Type: 2, Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Connor Herbert", Email: "lindsaln@mail.uc.edu",  Type: 2, Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "10/29/2020", Name: "Isaac Smitherman", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "10/28/2020", Name: "Joshua St. Pierre", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Karl Dierking", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Jake van Meter", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Daniel Cummins", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Isaiah Corso-Phinney", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Logan Lindsay", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Sivani Alla", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Teja Bollimunta", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Connor Herbert", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Isaac Smitherman", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Joshua St. Pierre", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Teja Bollimunta", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Connor Herbert", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "10/29/2020", Name: "Isaac Smitherman", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "10/28/2020", Name: "Joshua St. Pierre", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Karl Dierking", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Jake van Meter", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Daniel Cummins", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Isaiah Corso-Phinney", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Logan Lindsay", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Sivani Alla", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Teja Bollimunta", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Connor Herbert", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Isaac Smitherman", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Joshua St. Pierre", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Teja Bollimunta", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Connor Herbert", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "10/29/2020", Name: "Isaac Smitherman", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "10/28/2020", Name: "Joshua St. Pierre", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Karl Dierking", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Jake van Meter", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Daniel Cummins", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Friday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Isaiah Corso-Phinney", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Logan Lindsay", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/04/2020", Name: "Sivani Alla", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Teja Bollimunta", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Connor Herbert", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/03/2020", Name: "Isaac Smitherman", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Monday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Joshua St. Pierre", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Thursday 4-6 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Teja Bollimunta", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "11/02/2020", Name: "Connor Herbert", Email: "lindsaln@mail.uc.edu", Type: 2, Address: "2650 Campus Drive", DateTime: "Wednesday 8-12 pm", Items: "items", Status: "status"},
-    { Date: "10/29/2020", Name: "Isaac Smitherman", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"},
-    { Date: "10/28/2020", Name: "Joshua St. Pierre", Email: "lindsaln@mail.uc.edu", Type: 3, Address: "2650 Campus Drive", DateTime: "Tuesday 2-4 pm", Items: "items", Status: "status"}
-]
+
+
 
 $(function(){
     $("#navbar").load("NavBar.html");
 });
 
-$(function () {
+
+function styleOrdersTable() {
     $('#orders_table').DataTable({
       "pageLength": 10,
       "lengthChange": true,
@@ -79,58 +24,90 @@ $(function () {
         search: "",
       }
       });
-});
+}
 
-function generateTableHead(table) {
-    let thead = table.createTHead();
-    let row = thead.insertRow();
-    for (let key of orders_data) {
-        let th = document.createElement("th");
-        let text = document.createTextNode(key);
-        th.appendChild(text);
-        row.appendChild(th);
+async function getOrders(){
+    let response = await fetch(url + "orders/")
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
     }
 }
 
-function generateTable(table, orders_data) {
-    var counter = 0;
-    for (let element of orders_data) {
-        let row = table.insertRow();
-        for (key in element) {
+async function createOrdersTable(){
+    //get all the orders
+    getOrders().then(orders=>{
+        if (orders != "notFound"){
+            //generate the table
+            generateTable(orders).then(()=> styleOrdersTable())
+        }
+    })
+
+}
+
+function generateTable(orders) {
+    console.log(orders)
+    let loadPromise = function(resolve,reject) {
+        const table = document.getElementById("currentOrders");
+        for (let element of orders){
+            let row = table.insertRow();
+            //Date
             let cell = row.insertCell();
-            let text = document.createTextNode(element[key]);
-            if (element[key] == "items") {
-                cell.innerHTML = "<input type=\"button\" class=\"btn btn-red\" value=\"See Items\" id=\"ItemBtn"+counter+"\" onclick = \"popViewTransaction(this.id)\">";
-            }
-            else if (element[key] == "status") {
-                cell.innerHTML = "<input type=\"button\" class=\"btn btn-green\" value=\"Confirm\" id=\"ConfirmBtn"+counter+"\" onclick = \"popViewTransaction(this.id)\"><input type=\"button\" class=\"btn btn-reject\" value=\"Decline\" id=\"DenyBtn"+counter+"\" onclick = \"popViewTransaction(this.id)\">";
-                counter++;
-            }
-            else if (element[key] == 3) {
+            let text = document.createTextNode(element.orderDate)
+            cell.appendChild(text)
+            //Name
+            cell = row.insertCell();
+            let name = element.fname + " " + element.lname;
+            text = document.createTextNode(name)
+            cell.appendChild(text)
+            //Email
+            cell = row.insertCell();
+            text = document.createTextNode(element.email)
+            cell.appendChild(text)
+            //Type
+            cell = row.insertCell();
+            //True means delivery
+            if (element.delOrPickUp === true){
                 cell.innerHTML = "<input type=\"button\" class=\"btn btn-yellow\" value=\"Delivery\">";
-            }
-            else if (element[key] == 2) {
+            } else{
                 cell.innerHTML = "<input type=\"button\" class=\"btn btn-orange\" value=\"Pick-Up\">";
             }
-            else {
-                cell.appendChild(text);
-            }
+            //Address
+            cell = row.insertCell();
+            //TODO format for address 2
+            text = document.createTextNode(element.address)
+            cell.appendChild(text)
+            //Date & Time
+            cell = row.insertCell();
+            let dateTime = element.delDate + " " + element.deliveryTime
+            text = document.createTextNode(dateTime)
+            cell.appendChild(text)
+            //Items
+            //TODO hit orderItems API endpoint
+            cell = row.insertCell();
+            cell.innerHTML = "<input type=\"button\" class=\"btn btn-red\" value=\"See Items\" id=\"ItemBtn\" onclick = \"popViewTransaction("+element.orderId+")\">";
+            //Status
+            cell = row.insertCell();
+            cell.innerHTML = "<input type=\"button\" class=\"btn btn-green\" value=\"Confirm\" id=\"ConfirmBtn\" onclick = \"popViewTransaction("+element.orderId+")\"><input type=\"button\" class=\"btn btn-reject\" value=\"Decline\" id=\"DenyBtn\" onclick = \"popViewTransaction("+element.orderId+")\">";
         }
+        resolve("Success")
     }
+    return new Promise(loadPromise);
 }
 
 var closeModal = null
-function popViewTransaction(clicked_id){
-    if(closeModal === null){
-        document.getElementById("viewOrder").style.display = "block";
-        closeModal = true
-        document.getElementById("modal-body").innerHTML = clicked_id;
-        document.getElementById('page-mask').style.position = "fixed";
-    } else {
-        document.getElementById("viewOrder").style.display = "none";
-        document.getElementById('page-mask').style.position = "unset";
-        closeModal = null
-    }
+function popViewTransaction(orderId){
+    // if(closeModal === null){
+    //     document.getElementById("viewOrder").style.display = "block";
+    //     closeModal = true
+    //     document.getElementById("modal-body").innerHTML = clicked_id;
+    //     document.getElementById('page-mask').style.position = "fixed";
+    // } else {
+    //     document.getElementById("viewOrder").style.display = "none";
+    //     document.getElementById('page-mask').style.position = "unset";
+    //     closeModal = null
+    // }
 }
 
 function showNavBar() {
@@ -152,7 +129,17 @@ function exportCSV(elem){
     return false;
 }
 
-let orders_table = document.getElementById('orders_table');
-let orders_data = Object.keys(orders[0]);
-generateTable(orders_table, orders);
-generateTableHead(orders_table, orders_data);
+fetch("../environment.json").then(response=>response.json())
+    .then(json=>{
+        env=json.env
+        if (env === "dev"){
+            url = "http://localhost:8080/"
+            posturl = 'http://localhost:8080/'
+        }else{
+            //https does not work because SSL cert. Changing to http
+            url = "http://bearcatspantry.uc.edu:8080/web-services/"
+            posturl = 'http://bearcatspantry.uc.edu:8080/web-services/'
+        }
+        createOrdersTable()
+    })
+    .catch(err => console.log("Error reading Environment"))
