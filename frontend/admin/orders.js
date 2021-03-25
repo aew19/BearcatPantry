@@ -35,6 +35,24 @@ async function getOrders(){
     }
 }
 
+async function getOrderItemsById(orderId){
+    let response = await fetch(url + "orderItems/"+orderId)
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
+async function getBarcode(barcode){
+    let response = await fetch(url + "items/"+barcode)
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
 async function createOrdersTable(){
     //get all the orders
     getOrders().then(orders=>{
@@ -96,18 +114,23 @@ function generateTable(orders) {
     return new Promise(loadPromise);
 }
 
-var closeModal = null
 function popViewTransaction(orderId){
-    // if(closeModal === null){
-    //     document.getElementById("viewOrder").style.display = "block";
-    //     closeModal = true
-    //     document.getElementById("modal-body").innerHTML = clicked_id;
-    //     document.getElementById('page-mask').style.position = "fixed";
-    // } else {
-    //     document.getElementById("viewOrder").style.display = "none";
-    //     document.getElementById('page-mask').style.position = "unset";
-    //     closeModal = null
-    // }
+    document.getElementById("viewOrder").style.display = "block";
+    //Get order items
+    getOrderItemsById(orderId).then(items =>{
+        let orderItems = []
+        for (let item of items){
+            //get item name and brand
+            getBarcode(item.barcodeId).then(data =>{
+                orderItems.push(data.brand + " " + data.name)
+                document.getElementById("modal-body").innerHTML = orderItems;
+            })
+
+        }
+
+        document.getElementById('page-mask').style.position = "fixed";
+    })
+
 }
 
 function showNavBar() {
@@ -127,6 +150,10 @@ function exportCSV(elem){
     elem.setAttribute("href", url);
     elem.setAttribute("download", "pantryorders.xls"); // Choose the file name
     return false;
+}
+function closePopup(element){
+    document.getElementById(element).style.display = "none";
+    document.getElementById('page-mask').style.position = "unset";
 }
 
 fetch("../environment.json").then(response=>response.json())

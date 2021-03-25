@@ -39,6 +39,12 @@ public class OrdersTableController {
     @GetMapping("/orderItems")
     public @ResponseBody List<OrderItemsTable> getAllOrderItems(){ return orderItemsRepository.findAll(); }
 
+    @GetMapping("/orderItems/{orderId}")
+    public @ResponseBody List<OrderItemsTable> getOrdersById(@PathVariable(value="orderId") Long orderId){
+        System.out.println(orderId);
+        return orderItemsRepository.findOrderItemsTableByOrderId(orderId);
+    }
+
     @PostMapping("/orders")
     public @ResponseBody String createOrder(@RequestParam boolean delOrPickUp, String delDate, String deliveryTime, Integer orderStatus, String mNumber, String fName, String lName, String address, String address2, String email, String phoneNumber, String[] barcodes) {
         //Add user information to orders table
