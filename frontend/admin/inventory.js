@@ -674,11 +674,6 @@ function editItem(){
     if (document.getElementById("newVegan").value == "true") {
         vegan = true;
     }
-
-
-    if (updateQuantity == "" || currBarcode == "" || itemName == "" || itemBrand == "" || itemType == "" || itemURL == "" || image == null) {
-        document.getElementById("EditwarningText").style.display = "block";
-    }
     else {
         document.getElementById("editItem").style.display = "none";
         document.getElementById('page-mask').style.position = "unset";

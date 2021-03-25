@@ -34,7 +34,7 @@
                                     <label for="editImg" class="file-upload">
                                         Upload Image
                                     </label>
-                                    <input type="file" name="file" id="editImg" accept="image/*" required onchange="readEditUrl(this)"/>
+                                    <input type="file" name="file" id="editImg" accept="image/*" onchange="readEditUrl(this)"/>
                                 </div>
                                 <div style="padding-bottom: 10px;" class="newmodal4 form-group">
                                     <input class="form-control" id="newItemBrand" autocomplete="off" placeholder="Company Brand">
@@ -80,7 +80,6 @@
                                     </select>
                                 </div>
                                 <button type="submit" class="newmodal9 btn btn-red" onclick="editItem()">Submit</button>
-                                <h6 style="display:none" id="EditwarningText"><strong>*Please fill out ALL fields before proceeding.</strong></h6>
                             </div>
                         </form>
                     </div>
