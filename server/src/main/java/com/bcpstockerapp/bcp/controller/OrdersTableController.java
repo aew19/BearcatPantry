@@ -1,7 +1,11 @@
 package com.bcpstockerapp.bcp.controller;
 
+import com.bcpstockerapp.bcp.model.InventoryTable;
+import com.bcpstockerapp.bcp.model.OrderItemsTable;
 import com.bcpstockerapp.bcp.model.OrdersTable;
+import com.bcpstockerapp.bcp.repository.InventoryTableRepository;
 import com.bcpstockerapp.bcp.repository.OrdersTableRepository;
+import com.bcpstockerapp.bcp.repository.OrderItemsRepository;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +16,7 @@ import com.bcpstockerapp.bcp.gmail.api.SendEmail;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,16 +26,22 @@ public class OrdersTableController {
 
     @Autowired
     private OrdersTableRepository ordersTableRepository;
+    @Autowired
+    private OrderItemsRepository orderItemsRepository;
+    @Autowired
+    private InventoryTableRepository inventoryTableRepository;
 
     @GetMapping("/orders")
     public @ResponseBody List<OrdersTable> getAllOrders(){
-        return  ordersTableRepository.findAll();
+        return ordersTableRepository.findAll();
     }
 
+    @GetMapping("/orderItems")
+    public @ResponseBody List<OrderItemsTable> getAllOrderItems(){ return orderItemsRepository.findAll(); }
+
     @PostMapping("/orders")
-    public @ResponseBody String createOrder(@RequestParam boolean delOrPickUp, String delDate, String deliveryTime, Integer orderStatus, String mNumber, String fName, String lName, String address, String address2, String email, String phoneNumber) {
-        System.out.println("Delivery Date: "+delDate);
-        System.out.println("Delivery Time: " + deliveryTime);
+    public @ResponseBody String createOrder(@RequestParam boolean delOrPickUp, String delDate, String deliveryTime, Integer orderStatus, String mNumber, String fName, String lName, String address, String address2, String email, String phoneNumber, String[] barcodes) {
+        //Add user information to orders table
         OrdersTable order = new OrdersTable();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate orderDate = LocalDate.now();
@@ -47,7 +58,7 @@ public class OrdersTableController {
         order.setAddress2(address2);
         order.setEmail(email);
         order.setPhoneNumber(phoneNumber);
-        ordersTableRepository.save(order);
+        OrdersTable currOrder = ordersTableRepository.save(order);
 
         String method;
         if (delOrPickUp) {
@@ -60,6 +71,29 @@ public class OrdersTableController {
         String subject = "BCP Pantry & Resource Center Order Received";
         String body = "Hello " + fName + ", \n\nThank you for placing an order with the BCP Pantry and Resource Center. Your order has been recieved with the following details:\n\n - Name: " + fName + " " + lName + "\n - Delivery Date: " + delDate + "\n - Delivery Time: " + deliveryTime + "\n - Method: " + method + "\n - Address: " + address + "\n - Email: " + email + "\n - Phone Number: " + phoneNumber + "\n\nOur volunteers are currently processing your order and you should recieve a confirmation email shortly.\n\n Thank you for utilizing the BCP Pantry and Resource Center! \n\n - BCP Pantry and Resource Center Team\n\nPlease reach out to BearcatsPantry@ucmail.uc.edu with any questions or concerns.";
         Email.SendEmail(email, subject, body);
+
+        //Get order id to relate both tables
+        Long orderId = currOrder.getOrderId();
+
+        for (String barcodeId : barcodes){
+            //Add to order items table
+            OrderItemsTable item = new OrderItemsTable();
+            item.setBarcodeId(barcodeId);
+            item.setOrderId(orderId);
+            item.setItemQuantity(1);
+            orderItemsRepository.save(item);
+            //Remove from inventory
+            InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeId);
+            Integer currentQuantity = inventory.getQuantity();
+            if (currentQuantity == 1) {
+                inventoryTableRepository.delete(inventory);
+            } else {
+                inventory.setQuantity(currentQuantity - 1);
+                inventoryTableRepository.save(inventory);
+            }
+        }
+
+
         return "Saved!";
     }
 

@@ -10,6 +10,8 @@ public class FileUploadUtil {
         Path uploadPath = Paths.get(uploadDir);
 
         if (!Files.exists(uploadPath)) {
+            File photos = new File(uploadDir);
+            photos.mkdir();
             Files.createDirectories(uploadPath);
         }
 
