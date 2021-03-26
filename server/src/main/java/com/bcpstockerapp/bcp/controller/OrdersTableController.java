@@ -6,6 +6,7 @@ import com.bcpstockerapp.bcp.model.OrdersTable;
 import com.bcpstockerapp.bcp.repository.InventoryTableRepository;
 import com.bcpstockerapp.bcp.repository.OrdersTableRepository;
 import com.bcpstockerapp.bcp.repository.OrderItemsRepository;
+import com.bcpstockerapp.bcp.utilities.orders;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +42,6 @@ public class OrdersTableController {
 
     @GetMapping("/orderItems/{orderId}")
     public @ResponseBody List<OrderItemsTable> getOrdersById(@PathVariable(value="orderId") Long orderId){
-        System.out.println(orderId);
         return orderItemsRepository.findOrderItemsTableByOrderId(orderId);
     }
 
@@ -80,16 +80,16 @@ public class OrdersTableController {
 
         //Get order id to relate both tables
         Long orderId = currOrder.getOrderId();
-
-        for (String barcodeId : barcodes){
+        ArrayList<orders> barcodesAndQuantities = orders.getUniqueBarcodesAndQuantities(barcodes);
+        for (orders barcodePair : barcodesAndQuantities){
             //Add to order items table
             OrderItemsTable item = new OrderItemsTable();
-            item.setBarcodeId(barcodeId);
+            item.setBarcodeId(barcodePair.getBarcode());
             item.setOrderId(orderId);
-            item.setItemQuantity(1);
+            item.setItemQuantity(barcodePair.getQuantity());
             orderItemsRepository.save(item);
             //Remove from inventory
-            InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeId);
+            InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodePair.getBarcode());
             Integer currentQuantity = inventory.getQuantity();
             if (currentQuantity == 1) {
                 inventoryTableRepository.delete(inventory);
