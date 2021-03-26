@@ -75,13 +75,10 @@ function newShoppingItem(){
             let buttonDiv = document.createElement("div")
             cardBody.appendChild(buttonDiv)
 
-            let styledButtonDiv = document.createElement("div")
-            styledButtonDiv.className = "btn-group"
-            styledButtonDiv.innerHTML = "<button type=\"button\" class=\"btn btn-sm btn-outline-secondary\" onclick=addToCart("+currentElement+")><i class=\"fas fa-cart-plus\"></i> Add to Cart</button>"
-            buttonDiv.appendChild(styledButtonDiv)
-
             let productTypeDiv = document.createElement("div")
             productTypeDiv.innerHTML = "<small class=\"text-muted\">"+element.foodType+"</small>"
+            productTypeDiv.style.float = "left"
+            productTypeDiv.style.width="50%"
             buttonDiv.appendChild(productTypeDiv)
             let dietTypeDiv = document.createElement("div")
             let dietStatus = "";
@@ -91,7 +88,15 @@ function newShoppingItem(){
                 dietStatus = "Vegetarian"
             }
             dietTypeDiv.innerHTML ="<small class=\"text-muted\">"+dietStatus+"</small>"
+            dietTypeDiv.style.textAlign="right"
             buttonDiv.appendChild(dietTypeDiv)
+
+            let styledButtonDiv = document.createElement("div")
+            styledButtonDiv.className = "btn-group"
+            styledButtonDiv.style.paddingTop = "20px"
+            styledButtonDiv.style.textAlign = "center"
+            styledButtonDiv.innerHTML = "<button type=\"button\" class=\"btn btn-sm btn-outline-secondary\" onclick=addToCart("+currentElement+")><i class=\"fas fa-cart-plus\"></i> Add to Cart</button>"
+            buttonDiv.appendChild(styledButtonDiv)
             divhousing.appendChild(largestOuterDiv)
         }
 
