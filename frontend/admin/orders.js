@@ -116,19 +116,34 @@ function generateTable(orders) {
 
 function popViewTransaction(orderId){
     document.getElementById("viewOrder").style.display = "block";
+    document.getElementById('page-mask').style.position = "fixed";
+    const table = document.getElementById("orderItemsTable");
+    //Clear old rows from different order
+    let rowCount = table.rows.length;
+    for (let i = 1; i < rowCount; i++) {
+        table.deleteRow(1);
+    }
     //Get order items
     getOrderItemsById(orderId).then(items =>{
-        let orderItems = []
         for (let item of items){
             //get item name and brand
             getBarcode(item.barcodeId).then(data =>{
-                orderItems.push(data.brand + " " + data.name)
-                document.getElementById("modal-body").innerHTML = orderItems;
+                let row = table.insertRow();
+                //name
+                let cell = row.insertCell();
+                let text = document.createTextNode(data.name);
+                cell.appendChild(text);
+                //brand
+                cell = row.insertCell();
+                text = document.createTextNode(data.brand);
+                cell.appendChild(text);
+                //quantity Button
+                cell = row.insertCell();
+                text = document.createTextNode(item.itemQuantity);
+                cell.appendChild(text);
             })
 
         }
-
-        document.getElementById('page-mask').style.position = "fixed";
     })
 
 }
