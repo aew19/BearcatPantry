@@ -46,4 +46,18 @@ public class ShibbolethController {
         
         return map;
     }
+
+    public Map getHVTest() {
+        Map map = new HashMap();
+                // get header values from request object
+        Enumeration headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String key = (String) headerNames.nextElement();
+            String value = request.getHeader(key);
+            map.put(key, value);
+            System.out.println(key + " - " + value);
+        }
+        
+        return map;
+    }
 }

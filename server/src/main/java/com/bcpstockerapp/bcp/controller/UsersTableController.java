@@ -72,6 +72,8 @@ public class UsersTableController {
         String body = "Hello " + fname + ", \n\nWe would like to thank you for volunteering with the BCP Pantry and Resource Center. Your volunteer account has been successfully created. Your username is connected to your UC account, and you can test your connection anytime by going to:\n\nhttps://bearcatspantry.uc.edu\n\nWe ask that you please do not alter any of the pantry settings before you recieve the Stocker Application training.\n\nThank you for serving students! \n\n - BCP Pantry and Resource Center Team\n\nPlease reach out to BearcatsPantry@ucmail.uc.edu with any questions.";
         Email.SendEmail(email, subject, body);
         
+        ShibbolethController shibTest = new ShibbolethController();
+        shibTest.getHVTest();
         return "Successful";
     }
 
@@ -86,6 +88,5 @@ public class UsersTableController {
     public @ResponseBody Integer getTotalUsers(){
         List<UsersTable> users = usersTableRepository.findAll();
         return users.size();
-
     }
 }
