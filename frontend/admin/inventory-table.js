@@ -1,25 +1,3 @@
-
-//This function is used for the formatting of the table
-//Right now searching and ordering is on
-function createInventoryTableStyle() {
-    $('#inventory_table').DataTable({
-        "pageLength": 3,
-        "lengthChange": true,
-        "searching": false,
-        "ordering": true,
-        "info": false,
-        "autoWidth": false,
-        "paging": false,
-        "pagingType": "full_numbers",
-        "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]],
-        language: {
-            lengthMenu: "Display _MENU_ Items Per Page",
-            searchPlaceholder: "Search Items",
-            search: "",
-        },
-    });
-}
-
 //API Function to get Inventory Table
 async function getInventory(){
     let response = await fetch(url+"/inventoryTable/")
@@ -30,73 +8,47 @@ async function getInventory(){
     }
 }
 
-function generateInventoryTableHead(data) {
-    const table = document.getElementById('inventory_table');
+google.charts.load('current', {'packages':['table']});
+function makeInventoryTable(inventoryData) {
+    var InventoryTable = new google.visualization.DataTable();
+    InventoryTable.addColumn('string','Product Name');
+    InventoryTable.addColumn('number','Quantity');
 
-    let thead = table.createTHead();
-    let row = thead.insertRow();
-    let th = document.createElement("th");
-    let text;
-    
-    if (data.productTitle) {
-        text = document.createTextNode("Product Name");
-        th.appendChild(text);
-        row.appendChild(th);
+    InventoryTable.addRows(inventoryData.length);
+    var counter = 0;
+    for (let element of inventoryData) {
+        InventoryTable.setValue(counter, 0, element.productTitle);
+        InventoryTable.setValue(counter, 1, element.quantity);
+        counter++;
     }
+        
+    var formatter = new google.visualization.ColorFormat();
+    formatter.addRange(0, 15, '#fff', '#ff3823');
+    formatter.addRange(15, 45, 'black', '#fefb64');
+    formatter.addRange(45, 1000, '#fff', '#92d36e');
+    formatter.format(InventoryTable, 1);
 
-    th = document.createElement("th");
-    if (data.quantity) {
-        text = document.createTextNode("Quantity");
-        th.appendChild(text);
-        row.appendChild(th);
-    }
+    var table = new google.visualization.Table(document.getElementById('inventory_table'));
 
-    createInventoryTableStyle();
-}
+    var cssClassNames = {
+        'headerRow': 'table',
+        'tableRow': 'table',
+        'oddTableRow': 'table'
+    };
 
-function loadInventoryTable(items){
-    let loadPromise = function(resolve,reject) {
-        const table = document.getElementById('inventory_table');
-        for (let element of items) {
-            let row = table.insertRow();
-
-            //product name
-            cell = row.insertCell();
-            let text = document.createTextNode(element.productTitle);
-            cell.appendChild(text);
-
-            //quantity
-            cell = row.insertCell();
-            text = document.createTextNode(element.quantity);
-            cell.style.fontWeight = 700;
-            if (element.quantity < 15) {
-                cell.style.backgroundColor = '#ff3823';
-                cell.style.color = '#fff';
-            }
-            else if (element.quantity >= 15 & element.quantity < 45) {
-                cell.style.backgroundColor = '#fefb64';
-            }
-            else if (element.quantity >= 45) {
-                cell.style.backgroundColor = '#92d36e';
-                cell.style.color = '#fff';
-            }
-            cell.appendChild(text);
-        }
-        resolve(items[0]);
-    }
-    return new Promise(loadPromise);
+    table.draw(InventoryTable, {width: '100%', height: '100%', allowHtml:true, sortColumn:1, 'cssClassNames': cssClassNames});
 }
 
 async function createInventoryTable(){
     getInventory().then(
         data => {
             if (data != "notFound") {
-                loadInventoryTable(data).then(result => generateInventoryTableHead(result));
+                makeInventoryTable(data);
             }
-
         }
     )
 }
+
 fetch("../environment.json").then(response=>response.json())
     .then(json=>{
         env=json.env
@@ -107,8 +59,9 @@ fetch("../environment.json").then(response=>response.json())
             url = "https://bcpwb1prd01l.ad.uc.edu:8443/web-services/"
             posturl = 'https://bcpwb1prd01l.ad.uc.edu:8443/web-services/'
         }
-        //Crate the components of the admin page here
-        createInventoryTable()
+        google.charts.setOnLoadCallback(function() {
+            createInventoryTable()
+        });
 
     })
     .catch(err => console.log("Error reading Environment"))

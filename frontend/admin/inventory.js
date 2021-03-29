@@ -5,27 +5,6 @@ let env="";
 let url = "";
 let posturl = '';
 
-//Reads the environment and sets the correct API URL
-async function loadEnv(){
-    fetch("../environment.json").then(response=>response.json())
-        .then(json=>{
-            env=json.env
-            if (env === "dev"){
-                url = "http://localhost:8080/"
-                posturl = 'http://localhost:8080/'
-            }else{
-                //https does not work because SSL cert. Changing to http
-                url = "http://bearcatspantry.uc.edu:8080/web-services/"
-                posturl = 'http://bearcatspantry.uc.edu:8080/web-services/'
-            }
-            createInventoryTable()
-        })
-        .catch(err => console.log("Error reading Environment"))
-}
-
-
-
-
 $(function(){
     $("#newItemModal").load("newItemModal.html");
 });
@@ -276,8 +255,8 @@ function checkoutUpdateQuantities(){
         });
     location.reload()
     rowCount = 0;
-
 }
+
 //Removes image when editing the image in the folder
 async function deleteImage(barcode){
     fetch(posturl+'deleteImage/'+ barcode, {
@@ -298,11 +277,49 @@ async function createInventoryTable(){
     getInventory().then(
         data => {
             if (data != "notFound") {
-                loadPantryItems(data).then(result => createTableStyle())
+                //loadPantryItems(data).then(result => createTableStyle())
+                makeInventoryTable(data);
             }
-
         }
     )
+}
+
+google.charts.load('current', {'packages':['table']});
+function makeInventoryTable(inventoryData) {
+    var InventoryTable = new google.visualization.DataTable();
+    InventoryTable.addColumn('string','Modify Item');
+    InventoryTable.addColumn('string','Item');
+    InventoryTable.addColumn('number','Quantity');
+    InventoryTable.addColumn('string','Type');
+    InventoryTable.addColumn('string','Brand');
+
+    InventoryTable.addRows(inventoryData.length);
+    var counter = 0;
+    for (let element of inventoryData) {
+        let currentElement = JSON.stringify(element.barcodeId);
+        InventoryTable.setValue(counter, 0, "<a class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditItem("+currentElement+","+element.quantity+")><i class='fas fa-edit'></i></a><a class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteItem("+currentElement+")><i class='fas fa-trash'></i></a>");
+        InventoryTable.setValue(counter, 1, element.productTitle);
+        InventoryTable.setValue(counter, 2, element.quantity);
+        InventoryTable.setValue(counter, 3, element.foodType);
+        InventoryTable.setValue(counter, 4, element.brand);
+        counter++;
+    }
+        
+    var formatter = new google.visualization.ColorFormat();
+    formatter.addRange(0, 15, '#fff', '#ff3823');
+    formatter.addRange(15, 45, 'black', '#fefb64');
+    formatter.addRange(45, 1000, '#fff', '#92d36e');
+    formatter.format(InventoryTable, 2);
+
+    var table = new google.visualization.Table(document.getElementById('pantryStock'));
+
+    var cssClassNames = {
+        'headerRow': 'table',
+        'tableRow': 'table',
+        'oddTableRow': 'table'
+    };
+
+    table.draw(InventoryTable, {width: '100%', height: '100%', allowHtml:true, sortColumn:2, page:'enable', pageSize: 10, pagingButtons:'both', 'cssClassNames': cssClassNames});
 }
 
 //MODAL FUNCTIONS
@@ -419,6 +436,7 @@ async function submitUnknownItem(){
 function closePopup(element){
     document.getElementById(element).style.display = "none";
     document.getElementById('page-mask').style.position = "unset";
+    document.getElementById('page-mask').style.backgroundColor = "unset";
 }
 
 
@@ -711,55 +729,6 @@ function exportCSV(elem){
     return false;
 }
 
-//This function formats database data into the columns for the database
-//Helper function
-function loadPantryItems(items){
-    let loadPromise = function(resolve,reject) {
-        const table = document.getElementById("pantryStock");
-        for (let element of items) {
-            let currentElement = JSON.stringify(element.barcodeId)
-            //let currentQuantity = JSON.stringify(element.quantity)
-
-            let row = table.insertRow();
-            //modify item
-            let cell = row.insertCell();
-            cell.innerHTML = "<a class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditItem("+currentElement+","+element.quantity+")><i class='fas fa-edit'></i></a><a class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteItem("+currentElement+")><i class='fas fa-trash'></i></a>";
-            //name
-            cell = row.insertCell();
-            let text = document.createTextNode(element.productTitle);
-            cell.appendChild(text);
-
-            //quantity
-            cell = row.insertCell();
-            text = document.createTextNode(element.quantity);
-            if (element.quantity < 15) {
-                cell.style.backgroundColor = '#ff3823';
-                cell.style.color = '#fff';
-            }
-            else if (element.quantity >= 15 & element.quantity < 45) {
-                cell.style.backgroundColor = '#fefb64';
-            }
-            else if (element.quantity >= 45) {
-                cell.style.backgroundColor = '#92d36e';
-                cell.style.color = '#fff';
-            }
-            cell.appendChild(text);
-
-            //type
-            cell = row.insertCell();
-            text = document.createTextNode(element.foodType);
-            cell.appendChild(text);
-
-            //brand
-            cell = row.insertCell();
-            text = document.createTextNode(element.brand);
-            cell.appendChild(text);
-        }
-        resolve("Success");
-    }
-    return new Promise(loadPromise);
-}
-
 //This function is used for the formatting of the table
 //Right now searching and ordering is on
 function createTableStyle() {
@@ -848,6 +817,26 @@ function sleep(milliseconds) {
     do {
         currentDate = Date.now();
     } while (currentDate - date < milliseconds);
+}
+
+//Reads the environment and sets the correct API URL
+async function loadEnv(){
+    fetch("../environment.json").then(response=>response.json())
+        .then(json=>{
+            env=json.env
+            if (env === "dev"){
+                url = "http://localhost:8080/"
+                posturl = 'http://localhost:8080/'
+            }else{
+                //https does not work because SSL cert. Changing to http
+                url = "http://bearcatspantry.uc.edu:8080/web-services/"
+                posturl = 'http://bearcatspantry.uc.edu:8080/web-services/'
+            }
+            google.charts.setOnLoadCallback(function() {
+                createInventoryTable();
+            });
+        })
+        .catch(err => console.log("Error reading Environment"))
 }
 
 loadEnv()

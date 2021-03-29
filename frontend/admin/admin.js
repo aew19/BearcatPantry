@@ -51,7 +51,7 @@ function makeTableScroll() {
     }
 
     maxRows = 6;
-    table = document.getElementById('transactions_table');
+    table = document.getElementById('orders_table');
     rowsInTable = table.rows.length;
     height = 0;
     if (rowsInTable > maxRows) {
@@ -252,8 +252,8 @@ function deleteUser(userID) {
                 method:"PUT",
                 headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
             }).then(response => response.json())
-                .then(data=> {console.log('Success');location.reload();})
-                .catch((error)=>{ console.error('Error:', error);location.reload();});           
+                .then(data=> {console.log('Success');createUsersTable();})
+                .catch((error)=>{ console.error('Error:', error);createUsersTable();});           
         }
     );
         
@@ -289,8 +289,8 @@ function editUser(userID, FName, LName, mNumber, Permissions, email) {
         method:"PUT",
         headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
     }).then(response => response.json())
-        .then(data=> {console.log('Success');location.reload();})
-        .catch((error)=>{ console.error('Error:', error);location.reload();});
+        .then(data=> {console.log('Success');createUsersTable();})
+        .catch((error)=>{ console.error('Error:', error);createUsersTable();});
 }
 
 function showNavBar() {

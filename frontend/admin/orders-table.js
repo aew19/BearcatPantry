@@ -1,55 +1,16 @@
-
-
-
-$(function(){
-    $("#navbar").load("NavBar.html");
-});
-
-async function getOrders(){
-    let response = await fetch(url + "orders/")
-    try{
-        return await response.json();
-    }catch{
-        return "notFound";
-    }
-}
-
-async function getOrderItemsById(orderId){
-    let response = await fetch(url + "orderItems/"+orderId)
-    try{
-        return await response.json();
-    }catch{
-        return "notFound";
-    }
-}
-
-async function getBarcode(barcode){
-    let response = await fetch(url + "items/"+barcode)
-    try{
-        return await response.json();
-    }catch{
-        return "notFound";
-    }
-}
-
 async function createOrdersTable(){
-    //get all the orders
     getOrders().then(orders=>{
         if (orders != "notFound"){
-            makeInventoryTable(orders);
+            makeOrdersTable(orders);
         }
     })
 }
 
 google.charts.load('current', {'packages':['table']});
-function makeInventoryTable(OrdersData) {
+function makeOrdersTable(OrdersData) {
     var OrdersTable = new google.visualization.DataTable();
     OrdersTable.addColumn('string','Order Date');
     OrdersTable.addColumn('string','Name');
-    OrdersTable.addColumn('string','Email');
-    OrdersTable.addColumn('string','Type');
-    OrdersTable.addColumn('string','Address');
-    OrdersTable.addColumn('string','Date & Time');
     OrdersTable.addColumn('string','Items');
     OrdersTable.addColumn('string','Status');
 
@@ -58,16 +19,12 @@ function makeInventoryTable(OrdersData) {
     for (let element of OrdersData) {
         OrdersTable.setValue(counter, 0, element.orderDate);
         OrdersTable.setValue(counter, 1, element.fname + " " + element.lname);
-        OrdersTable.setValue(counter, 2, element.email);
+        OrdersTable.setValue(counter, 2, "<input type=\"button\" class=\"btn btn-red\" value=\"See Items\" id=\"ItemBtn\" onclick = \"popViewTransaction("+element.orderId+")\">");
         if (element.delOrPickUp === true){
             OrdersTable.setValue(counter, 3, "<input type=\"button\" class=\"btn btn-yellow\" value=\"Delivery\">");
         } else{
             OrdersTable.setValue(counter, 3, "<input type=\"button\" class=\"btn btn-orange\" value=\"Pick-Up\">");
         }
-        OrdersTable.setValue(counter, 4, element.address);
-        OrdersTable.setValue(counter, 5, element.delDate + " " + element.deliveryTime);
-        OrdersTable.setValue(counter, 6, "<input type=\"button\" class=\"btn btn-red\" value=\"See Items\" id=\"ItemBtn\" onclick = \"popViewTransaction("+element.orderId+")\">");
-        OrdersTable.setValue(counter, 7, "<input type=\"button\" class=\"btn btn-green\" value=\"Confirm\" id=\"ConfirmBtn\" onclick = \"popViewTransaction("+element.orderId+")\"><input type=\"button\" class=\"btn btn-reject\" value=\"Decline\" id=\"DenyBtn\" onclick = \"popViewTransaction("+element.orderId+")\">");
         counter++;
     }
 
@@ -79,7 +36,7 @@ function makeInventoryTable(OrdersData) {
         'oddTableRow': 'table'
     };
 
-    table.draw(OrdersTable, {width: '100%', height: '100%', allowHtml:true, sortColumn:0, page:'enable', pageSize: 10, pagingButtons:'both', 'cssClassNames': cssClassNames});
+    table.draw(OrdersTable, {width: '100%', height: '100%', allowHtml:true, sortColumn:0, 'cssClassNames': cssClassNames});
 }
 
 function popViewTransaction(orderId){
@@ -116,10 +73,42 @@ function popViewTransaction(orderId){
 
 }
 
-function closePopup(element){
-    document.getElementById(element).style.display = "none";
-    document.getElementById('page-mask').style.position = "unset";
-    document.getElementById('page-mask').style.backgroundColor = "unset";
+//API Call to get student visits data
+async function getStudentVisits(){
+    let response = await fetch(url + "/orders/")
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
+//API Call to get orders data
+async function getOrders(){
+    let response = await fetch(url+"/orders/")
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
+async function getOrderItemsById(orderId){
+    let response = await fetch(url + "orderItems/"+orderId)
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
+async function getBarcode(barcode){
+    let response = await fetch(url + "items/"+barcode)
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
 }
 
 fetch("../environment.json").then(response=>response.json())
@@ -134,7 +123,7 @@ fetch("../environment.json").then(response=>response.json())
             posturl = 'http://bearcatspantry.uc.edu:8080/web-services/'
         }
         google.charts.setOnLoadCallback(function() {
-            createOrdersTable();
+            createOrdersTable()
         });
     })
     .catch(err => console.log("Error reading Environment"))

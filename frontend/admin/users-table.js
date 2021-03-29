@@ -1,115 +1,3 @@
-//This function is used for the formatting of the table
-//Right now searching and ordering is on
-function createUserTableStyle() {
-    $('#users_table').DataTable({
-        "pageLength": 3,
-        "lengthChange": true,
-        "searching": false,
-        "ordering": true,
-        "info": false,
-        "autoWidth": false,
-        "paging": false,
-        "pagingType": "full_numbers",
-        "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]],
-        language: {
-            lengthMenu: "Display _MENU_ Items Per Page",
-            searchPlaceholder: "Search Items",
-            search: "",
-        },
-    });
-}
-
-function generateUsersTableHead(data) {
-
-    const table = document.getElementById('users_table');
-    let thead = table.createTHead();
-    let row = thead.insertRow();
-    let th = document.createElement("th");
-    let text;
-
-    if (data.id) {
-        text = document.createTextNode("User ID");
-        th.appendChild(text);
-        th.style.display = "none";
-        row.appendChild(th);
-    }
-
-    th = document.createElement("th");
-    if (data.fname) {
-        text = document.createTextNode("Name");
-        th.appendChild(text);
-        row.appendChild(th);
-    }
-    
-    th = document.createElement("th");
-    if (data.permissions) {
-        if (data.permissions == 1) {
-            text = document.createTextNode("Volunteer");
-        }
-        else if (data.permissions == 2 ) {
-            text = document.createTextNode("Supervisor");
-        }
-        else if (data.permissions == 3 ) {
-            text = document.createTextNode("Owner");
-        }
-        th.appendChild(text);
-        row.appendChild(th);
-    }
-    
-    th = document.createElement("th");
-    if (data.dateActive) { 
-        text = document.createTextNode("Modify User");
-        th.appendChild(text);
-        row.appendChild(th);
-    }
-
-    createUserTableStyle();
-}
-
-function loadUsersTable(users){
-    let loadPromise = function(resolve,reject) {
-        const table = document.getElementById('users_table');
-        for (let element of users) {
-            if (element.isActive == 1) {
-                let row = table.insertRow();
-                row.id = element.id;
-
-                //user id
-                cell = row.insertCell();
-                let text = document.createTextNode(element.id);
-                cell.appendChild(text);
-                cell.style.display = "none";
-
-                //first and last name
-                cell = row.insertCell();
-                text = document.createTextNode(element.fname + " " + element.lname);
-                cell.appendChild(text);
-
-                //role
-                cell = row.insertCell();
-                if (element.permissions == 1) {
-                    text = document.createTextNode("Volunteer");
-                }
-                else if (element.permissions == 2 ) {
-                    text = document.createTextNode("Supervisor");
-                }
-                else if (element.permissions == 3 ) {
-                    text = document.createTextNode("Owner");
-                }
-                cell.appendChild(text);
-
-                //modify
-                cell = row.insertCell();
-                text = document.createTextNode("");
-                cell.innerHTML = "<a class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditUser("+element.id+")><i class='fas fa-edit'></i></a><a class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteUser("+element.id+")><i class='fas fa-trash'></i></a>";
-                cell.appendChild(text);
-            }
-        }
-        resolve(users[0]);
-    }
-    return new Promise(loadPromise);
-}
-
 //API Call to get users table
 async function getUsers(){
     let response = await fetch(url + "users/")
@@ -124,7 +12,7 @@ async function createUsersTable(){
     getUsers().then(
         data => {
             if (data != "notFound") {
-                loadUsersTable(data).then(result => generateUsersTableHead(result));
+                makeUsersTable(data);
             }
         }
     )
@@ -157,7 +45,7 @@ async function submitNewUser(){
     document.getElementById('page-mask').style.position = "unset";
     //Call API Endpoint
     await addUser(mNumber, FName, LName, PermissionLevel, ActiveStatus, email);
-    location.reload();
+    createUsersTable();
 }
 
 async function addUser(mNumber, FName, LName, PermissionLevel, ActiveStatus, Email){
@@ -180,11 +68,11 @@ async function addUser(mNumber, FName, LName, PermissionLevel, ActiveStatus, Ema
         .then(json)
         .then(function(data){
             console.log('Request Succeeded', data)
-            location.reload()
+            createUsersTable();
         })
         .catch(function(error){
             console.log('Request Failed', error)
-            location.reload()
+            createUsersTable();
         });
 }
 
@@ -203,6 +91,58 @@ function json(response) {
 }
 
 
+google.charts.load('current', {'packages':['table']});
+function makeUsersTable(usersData) {
+    var UsersTable = new google.visualization.DataTable();
+    UsersTable.addColumn('number','User ID');
+    UsersTable.addColumn('string','Name');
+    UsersTable.addColumn('string','Role');
+    UsersTable.addColumn('string','Modify User');
+
+    var length = 0;
+    for (let element of usersData) {
+        if (element.isActive == 1) {
+            length++;
+        }
+    }
+
+    UsersTable.addRows(length);
+    var counter = 0;
+    for (let element of usersData) {
+        if (element.isActive == 1) {
+    
+            let role;
+            if (element.permissions == 1) {
+                role = "Volunteer";
+            }
+            else if (element.permissions == 2 ) {
+                role = "Supervisor";
+            }
+            else if (element.permissions == 3 ) {
+                role = "Owner";
+            }
+    
+            UsersTable.setValue(counter, 0, element.id);
+            UsersTable.setValue(counter, 1, element.fname + " " + element.lname);
+            UsersTable.setValue(counter, 2, role);
+            UsersTable.setValue(counter, 3, "<a class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditUser("+element.id+")><i class='fas fa-edit'></i></a><a class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteUser("+element.id+")><i class='fas fa-trash'></i></a>");
+            counter++;
+        }
+    }
+    
+    var view = new google.visualization.DataView(UsersTable);
+    view.setColumns([1,2,3]);
+    var table = new google.visualization.Table(document.getElementById('users_table'));
+    
+    var cssClassNames = {
+        'headerRow': 'table',
+        'tableRow': 'table',
+        'oddTableRow': 'table'
+    };
+
+    table.draw(view, {width: '100%', height: '100%', allowHtml:true, sortColumn:0, 'cssClassNames': cssClassNames});
+}
+
 fetch("../environment.json").then(response=>response.json())
     .then(json=>{
         env=json.env
@@ -213,8 +153,9 @@ fetch("../environment.json").then(response=>response.json())
             url = "https://bcpwb1prd01l.ad.uc.edu:8443/web-services/"
             posturl = 'https://bcpwb1prd01l.ad.uc.edu:8443/web-services/'
         }
-        //Crate the components of the admin page here
-        createUsersTable()
+        google.charts.setOnLoadCallback(function() {
+            createUsersTable()
+        });
 
     })
     .catch(err => console.log("Error reading Environment"))

@@ -192,6 +192,7 @@ a {
     border-color: #1861ac;
 }
 
+.goog-custom-button-hover,
 .btn-reject:hover,
 .btn-green:hover,
 .btn-red:hover {
@@ -324,6 +325,15 @@ body {
 
 .table{
     font-family: sans-serif !important;
+    font-size: 1rem;
+}
+
+.google-visualization-table-table {
+    border-collapse: unset;
+}
+
+.google-visualization-table-td.google-visualization-table-type-number {
+    text-align: center;
 }
 
 .table tr:nth-child(even) {
@@ -364,7 +374,25 @@ body {
     outline: 0;
     box-shadow: 0 0 0 0.2rem #dee2e6;
 }
-  
+.google-visualization-table-div-page {
+    display: flex;
+    background-color: #e9ecef;
+    font-family: sans-serif !important;
+    padding: 5px 0px 5px 10px;
+}
+
+.goog-custom-button {
+    color: #e9ecef;
+    background: unset;
+    background-color: #e00122;
+}
+
+.google-visualization-table-div-page [role="button"] {
+    font-family: sans-serif !important;
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
 .page-item.active .page-link {
     z-index: 1;
     color: #fff;
