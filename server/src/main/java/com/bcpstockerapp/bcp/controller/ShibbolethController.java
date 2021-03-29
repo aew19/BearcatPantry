@@ -1,6 +1,5 @@
 package com.bcpstockerapp.bcp.controller;
 
-import com.bcpstockerapp.bcp.model.ShibbolethData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
