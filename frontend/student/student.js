@@ -14,6 +14,10 @@ function addToCart(barcode){
         items = items +'::' + barcode
         sessionStorage.setItem('cart', items)
     }
+    alert("Item has been added to cart!");
+    var count = document.getElementById("shoppingCount").innerHTML;
+    count++;
+    document.getElementById("shoppingCount").innerHTML = count;
 }
 
 function showNavBar() {
@@ -88,11 +92,11 @@ function newShoppingItem(){
             let dietTypeDiv = document.createElement("div")
             let dietStatus = "";
             if (element.vegan == true){
-                dietStatus = "Vegan"
+                dietStatus = "Vegan <i class=\"fas fa-seedling\"></i>"
             } else if(element.vegetarian == true){
-                dietStatus = "Vegetarian"
+                dietStatus = "Vegetarian <i class=\"fas fa-leaf\"></i>"
             }
-            dietTypeDiv.innerHTML ="<small class=\"text-muted\">"+dietStatus+"</small>"
+            dietTypeDiv.innerHTML ="<small style=\"color:#92d36e\">"+dietStatus+"</small>"
             dietTypeDiv.style.width="50%"
             dietTypeDiv.style.display="inline-block"
             dietTypeDiv.style.textAlign="right"
@@ -104,6 +108,10 @@ function newShoppingItem(){
             let styledButtonDiv = document.createElement("div")
             styledButtonDiv.className = "btn-group"
             styledButtonDiv.style.paddingTop="20px"
+            styledButtonDiv.style.marginLeft="auto"
+            styledButtonDiv.style.marginRight="auto"
+            styledButtonDiv.style.maxWidth="50%"
+            styledButtonDiv.style.display="grid"
             styledButtonDiv.innerHTML = "<button type=\"button\" class=\"btn btn-sm btn-outline-secondary\" onclick=addToCart("+currentElement+")><i class=\"fas fa-cart-plus\"></i> Add to Cart</button>"
             buttonDiv.appendChild(styledButtonDiv)
         }
