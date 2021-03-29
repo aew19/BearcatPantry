@@ -15,10 +15,10 @@ public class SendEmail {
 
         // Add sender
         String from = "BearcatsPantry@ucmail.uc.edu";
-        final String username = "loganlindsay59@gmail.com";
+        final String username = "BearcatsPantry@ucmail.uc.edu";
         final String password = "";
 
-        String host = "smtp.gmail.com";
+        String host = "smtp.uc.edu";
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
