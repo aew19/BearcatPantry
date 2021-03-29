@@ -50,6 +50,7 @@ function submitOrder() {
     addToOrders(fName, lName, mNumber, email, address, address2, method,phoneNumber, deliveryDate, deliveryTime)
     sessionStorage.removeItem('cart')
     document.getElementById("itemCount").innerHTML=0;
+    document.getElementById("shoppingCount").innerHTML= document.getElementById("itemCount").innerHTML;
     location.reload()
 }
 
@@ -82,11 +83,13 @@ function populateCart(){
     if (items === "" || items === null){
         sessionStorage.removeItem('cart')
         document.getElementById("itemCount").innerHTML = 0
+        document.getElementById("shoppingCount").innerHTML = document.getElementById("itemCount").innerHTML
         return;
     }
 
     let barcodes = items.split('::')
     document.getElementById("itemCount").innerHTML=barcodes.length
+    document.getElementById("shoppingCount").innerHTML=document.getElementById("itemCount").innerHTML
     barcodes.forEach(barcode =>{
         if (barcode=== ""){
             return;
