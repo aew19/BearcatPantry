@@ -705,6 +705,9 @@ function editItem(){
     let vegan = false;
     let image = document.getElementById("editImg").files[0];
 
+    document.getElementById("editItem").style.display = "none";
+    document.getElementById('page-mask').style.position = "unset";
+
     if (document.getElementById("newVegetarian").value == "true") {
         vegetarian = true;
     }
@@ -712,25 +715,22 @@ function editItem(){
     if (document.getElementById("newVegan").value == "true") {
         vegan = true;
     }
-    else {
-        document.getElementById("editItem").style.display = "none";
-        document.getElementById('page-mask').style.position = "unset";
-        if (updateQuantity === 0){
-            //Delete
-            deleteInventory(currBarcode)
-            location.reload()
-        }
-        else{
-            //Update
-            updateInventory(currBarcode, updateQuantity)
-            updateProduct(currBarcode, itemName, itemBrand, itemType, itemURL,vegetarian, vegan)
-            //Check to see if image is being updated
-            if (image != undefined){
-                deleteImage(currBarcode).then(()=>{
-                    sleep(600)
-                    addImage(currBarcode, image).then(r => console.log(r))
-                })
-            }
+
+    if (updateQuantity === 0){
+        //Delete
+        deleteInventory(currBarcode)
+        location.reload()
+    }
+    else{
+        //Update
+        updateInventory(currBarcode, updateQuantity)
+        updateProduct(currBarcode, itemName, itemBrand, itemType, itemURL,vegetarian, vegan)
+        //Check to see if image is being updated
+        if (image != undefined){
+            deleteImage(currBarcode).then(()=>{
+                sleep(600)
+                addImage(currBarcode, image).then(r => console.log(r))
+            })
         }
     }
 }
