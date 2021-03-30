@@ -5,6 +5,26 @@ let env="";
 let url = "";
 let posturl = '';
 
+//Reads the environment and sets the correct API URL
+async function loadEnv(){
+    fetch("../environment.json").then(response=>response.json())
+        .then(json=>{
+            env=json.env
+            if (env === "dev"){
+                url = "http://localhost:8080/"
+                posturl = 'http://localhost:8080/'
+            }else{
+                //https does not work because SSL cert. Changing to http
+                url = "https://bearcatspantry.uc.edu:8443/web-services/"
+                posturl = 'https://bearcatspantry.uc.edu:8443/web-services/'
+            }
+            google.charts.setOnLoadCallback(function() {
+                createInventoryTable();
+            });
+        })
+        .catch(err => console.log("Error reading Environment"))
+}
+
 $(function(){
     $("#newItemModal").load("newItemModal.html");
 });
@@ -817,26 +837,6 @@ function sleep(milliseconds) {
     do {
         currentDate = Date.now();
     } while (currentDate - date < milliseconds);
-}
-
-//Reads the environment and sets the correct API URL
-async function loadEnv(){
-    fetch("../environment.json").then(response=>response.json())
-        .then(json=>{
-            env=json.env
-            if (env === "dev"){
-                url = "http://localhost:8080/"
-                posturl = 'http://localhost:8080/'
-            }else{
-                //https does not work because SSL cert. Changing to http
-                url = "http://bearcatspantry.uc.edu:8080/web-services/"
-                posturl = 'http://bearcatspantry.uc.edu:8080/web-services/'
-            }
-            google.charts.setOnLoadCallback(function() {
-                createInventoryTable();
-            });
-        })
-        .catch(err => console.log("Error reading Environment"))
 }
 
 loadEnv()

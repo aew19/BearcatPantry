@@ -27,8 +27,8 @@ async function loadEnv(){
                 posturl = 'http://localhost:8080/'
             }else{
                 //https does not work because SSL cert. Changing to http
-                url = "http://bearcatspantry.uc.edu:8080/web-services/"
-                posturl = 'http://bearcatspantry.uc.edu:8080/web-services/'
+                url = "https://bearcatspantry.uc.edu:8443/web-services/"
+                posturl = 'https://bearcatspantry.uc.edu:8443/web-services/'
             }
             //Crate the components of the admin page here
             SetStatistics()
