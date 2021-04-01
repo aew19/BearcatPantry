@@ -73,7 +73,7 @@ public class ProductTableController {
             product.setImage(StringUtils.cleanPath(file.getOriginalFilename()));
             productTableRepository.save(product);
             //Save Image In Directory
-            String uploadDir = "productPhotos/" + barcodeId;
+            String uploadDir = "productPhotos/";
             FileUploadUtil.saveFile(uploadDir, StringUtils.cleanPath(file.getOriginalFilename()), file);
         }catch (IOException e){
             System.out.println("Error Uploading Image: " + e);
@@ -94,10 +94,10 @@ public class ProductTableController {
         if (!Files.exists(Paths.get("productPhotos/"+barcodeId))){
             return "No Folder for Item";
         }else{
-            for (File file: Paths.get("productPhotos/"+barcodeId).toFile().listFiles()){
+            for (File file: Paths.get("productPhotos/").toFile().listFiles()){
                 file.delete();
             }
-            Files.delete(Paths.get("productPhotos/"+barcodeId));
+            Files.delete(Paths.get("productPhotos/"));
             return "success";
         }
     }
