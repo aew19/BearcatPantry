@@ -130,8 +130,8 @@ fetch("../environment.json").then(response=>response.json())
             posturl = 'http://localhost:8080/'
         }else{
             //https does not work because SSL cert. Changing to http
-            url = "https://bearcatspantry.uc.edu:8443/web-services/"
-            posturl = 'https://bearcatspantry.uc.edu:8443/web-services/'
+            url = "https://bearcatspantry.uc.edu/web-services/"
+            posturl = 'https://bearcatspantry.uc.edu/web-services/'
         }
         google.charts.setOnLoadCallback(function() {
             createOrdersTable();
