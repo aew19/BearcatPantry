@@ -91,7 +91,7 @@ public class ProductTableController {
     //Deletes image in folder if image is changing
     @DeleteMapping("/deleteImage/{barcodeId}")
     public @ResponseBody String deleteImage(@PathVariable(value="barcodeId") String barcodeId) throws IOException{
-        if (!Files.exists(Paths.get("productPhotos/"+barcodeId))){
+        if (!Files.exists(Paths.get("productPhotos/"))){
             return "No Folder for Item";
         }else{
             for (File file: Paths.get("productPhotos/").toFile().listFiles()){
