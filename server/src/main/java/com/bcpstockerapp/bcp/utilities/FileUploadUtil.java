@@ -19,7 +19,7 @@ public class FileUploadUtil {
 
         if (!Files.exists(uploadPath)) {
             File photos = new File(uploadDir);
-            photos.mkdir();
+            photos.mkdirs();
            // Files.createDirectories(uploadPath);
         }
 
