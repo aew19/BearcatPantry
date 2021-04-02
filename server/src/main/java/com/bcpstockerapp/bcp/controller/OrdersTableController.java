@@ -103,7 +103,7 @@ public class OrdersTableController {
     }
 
     @PutMapping("/orders/{orderID}")
-    public @ResponseBody String updateOrderStatus(@PathVariable(value="orderID") int orderID, int newStatus){
+    public @ResponseBody String updateOrderStatus(@PathVariable(value="orderID") Long orderID, int newStatus){
         OrdersTable orders = ordersTableRepository.findByOrderID(orderID);
         orders.setOrderStatus(newStatus);
         ordersTableRepository.save(orders);
@@ -111,13 +111,13 @@ public class OrdersTableController {
     }
 
     @DeleteMapping("/orders/{orderID}")
-    public @ResponseBody String removeOrder(@PathVariable(value="orderID") int orderID){
+    public @ResponseBody String removeOrder(@PathVariable(value="orderID") Long orderID){
         ordersTableRepository.removeOrdersTableByOrderID(orderID);
         return "Success";
     }
 
     @GetMapping("/orders/{orderID}")
-    public @ResponseBody OrdersTable findByOrderID(@PathVariable(value="orderID") int orderID){
+    public @ResponseBody OrdersTable findByOrderID(@PathVariable(value="orderID") Long orderID){
         return ordersTableRepository.findByOrderID(orderID);
     }
 

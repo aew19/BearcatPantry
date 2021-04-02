@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrdersTableRepository extends JpaRepository<OrdersTable, Long>{
-    OrdersTable findByOrderID(int orderID);
-    OrdersTable removeOrdersTableByOrderID(int orderID);
+    OrdersTable findByOrderID(Long orderID);
+    OrdersTable removeOrdersTableByOrderID(Long orderID);
 }
