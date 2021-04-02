@@ -90,8 +90,15 @@ public class ProductTableController {
 
     @GetMapping("/getPath")
     public @ResponseBody String getFilePath(){
-        String uploadPath = Paths.get("productPhotos/").toString();
-        return uploadPath;
+        String os = System.getProperty("os.name").toLowerCase();
+        Path uploadPath;
+        if (os.contains("windows")){
+            uploadPath = Paths.get("productPhotos/");
+        }else{
+            uploadPath = Paths.get("/usr/local/tomcat9/webapps/BearcatPantry/"+"/productPhotos");
+        }
+
+        return uploadPath.toString();
     }
 
     //Deletes image in folder if image is changing
