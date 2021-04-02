@@ -73,10 +73,10 @@ public class OrdersTableController {
         else {
             method = "Pickup";
         }
-        SendEmail Email = new SendEmail();
-        String subject = "BCP Pantry & Resource Center Order Received";
-        String body = "Hello " + fName + ", \n\nThank you for placing an order with the BCP Pantry and Resource Center. Your order has been recieved with the following details:\n\n - Name: " + fName + " " + lName + "\n - Delivery Date: " + delDate + "\n - Delivery Time: " + deliveryTime + "\n - Method: " + method + "\n - Address: " + address + "\n - Email: " + email + "\n - Phone Number: " + phoneNumber + "\n\nOur volunteers are currently processing your order and you should recieve a confirmation email shortly.\n\n Thank you for utilizing the BCP Pantry and Resource Center! \n\n - BCP Pantry and Resource Center Team\n\nPlease reach out to BearcatsPantry@ucmail.uc.edu with any questions or concerns.";
-        Email.SendEmail(email, subject, body);
+//        SendEmail Email = new SendEmail();
+//        String subject = "BCP Pantry & Resource Center Order Received";
+//        String body = "Hello " + fName + ", \n\nThank you for placing an order with the BCP Pantry and Resource Center. Your order has been recieved with the following details:\n\n - Name: " + fName + " " + lName + "\n - Delivery Date: " + delDate + "\n - Delivery Time: " + deliveryTime + "\n - Method: " + method + "\n - Address: " + address + "\n - Email: " + email + "\n - Phone Number: " + phoneNumber + "\n\nOur volunteers are currently processing your order and you should recieve a confirmation email shortly.\n\n Thank you for utilizing the BCP Pantry and Resource Center! \n\n - BCP Pantry and Resource Center Team\n\nPlease reach out to BearcatsPantry@ucmail.uc.edu with any questions or concerns.";
+//        Email.SendEmail(email, subject, body);
 
         //Get order id to relate both tables
         Long orderId = currOrder.getOrderId();
@@ -98,7 +98,6 @@ public class OrdersTableController {
                 inventoryTableRepository.save(inventory);
             }
         }
-
 
         return "Saved!";
     }

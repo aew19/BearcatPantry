@@ -41,10 +41,10 @@ public class UsersTableController {
         user.setDateActive(new Date());
         usersTableRepository.save(user);
 
-        SendEmail Email = new SendEmail();
-        String subject = "BCP Pantry & Resource Center Account Activated";
-        String body = "Hello " + fname + ", \n\nWe would like to thank you for volunteering with the BCP Pantry and Resource Center. Your volunteer account has been successfully created. Your username is connected to your UC account, and you can test your connection anytime by going to:\n\nhttps://bearcatspantry.uc.edu\n\nWe ask that you please do not alter any of the pantry settings before you recieve the Stocker Application training.\n\nThank you for serving students! \n\n - BCP Pantry and Resource Center Team\n\nPlease reach out to BearcatsPantry@ucmail.uc.edu with any questions.";
-        Email.SendEmail(email, subject, body);
+//        SendEmail Email = new SendEmail();
+//        String subject = "BCP Pantry & Resource Center Account Activated";
+//        String body = "Hello " + fname + ", \n\nWe would like to thank you for volunteering with the BCP Pantry and Resource Center. Your volunteer account has been successfully created. Your username is connected to your UC account, and you can test your connection anytime by going to:\n\nhttps://bearcatspantry.uc.edu\n\nWe ask that you please do not alter any of the pantry settings before you recieve the Stocker Application training.\n\nThank you for serving students! \n\n - BCP Pantry and Resource Center Team\n\nPlease reach out to BearcatsPantry@ucmail.uc.edu with any questions.";
+//        Email.SendEmail(email, subject, body);
         
         return "Success";
     }
@@ -67,10 +67,10 @@ public class UsersTableController {
         user.setIsActive(isActive);
         usersTableRepository.save(user);
 
-        SendEmail Email = new SendEmail();
-        String subject = "BCP Pantry & Resource Center Account Activated";
-        String body = "Hello " + fname + ", \n\nWe would like to thank you for volunteering with the BCP Pantry and Resource Center. Your volunteer account has been successfully created. Your username is connected to your UC account, and you can test your connection anytime by going to:\n\nhttps://bearcatspantry.uc.edu\n\nWe ask that you please do not alter any of the pantry settings before you recieve the Stocker Application training.\n\nThank you for serving students! \n\n - BCP Pantry and Resource Center Team\n\nPlease reach out to BearcatsPantry@ucmail.uc.edu with any questions.";
-        Email.SendEmail(email, subject, body);
+//        SendEmail Email = new SendEmail();
+//        String subject = "BCP Pantry & Resource Center Account Activated";
+//        String body = "Hello " + fname + ", \n\nWe would like to thank you for volunteering with the BCP Pantry and Resource Center. Your volunteer account has been successfully created. Your username is connected to your UC account, and you can test your connection anytime by going to:\n\nhttps://bearcatspantry.uc.edu\n\nWe ask that you please do not alter any of the pantry settings before you recieve the Stocker Application training.\n\nThank you for serving students! \n\n - BCP Pantry and Resource Center Team\n\nPlease reach out to BearcatsPantry@ucmail.uc.edu with any questions.";
+//        Email.SendEmail(email, subject, body);
         
         ShibbolethController shibTest = new ShibbolethController();
         shibTest.getHVTest();
