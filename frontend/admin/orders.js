@@ -52,6 +52,7 @@ function makeInventoryTable(OrdersData) {
     OrdersTable.addColumn('string','Date & Time');
     OrdersTable.addColumn('string','Items');
     OrdersTable.addColumn('string','Status');
+    OrdersTable.addColumn('string','');
 
     OrdersTable.addRows(OrdersData.length);
     var counter = 0;
@@ -64,10 +65,22 @@ function makeInventoryTable(OrdersData) {
         } else{
             OrdersTable.setValue(counter, 3, "<input type=\"button\" class=\"btn btn-orange\" value=\"Pick-Up\">");
         }
-        OrdersTable.setValue(counter, 4, element.address);
+        OrdersTable.setValue(counter, 4, element.address + "\n" + element.address2);
         OrdersTable.setValue(counter, 5, element.delDate + " " + element.deliveryTime);
+
         OrdersTable.setValue(counter, 6, "<input type=\"button\" class=\"btn btn-red\" value=\"See Items\" id=\"ItemBtn\" onclick = \"popViewTransaction("+element.orderId+")\">");
-        OrdersTable.setValue(counter, 7, "<input type=\"button\" class=\"btn btn-green\" value=\"Confirm\" id=\"ConfirmBtn\" onclick = \"popViewTransaction("+element.orderId+")\"><input type=\"button\" class=\"btn btn-reject\" value=\"Decline\" id=\"DenyBtn\" onclick = \"popViewTransaction("+element.orderId+")\">");
+        if (element.orderStatus === 0){
+            OrdersTable.setValue(counter, 7, "Pending")
+            OrdersTable.setValue(counter, 8, "<input type=\"button\" class=\"btn btn-green\" value=\"Confirm\" id=\"ConfirmBtn\" onclick = \"changeToInProgress("+element.orderId+")\"><input type=\"button\" class=\"btn btn-reject\" value=\"Decline\" id=\"DenyBtn\" onclick = \"deleteOrder("+element.orderId+")\">");
+        }else if(element.orderStatus === 1){
+            OrdersTable.setValue(counter, 7, "In Progress")
+            OrdersTable.setValue(counter, 8, "<input type=\"button\" class=\"btn btn-green\" value=\"Confirm\" id=\"ConfirmBtn\" onclick = \"changeToComplete("+element.orderId+")\"><input type=\"button\" class=\"btn btn-reject\" value=\"Decline\" id=\"DenyBtn\" onclick = \"emailStudent("+element.orderId+")\">");
+        }else if (element.orderStatus === 2){
+            OrdersTable.setValue(counter, 7, "Complete")
+        }else{
+            OrdersTable.setValue(counter, 7, "In Error")
+        }
+
         counter++;
     }
 
@@ -114,6 +127,15 @@ function popViewTransaction(orderId){
         }
     })
 
+}
+
+function changeToInProgress(orderId){
+}
+function changeToComplete(orderId){
+}
+function deleteOrder(orderId){
+}
+function emailStudent(orderId){
 }
 
 function closePopup(element){
