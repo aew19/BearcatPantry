@@ -17,10 +17,15 @@ public class FileUploadUtil {
         }
 
 
-        if (!Files.exists(uploadPath)) {
+        if (!Files.exists(uploadPath) && !os.contains("windows")) {
             File photos = new File(uploadDir);
+            photos.setReadable(true);
+            photos.setWritable(true);
+            photos.setExecutable(true);
             photos.mkdirs();
-           // Files.createDirectories(uploadPath);
+           //
+        } else if (!Files.exists(uploadPath)){
+            Files.createDirectories(uploadPath);
         }
 
         try (InputStream inputStream = multipartFile.getInputStream()) {
