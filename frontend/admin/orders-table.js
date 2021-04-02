@@ -20,11 +20,21 @@ function makeOrdersTable(OrdersData) {
         OrdersTable.setValue(counter, 0, element.orderDate);
         OrdersTable.setValue(counter, 1, element.fname + " " + element.lname);
         OrdersTable.setValue(counter, 2, "<input type=\"button\" class=\"btn btn-red\" value=\"See Items\" id=\"ItemBtn\" onclick = \"popViewTransaction("+element.orderId+")\">");
-        if (element.delOrPickUp === true){
-            OrdersTable.setValue(counter, 3, "<input type=\"button\" class=\"btn btn-yellow\" value=\"Delivery\">");
-        } else{
-            OrdersTable.setValue(counter, 3, "<input type=\"button\" class=\"btn btn-orange\" value=\"Pick-Up\">");
+        if (element.orderStatus === 0){
+            OrdersTable.setValue(counter, 3, "Pending")
+        }else if(element.orderStatus === 1){
+            OrdersTable.setValue(counter, 3, "In Progress")
+        }else if (element.orderStatus === 2){
+            OrdersTable.setValue(counter, 3, "Complete")
+        }else{
+            OrdersTable.setValue(counter, 3, "In Error")
         }
+
+        // if (element.delOrPickUp === true){
+        //     OrdersTable.setValue(counter, 3, "<input type=\"button\" class=\"btn btn-yellow\" value=\"Delivery\">");
+        // } else{
+        //     OrdersTable.setValue(counter, 3, "<input type=\"button\" class=\"btn btn-orange\" value=\"Pick-Up\">");
+        // }
         counter++;
     }
 
