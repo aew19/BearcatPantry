@@ -112,7 +112,8 @@ public class OrdersTableController {
 
     @DeleteMapping("/orders/{orderID}")
     public @ResponseBody String removeOrder(@PathVariable(value="orderID") Long orderID){
-        ordersTableRepository.removeOrdersTableByOrderID(orderID);
+        OrdersTable order = ordersTableRepository.findByOrderID(orderID);
+        ordersTableRepository.delete(order);
         return "Success";
     }
 
