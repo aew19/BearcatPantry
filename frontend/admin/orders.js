@@ -105,7 +105,7 @@ function popViewTransaction(orderId){
                 cell = row.insertCell();
                 text = document.createTextNode(data.brand);
                 cell.appendChild(text);
-                //quantity Button
+                //quantity
                 cell = row.insertCell();
                 text = document.createTextNode(item.itemQuantity);
                 cell.appendChild(text);

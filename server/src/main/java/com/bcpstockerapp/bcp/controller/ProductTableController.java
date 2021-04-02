@@ -88,6 +88,12 @@ public class ProductTableController {
         return product.size();
     }
 
+    @GetMapping("/getPath")
+    public @ResponseBody String getFilePath(){
+        String uploadPath = Paths.get("productPhotos/").toString();
+        return uploadPath;
+    }
+
     //Deletes image in folder if image is changing
     @DeleteMapping("/deleteImage/{barcodeId}")
     public @ResponseBody String deleteImage(@PathVariable(value="barcodeId") String barcodeId) throws IOException{

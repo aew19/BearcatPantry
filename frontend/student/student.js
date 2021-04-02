@@ -43,9 +43,21 @@ async function getInventory(){
     }
 }
 
+async function getPath(){
+    let response = await fetch(url + "getPath")
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
 
 //Function that looks at multiple items button and reads the barcode scanned
 function newShoppingItem(){
+    getPath().then(data =>{
+        console.log(data)
+    })
     getInventory().then(data =>{
         for (let element of data) {
             let currentElement = JSON.stringify(element.barcodeId)
