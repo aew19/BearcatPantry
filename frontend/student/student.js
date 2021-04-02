@@ -74,7 +74,7 @@ function newShoppingItem(){
             let cardDiv = document.createElement("div")
             cardDiv.className = "card shadow-sm shoppingcard"
             columnStyleDiv.appendChild(cardDiv)
-            cardDiv.innerHTML = "<svg class=\"bd-placeholder-img card-img-top\" width=\"152\" height=\"152\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"Placeholder: Thumbnail\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\"><image href=\"../../productPhotos/"+element.barcodeId+"/"+element.image+"\" height=\"152\" width=\"152\"/></svg>"
+            cardDiv.innerHTML = "<svg class=\"bd-placeholder-img card-img-top\" width=\"152\" height=\"152\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"Placeholder: Thumbnail\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\"><image href=\"../../productPhotos/"+element.image+"\" height=\"152\" width=\"152\"/></svg>"
 
             let cardBody = document.createElement("div")
             cardBody.className = "card-body"

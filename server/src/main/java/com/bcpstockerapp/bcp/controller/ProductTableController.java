@@ -67,14 +67,16 @@ public class ProductTableController {
                 return "File name is empty";
             }
             System.out.println(StringUtils.cleanPath(file.getOriginalFilename()));
+            String[] words = StringUtils.cleanPath(file.getOriginalFilename()).split("\\.");
+            System.out.println(words[1]);
             //Add Image Reference to Database
             ProductTable product = productTableRepository.findByBarcodeId(barcodeId);
             System.out.println("Product" + product);
-            product.setImage(StringUtils.cleanPath(file.getOriginalFilename()));
+            product.setImage(barcodeId + "." +words[1]);
             productTableRepository.save(product);
             //Save Image In Directory
-            String uploadDir = "productPhotos/" + barcodeId;
-            FileUploadUtil.saveFile(uploadDir, StringUtils.cleanPath(file.getOriginalFilename()), file);
+            String uploadDir = "productPhotos/";
+            FileUploadUtil.saveFile(uploadDir, barcodeId + "." +words[1], file);
         }catch (IOException e){
             System.out.println("Error Uploading Image: " + e);
             return "Error Uploading Image";
@@ -104,13 +106,14 @@ public class ProductTableController {
     //Deletes image in folder if image is changing
     @DeleteMapping("/deleteImage/{barcodeId}")
     public @ResponseBody String deleteImage(@PathVariable(value="barcodeId") String barcodeId) throws IOException{
-        if (!Files.exists(Paths.get("productPhotos/"+barcodeId))){
+        if (!Files.exists(Paths.get("productPhotos/"))){
             return "No Folder for Item";
         }else{
-            for (File file: Paths.get("productPhotos/"+barcodeId).toFile().listFiles()){
-                file.delete();
+            for (File file: Paths.get("productPhotos/").toFile().listFiles()){
+                if (file.toString().contains(barcodeId)){
+                    file.delete();
+                }
             }
-            Files.delete(Paths.get("productPhotos/"+barcodeId));
             return "success";
         }
     }

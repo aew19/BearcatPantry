@@ -23,7 +23,7 @@ public class FileUploadUtil {
             photos.setWritable(true);
             photos.setExecutable(true);
             photos.mkdirs();
-           //
+
         } else if (!Files.exists(uploadPath)){
             Files.createDirectories(uploadPath);
         }
