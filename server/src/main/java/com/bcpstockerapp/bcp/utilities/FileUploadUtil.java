@@ -7,7 +7,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FileUploadUtil {
     public static void saveFile(String uploadDir, String fileName, MultipartFile multipartFile) throws IOException {
-        Path uploadPath = Paths.get(uploadDir);
+
+        String os = System.getProperty("os.name").toLowerCase();
+        Path uploadPath;
+        if (os.contains("windows")){
+            uploadPath = Paths.get(uploadDir);
+        }else{
+            uploadPath = Paths.get("/usr/local/tomcat9/webapps/BearcatPantry/"+uploadDir);
+        }
+
 
         if (!Files.exists(uploadPath)) {
             File photos = new File(uploadDir);
