@@ -71,10 +71,10 @@ function makeInventoryTable(OrdersData) {
         OrdersTable.setValue(counter, 6, "<input type=\"button\" class=\"btn btn-red\" value=\"See Items\" id=\"ItemBtn\" onclick = \"popViewTransaction("+element.orderId+")\">");
         if (element.orderStatus === 0){
             OrdersTable.setValue(counter, 7, "Pending")
-            OrdersTable.setValue(counter, 8, "<input type=\"button\" class=\"btn btn-green\" value=\"Confirm\" id=\"ConfirmBtn\" onclick = \"changeToInProgress("+element.orderId+")\"><input type=\"button\" class=\"btn btn-reject\" value=\"Decline\" id=\"DenyBtn\" onclick = \"deleteOrder("+element.orderId+")\">");
+            OrdersTable.setValue(counter, 8, "<input type=\"button\" class=\"btn btn-green\" value=\"Confirm\" id=\"ConfirmBtn\" onclick = \"changeOrderStatusInProgress("+element.orderId+")\"><input type=\"button\" class=\"btn btn-reject\" value=\"Decline\" id=\"DenyBtn\" onclick = \"deleteOrder("+element.orderId+")\">");
         }else if(element.orderStatus === 1){
             OrdersTable.setValue(counter, 7, "In Progress")
-            OrdersTable.setValue(counter, 8, "<input type=\"button\" class=\"btn btn-green\" value=\"Confirm\" id=\"ConfirmBtn\" onclick = \"changeToComplete("+element.orderId+")\"><input type=\"button\" class=\"btn btn-reject\" value=\"Decline\" id=\"DenyBtn\" onclick = \"emailStudent("+element.orderId+")\">");
+            OrdersTable.setValue(counter, 8, "<input type=\"button\" class=\"btn btn-green\" value=\"Complete\" id=\"ConfirmBtn\" onclick = \"changeOrderStatusCompleted("+element.orderId+")\"><input type=\"button\" class=\"btn btn-reject\" value=\"Email Student\" id=\"DenyBtn\" onclick = \"emailStudent("+element.orderId+")\">");
         }else if (element.orderStatus === 2){
             OrdersTable.setValue(counter, 7, "Complete")
         }else{
@@ -129,13 +129,82 @@ function popViewTransaction(orderId){
 
 }
 
-function changeToInProgress(orderId){
+function changeOrderStatusInProgress(orderId){
+    //Update order status
+    let data = {'newStatus':1}
+    let formBody =[];
+    for (let key in data){
+        let encodedKey = encodeURIComponent(key);
+        let encodedValue = encodeURIComponent(data[key]);
+        formBody.push(encodedKey+"="+encodedValue);
+    }
+    formBody = formBody.join("&");
+    fetch(posturl + 'orders/'+ orderId, {
+        body: formBody,
+        method:"PUT",
+        headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+    })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log('Request Succeeded', data)
+        })
+        .catch(function(error){
+            console.log('Request Failed', error)
+        });
+    location.reload()
 }
-function changeToComplete(orderId){
+
+function changeOrderStatusCompleted(orderId){
+    //Update order status
+    let data = {'newStatus':2}
+    let formBody =[];
+    for (let key in data){
+        let encodedKey = encodeURIComponent(key);
+        let encodedValue = encodeURIComponent(data[key]);
+        formBody.push(encodedKey+"="+encodedValue);
+    }
+    formBody = formBody.join("&");
+    fetch(posturl + 'orders/'+ orderId, {
+        body: formBody,
+        method:"PUT",
+        headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+    })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log('Request Succeeded', data)
+        })
+        .catch(function(error){
+            console.log('Request Failed', error)
+        });
+    location.reload()
 }
+
+//Error handling for status
+function status(response) {
+    if (response.status >= 200 && response.status < 300) {
+        return Promise.resolve(response)
+    } else {
+        return Promise.reject(new Error(response.statusText))
+    }
+}
+
+//Returns the json of the response
+function json(response) {
+    return response.json()
+}
+
 function deleteOrder(orderId){
+    fetch(posturl+'orders/'+ orderId, {
+        method:"DELETE",
+        headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+    }).then(response => console.log(response.json()));
+    location.reload()
 }
 function emailStudent(orderId){
+    //Add mailer to send student generic email stating there are problems
+    //fulfilling their order.
 }
 
 function closePopup(element){
