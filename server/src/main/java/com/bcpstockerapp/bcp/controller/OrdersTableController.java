@@ -102,6 +102,20 @@ public class OrdersTableController {
         return "Saved!";
     }
 
+    @PutMapping("/orders/{orderID}")
+    public @ResponseBody String updateOrderStatus(@PathVariable(value="orderID") int orderID, int newStatus){
+        OrdersTable orders = ordersTableRepository.findByOrderID(orderID);
+        orders.setOrderStatus(newStatus);
+        ordersTableRepository.save(orders);
+        return "Success";
+    }
+
+    @DeleteMapping("/orders/{orderID}")
+    public @ResponseBody String removeOrder(@PathVariable(value="orderID") int orderID){
+        ordersTableRepository.removeOrdersTableByOrderID(orderID);
+        return "Success";
+    }
+
     @GetMapping("/orders/{orderID}")
     public @ResponseBody OrdersTable findByOrderID(@PathVariable(value="orderID") int orderID){
         return ordersTableRepository.findByOrderID(orderID);
