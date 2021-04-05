@@ -17,7 +17,7 @@ import java.util.Map;
 @CrossOrigin
 @RestController
 public class ShibbolethController {
-
+    @Autowired
     private HttpServletRequest request;
 
     public static void ShibbolethController() {

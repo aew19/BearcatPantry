@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Shib Test</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Shib Test</title>
+    </head>
+    <body>
+        <div>
+            <p id="shibData">Test</p>   
+        </div>
+    </body>
+    <script>
+        async function getShibData(){
+            let response = await fetch("https://bearcatspantry.uc.edu/web-services/shibtest/")
+            try{
+                return await response.json();
+            }catch{
+                return "notFound";
+            }
+        }
+
+        getShibData().then(
+            shibData => {
+                if (shibData != "notFound") {
+                    var x, txt = "";
+                    for (x in shibData) {
+                        console.log(x);
+                        txt += shibData[x] + "<br>";
+                    }
+                    document.getElementById("shibData").innerHTML = txt;
+                }
+            }
+        )
+    </script>
+</html>
