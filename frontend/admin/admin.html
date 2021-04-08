@@ -22,7 +22,7 @@
             <div style="background-color: unset;" id="page-mask"></div>
             <div class="item9 grid-border">
                 <div>
-                    <h2 style="float:left">UNCOMPLETED ORDERS</h2>
+                    <h2 style="float:left">UNCOMPLETED ONLINE ORDERS</h2>
                     <a href="#" style="float:right" id = "trnCSV" onClick="exportCSV(this)" class="btn btn-red"><i class="fas fa-file-export">  Export Data</i></a>
                 </div>                    
                 <div style="clear: both;">
@@ -31,25 +31,33 @@
                 <div class="scrollingTable">
                     <table class ="table" id="orders_table"></table>
                 </div>
-                <!-- View Transaction Modal -->
-                <div class="modal" id="viewTransaction" tabindex="-1" role="dialog">
+                <div class="modal" id="viewAdminOrder" tabindex="-1" role="dialog">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">Order Details</h5>
-                                <button type="button" class="close" onclick="popViewTransaction()" aria-label="Close">
+                                <button type="button" class="close" onclick=closePopup("viewAdminOrder") aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body" id="modal-body">
-                                <b>Item 1</b>
+                                <table class = "table table-bordered" style="overflow: auto;" id = "orderItemsTable" width="100%" cellspacing="0">
+                                    <thead style="text-align: center">
+                                    <tr>
+                                        <th scope="col">Item Name</th>
+                                        <th scope="col">Brand</th>
+                                        <th scope="col">Quantity</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody style="text-align: center;overflow-y:scroll; display:block;" id = "orderItems"></tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="item1 grid-border">
-                <h2 style="float:left;">STUDENT VISITS PER MONTH</h2>
+                <h2 style="float:left;">STUDENT VISITS PER MONTH FOR THIS YEAR</h2>
                 <a style="float:right" href="#" id = "studentvisitsCSV" onClick="exportCSV(this)" class="btn btn-red"><i class="fas fa-file-export">  Export Data</i></a>
                 <div style="clear: both;">
                     <hr style="height:2px;height:1px;border-width:0;background-color:#e00122">

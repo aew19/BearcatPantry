@@ -36,13 +36,13 @@ async function createOrdersTable(){
     //get all the orders
     getOrders().then(orders=>{
         if (orders != "notFound"){
-            makeInventoryTable(orders);
+            makeFullOrdersTable(orders);
         }
     })
 }
 
 google.charts.load('current', {'packages':['table']});
-function makeInventoryTable(OrdersData) {
+function makeFullOrdersTable(OrdersData) {
     var OrdersTable = new google.visualization.DataTable();
     OrdersTable.addColumn('string','Order Date');
     OrdersTable.addColumn('string','Name');
@@ -66,7 +66,7 @@ function makeInventoryTable(OrdersData) {
             OrdersTable.setValue(counter, 3, "<input type=\"button\" class=\"btn btn-orange\" value=\"Pick-Up\">");
         }
         OrdersTable.setValue(counter, 4, element.address + "\n" + element.address2);
-        OrdersTable.setValue(counter, 5, element.delDate + " " + element.deliveryTime);
+        OrdersTable.setValue(counter, 5, element.delDate + ", " + element.deliveryTime);
 
         OrdersTable.setValue(counter, 6, "<input type=\"button\" class=\"btn btn-red\" value=\"See Items\" id=\"ItemBtn\" onclick = \"popViewTransaction("+element.orderId+")\">");
         if (element.orderStatus === 0){

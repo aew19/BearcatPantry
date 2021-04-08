@@ -1,5 +1,5 @@
 async function createOrdersTable(){
-    getOrders().then(orders=>{
+    getUncompletedOrders().then(orders=>{
         if (orders != "notFound"){
             makeOrdersTable(orders);
         }
@@ -12,6 +12,8 @@ function makeOrdersTable(OrdersData) {
     OrdersTable.addColumn('string','Order Date');
     OrdersTable.addColumn('string','Name');
     OrdersTable.addColumn('string','Items');
+    OrdersTable.addColumn('string','Type');
+    OrdersTable.addColumn('string','Date & Time');
     OrdersTable.addColumn('string','Status');
 
     OrdersTable.addRows(OrdersData.length);
@@ -20,21 +22,21 @@ function makeOrdersTable(OrdersData) {
         OrdersTable.setValue(counter, 0, element.orderDate);
         OrdersTable.setValue(counter, 1, element.fname + " " + element.lname);
         OrdersTable.setValue(counter, 2, "<input type=\"button\" class=\"btn btn-red\" value=\"See Items\" id=\"ItemBtn\" onclick = \"popViewTransaction("+element.orderId+")\">");
-        if (element.orderStatus === 0){
-            OrdersTable.setValue(counter, 3, "Pending")
-        }else if(element.orderStatus === 1){
-            OrdersTable.setValue(counter, 3, "In Progress")
-        }else if (element.orderStatus === 2){
-            OrdersTable.setValue(counter, 3, "Complete")
-        }else{
-            OrdersTable.setValue(counter, 3, "In Error")
+        if (element.delOrPickUp === true){
+            OrdersTable.setValue(counter, 3, "<input type=\"button\" class=\"btn btn-yellow\" value=\"Delivery\">");
+        } else{
+            OrdersTable.setValue(counter, 3, "<input type=\"button\" class=\"btn btn-orange\" value=\"Pick-Up\">");
         }
-
-        // if (element.delOrPickUp === true){
-        //     OrdersTable.setValue(counter, 3, "<input type=\"button\" class=\"btn btn-yellow\" value=\"Delivery\">");
-        // } else{
-        //     OrdersTable.setValue(counter, 3, "<input type=\"button\" class=\"btn btn-orange\" value=\"Pick-Up\">");
-        // }
+        OrdersTable.setValue(counter, 4, element.delDate + ", " + element.deliveryTime);
+        if (element.orderStatus === 0){
+            OrdersTable.setValue(counter, 5, "Pending")
+        }else if(element.orderStatus === 1){
+            OrdersTable.setValue(counter, 5, "In Progress")
+        }else if (element.orderStatus === 2){
+            OrdersTable.setValue(counter, 5, "Complete")
+        }else{
+            OrdersTable.setValue(counter, 5, "In Error")
+        }
         counter++;
     }
 
@@ -50,7 +52,7 @@ function makeOrdersTable(OrdersData) {
 }
 
 function popViewTransaction(orderId){
-    document.getElementById("viewOrder").style.display = "block";
+    document.getElementById("viewAdminOrder").style.display = "block";
     document.getElementById('page-mask').style.position = "fixed";
     const table = document.getElementById("orderItemsTable");
     //Clear old rows from different order
@@ -72,7 +74,7 @@ function popViewTransaction(orderId){
                 cell = row.insertCell();
                 text = document.createTextNode(data.brand);
                 cell.appendChild(text);
-                //quantity Button
+                //quantity
                 cell = row.insertCell();
                 text = document.createTextNode(item.itemQuantity);
                 cell.appendChild(text);
@@ -94,8 +96,8 @@ async function getStudentVisits(){
 }
 
 //API Call to get orders data
-async function getOrders(){
-    let response = await fetch(url+"/orders/")
+async function getUncompletedOrders(){
+    let response = await fetch(url+"/getTotalUncompletedOrders/")
     try{
         return await response.json();
     }catch{

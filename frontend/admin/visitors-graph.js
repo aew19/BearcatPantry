@@ -1,18 +1,28 @@
+async function createVisitorsTable(){
+    getVisitors().then(visitors=>{
+        if (visitors != "notFound"){
+            makeVisitorsTable(visitors);
+        }
+    })
+}
+
 google.charts.load('current', {packages: ['corechart', 'line']});
-google.charts.setOnLoadCallback(drawBasic);
-function drawBasic() {
+function makeVisitorsTable(VisitorsData) {
+    var VisitorsTable = new google.visualization.DataTable();
+    VisitorsTable.addColumn('string', 'X');
+    VisitorsTable.addColumn('number', 'Students');
 
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'X');
-    data.addColumn('number', 'Students');
-
-    data.addRows([
-        ['January', 15],     ['February', 18],   ['March', 14],      ['April', 14],
-        ['May', 17],        ['June', 19],       ['July', 16],       ['August', 18],
-        ['September', 14],  ['October', 14],    ['November', 15],   ['December', 16],
+    VisitorsTable.addRows([
+        ['January', VisitorsData[0]], ['February', VisitorsData[1]], ['March', VisitorsData[2]], ['April', VisitorsData[3]],
+        ['May', VisitorsData[4]], ['June', VisitorsData[5]], ['July', VisitorsData[6]], ['August', VisitorsData[7]],
+        ['September', VisitorsData[8]], ['October', VisitorsData[9]], ['November', VisitorsData[10]], ['December', VisitorsData[11]]
     ]);
 
+    var table = new google.visualization.AreaChart(document.getElementById('chart_div'));
+
     var options = {
+        width: '100%',
+        height: '100%',
         hAxis: {
             title: 'Month',
             titleTextStyle: {
@@ -23,8 +33,7 @@ function drawBasic() {
             textStyle: {
                 bold: '1',
                 italic: '1',
-            },
-            slantedText: true
+            }
         },
         vAxis: {
             title: 'Number of Students',
@@ -52,7 +61,31 @@ function drawBasic() {
         fontName: 'Open Sans',
     };
 
-    var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-
-    chart.draw(data, options);
+    table.draw(VisitorsTable, options);
 }
+
+async function getVisitors(){
+    let response = await fetch(url+"/getVisitorsData/")
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
+fetch("../environment.json").then(response=>response.json())
+    .then(json=>{
+        env=json.env
+        if (env === "dev"){
+            url = "http://localhost:8080/"
+            posturl = 'http://localhost:8080/'
+        }else{
+            //https does not work because SSL cert. Changing to http
+            url = "https://bearcatspantry.uc.edu/web-services/"
+            posturl = 'https://bearcatspantry.uc.edu/web-services/'
+        }
+        google.charts.setOnLoadCallback(function() {
+            createVisitorsTable()
+        });
+    })
+    .catch(err => console.log("Error reading Environment"))

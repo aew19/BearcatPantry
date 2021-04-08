@@ -20,6 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Calendar;
 
 @CrossOrigin
 @RestController
@@ -129,10 +130,69 @@ public class OrdersTableController {
         return orders.size();
     }
 
-    //TODO: Add logic for uncompleted orders
     @GetMapping("/getTotalUncompletedOrders")
-    public @ResponseBody Integer getTotalUncompletedOrders(){
+    public @ResponseBody List<OrdersTable> getTotalUncompletedOrders(){
         List<OrdersTable> orders = ordersTableRepository.findAll();
-        return orders.size();
+        List<OrdersTable> uncompletedOrders = new ArrayList<OrdersTable>();
+        orders.forEach((OrdersTable item) -> {
+            if (item.getOrderStatus() == 0 || item.getOrderStatus() == 1) {
+                uncompletedOrders.add(item);
+            } 
+        });
+
+        return uncompletedOrders;
+    }
+
+    @GetMapping("/getTotalUncompletedOrdersCount")
+    public @ResponseBody Integer getTotalUncompletedOrdersCount(){
+        List<OrdersTable> orders = ordersTableRepository.findAll();
+        List<OrdersTable> uncompletedOrders = new ArrayList<OrdersTable>();
+        orders.forEach((OrdersTable item) -> {
+            if (item.getOrderStatus() == 0 || item.getOrderStatus() == 1) {
+                uncompletedOrders.add(item);
+            } 
+        });
+
+        return uncompletedOrders.size();
+    }
+
+    @GetMapping("/getVisitorsData")
+    public @ResponseBody List<Integer> getVisitorData(){
+        List<OrdersTable> orders = ordersTableRepository.findAll();
+        Integer currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        Integer JanCount = 0;Integer FebCount = 0;Integer MarCount = 0;
+        Integer AprCount = 0;Integer MayCount = 0;Integer JunCount = 0;
+        Integer JulCount = 0;Integer AugCount = 0;Integer SepCount = 0;
+        Integer OctCount = 0;Integer NovCount = 0;Integer DecCount = 0;
+
+        for (OrdersTable order : orders) {
+            String orderDate = (order.getOrderDate()).toString();
+            Integer orderYear = Integer.parseInt(orderDate.split("-")[0]);
+            Integer orderMonth = Integer.parseInt(orderDate.split("-")[1]);
+            if (orderYear.intValue() == currentYear.intValue()) {
+                if      (orderMonth == 1) { JanCount++; }
+                else if (orderMonth == 2) { FebCount++; }
+                else if (orderMonth == 3) { MarCount++; }
+                else if (orderMonth == 4) { AprCount++; }
+                else if (orderMonth == 5) { MayCount++; }
+                else if (orderMonth == 6) { JunCount++; }
+                else if (orderMonth == 7) { JulCount++; }
+                else if (orderMonth == 8) { AugCount++; }
+                else if (orderMonth == 9) { SepCount++; }
+                else if (orderMonth == 10) { OctCount++; }
+                else if (orderMonth == 11) { NovCount++; }
+                else if (orderMonth == 12) { DecCount++; }
+            }
+        };
+
+        List<Integer> visitorMonths = new ArrayList<Integer>();
+        visitorMonths.add(JanCount); visitorMonths.add(FebCount);
+        visitorMonths.add(MarCount); visitorMonths.add(AprCount);
+        visitorMonths.add(MayCount); visitorMonths.add(JunCount);
+        visitorMonths.add(JulCount); visitorMonths.add(AugCount);
+        visitorMonths.add(SepCount); visitorMonths.add(OctCount);
+        visitorMonths.add(NovCount); visitorMonths.add(DecCount);
+
+        return visitorMonths;
     }
 }

@@ -334,7 +334,7 @@ async function getTotalUsers(){
 
 //API Function to get Total Uncompleted Orders
 async function getTotalUncompleteOrders(){
-    let response = await fetch(url + "/getTotalUncompletedOrders/")
+    let response = await fetch(url + "/getTotalUncompletedOrdersCount/")
     try{
         return await response.json();
     }catch{
