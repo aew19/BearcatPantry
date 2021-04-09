@@ -89,15 +89,15 @@ public class OrdersTableController {
             item.setOrderId(orderId);
             item.setItemQuantity(barcodePair.getQuantity());
             orderItemsRepository.save(item);
-            //Remove from inventory
-            InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodePair.getBarcode());
-            Integer currentQuantity = inventory.getQuantity();
-            if (currentQuantity == 1) {
-                inventoryTableRepository.delete(inventory);
-            } else {
-                inventory.setQuantity(currentQuantity - 1);
-                inventoryTableRepository.save(inventory);
-            }
+//            //Remove from inventory
+//            InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodePair.getBarcode());
+//            Integer currentQuantity = inventory.getQuantity();
+//            if (currentQuantity == 1) {
+//                inventoryTableRepository.delete(inventory);
+//            } else {
+//                inventory.setQuantity(currentQuantity - 1);
+//                inventoryTableRepository.save(inventory);
+//            }
         }
 
         return "Saved!";
