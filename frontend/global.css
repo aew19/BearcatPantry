@@ -230,6 +230,15 @@ a {
     margin: 5px;
     font-family: 'Open Sans';
 }
+
+.btn-email-student {
+    color: #fff;
+    background-color: #ffc823;
+    border-color: #ffc823;
+    margin: 5px;
+    font-family: 'Open Sans';
+}
+
 .btn-green {
     color: #fff;
     background-color: #92d36e;
