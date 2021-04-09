@@ -74,7 +74,7 @@ function makeFullOrdersTable(OrdersData) {
             OrdersTable.setValue(counter, 8, "<input type=\"button\" class=\"btn btn-green\" value=\"Confirm\" id=\"ConfirmBtn\" onclick = \"changeOrderStatusInProgress("+element.orderId+")\"><input type=\"button\" class=\"btn btn-reject\" value=\"Decline\" id=\"DenyBtn\" onclick = \"deleteOrder("+element.orderId+")\">");
         }else if(element.orderStatus === 1){
             OrdersTable.setValue(counter, 7, "In Progress")
-            OrdersTable.setValue(counter, 8, "<input type=\"button\" class=\"btn btn-green\" value=\"Complete\" id=\"ConfirmBtn\" onclick = \"changeOrderStatusCompleted("+element.orderId+")\"><input type=\"button\" class=\"btn btn-reject\" value=\"Email Student\" id=\"DenyBtn\" onclick = \"emailStudent("+element.orderId+")\">");
+            OrdersTable.setValue(counter, 8, "<input type=\"button\" class=\"btn btn-green\" value=\"Complete\" id=\"ConfirmBtn\" onclick = \"changeOrderStatusCompleted("+element.orderId+")\"><input type=\"button\" class=\"btn btn-email-student\" value=\"Email Student\" id=\"EmailStudentBtn\" onclick = \"emailStudent("+element.orderId+")\"><input type=\"button\" class=\"btn btn-reject\" value=\"Cancel\" id=\"DenyBtn\" onclick = \"deleteOrder("+element.orderId+")\">");
         }else if (element.orderStatus === 2){
             OrdersTable.setValue(counter, 7, "Complete")
         }else{
