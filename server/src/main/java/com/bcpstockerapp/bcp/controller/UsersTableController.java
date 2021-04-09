@@ -36,6 +36,7 @@ public class UsersTableController {
         user.setmNumber(mNumber);
         user.setFname(fname);
         user.setLname(lname);
+        user.setEmail(email);
         user.setPermissions(permissions);
         user.setIsActive(isActive);
         user.setDateActive(new Date());
@@ -63,6 +64,9 @@ public class UsersTableController {
         }
         if (mNumber != null) {
             user.setmNumber(mNumber);
+        }
+        if (email != null) {
+            user.setEmail(email);
         }
         user.setIsActive(isActive);
         usersTableRepository.save(user);
