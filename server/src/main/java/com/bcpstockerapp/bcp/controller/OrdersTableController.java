@@ -75,8 +75,8 @@ public class OrdersTableController {
             method = "Pickup";
         }
 //        SendEmail Email = new SendEmail();
-//        String subject = "BCP Pantry & Resource Center Order Received";
-//        String body = "Hello " + fName + ", \n\nThank you for placing an order with the BCP Pantry and Resource Center. Your order has been recieved with the following details:\n\n - Name: " + fName + " " + lName + "\n - Delivery Date: " + delDate + "\n - Delivery Time: " + deliveryTime + "\n - Method: " + method + "\n - Address: " + address + "\n - Email: " + email + "\n - Phone Number: " + phoneNumber + "\n\nOur volunteers are currently processing your order and you should recieve a confirmation email shortly.\n\n Thank you for utilizing the BCP Pantry and Resource Center! \n\n - BCP Pantry and Resource Center Team\n\nPlease reach out to BearcatsPantry@ucmail.uc.edu with any questions or concerns.";
+//        String subject = "BCP & Resource Center Order Received";
+//        String body = "Hello " + fName + ", \n\nThank you for placing an order with the BCP & Resource Center. Your order has been received with the following details:\n\n - Name: " + fName + " " + lName + "\n - Delivery Date: " + delDate + "\n - Delivery Time: " + deliveryTime + "\n - Method: " + method + "\n - Address: " + address + "\n - Email: " + email + "\n - Phone Number: " + phoneNumber + "\n\nOur volunteers are currently processing your order and you will receive a confirmation email when it is complete. If you have any questions or changes to your order, contact the BCP at BearcatsPantry@ucmail.uc.edu.\n\n Thank you for utilizing the BCP & Resource Center! \n\n - BCP & Resource Center Team\n\nPlease reach out to BearcatsPantry@ucmail.uc.edu with any questions or concerns.";
 //        Email.SendEmail(email, subject, body);
 
         //Get order id to relate both tables
@@ -115,6 +115,11 @@ public class OrdersTableController {
     public @ResponseBody String removeOrder(@PathVariable(value="orderID") Long orderID){
         OrdersTable order = ordersTableRepository.findByOrderID(orderID);
         ordersTableRepository.delete(order);
+        //SendEmail Email = new SendEmail();
+        //String subject = "BCP & Resource Center Order Cancelled";
+        //String body = "Hello, \n\nYour order with the BCP & Resource Center has been cancelled due to unforeseen circumstances. Our volunteers will be emailing you shortly with more information.\n\nIn the interim, please reach out to BearcatsPantry@ucmail.uc.edu with any questions or concerns. Thank you for utilizing the BCP & Resource Center. \n\n - BCP & Resource Center Team";
+        //Email.SendEmail(email, subject, body);
+        
         return "Success";
     }
 
@@ -154,6 +159,16 @@ public class OrdersTableController {
         });
 
         return uncompletedOrders.size();
+    }
+
+    @GetMapping("/emailStudent")
+    public @ResponseBody String emailStudentAboutOrder(){
+        //SendEmail Email = new SendEmail();
+        //String subject = "BCP & Resource Center Order Delayed";
+        //String body = "Hello, \n\nThank you again for utilizing the BCP & Resource Center. We are currently facing difficulties fulfilling your order and there might be a delay. Our volunteers will be emailing you shortly with more information.\n\nIn the interim, please reach out to BearcatsPantry@ucmail.uc.edu with any questions or concerns. Thank you for your patience. \n\n - BCP & Resource Center Team";
+        //Email.SendEmail(email, subject, body);
+
+        return "Success";
     }
 
     @GetMapping("/getVisitorsData")

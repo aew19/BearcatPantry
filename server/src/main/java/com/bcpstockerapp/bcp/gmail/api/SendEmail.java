@@ -15,8 +15,6 @@ public class SendEmail {
 
         // Add sender
         String from = "BearcatsPantry@ucmail.uc.edu";
-        final String username = "BearcatsPantry@ucmail.uc.edu";
-        final String password = "";
 
         String host = "smtp.uc.edu";
 
@@ -25,14 +23,9 @@ public class SendEmail {
         props.put("mail.smtp.starttls.enable", "true"); 
         props.put("mail.smtp.host", host);
         props.put("mail.smtp.port", "587");
-
+        
         // Get the Session object
-        Session session = Session.getInstance(props,
-        new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
-            }
-        });
+        Session session = Session.getInstance(props);
 
         try {
             // Create a default MimeMessage object

@@ -32,6 +32,15 @@ async function getBarcode(barcode){
     }
 }
 
+async function emailStudentCall(){
+    let response = await fetch(url + "emailStudent/")
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
 async function createOrdersTable(){
     //get all the orders
     getOrders().then(orders=>{
@@ -203,8 +212,9 @@ function deleteOrder(orderId){
     location.reload()
 }
 function emailStudent(orderId){
-    //Add mailer to send student generic email stating there are problems
-    //fulfilling their order.
+    emailStudentCall().then(
+        alert("Student has been notified!")
+    );
 }
 
 function closePopup(element){
