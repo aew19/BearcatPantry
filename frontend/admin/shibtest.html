@@ -8,12 +8,12 @@
     </head>
     <body>
         <div>
-            <p id="shibData">Test</p>   
+            <p id="shibData">Test</p>
         </div>
     </body>
     <script>
         async function getShibData(){
-            let response = await fetch("https://bearcatspantry.uc.edu/web-services/shibtest/")
+            let response = await fetch("https://bearcatspantry.uc.edu/web-services/ShibbolethData")
             try{
                 return await response.json();
             }catch{
@@ -23,13 +23,9 @@
 
         getShibData().then(
             shibData => {
+                console.log(shibData);
                 if (shibData != "notFound") {
-                    var x, txt = "";
-                    for (x in shibData) {
-                        console.log(x);
-                        txt += shibData[x] + "<br>";
-                    }
-                    document.getElementById("shibData").innerHTML = txt;
+                    document.getElementById("shibData").innerHTML = JSON.stringify(shibData);
                 }
             }
         )
