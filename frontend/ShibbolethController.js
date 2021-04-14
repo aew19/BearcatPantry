@@ -27,29 +27,25 @@ async function getUsers(){
 }
 
 function initializeShibboleth() {
-        getShibData().then(
-                shibData => {
-                        getUsers().then(
-                                users => { 
-                                        for (const [userKey, userValue] of Object.entries(users)) {
-                                                if (userValue.isActive && userValue.mNumber == shibData.uceduUCID) { 
-                                                        if (userValue.permissions == 1 || userValue.permissions == 2 || userValue.permissions == 3) {
-                                                                $("#navbar").load("AdminNavBar.html");
-                                                        }
-                                                        else {  
-                                                                $("#navbar").load("StudentNavBar.html");
-                                                        }
-                                                }
-                                        }
-                                }
-                        )
+    getShibData().then(
+        shibData => {
+            getUsers().then(
+                users => { 
+                    for (const [userKey, userValue] of Object.entries(users)) {
+                        if (userValue.isActive && userValue.mNumber == shibData.uceduUCID) { 
+                            if (userValue.permissions == 1 || userValue.permissions == 2 || userValue.permissions == 3) {
+                                $("#navbar").load("../../../BearcatPantry/frontend/admin/AdminNavBar.html");
+                            }
+                            else {  
+                                $("#navbar").load("../../../BearcatPantry/frontend/student/StudentNavBar.html");
+                            }
+                        }
+                    }
                 }
-        )
+            )
+        }
+    )
 }
-
-let env="";
-let url = "";
-let posturl = '';
 
 //Reads the environment and sets the correct API URL
 async function loadEnv(){
