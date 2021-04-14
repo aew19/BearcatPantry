@@ -9,16 +9,7 @@ async function getShibData(){
 }
 
 async function getUserByMNumber(MNum){
-    let response = await fetch(url + "/getUserByMNum/"+MNum)
-    try{
-        return await response.json();
-    }catch{
-        return "notFound";
-    }
-}
-
-async function getUsers(){
-    let response = await fetch(url + "/users/")
+    let response = await fetch(url + "/getUserByMNum/"+ MNum)
     try{
         return await response.json();
     }catch{
@@ -29,17 +20,13 @@ async function getUsers(){
 function initializeShibboleth() {
     getShibData().then(
         shibData => {
-            getUsers().then(
-                users => { 
-                    for (const [userKey, userValue] of Object.entries(users)) {
-                        if (userValue.isActive && userValue.mNumber == shibData.uceduUCID) { 
-                            if (userValue.permissions == 1 || userValue.permissions == 2 || userValue.permissions == 3) {
-                                $("#navbar").load("../../../BearcatPantry/frontend/admin/AdminNavBar.html");
-                            }
-                            else {  
-                                $("#navbar").load("../../../BearcatPantry/frontend/student/StudentNavBar.html");
-                            }
-                        }
+            getUserByMNumber(shibData.uceduUCID).then(
+                user => { 
+                    if (user.permissions == 1 || user.permissions == 2 || user.permissions == 3) {
+                        $("#navbar").load("../../../BearcatPantry/frontend/admin/AdminNavBar.html");
+                    }
+                    else {  
+                        $("#navbar").load("../../../BearcatPantry/frontend/student/StudentNavBar.html");
                     }
                 }
             )
