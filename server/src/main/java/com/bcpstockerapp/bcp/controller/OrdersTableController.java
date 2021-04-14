@@ -114,6 +114,7 @@ public class OrdersTableController {
     @DeleteMapping("/orders/{orderID}")
     public @ResponseBody String removeOrder(@PathVariable(value="orderID") Long orderID){
         OrdersTable order = ordersTableRepository.findByOrderID(orderID);
+        String email = order.getEmail();
         ordersTableRepository.delete(order);
         SendEmail Email = new SendEmail();
         String subject = "BCP & Resource Center Order Cancelled";
@@ -161,8 +162,10 @@ public class OrdersTableController {
         return uncompletedOrders.size();
     }
 
-    @GetMapping("/emailStudent")
-    public @ResponseBody String emailStudentAboutOrder(){
+    @GetMapping("/emailStudent/{orderID}")
+    public @ResponseBody String emailStudentAboutOrder(@PathVariable(value="orderID") Long orderID){
+        OrdersTable order = ordersTableRepository.findByOrderID(orderID);
+        String email = order.getEmail();
         SendEmail Email = new SendEmail();
         String subject = "BCP & Resource Center Order Delayed";
         String body = "Hello, \n\nThank you again for utilizing the BCP & Resource Center. We are currently facing difficulties fulfilling your order and there might be a delay. Our volunteers will be emailing you shortly with more information.\n\nIn the interim, please reach out to BearcatsPantry@ucmail.uc.edu with any questions or concerns. Thank you for your patience. \n\n - BCP & Resource Center Team";

@@ -25,8 +25,8 @@ async function getBarcode(barcode){
     }
 }
 
-async function emailStudentCall(){
-    let response = await fetch(url + "emailStudent/")
+async function emailStudentCall(orderId){
+    let response = await fetch(url + "emailStudent/"+orderId)
     try{
         return await response.json();
     }catch{
@@ -205,7 +205,7 @@ function deleteOrder(orderId){
     location.reload()
 }
 function emailStudent(orderId){
-    emailStudentCall().then(
+    emailStudentCall(orderId).then(
         alert("Student has been notified!")
     );
 }
