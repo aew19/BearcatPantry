@@ -1,10 +1,3 @@
-
-
-
-$(function(){
-    $("#navbar").load("NavBar.html");
-});
-
 async function getOrders(){
     let response = await fetch(url + "orders/")
     try{

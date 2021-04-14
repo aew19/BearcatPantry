@@ -1,10 +1,5 @@
-$(function(){
-    $("#navbar").load("../admin/NavBar.html");
-});
-
 //GLOBAL VARIABLES
 let divhousing = "";
-
 
 function addToCart(barcode){
     let items = sessionStorage.getItem('cart')
@@ -18,15 +13,6 @@ function addToCart(barcode){
     var count = document.getElementById("shoppingCount").innerHTML;
     count++;
     document.getElementById("shoppingCount").innerHTML = count;
-}
-
-function showNavBar() {
-    var x = document.getElementById("myLinks");
-    if (x.style.display === "block") {
-        x.style.display = "none";
-    } else {
-        x.style.display = "block";
-    }
 }
 
 function checkout() {

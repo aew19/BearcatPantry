@@ -10,10 +10,6 @@ $(function(){
     $("#addUserModal").load("addUserModal.html");
 });
 
-$(function(){
-    $("#navbar").load("NavBar.html");
-});
-
 let env="";
 let url = "";
 let posturl = '';
@@ -291,15 +287,6 @@ function editUser(userID, FName, LName, mNumber, Permissions, email) {
     }).then(response => response.json())
         .then(data=> {console.log('Success');createUsersTable();})
         .catch((error)=>{ console.error('Error:', error);createUsersTable();});
-}
-
-function showNavBar() {
-    var x = document.getElementById("myLinks");
-    if (x.style.display === "block") {
-      x.style.display = "none";
-    } else {
-      x.style.display = "block";
-    }
 }
 
 //API Function to get Total Items

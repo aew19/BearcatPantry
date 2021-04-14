@@ -1,7 +1,3 @@
-$(function(){
-    $("#navbar").load("../admin/NavBar.html");
-});
-
 //Post to the orders table
 //address 2 serves as apartment number
 function addToOrders(fName, lName, mNumber, email, address, address2, method,phoneNumber, deliveryDate, deliveryTime){

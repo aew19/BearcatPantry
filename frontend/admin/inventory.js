@@ -55,10 +55,6 @@ $(function(){
     $("#unknownItemModal").load("unknownItemModal.html");
 });
 
-$(function(){
-    $("#navbar").load("NavBar.html");
-});
-
 //Global Variables
 let newItem = null
 let scanItem = null
@@ -297,7 +293,6 @@ async function createInventoryTable(){
     getInventory().then(
         data => {
             if (data != "notFound") {
-                //loadPantryItems(data).then(result => createTableStyle())
                 makeInventoryTable(data);
             }
         }
@@ -805,15 +800,6 @@ function readEditUrl(input){
         }
 
         reader.readAsDataURL(input.files[0]); // convert to base64 string
-    }
-}
-
-function showNavBar() {
-    var x = document.getElementById("myLinks");
-    if (x.style.display === "block") {
-      x.style.display = "none";
-    } else {
-      x.style.display = "block";
     }
 }
 
