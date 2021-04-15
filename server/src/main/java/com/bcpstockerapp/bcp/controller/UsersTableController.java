@@ -97,6 +97,7 @@ public class UsersTableController {
     }*/
 
     //Statistic Endpoint
+    //won't be correct because not looking for active status
     @GetMapping("/getTotalUsers")
     public @ResponseBody Integer getTotalUsers(){
         List<UsersTable> users = usersTableRepository.findAll();
