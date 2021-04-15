@@ -89,11 +89,12 @@ public class UsersTableController {
         return "Successful";
     }
 
+    /* We don't ever delete users because we just make them inactive, so commenting this function out.
     @DeleteMapping("/deleteUser/{id}")
     public @ResponseBody String deleteUser(@PathVariable(value ="id") Long id){
         usersTableRepository.deleteById(id);
         return "Success";
-    }
+    }*/
 
     //Statistic Endpoint
     @GetMapping("/getTotalUsers")
