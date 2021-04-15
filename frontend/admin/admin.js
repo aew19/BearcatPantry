@@ -167,6 +167,7 @@ function popEditUser(userID){
                 document.getElementById("fName").value = userdata.fname;
                 document.getElementById("lName").value = userdata.lname;
                 document.getElementById("userUCID").value = userdata.mNumber;
+                document.getElementById("userEditEmail").value = userdata.email;
             } else {
                 document.getElementById("editUser").style.display = "none";
                 editUserModal = null
