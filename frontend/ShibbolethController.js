@@ -17,25 +17,33 @@ async function getUserByMNumber(MNum){
     }
 }
 
+function populateAdmin() {
+    $("#navbar").load("../../../BearcatPantry/frontend/admin/AdminNavBar.html");
+}
+
+function populateStudent() {
+    $("#navbar").load("../../../BearcatPantry/frontend/student/StudentNavBar.html");
+    var currentPage = location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
+    if (currentPage != "student.html" && currentPage != "checkout.html" && currentPage != "about.html") {
+        document.write('<script type="text/undefined">');
+        window.stop();
+        var ua = window.navigator.userAgent;
+        var msie = ua.indexOf("MSIE ");
+        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {document.execCommand("Stop");};    
+        location.replace("../../../BearcatPantry/frontend/student/student.html")
+    }
+}
+
 function initializeShibboleth() {
     getShibData().then(
         shibData => {
             getUserByMNumber(shibData.uceduUCID).then(
                 user => { 
-                    if (user.permissions == 1 || user.permissions == 2 || user.permissions == 3 || env === "dev") { // if dev mode, load admin side anyway
-                        $("#navbar").load("../../../BearcatPantry/frontend/admin/AdminNavBar.html");
+                    if (user.permissions == 1 || user.permissions == 2 || user.permissions == 3) {
+                        populateAdmin();
                     }
                     else {  
-                        $("#navbar").load("../../../BearcatPantry/frontend/student/StudentNavBar.html");
-                        var currentPage = location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
-                        if (currentPage != "student.html" && currentPage != "checkout.html" && currentPage != "about.html") {
-                            document.write('<script type="text/undefined">');
-                            window.stop();
-                            var ua = window.navigator.userAgent;
-                            var msie = ua.indexOf("MSIE ");
-                            if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {document.execCommand("Stop");};    
-                            location.replace("../../../BearcatPantry/frontend/student/student.html")
-                        }
+                        populateStudent();
                     }
                 }
             )
@@ -57,7 +65,11 @@ async function loadEnv(){
                 posturl = 'https://bearcatspantry.uc.edu/web-services/'
             }
             //Crate the components of the admin page here
-            initializeShibboleth()
+            if (env === "dev") { //Shibboleth will not work with local developent so force load admin
+                populateAdmin();
+            } else {
+                initializeShibboleth();
+            }
 
         })
         .catch(err => console.log("Error reading Environment"))
