@@ -97,21 +97,7 @@ function makeUsersTable(usersData) {
     UsersTable.addColumn('number','User ID');
     UsersTable.addColumn('string','Name');
     UsersTable.addColumn('string','Role');
-
-    getShibData().then(
-        shibData => {
-            getUserByMNumber(shibData.uceduUCID).then(
-                user => { 
-                    if (user.permissions == 2 || user.permissions == 3) {
-                        UsersTable.addColumn('string','Modify User');
-                    }
-                    else { //remove this after testing
-                        UsersTable.addColumn('string','Modify User');
-                    }
-                }
-            )
-        }
-    )
+    UsersTable.addColumn('string','Modify User');
 
     var length = 0;
     for (let element of usersData) {
@@ -143,11 +129,8 @@ function makeUsersTable(usersData) {
                 shibData => {
                     getUserByMNumber(shibData.uceduUCID).then(
                         user => { 
-                            if (user.permissions == 2 || user.permissions == 3) {
+                            if (user.permissions == 2 || user.permissions == 3 || user.permissions == 1) {
                                 UsersTable.setValue(counter, 3, "<a class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditUser("+element.id+")><i class='fas fa-edit'></i></a><a class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteUser("+element.id+")><i class='fas fa-trash'></i></a>");
-                            }
-                            else { //remove this after testing
-                                UsersTable.setValue(counter, 3, "<a class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditUser("+element.id+")><i class='fas fa-edit'></i></a>");
                             }
                         }
                     )
