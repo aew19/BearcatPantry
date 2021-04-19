@@ -93,64 +93,64 @@ function json(response) {
 
 google.charts.load('current', {'packages':['table']});
 function makeUsersTable(usersData) {
-    var UsersTable = new google.visualization.DataTable();
-    UsersTable.addColumn('number','User ID');
-    UsersTable.addColumn('string','Name');
-    UsersTable.addColumn('string','Role');
-    UsersTable.addColumn('string','Modify User');
+    getShibData().then(
+        shibData => {
+            getUserByMNumber(shibData.uceduUCID).then(
+                user => { 
+                    var UsersTable = new google.visualization.DataTable();
+                    UsersTable.addColumn('number','User ID');
+                    UsersTable.addColumn('string','Name');
+                    UsersTable.addColumn('string','Role');
+                    UsersTable.addColumn('string','Modify User');
 
-    var length = 0;
-    for (let element of usersData) {
-        if (element.isActive == 1) {
-            length++;
-        }
-    }
+                    var length = 0;
+                    for (let element of usersData) {
+                        if (element.isActive == 1) {
+                            length++;
+                        }
+                    }
 
-    UsersTable.addRows(length);
-    var counter = 0;
-    for (let element of usersData) {
-        if (element.isActive == 1) {
-    
-            let role;
-            if (element.permissions == 1) {
-                role = "Volunteer";
-            }
-            else if (element.permissions == 2 ) {
-                role = "Supervisor";
-            }
-            else if (element.permissions == 3 ) {
-                role = "Owner";
-            }
-    
-            UsersTable.setValue(counter, 0, element.id);
-            UsersTable.setValue(counter, 1, element.fname + " " + element.lname);
-            UsersTable.setValue(counter, 2, role);
-            getShibData().then(
-                shibData => {
-                    getUserByMNumber(shibData.uceduUCID).then(
-                        user => { 
+                    UsersTable.addRows(length);
+                    var counter = 0;
+                    for (let element of usersData) {
+                        if (element.isActive == 1) {
+                    
+                            let role;
+                            if (element.permissions == 1) {
+                                role = "Volunteer";
+                            }
+                            else if (element.permissions == 2 ) {
+                                role = "Supervisor";
+                            }
+                            else if (element.permissions == 3 ) {
+                                role = "Owner";
+                            }
+                    
+                            UsersTable.setValue(counter, 0, element.id);
+                            UsersTable.setValue(counter, 1, element.fname + " " + element.lname);
+                            UsersTable.setValue(counter, 2, role); 
                             if (user.permissions == 2 || user.permissions == 3 || user.permissions == 1) {
                                 UsersTable.setValue(counter, 3, "<a class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditUser("+element.id+")><i class='fas fa-edit'></i></a><a class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteUser("+element.id+")><i class='fas fa-trash'></i></a>");
                             }
+                            counter++;
                         }
-                    )
+                    }
+                    
+                    var view = new google.visualization.DataView(UsersTable);
+                    view.setColumns([1,2,3]);
+                    var table = new google.visualization.Table(document.getElementById('users_table'));
+                    
+                    var cssClassNames = {
+                        'headerRow': 'table',
+                        'tableRow': 'table',
+                        'oddTableRow': 'table'
+                    };
+
+                    table.draw(view, {width: '100%', height: '100%', allowHtml:true, sortColumn:0, 'cssClassNames': cssClassNames});
                 }
             )
-            counter++;
         }
-    }
-    
-    var view = new google.visualization.DataView(UsersTable);
-    view.setColumns([1,2,3]);
-    var table = new google.visualization.Table(document.getElementById('users_table'));
-    
-    var cssClassNames = {
-        'headerRow': 'table',
-        'tableRow': 'table',
-        'oddTableRow': 'table'
-    };
-
-    table.draw(view, {width: '100%', height: '100%', allowHtml:true, sortColumn:0, 'cssClassNames': cssClassNames});
+    )
 }
 
 fetch("../environment.json").then(response=>response.json())
