@@ -17,6 +17,18 @@ async function loadEnv(){
                 //https does not work because SSL cert. Changing to http
                 url = "https://bearcatspantry.uc.edu/web-services/"
                 posturl = 'https://bearcatspantry.uc.edu/web-services/'
+
+                getShibData().then(
+                    shibData => {
+                        getUserByMNumber(shibData.uceduUCID).then(
+                            user => { 
+                                if (user.permissions != 2 && user.permissions != 3) {
+                                    document.getElementById("InventoryCSVExport").disabled = true;
+                                }
+                            }
+                        )
+                    }
+                )
             }
             google.charts.setOnLoadCallback(function() {
                 createInventoryTable();
