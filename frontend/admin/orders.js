@@ -226,6 +226,8 @@ fetch("../environment.json").then(response=>response.json())
             //https does not work because SSL cert. Changing to http
             url = "https://bearcatspantry.uc.edu/web-services/"
             posturl = 'https://bearcatspantry.uc.edu/web-services/'
+
+            removeATagFromVolunteer("OrdersCSVExport");
         }
         google.charts.setOnLoadCallback(function() {
             createOrdersTable();

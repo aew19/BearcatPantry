@@ -51,6 +51,20 @@ function initializeShibboleth() {
     )
 }
 
+function removeATagFromVolunteer(elementID) {
+    getShibData().then(
+        shibData => {
+            getUserByMNumber(shibData.uceduUCID).then(
+                user => { 
+                    if (user.permissions != 2 && user.permissions != 3) {
+                        document.getElementById(elementID).remove();
+                    }
+                }
+            )
+        }
+    )
+}
+
 //Reads the environment and sets the correct API URL
 async function loadEnv(){
     fetch("../environment.json").then(response=>response.json())

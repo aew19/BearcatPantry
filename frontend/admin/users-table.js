@@ -97,7 +97,21 @@ function makeUsersTable(usersData) {
     UsersTable.addColumn('number','User ID');
     UsersTable.addColumn('string','Name');
     UsersTable.addColumn('string','Role');
-    UsersTable.addColumn('string','Modify User');
+
+    getShibData().then(
+        shibData => {
+            getUserByMNumber(shibData.uceduUCID).then(
+                user => { 
+                    if (user.permissions == 2 || user.permissions == 3) {
+                        UsersTable.addColumn('string','Modify User');
+                    }
+                    else { //remove this after testing
+                        UsersTable.addColumn('string','Modify User');
+                    }
+                }
+            )
+        }
+    )
 
     var length = 0;
     for (let element of usersData) {
@@ -125,7 +139,20 @@ function makeUsersTable(usersData) {
             UsersTable.setValue(counter, 0, element.id);
             UsersTable.setValue(counter, 1, element.fname + " " + element.lname);
             UsersTable.setValue(counter, 2, role);
-            UsersTable.setValue(counter, 3, "<a class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditUser("+element.id+")><i class='fas fa-edit'></i></a><a class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteUser("+element.id+")><i class='fas fa-trash'></i></a>");
+            getShibData().then(
+                shibData => {
+                    getUserByMNumber(shibData.uceduUCID).then(
+                        user => { 
+                            if (user.permissions == 2 || user.permissions == 3) {
+                                UsersTable.setValue(counter, 3, "<a class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditUser("+element.id+")><i class='fas fa-edit'></i></a><a class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteUser("+element.id+")><i class='fas fa-trash'></i></a>");
+                            }
+                            else { //remove this after testing
+                                UsersTable.setValue(counter, 3, "<a class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditUser("+element.id+")><i class='fas fa-edit'></i></a>");
+                            }
+                        }
+                    )
+                }
+            )
             counter++;
         }
     }

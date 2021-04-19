@@ -25,6 +25,12 @@ async function loadEnv(){
                 //https does not work because SSL cert. Changing to http
                 url = "https://bearcatspantry.uc.edu/web-services/"
                 posturl = 'https://bearcatspantry.uc.edu/web-services/'
+
+                removeATagFromVolunteer("AdminOrdersCSVExported");
+                removeATagFromVolunteer("AdminInventoryCSVExported");
+                removeATagFromVolunteer("AdminUsersCSVExported");
+                removeATagFromVolunteer("addUsers");
+                removeATagFromVolunteer("AdminVisitsCSVExported");
             }
             //Crate the components of the admin page here
             SetStatistics()
