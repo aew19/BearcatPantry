@@ -129,7 +129,7 @@ function makeUsersTable(usersData) {
                             UsersTable.setValue(counter, 0, element.id);
                             UsersTable.setValue(counter, 1, element.fname + " " + element.lname);
                             UsersTable.setValue(counter, 2, role); 
-                            if (user.permissions == 2 || user.permissions == 3 || user.permissions == 1) {
+                            if (user.permissions == 2 || user.permissions == 3) {
                                 UsersTable.setValue(counter, 3, "<a class=\"btn btn-red\" id=\"EditBtn\" onclick =popEditUser("+element.id+")><i class='fas fa-edit'></i></a><a class=\"btn btn-red\" id=\"DeleteBtn\" onclick =popConfirmDeleteUser("+element.id+")><i class='fas fa-trash'></i></a>");
                             }
                             counter++;
