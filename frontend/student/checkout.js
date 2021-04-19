@@ -47,6 +47,8 @@ function submitOrder() {
     sessionStorage.removeItem('cart')
     document.getElementById("itemCount").innerHTML=0;
     document.getElementById("shoppingCount").innerHTML=0;
+    alert("Order submitted, please fill out the intake form for your order to be fulfilled.");
+    window.open("https://www.uc.edu/campus-life/dean-of-students/bearcats-pantry/form.html", "_blank");
     location.reload()
 }
 
