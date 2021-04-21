@@ -77,7 +77,7 @@ function makeTableScroll() {
 }
 
 function exportCSV(elem){
-    if (elem.id == "invCSV") {
+    if (elem.id == "AdminInventoryCSVExported") {
         getInventory().then(
             Inventory => {
                 if (Inventory != "notFound") {
@@ -88,7 +88,7 @@ function exportCSV(elem){
             }
         )
     }
-    else if (elem.id == "usrCSV") {
+    else if (elem.id == "AdminUsersCSVExported") {
         getUsers().then(
             Users => {
                 if (Users != "notFound") {
@@ -99,7 +99,7 @@ function exportCSV(elem){
             }
         )
     }
-    else if (elem.id == "trnCSV") {
+    else if (elem.id == "AdminOrdersCSVExported") {
         getOrders().then(
             Orders => {
                 if (Orders != "notFound") {
@@ -110,12 +110,12 @@ function exportCSV(elem){
             }
         )
     }
-    else if (elem.id == "studentvisitsCSV") {
-        getStudentVisits().then(
+    else if (elem.id == "AdminVisitsCSVExported") {
+        getVisitors().then(
             Visits => {
                 if (Visits != "notFound") {
                     var myStudentVisitsXML = new myExcelXML(Visits);
-                    myStudentVisitsXML.fileName = "PantryUsers";
+                    myStudentVisitsXML.fileName = "PantryVisitors";
                     myStudentVisitsXML.downLoad();
                 }
             }
@@ -294,6 +294,25 @@ function editUser(userID, FName, LName, mNumber, Permissions, email) {
     }).then(response => response.json())
         .then(data=> {console.log('Success');createUsersTable();})
         .catch((error)=>{ console.error('Error:', error);createUsersTable();});
+}
+
+//API Function to get Orders
+async function getOrders(){
+    let response = await fetch(url + "orders/")
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
+async function getVisitors(){
+    let response = await fetch(url+"/getVisitorsData/")
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
 }
 
 //API Function to get Total Items
