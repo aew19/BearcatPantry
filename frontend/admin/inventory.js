@@ -4,7 +4,7 @@
 let env="";
 let url = "";
 let posturl = '';
-
+let InventoryData = new Object();
 //Reads the environment and sets the correct API URL
 async function loadEnv(){
     fetch("../environment.json").then(response=>response.json())
@@ -295,6 +295,7 @@ async function createInventoryTable(){
     getInventory().then(
         data => {
             if (data != "notFound") {
+                InventoryData = data;
                 makeInventoryTable(data);
             }
         }
@@ -734,12 +735,8 @@ function editItem(){
 }
 
 //This function is used for exporting data in a table to CSV
-function exportCSV(elem){
-    getInventory().then(
-        Inventory => {
-            if (Inventory != "notFound") { JSONToCSVConvertor(Inventory, "PantryInventory", true); }
-        }
-    )
+function exportCSV(){
+    JSONToCSVConvertor(InventoryData, "PantryInventory", true);
 }
 
 //This function is used for the formatting of the table

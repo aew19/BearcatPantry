@@ -1,3 +1,5 @@
+var OrdersData = new Object();
+
 async function getOrders(){
     let response = await fetch(url + "orders/")
     try{
@@ -38,6 +40,7 @@ async function createOrdersTable(){
     //get all the orders
     getOrders().then(orders=>{
         if (orders != "notFound"){
+            OrdersData = orders;
             makeFullOrdersTable(orders);
         }
     })
@@ -207,11 +210,7 @@ function deleteOrder(orderId){
 
 //This function is used for exporting data in a table to CSV
 function exportCSV(){
-    getOrders().then(
-        Orders => {
-            if (Orders != "notFound") { JSONToCSVConvertor(Orders, "PantryOrders", true); }
-        }
-    )
+    JSONToCSVConvertor(OrdersData, "PantryOrders", true);
 }
 
 function emailStudent(orderId){
