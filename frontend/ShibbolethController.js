@@ -50,7 +50,12 @@ function initializeShibboleth() {
                     if (currentPage == "checkout.html") {
                         let nameArray = shibData.displayName.split(" ");
                         document.getElementById("checkoutFirstName").value = nameArray[0];
-                        document.getElementById("checkoutLastName").value = nameArray[1] + nameArray[2];
+                        if (nameArray[2] != "undefined") {
+                            document.getElementById("checkoutLastName").value = nameArray[1] + nameArray[2];
+                        }
+                        else {
+                            document.getElementById("checkoutLastName").value = nameArray[1];
+                        }
                         document.getElementById("checkoutMNumber").value = shibData.uceduUCID;
                         document.getElementById("checkoutUserEmail").value = shibData.mail;
                         document.getElementById("checkoutUserEmail").value = shibData.mail;
