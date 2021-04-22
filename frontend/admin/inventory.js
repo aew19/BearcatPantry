@@ -737,14 +737,9 @@ function editItem(){
 function exportCSV(elem){
     getInventory().then(
         Inventory => {
-            if (Inventory != "notFound") {
-                var myInventoryXML = new myExcelXML(Inventory);
-                myInventoryXML.fileName = "PantryInventory";
-                myInventoryXML.downLoad();
-            }
+            if (Inventory != "notFound") { JSONToCSVConvertor(Inventory, "PantryInventory", true); }
         }
     )
-    return false;
 }
 
 //This function is used for the formatting of the table

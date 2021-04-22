@@ -204,6 +204,16 @@ function deleteOrder(orderId){
     }).then(response => console.log(response.json()));
     location.reload()
 }
+
+//This function is used for exporting data in a table to CSV
+function exportCSV(){
+    getOrders().then(
+        Orders => {
+            if (Orders != "notFound") { JSONToCSVConvertor(Orders, "PantryOrders", true); }
+        }
+    )
+}
+
 function emailStudent(orderId){
     emailStudentCall(orderId).then(
         alert("Student has been notified!")

@@ -80,49 +80,31 @@ function exportCSV(elem){
     if (elem.id == "AdminInventoryCSVExported") {
         getInventory().then(
             Inventory => {
-                if (Inventory != "notFound") {
-                    var myInventoryXML = new myExcelXML(Inventory);
-                    myInventoryXML.fileName = "PantryInventory";
-                    myInventoryXML.downLoad();
-                }
+                if (Inventory != "notFound") { JSONToCSVConvertor(Inventory, "PantryInventory", true); }
             }
         )
     }
     else if (elem.id == "AdminUsersCSVExported") {
         getUsers().then(
             Users => {
-                if (Users != "notFound") {
-                    var myUsersXML = new myExcelXML(Users);
-                    myUsersXML.fileName = "PantryUsers";
-                    myUsersXML.downLoad();
-                }
+                if (Users != "notFound") { JSONToCSVConvertor(Users, "PantryUsers", true); }
             }
         )
     }
     else if (elem.id == "AdminOrdersCSVExported") {
         getOrders().then(
             Orders => {
-                if (Orders != "notFound") {
-                    var myTransactionsXML = new myExcelXML(Orders);
-                    myTransactionsXML.fileName = "PantryOrders";
-                    myTransactionsXML.downLoad();
-                }
+                if (Orders != "notFound") { JSONToCSVConvertor(Orders, "PantryOrders", true); }
             }
         )
     }
     else if (elem.id == "AdminVisitsCSVExported") {
-        getVisitors().then(
-            Visits => {
-                if (Visits != "notFound") {
-                    var myStudentVisitsXML = new myExcelXML(Visits);
-                    myStudentVisitsXML.fileName = "PantryVisitors";
-                    myStudentVisitsXML.downLoad();
-                }
+        getOrders().then(
+            Orders => {
+                if (Orders != "notFound") { JSONToCSVConvertor(Orders, "PantryVisitors", true); }
             }
         )
     }
-
-    return false;
 }
 
 let closeModal = null
