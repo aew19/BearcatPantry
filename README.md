@@ -11,6 +11,7 @@ The Bearcats Pantry is a great resource for students but is not in the most acce
 - Javascript
 - Java
 - Spring-boot
+- MySQL
 
 ## Dependancies:
 - Java 8
