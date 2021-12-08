@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
+
 
 @CrossOrigin
 @RestController
@@ -34,6 +36,19 @@ public class InventoryTableController {
     @GetMapping("/inventoryTable")
     public @ResponseBody List<prodInventoryJoin> joinTable(){
         return inventoryTableRepository.join();
+    }
+
+    
+    @GetMapping(value="/inventoryTable/{foodType}")
+    public @ResponseBody List<prodInventoryJoin> joinTableByType(@PathVariable(value="foodType") String foodType){
+        List<prodInventoryJoin> allItems = inventoryTableRepository.join();
+        List<prodInventoryJoin> returnList = new ArrayList<prodInventoryJoin>();
+        for (prodInventoryJoin elem : allItems){
+            if(elem.getFoodType().equals(foodType)){
+                returnList.add(elem);
+            }
+        }
+        return returnList;
     }
 
     @PutMapping("/increaseInventory")
