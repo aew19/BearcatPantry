@@ -45,9 +45,22 @@ async function getTypeInventory(){
     }
 }
 
+async function fillShoppingCount(){
+    let cart = sessionStorage.getItem('cart')
+    if(cart == null){return;}
+    else{
+        let cartArray = cart.split("::")
+        let count = cartArray.length
+        document.getElementById("shoppingCount").innerHTML = count;
+    }
+}
+
 
 // add input for food type
 function fillInventoryTable(){
+    // set shopping cart number in case student is returning to this page
+    fillShoppingCount();
+
     getTypeInventory().then(data =>{
         document.getElementById("itemsOuterContainer").innerHTML = "";
         for (let element of data) {
