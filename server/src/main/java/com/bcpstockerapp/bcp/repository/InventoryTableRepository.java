@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface InventoryTableRepository extends JpaRepository<InventoryTable, Long> {
 
-    @Query("select new com.bcpstockerapp.bcp.model.prodInventoryJoin(p.barcodeId, i.quantity, p.productTitle, p.foodType, p.brand, p.vegetarian, p.vegan, p.image,p.productURL) from ProductTable p, InventoryTable i where p.barcodeId = i.barcodeId")
+    @Query("select new com.bcpstockerapp.bcp.model.prodInventoryJoin(p.barcodeId, i.quantity, p.productTitle, p.foodType, p.brand, p.vegetarian, p.vegan, p.image,p.productURL, p.weight) from ProductTable p, InventoryTable i where p.barcodeId = i.barcodeId")
     public List<prodInventoryJoin> join();
     InventoryTable findByBarcodeId(String barcodeId);
 

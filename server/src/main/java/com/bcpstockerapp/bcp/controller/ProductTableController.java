@@ -30,7 +30,7 @@ public class ProductTableController {
     }
 
     @PostMapping("/items")
-    public @ResponseBody ProductTable createItem(@RequestParam String barcodeId, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, String productURL) {
+    public @ResponseBody ProductTable createItem(@RequestParam String barcodeId, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, String productURL, double weight) {
         ProductTable item = new ProductTable();
         item.setBarcode(barcodeId);
         item.setName(productTitle);
@@ -39,6 +39,7 @@ public class ProductTableController {
         item.setVegetarian(vegetarian);
         item.setVegan(vegan);
         item.setProductURL(productURL);
+        item.setWeight(weight);
         return productTableRepository.save(item);
 
     }
@@ -49,7 +50,7 @@ public class ProductTableController {
     }
 
     @PutMapping("/items/{barcodeId}")
-    public @ResponseBody ProductTable updateProduct(@PathVariable(value="barcodeId") String barcodeId, String productTitle, String brand, String foodType, String productURL, boolean vegetarian, boolean vegan){
+    public @ResponseBody ProductTable updateProduct(@PathVariable(value="barcodeId") String barcodeId, String productTitle, String brand, String foodType, String productURL, boolean vegetarian, boolean vegan, double weight){
         ProductTable product = productTableRepository.findByBarcodeId(barcodeId);
         product.setName(productTitle);
         product.setBrand(brand);
@@ -57,6 +58,7 @@ public class ProductTableController {
         product.setProductURL(productURL);
         product.setVegetarian(vegetarian);
         product.setVegan(vegan);
+        product.setWeight(weight);
         return productTableRepository.save(product);
     }
 

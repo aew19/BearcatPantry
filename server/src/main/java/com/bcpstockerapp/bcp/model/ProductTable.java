@@ -19,11 +19,12 @@ public class ProductTable {
     private boolean vegan;
     private String image;
     private String productURL;
+    private double weight;
 
 
     //Constructors
     public ProductTable(){}
-    public ProductTable(String barcodeId, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, String image, String productURL){
+    public ProductTable(String barcodeId, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, String image, String productURL, double weight){
         this.barcodeId = barcodeId;
         this.productTitle = productTitle;
         this.foodType = foodType;
@@ -32,6 +33,7 @@ public class ProductTable {
         this.vegan = vegan;
         this.image = image;
         this.productURL = productURL;
+        this.weight = weight;
     }
 
     //Getters
@@ -52,6 +54,7 @@ public class ProductTable {
     public boolean getVegan(){ return this.vegan;}
     public String getImage(){return this.image;}
     public String getProductURL(){return this.productURL;}
+    public double getWeight(){return this.weight;}
 
 
     //Setters
@@ -67,5 +70,6 @@ public class ProductTable {
     public void setVegan(boolean vegan){ this.vegan = vegan;}
     public void setImage(String image){this.image = image;}
     public void setProductURL(String productURL){this.productURL = productURL;}
+    public void setWeight(double weight){this.weight = weight;}
 }
 

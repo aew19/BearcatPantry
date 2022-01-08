@@ -12,8 +12,9 @@ public class prodInventoryJoin {
     private boolean vegan;
     private String image;
     private String productURL;
+    private double weight;
 
-    public prodInventoryJoin(String barcodeId, Integer quantity, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, String image, String productURL) {
+    public prodInventoryJoin(String barcodeId, Integer quantity, String productTitle, String foodType, String brand, boolean vegetarian, boolean vegan, String image, String productURL, double weight) {
         this.barcodeId = barcodeId;
         this.quantity = quantity;
         this.productTitle = productTitle;
@@ -23,6 +24,7 @@ public class prodInventoryJoin {
         this.vegan = vegan;
         this.image = image;
         this.productURL = productURL;
+        this.weight = weight;
     }
 
     public String getBarcodeId() {
@@ -95,5 +97,13 @@ public class prodInventoryJoin {
 
     public void setProductURL(String productURL) {
         this.productURL = productURL;
+    }
+
+    public double getWeight(){
+        return weight;
+    }
+
+    public void setWeight(double weight){
+        this.weight = weight;
     }
 }

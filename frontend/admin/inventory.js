@@ -108,8 +108,8 @@ function updateInventory(barcode1, quantity){
 }
 
 //Update product table
-function updateProduct(barcode, itemName, brand, type, url, isVegetarian, isVegan){
-    let data = {'productTitle':itemName, 'brand':brand,'foodType':type, 'productURL':url, 'vegetarian':isVegetarian, 'vegan':isVegan}
+function updateProduct(barcode, itemName, brand, type, url, isVegetarian, isVegan, weight){
+    let data = {'productTitle':itemName, 'brand':brand,'foodType':type, 'productURL':url, 'vegetarian':isVegetarian, 'vegan':isVegan, 'weight':weight}
     let formBody =[];
     for (let key in data){
         let encodedKey = encodeURIComponent(key);
@@ -176,9 +176,10 @@ async function getBarcode(barcode){
 }
 
 //Add new item to product database
-async function createItem(barcode, quantity, itemName, brand, type, url, isVegetarian, isVegan, image){
+async function createItem(barcode, quantity, itemName, brand, type, url, isVegetarian, isVegan, image, weight){
+    //let checkWeight = parseFloat(weight);
     //POST to product table
-    let prodData = {'barcodeId':barcode,'productTitle':itemName, 'foodType':type, 'brand':brand, 'productURL':url, 'vegetarian':isVegetarian, 'vegan':isVegan}
+    let prodData = {'barcodeId':barcode,'productTitle':itemName, 'foodType':type, 'brand':brand, 'productURL':url, 'vegetarian':isVegetarian, 'vegan':isVegan, 'weight':weight}
     let prodFormBody =[];
     for (let prodKey in prodData){
         let encodedProdKey = encodeURIComponent(prodKey);
@@ -310,6 +311,7 @@ function makeInventoryTable(inventoryData) {
     InventoryTable.addColumn('number','Quantity');
     InventoryTable.addColumn('string','Type');
     InventoryTable.addColumn('string','Brand');
+    InventoryTable.addColumn('number','Weight');
 
     InventoryTable.addRows(inventoryData.length);
     var counter = 0;
@@ -320,6 +322,7 @@ function makeInventoryTable(inventoryData) {
         InventoryTable.setValue(counter, 2, element.quantity);
         InventoryTable.setValue(counter, 3, element.foodType);
         InventoryTable.setValue(counter, 4, element.brand);
+        InventoryTable.setValue(counter, 5, element.weight);
         counter++;
     }
         
@@ -615,6 +618,7 @@ function popEditItem(barcode1, quantity){
             document.getElementById("newQuantity").value = quantity;
             document.getElementById("newItemBrand").value = data.brand;
             document.getElementById("newProductURL").value = data.productURL;
+            document.getElementById("editItemWeight").value = data.weight.toString();
             if (data.vegetarian === true){
                 document.getElementById("newVegetarian").value = "true";
             }
@@ -659,6 +663,7 @@ async function submitNewItem(){
     let itemBrand = document.getElementById("itemBrand").value;
     let itemType = document.getElementById("type").value;
     let itemURL = document.getElementById("productURL").value;
+    let weight = parseFloat(document.getElementById("newItemWeight").value);
     let vegan = false;
     let vegetarian = false;
     let image = document.getElementById("prodImg").files[0];
@@ -671,14 +676,14 @@ async function submitNewItem(){
         vegan = true;
     }
 
-    if (newQuantity == "" || barcode == "" || itemName == "" || itemBrand == "" || itemType == "" || itemURL == "" || image == null) {
+    if (newQuantity == "" || barcode == "" || itemName == "" || itemBrand == "" || itemType == "" || itemURL == "" || image == null || weight == 0.0) {
         document.getElementById("NewwarningText").style.display = "block";
     }
     else {
         document.getElementById("newItem").style.display = "none";
         //Call API Endpoint
         await addToInventoryTable(barcode, newQuantity)
-        await createItem(barcode, newQuantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan, image)
+        await createItem(barcode, newQuantity, itemName, itemBrand, itemType, itemURL, vegetarian, vegan, image, weight)
         sleep(1000);
         await addImage(barcode,image)
         //See if image made it
@@ -703,6 +708,7 @@ function editItem(){
     let vegetarian = false;
     let vegan = false;
     let image = document.getElementById("editImg").files[0];
+    let weight = parseFloat(document.getElementById("editItemWeight").value);
 
     document.getElementById("editItem").style.display = "none";
     document.getElementById('page-mask').style.position = "unset";
@@ -723,7 +729,7 @@ function editItem(){
     else{
         //Update
         updateInventory(currBarcode, updateQuantity)
-        updateProduct(currBarcode, itemName, itemBrand, itemType, itemURL,vegetarian, vegan)
+        updateProduct(currBarcode, itemName, itemBrand, itemType, itemURL,vegetarian, vegan, weight)
         //Check to see if image is being updated
         if (image != undefined){
             deleteImage(currBarcode).then(()=>{
