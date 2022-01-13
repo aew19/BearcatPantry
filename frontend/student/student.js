@@ -28,15 +28,12 @@ async function getInventory(){
         return "notFound";
     }
 }
+
+// currently used to get inventory. backend call accounts for "All" prodtype
 async function getTypeInventory(){
     let prodType = document.getElementById("itemType").value; //works
     let response;
-    if(prodType == "All"){ 
-        response = await fetch(url + "inventoryTable/");
-    
-    }else{
-        response = await fetch(url + "inventoryTable/" + prodType);
-    }
+    response = await fetch(url + "inventoryTable/" + prodType);
     try{
         return await response.json();
     }catch(err){

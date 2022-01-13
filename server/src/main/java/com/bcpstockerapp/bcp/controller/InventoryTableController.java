@@ -38,14 +38,16 @@ public class InventoryTableController {
         return inventoryTableRepository.join();
     }
 
-    
     @GetMapping(value="/inventoryTable/{foodType}")
     public @ResponseBody List<prodInventoryJoin> joinTableByType(@PathVariable(value="foodType") String foodType){
+        // this mapping only gets items with inventory >0. Used for student page
         List<prodInventoryJoin> allItems = inventoryTableRepository.join();
         List<prodInventoryJoin> returnList = new ArrayList<prodInventoryJoin>();
         for (prodInventoryJoin elem : allItems){
-            if(elem.getFoodType().equals(foodType)){
-                returnList.add(elem);
+            if(elem.getQuantity() > 0){
+                if(elem.getFoodType().equals(foodType) || foodType.equals("All")){
+                    returnList.add(elem);
+                }
             }
         }
         return returnList;
@@ -77,12 +79,19 @@ public class InventoryTableController {
         for (String barcodeId : barcodeIds) {
             InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeId);
             Integer currentQuantity = inventory.getQuantity();
+            
+            if(currentQuantity != 0){
+                inventory.setQuantity(currentQuantity - 1);
+                inventoryTableRepository.save(inventory);
+            }
+
+            /*
             if (currentQuantity == 1) {
                 inventoryTableRepository.delete(inventory);
             } else {
                 inventory.setQuantity(currentQuantity - 1);
                 inventoryTableRepository.save(inventory);
-            }
+            }*/
 
         }
         return "done";
