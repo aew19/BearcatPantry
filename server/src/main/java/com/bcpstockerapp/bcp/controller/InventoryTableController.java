@@ -13,7 +13,6 @@ import com.bcpstockerapp.bcp.model.TransactionTable;
 import com.bcpstockerapp.bcp.repository.TransactionRepository;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -116,6 +115,7 @@ public class InventoryTableController {
                 inventory.setQuantity(currentQuantity - 1);
                 inventoryTableRepository.save(inventory);
             }
+            // else: add item to a list of items unable to be checked out? a ret list
 
             TransactionTable tran = new TransactionTable();
 
@@ -135,6 +135,11 @@ public class InventoryTableController {
              * inventoryTableRepository.save(inventory);
              * }
              */
+
+        /* IDEAS FOR INVENTORY AT 0 OR MORE ITEMS CHECKED OUT THAN INVENTORY QUANTITY
+        *    - return a string or another list of barcode strings that couldn't be checked out
+        *    - or completely cancel the call, but items are saved as you go through list, some could already be saved before cancelling
+        */
 
         }
         return "done";
@@ -160,10 +165,11 @@ public class InventoryTableController {
             tran.setItemsIn(true);
             tran.setQuantity(quantity - prevQuantity);
         }
-        else {
+        else if (prevQuantity > quantity) {
             tran.setItemsIn(false);
             tran.setQuantity(prevQuantity - quantity);
         }
+        else{ return ret; } // no change in quantity, dont save transaction
 
         transactionRepository.save(tran);
 
@@ -174,15 +180,15 @@ public class InventoryTableController {
     public @ResponseBody String deleteInventory(@PathVariable(value = "barcodeId") String barcodeId) {
         InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeId);
 
-        Integer quantity = inventory.getQuantity();
+        //Integer quantity = inventory.getQuantity();
 
-        TransactionTable tran = new TransactionTable();
+        /*TransactionTable tran = new TransactionTable();
         tran.setItemsIn(false);
         tran.setBarcodeId(barcodeId);
         LocalDate today = LocalDate.now();
         tran.setDate(today);
         tran.setQuantity(quantity);
-        transactionRepository.save(tran);
+        transactionRepository.save(tran); */
 
 
         inventoryTableRepository.delete(inventory);

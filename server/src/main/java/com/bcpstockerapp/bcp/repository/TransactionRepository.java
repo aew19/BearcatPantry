@@ -10,4 +10,5 @@ import java.time.LocalDate;
 public interface TransactionRepository extends JpaRepository<TransactionTable, Long> {
     List<TransactionTable> findByBarcodeId(String _barcodeId);
     List<TransactionTable> findByDate(LocalDate _date);
+    TransactionTable findByBarcodeIdAndDate(String _barcodeId, LocalDate _date);
 }
