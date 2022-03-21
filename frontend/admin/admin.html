@@ -57,6 +57,55 @@
                     </div>
                 </div>
             </div>
+            <div class="item4 grid-border">
+                <div>
+                    <h2 style="float:left;">TRANSACTIONS</h2>
+                    <a style="float:right" href="#" id="TransactionsCSVExported" onClick="exportCSV(this)" class="btn btn-red"><i class="fas fa-file-export">  Export Data</i></a>
+                </div>
+                <div style="clear: both;">
+                    <hr style="height:2px;height:1px;border-width:0;background-color:#e00122">
+                </div>
+                <div>
+                    <div id="tableInputs" style="float:left; width:25%; ">
+                        <label for="fromDate" style="float:left;width: 25%;">From: </label>
+                        <input class="form-control" type="Date" style="float:left;width: 75%;" id="fromDate" placeholder="Day" onchange="createTransactionTable()" required>
+                        <div style="margin-top: 60px;"><label for="toDate" style="float:left;width: 25%;">To: </label>
+                        <input class="form-control" type="Date" style="float:left;width: 75%;" id="toDate" placeholder="Day" onchange="createTransactionTable()" required></div>
+                        <div style="margin-top: 150px;">
+                        <label for="itemType" style="float:left;width: 25%;">Type: </label>
+                        <select id="itemType" name="type" style="float:left;width: 75%;" required class="select" onchange="createTransactionTable()">
+                            <option value="All" selected>All</option>
+                            <option value="Vegetable">Vegetable</option>
+                            <option value="Grains">Grains</option>
+                            <option value="Fruit">Fruit</option>
+                            <option value="Dairy">Dairy</option>
+                            <option value="Beans">Beans</option>
+                            <option value="Seafood">Seafood</option>
+                            <option value="Meat">Meat</option>
+                            <option value="Eggs">Eggs</option>
+                            <option value="Nuts">Nuts</option>
+                            <option value="Poultry">Poultry</option>
+                            <option value="Baked Goods">Baked Goods</option>
+                            <option value="Spices">Spices</option>
+                            <option value="Soups">Soups</option>
+                            <option value="Desserts">Desserts</option>
+                            <option value="Liquids">Liquids</option>
+                            <option value="Breads">Breads</option>
+                            <option value="Pasta">Pasta</option>
+                            <option value="Other">Other</option>
+                        </select></div>
+                        <div id="radioGroup" style="margin-top:220px; margin-left: 60px;">
+                            <input type="radio" id="itemsInRadio" checked name="tranType" value="In" onchange="createTransactionTable()" style="float:left;width: 10%;">
+                            <label for="itemsInRadio">Items In</label>
+                            <input type="radio" id="itemsOutRadio" name="tranType" value="Out" onchange="createTransactionTable()" style="float:left;width: 10%; margin-left: 10%;">
+                            <label for="itemsOutRadio" style="width: 80px;">Items Out</label><br>
+                        </div>
+                    </div>
+                    <div class="scrollingTable" style="float:left; width:70%; margin-left:5%; border-left:#e00122; border: thin;">
+                        <table class ="table" id="transaction_table"></table>
+                    </div>
+                </div>
+            </div>
             <div class="item1 grid-border">
                 <h2 style="float:left;">STUDENT VISITS PER MONTH FOR THIS YEAR</h2>
                 <a style="float:right" href="#" id="AdminVisitsCSVExported" onClick="exportCSV(this)" class="btn btn-red"><i class="fas fa-file-export">  Export Data</i></a>
@@ -166,5 +215,6 @@
     <script src="orders-table.js"></script>
     <script src="inventory-table.js"></script>
     <script src="visitors-graph.js"></script>
+    <script src="transaction-table.js"></script>
     <script src="../ShibbolethController.js"></script>
 </html>
