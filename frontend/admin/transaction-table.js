@@ -15,7 +15,7 @@ function makeTransactionTable(TransactionData) {
     TranTable.addColumn('number','Quantity');
     TranTable.addColumn('string','Tansaction In/Out');
 
-    TranTable.addRows(TransactionData.length);
+    TranTable.addRows(TransactionData.length + 1);
 
 
     var counter = 0;
@@ -30,6 +30,15 @@ function makeTransactionTable(TransactionData) {
         counter++;
     }
 
+    // calculate sums
+    var weightSum = getColumnSum(TranTable, 2)
+    var quantitySum = getColumnSum(TranTable, 3)
+    // set sums in table final row
+    TranTable.setValue(counter, 0, "Totals");
+    TranTable.setValue(counter, 2, weightSum);
+    TranTable.setValue(counter, 3, quantitySum);
+    TranTable.setRowProperty(counter, "className", "bold-font")
+
     var table = new google.visualization.Table(document.getElementById('transaction_table'));
 
     var cssClassNames = {
@@ -39,6 +48,20 @@ function makeTransactionTable(TransactionData) {
     };
 
     table.draw(TranTable, {width: '100%', height: '100%', allowHtml:true, sortColumn:0, 'cssClassNames': cssClassNames});
+
+    /*var TotalsTable = new google.visualization.DataTable();
+    TotalsTable.addColumn('string','Date');
+    TotalsTable.addColumn('string','Item Name');
+    TotalsTable.addColumn('number','Weight');
+    TotalsTable.addColumn('number','Quantity');
+    TotalsTable.addColumn('string','Tansaction In/Out');
+    TotalsTable.addRows(1);
+    TotalsTable.setValue(0, 0, "Totals");
+    TotalsTable.setValue(0, 2, weightSum);
+    TotalsTable.setValue(0, 3, quantitySum);
+    TotalsTable.setRowProperty(0, "className", "table-totals-row")
+    var table = new google.visualization.Table(document.getElementById('totals_table'));*/
+    //table.draw(TotalsTable, {width: '100%', height: '100%', allowHtml:true, sortColumn:0, 'cssClassNames': {'headerRow': 'noHeader', 'tableRow': 'table'}});
 }
 
 async function getTransactionData(){
@@ -68,6 +91,14 @@ async function getTransactionData(){
     }catch{
         return "notFound";
     }
+}
+
+function getColumnSum(table, column){
+    var total = 0;
+    for(i=0; i < table.getNumberOfRows(); i++){
+        total = total + table.getValue(i, column);
+    }
+    return total;
 }
 
 function setInputDates(){

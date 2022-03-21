@@ -2,6 +2,17 @@
 .btn-orange {
     width:50% !important;
 }
+.table-totals-row{
+    font-weight: normal;
+    color:white;
+    background-color: #e00122;
+}
+.bold-font{
+    font-weight: bold;
+}
+.noHeader{
+    visibility: hidden;
+}
 
 .table{
     padding: 20px !important;

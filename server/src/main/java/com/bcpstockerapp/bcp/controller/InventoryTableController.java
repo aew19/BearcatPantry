@@ -15,6 +15,8 @@ import com.bcpstockerapp.bcp.repository.TransactionRepository;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Enumeration;
 
 @CrossOrigin
 @RestController
@@ -107,6 +109,10 @@ public class InventoryTableController {
 
     @PutMapping("/decreaseInventory")
     public @ResponseBody String decreaseInventory(@RequestParam String[] barcodeIds) {
+        // needed for transactions. totals quantities of each product being checked out
+        // otherwise would create individual transactions of quantity=1 for each instance of same product
+        Hashtable<String, Integer> totals = new Hashtable<String, Integer>();
+
         for (String barcodeId : barcodeIds) {
             InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeId);
             Integer currentQuantity = inventory.getQuantity();
@@ -114,18 +120,15 @@ public class InventoryTableController {
             if (currentQuantity != 0) {
                 inventory.setQuantity(currentQuantity - 1);
                 inventoryTableRepository.save(inventory);
+
+                if(totals.containsKey(barcodeId)){
+                    totals.put(barcodeId, totals.get(barcodeId) + 1);
+                }
+                else{
+                    totals.put(barcodeId, 1);
+                }
             }
             // else: add item to a list of items unable to be checked out? a ret list
-
-            TransactionTable tran = new TransactionTable();
-
-            tran.setItemsIn(false);
-            tran.setBarcodeId(barcodeId);
-            tran.setQuantity(1);
-            LocalDate today = LocalDate.now();
-            tran.setDate(today);
-
-            transactionRepository.save(tran);
 
             /*
              * if (currentQuantity == 1) {
@@ -142,6 +145,20 @@ public class InventoryTableController {
         */
 
         }
+
+        Enumeration<String> e = totals.keys();
+        while(e.hasMoreElements()){
+            String barcode = e.nextElement();
+
+            TransactionTable tran = new TransactionTable();
+            tran.setItemsIn(false);
+            tran.setBarcodeId(barcode);
+            tran.setQuantity(totals.get(barcode));
+            LocalDate today = LocalDate.now();
+            tran.setDate(today);
+            transactionRepository.save(tran);
+        }
+
         return "done";
     }
 
