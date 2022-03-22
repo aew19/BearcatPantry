@@ -105,6 +105,13 @@ function exportCSV(elem){
             }
         )
     }
+    else if (elem.id = "TransactionsCSVExported"){
+        getTransactionData().then(
+            Transactions => {
+                if (Transactions != "notFound") { JSONToCSVConvertor(Transactions, "TransactionSet", true) }
+            }
+        )
+    }
 }
 
 let closeModal = null
@@ -349,6 +356,35 @@ async function getTotalOrders(){
 
 async function getUserByID(id){
     let response = await fetch(url + "/users/"+id)
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
+async function getTransactionData(){
+    fromDate = document.getElementById('fromDate').value
+    toDate = document.getElementById('toDate').value
+    prodType = document.getElementById('itemType').value
+    itemsIn = true
+    if(document.getElementById('itemsOutRadio').checked){itemsIn = false}
+
+    let data = {'fromDate':fromDate, 'toDate':toDate, 'prodType':prodType, 'itemsIn':itemsIn}
+    let formBody = []
+    for(let key in data){
+        let encodedKey = encodeURIComponent(key)
+        let encodedValue = encodeURIComponent(data[key])
+        formBody.push(encodedKey+"="+encodedValue)
+    }
+    formBody = formBody.join("&");
+
+
+    let response = await fetch(url + 'transactionQuery',{
+        body: formBody,
+        method:"POST",
+        headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'}
+    })
     try{
         return await response.json();
     }catch{

@@ -11,7 +11,7 @@ function makeTransactionTable(TransactionData) {
     var TranTable = new google.visualization.DataTable();
     TranTable.addColumn('string','Date');
     TranTable.addColumn('string','Item Name');
-    TranTable.addColumn('number','Weight');
+    TranTable.addColumn('number','Weight (oz)');
     TranTable.addColumn('number','Quantity');
     TranTable.addColumn('string','Tansaction In/Out');
 
