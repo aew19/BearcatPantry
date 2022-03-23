@@ -25,25 +25,27 @@
 }
 
 .item1 {
-    grid-row: 2;
+    grid-row-start: 3;
+    grid-row-end: 4;
     grid-column-start: 1;
     grid-column-end: 3;
 }
 
 .item2 {
-    grid-row: 3;
+    grid-row-start: 4;
+    grid-row-end: 5;
     grid-column-start: 2;
     grid-column-end: 3;
 }
 
 .item3 {
-    grid-row: 3;
-    grid-column-start: 1;
-    grid-column-end: 2;
+    grid-row-start: 4;
+    grid-row-end: 5;
 }
 
 .item4 {
-    grid-row: 4;
+    grid-row-start: 5;
+    grid-row-end: 6;
     grid-column-start: 1;
     grid-column-end: 3;
 }
@@ -54,13 +56,15 @@
 }
 
 .item7 {
-    grid-row: 5;
+    grid-row-start: 6;
+    grid-row-end: 7;
     grid-column-start: 1;
     grid-column-end: 3;
 }
 
 .item9 {
-    grid-row: 1;
+    grid-row-start: 1;
+    grid-row-end: 2;
     grid-column-start: 1;
     grid-column-end: 3;
 }
