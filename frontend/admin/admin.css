@@ -34,6 +34,8 @@
 .item2 {
     grid-row-start: 4;
     grid-row-end: 5;
+    grid-column-start: 2;
+    grid-column-end: 3;
 }
 
 .item3 {
@@ -119,5 +121,7 @@ input[type="radio"] {
 
 .grid-container {
     width: 100%;
+    display: grid;
+    grid-auto-columns: 1fr;
     margin: unset !important;
 }
