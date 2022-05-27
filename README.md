@@ -2,11 +2,11 @@
 The Bearcats Pantry is a great resource for students but is not in the most accessible location. By creating an ordering system for students online, and having the items delivered directly to them at their residence, we can ensure that every student has access to food, and hygienic items.
 
 ## Contributors:
-#2020-21
+# 2020-21
 - Logan Lindsay
 - Jake Van Meter
 - Ashley Wilhelm
-#2021-22
+# 2021-22
 - Derek Heidotting
 - Abhinav Garg
 
