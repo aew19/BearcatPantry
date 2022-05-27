@@ -2,11 +2,11 @@
 The Bearcats Pantry is a great resource for students but is not in the most accessible location. By creating an ordering system for students online, and having the items delivered directly to them at their residence, we can ensure that every student has access to food, and hygienic items.
 
 ## Contributors:
-# 2020-21
+#### 2020-21
 - Logan Lindsay
 - Jake Van Meter
 - Ashley Wilhelm
-# 2021-22
+#### 2021-22
 - Derek Heidotting
 - Abhinav Garg
 
@@ -21,6 +21,10 @@ The Bearcats Pantry is a great resource for students but is not in the most acce
 - Java 8
 - Maven 3.6
 - MySQL
+
+## Commit/Push Notes
+- Always make sure the [env](frontend/environment.json) variable is in the correct state. Set to "dev" when testing but ALWAYS make sure it is in "prod" on the repo and live server.
+- Not necessary, but try to ignore the createdFile and inputFile lists that are created locally when developing. However, server will create new ones when code is redeployed.
 
 ## Links to Documentation:
 - [Users Guide](https://docs.google.com/document/d/1B6PnMysM8zgCI7nPotV8fTu7GO8bqVcCmGcDfK74l2Q/edit?usp=sharing)
