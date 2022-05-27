@@ -41,7 +41,7 @@ function submitOrder() {
     let address = document.getElementById("checkoutAddress").value
     let method = document.getElementById("delivOrPick").value
     let phoneNumber = document.getElementById("checkoutPhoneNumber").value
-    let deliveryDate = document.getElementById("checkoutDay").value
+    let deliveryDate = document.getElementById("checkoutDayDropDown").value // document.getElementById("checkoutDay").value
     let deliveryTime = document.getElementById("checkoutTime").value
     addToOrders(fName, lName, mNumber, email, address, address2, method,phoneNumber, deliveryDate, deliveryTime)
     sessionStorage.removeItem('cart')
@@ -111,6 +111,63 @@ function populateCart(){
         })
     })
 }
+
+// ---------------------------- WORKING METHOD -------------------------------- \\
+/**    Notes
+ * 
+ * - starting algorithm is for the Summer Pilot of online orders - only two pickup days
+ * - helpful links when using calendar picker again:
+ * https://stackoverflow.com/questions/17182544/disable-certain-dates-from-html5-datepicker
+ * https://www.w3schools.com/jsref/jsref_getday.asp
+ * 
+ * 
+ * CURRENT STATE = can't set specific single dates to be enabled on calendar (without updated jQuery)
+ *  - if this is just a testing feature for summer and certain "ranges" will be the norm in future,
+ *     then maybe just have a drop down with the next available Tues and Wed for pick up.
+ * 
+ */
+
+function setPickupDropDown(){
+    let today = new Date();
+    let nextAvailTues = new Date();
+    let nextAvailWed = new Date();
+    let pickupDates = [];
+    // [0,1,2 ,3,4 ,5,6]
+    // [S,M,Tu,W,Th,F,Sa]
+    let dayOfWeekToday = today.getDay();
+    console.log(today.toDateString());
+
+    // if Sunday, get Tu/Wed of that week, otherwise get Tu/Wed of NEXT week
+    if(dayOfWeekToday == 0){
+        nextAvailTues = nextAvailTues.setDate(nextAvailTues.getDate() + 2); //new Date(today.getDate() + 2);
+        nextAvailWed = nextAvailWed.setDate(nextAvailWed.getDate() + 3); //new Date(today.getDate() + 3);
+        pickupDates.push(nextAvailTues, nextAvailWed);
+    }
+    else{
+        let gapToTues = 7 + (2 - dayOfWeekToday);
+        nextAvailTues = nextAvailTues.addDays(gapToTues); //nextAvailTues.setDate(nextAvailTues.getDate() + gapToTues);
+        nextAvailWed = nextAvailWed.addDays(gapToTues + 1); // just add 1 for next Wed
+        pickupDates.push(nextAvailTues, nextAvailWed);
+    }
+
+    let dateSelect = document.getElementById("checkoutDayDropDown");
+    dateSelect.innerHTML = "";
+    for(var i=0; i<pickupDates.length; i++){
+        let date = pickupDates[i];
+        let newElem = document.createElement("option");
+        newElem.textContent = date.toDateString();
+        newElem.value = date.toISOString().split('T')[0];
+        dateSelect.appendChild(newElem);
+    }
+}
+
+// method added to Date class
+Date.prototype.addDays = function(days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
+
 //Error handling for status
 function status(response) {
     if (response.status >= 200 && response.status < 300) {
@@ -139,6 +196,9 @@ fetch("../environment.json").then(response=>response.json())
             posturl = 'https://bearcatspantry.uc.edu/web-services/'
         }
         populateCart()
+        
     })
     .catch(err => console.log("Error reading Environment"))
 
+// **** for the Summer '22 test pilot *****
+setPickupDropDown()

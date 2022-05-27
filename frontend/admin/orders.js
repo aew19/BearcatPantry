@@ -183,6 +183,7 @@ function changeOrderStatusCompleted(orderId){
         .catch(function(error){
             console.log('Request Failed', error)
         });
+    alert("Please make sure you have scanned out the order items in the Inventory page!");    
     location.reload()
 }
 

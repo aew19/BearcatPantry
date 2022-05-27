@@ -93,9 +93,9 @@
               </div>
               <div class="col-md-3">
                 <select id="delivOrPick" name="type" class="select" required>
-                  <option disabled selected>Method</option>
-                  <option>Delivery</option>
-                  <option>Pickup</option>
+                  <option disabled>Method</option>
+                  <option disabled>Delivery (coming soon!)</option>
+                  <option selected>Pickup</option>
                 </select>
                 <div class="invalid-feedback">
                   Please enter your preferred pick-up method.
@@ -103,7 +103,10 @@
               </div>
               <div class="col-sm-6">
                 <label for="checkoutDay" class="form-label">Best Delivery or Pickup Day</label>
-                <input class="form-control" type="Date" id="checkoutDay" placeholder="Day" required>
+                <!--<input class="form-control" type="Date" id="checkoutDay" placeholder="Day" required>-->
+                <select id="checkoutDayDropDown" class="select" required>
+
+                </select>
                 <div class="invalid-feedback">
                   Valid Date is required.
                 </div>
@@ -111,13 +114,13 @@
               <div class="col-sm-6">
                 <label for="checkoutTime" class="form-label">Best Delivery or Pickup Time</label>
                 <select id="checkoutTime" name="type" class="select" required>
-                  <option disabled selected>Time</option>
-                  <option>10 am - 12 pm</option>
-                  <option>12 pm - 2 pm</option>
-                  <option>2 pm - 4 pm</option>
-                  <option>4 pm - 6 pm</option>
-                  <option>6 pm - 8 pm</option>
-                  <option>None of these times work</option>
+                  <option disabled>Time</option><!-- usually has the selected tag, but still disabled-->
+                  <option disabled>10 am - 12 pm</option>
+                  <option disabled>12 pm - 2 pm</option>
+                  <option selected>2 pm - 4 pm</option>
+                  <option disabled>4 pm - 6 pm</option>
+                  <option disabled>6 pm - 8 pm</option>
+                  <option disabled>None of these times work</option>
               </select>
                 <div class="invalid-feedback">
                   Valid Delivery Time is required.
