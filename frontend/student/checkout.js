@@ -7,7 +7,9 @@ function addToOrders(fName, lName, mNumber, email, address, address2, method,pho
         isDelivery = true;
     }
     let cart = sessionStorage.getItem('cart')
-    let cartArray = cart.split("::")
+    try{
+    var cartArray = cart.split("::")
+    }catch{ return; }
     let orderData = {'fName':fName,'lName':lName, 'mNumber':mNumber, 'address':address, 'address2':address2, 'delOrPickUp':isDelivery, 'email':email, 'phoneNumber':phoneNumber, 'orderStatus':0, 'delDate': deliveryDate, 'deliveryTime':deliveryTime, 'barcodes':cartArray}
     let orderFormBody =[];
     for (let orderKey in orderData){
@@ -31,7 +33,8 @@ function addToOrders(fName, lName, mNumber, email, address, address2, method,pho
         });
 }
 //On submit get all the orders information
-function submitOrder() {
+function submitOrder() {  
+    
     //Get the information to send to orders post
     let fName = document.getElementById("checkoutFirstName").value
     let lName = document.getElementById("checkoutLastName").value
@@ -43,13 +46,72 @@ function submitOrder() {
     let phoneNumber = document.getElementById("checkoutPhoneNumber").value
     let deliveryDate = document.getElementById("checkoutDayDropDown").value // document.getElementById("checkoutDay").value
     let deliveryTime = document.getElementById("checkoutTime").value
+
+    closePopup('intake');
+
+    let cart = sessionStorage.getItem('cart')
+    try{
+    var cartArray = cart.split("::")
+    }catch{ 
+        alert("Order not submitted. No items in cart!");
+        return; 
+    }
+
     addToOrders(fName, lName, mNumber, email, address, address2, method,phoneNumber, deliveryDate, deliveryTime)
     sessionStorage.removeItem('cart')
     document.getElementById("itemCount").innerHTML=0;
+    try{
     document.getElementById("shoppingCount").innerHTML=0;
+    }catch{}
     alert("Order submitted, please fill out the intake form for your order to be fulfilled.");
-    window.open("https://www.uc.edu/campus-life/dean-of-students/bearcats-pantry/form.html", "_blank");
+    //window.open("https://www.uc.edu/campus-life/dean-of-students/bearcats-pantry/form.html", "_blank");
     location.reload()
+}
+
+function checkInputs(){
+    let fName = document.getElementById("checkoutFirstName").value
+    let lName = document.getElementById("checkoutLastName").value
+    let mNumber = document.getElementById("checkoutMNumber").value
+    let email = document.getElementById("checkoutUserEmail").value
+    let address2 = document.getElementById("checkoutSuite").value
+    let address = document.getElementById("checkoutAddress").value
+    let method = document.getElementById("delivOrPick").value
+    let phoneNumber = document.getElementById("checkoutPhoneNumber").value
+    let deliveryDate = document.getElementById("checkoutDayDropDown").value // document.getElementById("checkoutDay").value
+    let deliveryTime = document.getElementById("checkoutTime").value
+
+    if(fName == "" || lName == "" || mNumber == "" || email == "" || address == "" || phoneNumber == ""){
+        document.getElementById("NewwarningText").style.display = "block";
+        return false;
+    }
+
+    return true;
+}
+
+function popIntake(){
+    if(!checkInputs()){
+        return;
+    }
+    try{
+    if(intakeFormOpen === null){
+        document.getElementById("intake").style.display = "block";
+
+        intakeFormOpen = true
+        document.getElementById('page-mask').style.position = "fixed";
+    }
+    else {
+        document.getElementById("intake").style.display = "none";
+        intakeFormOpen = null
+        document.getElementById('page-mask').style.position = "unset";
+    }
+    }catch(error){console.log(error)}
+}
+
+function closePopup(element){
+    document.getElementById(element).style.display = "none";
+    document.getElementById('page-mask').style.position = "unset";
+    document.getElementById('page-mask').style.backgroundColor = "unset";
+    //location.reload();
 }
 
 //Removes an item out of cart
@@ -182,8 +244,15 @@ function json(response) {
     return response.json()
 }
 
+// global vars
 let url ="";
 let posturl = "";
+let intakeFormOpen = null;
+
+$(function(){
+    $("#intakeForm").load("intakeForm.html");
+});
+
 fetch("../environment.json").then(response=>response.json())
     .then(json=>{
         env=json.env
@@ -200,5 +269,8 @@ fetch("../environment.json").then(response=>response.json())
     })
     .catch(err => console.log("Error reading Environment"))
 
+
+
+
 // **** for the Summer '22 test pilot *****
-setPickupDropDown()
+setPickupDropDown();

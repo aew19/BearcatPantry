@@ -721,9 +721,23 @@ function editItem(){
         vegan = true;
     }
 
+    updateInventory(currBarcode, updateQuantity)
+    updateProduct(currBarcode, itemName, itemBrand, itemType, itemURL,vegetarian, vegan, weight)
+    //Check to see if image is being updated
+    if (image != undefined){
+        deleteImage(currBarcode).then(()=>{
+             sleep(600)
+            addImage(currBarcode, image).then(r => console.log(r))
+        })
+    }
+    /*
     if (updateQuantity === 0){
         //Delete
-        deleteInventory(currBarcode)
+        // deleteInventory(currBarcode)
+
+        // no longer deleting entire item, just set quantity to 0
+        // NOTE: may be able to remove if statement
+        updateInventory(currBarcode, updateQuantity)
         location.reload()
     }
     else{
@@ -737,7 +751,7 @@ function editItem(){
                 addImage(currBarcode, image).then(r => console.log(r))
             })
         }
-    }
+    }*/
 }
 
 //This function is used for exporting data in a table to CSV
