@@ -458,7 +458,7 @@ function closePopup(element){
     document.getElementById(element).style.display = "none";
     document.getElementById('page-mask').style.position = "unset";
     document.getElementById('page-mask').style.backgroundColor = "unset";
-    location.reload();
+    //location.reload();
 }
 
 
