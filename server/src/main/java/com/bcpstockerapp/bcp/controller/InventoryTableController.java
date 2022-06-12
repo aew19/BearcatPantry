@@ -5,6 +5,8 @@ import com.bcpstockerapp.bcp.model.prodInventoryJoin;
 import com.bcpstockerapp.bcp.repository.InventoryTableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -195,7 +197,11 @@ public class InventoryTableController {
 
     @DeleteMapping("/deleteInventory/{barcodeId}")
     public @ResponseBody String deleteInventory(@PathVariable(value = "barcodeId") String barcodeId) {
-        InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeId);
+        //InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeId);
+        List<InventoryTable> inventory = inventoryTableRepository.findMultipleOfBarcode(barcodeId);
+        for (InventoryTable inventoryTable : inventory) {
+            inventoryTableRepository.delete(inventoryTable);
+        }
 
         //Integer quantity = inventory.getQuantity();
 
@@ -208,7 +214,8 @@ public class InventoryTableController {
         transactionRepository.save(tran); */
 
 
-        inventoryTableRepository.delete(inventory);
+        //inventoryTableRepository.delete(inventory);
+        //Integer testInt = inventory.size();
         return "Success";
     }
 
