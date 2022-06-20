@@ -29,17 +29,19 @@
             <div style="clear: both;">
                 <hr style="height:2px;height:1px;border-width:0;background-color:#e00122">
             </div>
-            <div class="modal" id="viewOrder" tabindex="-1" role="dialog">
+            <!-- https://medium.com/@ResearchNowEng/making-perfectly-sized-centered-scrollable-modals-a36da09b68e6 
+                 VERY USEFUL LINK FOR MODALS -->
+            <div class="modal" id="viewOrder" tabindex="-1" role="dialog" style="position: fixed; top:50%; left:50%; 
+            transform:translate(-50%,-50%); box-sizing:border-box; width:600px; max-width:calc(100% - 80px);max-height:calc(100% - 80px);">
                 <div class="modal-dialog" role="document">
-                    <div class="modal-content">
+                    <div class="modal-content" style="overflow:auto; max-height:calc(100vh - 125px);">
                         <div class="modal-header">
                             <h5 class="modal-title">Order Details</h5>
                             <button type="button" class="close" onclick=closePopup("viewOrder") aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body" id="modal-body" style="max-height: 100%;">
-                            <div style="overflow-y: auto;max-height: 300px; display: table;">
+                        <div class="modal-body" id="modal-body">
                             <table class = "table table-bordered" id = "orderItemsTable" width="100%" cellspacing="0">
                                 <thead style="text-align: center">
                                 <tr>
@@ -50,7 +52,6 @@
                                 </thead>
                                 <tbody style="text-align: center;" id = "orderItems"></tbody>
                             </table>
-                            </div>
                         </div>
                     </div>
                 </div>
