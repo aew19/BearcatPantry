@@ -57,6 +57,11 @@ $(function(){
     $("#unknownItemModal").load("unknownItemModal.html");
 });
 
+$(function(){
+    $("#addItemClassModal").load("addItemClassModal.html");
+});
+
+
 //Global Variables
 let newItem = null
 let scanItem = null
@@ -65,6 +70,7 @@ let checkoutItemList = [];
 let scanmulti = null
 let recountInv = null;
 let delItem = null;
+let newItemClass = null;
 let divHousing = null;
 let divMulti = null;
 let bulkScanItemList = [];
@@ -168,6 +174,15 @@ async function addToInventoryTable(barcode, quantity){
 //Calls barcode api endpoint
 async function getBarcode(barcode){
     let response = await fetch(url + "items/"+barcode)
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
+async function getInventoryItem(barcode){
+    let response = await fetch(url + "inventory/"+barcode)
     try{
         return await response.json();
     }catch{
@@ -607,12 +622,18 @@ function popNewItem(){
     }
 }
 
-function popEditItem(barcode1, quantity){
+async function popEditItem(barcode1, quantity){
+    let dropDown = document.getElementById("newType");
+    dropDown.innerHTML = "";
+    let inventoryItem = await getInventoryItem(barcode1);
+    console.log(inventoryItem);
+    let itemClasses = await getAllItemClasses();
+    console.log(itemClasses);
     getBarcode(barcode1).then(
         data => {
             document.getElementById("editItem").style.display = "block";
             document.getElementById('page-mask').style.position = "fixed";
-            document.getElementById("newType").value = data.type;
+            //document.getElementById("newType").value = data.type;
             document.getElementById("newBarcode").value = data.barcode;
             document.getElementById("newItemName").value = data.name;
             document.getElementById("newQuantity").value = quantity;
@@ -625,6 +646,18 @@ function popEditItem(barcode1, quantity){
             if (data.vegan === true){
                 document.getElementById("newVegan").value = "true";
             }
+
+                
+            for(i=0; i<itemClasses.length; i++){
+                let itemClass = itemClasses[i];
+                var opt = document.createElement("option");
+                opt.value = itemClass.className;
+                opt.innerHTML = itemClass.className;
+                if(inventoryItem.itemClass.classId == itemClass.classId){
+                    opt.selected = true;
+                }
+                dropDown.appendChild(opt);
+            }    
         })
 
 }
@@ -709,6 +742,7 @@ function editItem(){
     let vegan = false;
     let image = document.getElementById("editImg").files[0];
     let weight = parseFloat(document.getElementById("editItemWeight").value);
+    let itemClass = document.getElementById("newType").value
 
     document.getElementById("editItem").style.display = "none";
     document.getElementById('page-mask').style.position = "unset";
@@ -723,6 +757,7 @@ function editItem(){
 
     updateInventory(currBarcode, updateQuantity)
     updateProduct(currBarcode, itemName, itemBrand, itemType, itemURL,vegetarian, vegan, weight)
+    updateItemClass(currBarcode, itemClass)
     //Check to see if image is being updated
     if (image != undefined){
         deleteImage(currBarcode).then(()=>{
@@ -759,6 +794,131 @@ function exportCSV(){
     JSONToCSVConvertor(InventoryData, "PantryInventory", true);
 }
 
+function popAddItemClass(){
+    if(newItemClass === null){
+        document.getElementById("itemClassModal").style.display = "block";
+        newItemClass = true
+        document.getElementById('page-mask').style.position = "fixed";
+    } else {
+        document.getElementById("itemClassModal").style.display = "none";
+        newItemClass = null
+        document.getElementById('page-mask').style.position = "unset";
+    }
+}
+
+async function submitNewItemClass(){
+    // GET FROM HTML: className, foodType, image
+    let className = document.getElementById("className").value;
+    let foodType = document.getElementById("classFoodType").value;
+    let classImage = document.getElementById("classImg").files[0];
+
+    // if empty vals
+    if(className == "" || foodType == "" || classImage == null) {
+        document.getElementById("NewwarningText").style.display = "block";
+    }
+    
+    //POST to item class table
+    let data = {'className':className, 'foodType':foodType}
+    let formBody =[];
+    for (let key in data){
+        let encodedKey = encodeURIComponent(key);
+        let encodedValue = encodeURIComponent(data[key]);
+        formBody.push(encodedKey+"="+encodedValue);
+    }
+    formBody = formBody.join("&");
+
+    await fetch(posturl + 'itemClass', {
+        method:"POST",
+        headers:{'Content-Type': 'application/x-www-form-urlencoded'},
+        body: formBody
+    })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log('Request Succeeded', data)
+        })
+        .catch(function(error){
+            console.log('Request Failed', error)
+        });
+
+    //sleep(1000)
+    
+    //console.log(classObj);
+    //alert("test");
+
+    await addItemClassImage(className, classImage);
+
+    location.reload();
+    
+    //console.log(classObj.classId);
+}
+
+// WORKS
+async function getItemClassByName(className){
+    let response = await fetch(url + "itemClass/"+className)
+    try{
+        return response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
+async function addItemClassImage(className, image){
+    let classObj = await getItemClassByName(className);
+    let id = classObj.classId; // add to url
+    
+    let prodFormBody = new FormData();
+    prodFormBody.append('file',image)
+    fetch(posturl + 'addClassImage/'+ id, {
+        body: prodFormBody,
+        enctype: "multipart/form-data",
+        method:"PUT",
+    })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log('Request Succeeded', data)
+        })
+        .catch(function(error){
+            console.log('Request Failed', error)
+        });
+}
+
+async function getAllItemClasses(){
+    let response = await fetch(url + "itemClassAll");
+    try{
+        return await response.json();
+    }catch{
+        return "notFound";
+    }
+}
+
+async function updateItemClass(barcode, className){
+    //Update inventory table
+    let data = {'className':className}
+    let formBody =[];
+    for (let key in data){
+        let encodedKey = encodeURIComponent(key);
+        let encodedValue = encodeURIComponent(data[key]);
+        formBody.push(encodedKey+"="+encodedValue);
+    }
+    formBody = formBody.join("&");
+    fetch(posturl + 'updateItemClass/'+ barcode, {
+        body: formBody,
+        method:"PUT",
+        headers:{'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+    })
+        .then(status)
+        .then(json)
+        .then(function(data){
+            console.log('Request Succeeded', data)
+        })
+        .catch(function(error){
+            console.log('Request Failed', error)
+        });
+}
+
+
 //This function is used for the formatting of the table
 //Right now searching and ordering is on
 function createTableStyle() {
@@ -787,6 +947,18 @@ function readURL(input) {
 
         reader.onload = function(e) {
             $('#imgPreview').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]); // convert to base64 string
+    }
+}
+
+function classImageReadURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            $('#classImgPreview').attr('src', e.target.result);
         }
 
         reader.readAsDataURL(input.files[0]); // convert to base64 string

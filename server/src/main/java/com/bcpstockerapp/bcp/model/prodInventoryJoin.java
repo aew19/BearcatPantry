@@ -1,6 +1,9 @@
 package com.bcpstockerapp.bcp.model;
 
+import java.math.BigInteger;
 import java.util.Date;
+
+import ch.qos.logback.classic.ClassicConstants;
 
 public class prodInventoryJoin {
     private String barcodeId;

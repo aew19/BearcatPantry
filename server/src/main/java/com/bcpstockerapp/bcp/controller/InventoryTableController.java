@@ -1,8 +1,11 @@
 package com.bcpstockerapp.bcp.controller;
 
 import com.bcpstockerapp.bcp.model.InventoryTable;
+import com.bcpstockerapp.bcp.model.ItemClass;
 import com.bcpstockerapp.bcp.model.prodInventoryJoin;
 import com.bcpstockerapp.bcp.repository.InventoryTableRepository;
+import com.bcpstockerapp.bcp.repository.ItemClassRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -30,6 +33,9 @@ public class InventoryTableController {
     @Autowired
     private TransactionRepository transactionRepository;
 
+    @Autowired
+    private ItemClassRepository itemClassRepository;
+
     private static final Logger log = LoggerFactory.getLogger(InventoryTableController.class);
 
     @GetMapping("/inventory")
@@ -38,11 +44,19 @@ public class InventoryTableController {
 
     }
 
+    @GetMapping("/inventory/{barcodeId}")
+    public @ResponseBody InventoryTable getInventoryBarcode(@PathVariable(value="barcodeId") String barcodeId) {
+        return inventoryTableRepository.findMultipleOfBarcode(barcodeId).get(0);
+
+    }
+
     @PostMapping(value = "/inventory")
     public @ResponseBody InventoryTable createInventory(@RequestParam String barcodeId, Integer quantity) {
         InventoryTable item = new InventoryTable();
         item.setBarcodeId(barcodeId);
         item.setQuantity(quantity);
+        ItemClass inventoryItemClass = itemClassRepository.findByClassName("Test Class");
+        item.setItemClass(inventoryItemClass);
 
         TransactionTable tran = new TransactionTable();
 
@@ -75,6 +89,18 @@ public class InventoryTableController {
             }
         }
         return returnList;
+    }
+
+    @PutMapping("/updateItemClass/{barcodeId}")
+    public @ResponseBody String updateItemClass(@PathVariable(value = "barcodeId") String barcodeId, @RequestParam String className) {
+        InventoryTable inventory = inventoryTableRepository.findByBarcodeId(barcodeId);
+        //ItemClass currentItemClass = inventory.getItemClass();
+        ItemClass newItemClass = itemClassRepository.findByClassName(className);
+
+        inventory.setItemClass((newItemClass));
+        inventoryTableRepository.save(inventory);
+
+        return "done";
     }
 
     @PutMapping("/increaseInventory")

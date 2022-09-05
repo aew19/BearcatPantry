@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Item Class</title>
+</head>
+    <body>
+        <!-- Add Item Class Modal -->
+        <div class="modal" id="itemClassModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">New Item Class</h5>
+                        <button type="button" class="close" onclick="closePopup('itemClassModal')" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="text-align: center">
+                        <form style="padding-top:1rem;display: inline-block">
+                            <div style="padding-bottom: 10px;display: inline-block" class="form-group">
+                                <input class="form-control" id="className" autocomplete="off" required minlength="2" maxlength="40" pattern="[A-Za-z\s]{1,32}" placeholder="Class Name">
+                            </div>
+                            <div style="padding-left: 10px;display: inline-block" class="form-group">
+                                <select id="classFoodType" name="type" required class="select">
+                                    <option value="Other" disabled selected>Product Type</option>
+                                    <option value="Vegetable">Vegetable</option>
+                                    <option value="Grain">Grains</option>
+                                    <option value="Fruit">Fruit</option>
+                                    <option value="Dairy">Dairy</option>
+                                    <option value="Beans">Beans</option>
+                                    <option value="Seafood">Seafood</option>
+                                    <option value="Meat">Meat</option>
+                                    <option value="Eggs">Eggs</option>
+                                    <option value="Nuts">Nuts</option>
+                                    <option value="Poultry">Poultry</option>
+                                    <option value="Baked Goods">Baked Goods</option>
+                                    <option value="Spices">Spices</option>
+                                    <option value="Soups">Soups</option>
+                                    <option value="Desserts">Desserts</option>
+                                    <option value="Liquids">Liquids</option>
+                                    <option value="Breads">Breads</option>
+                                    <option value="Pasta">Pasta</option>
+                                    <option value="Snacks">Snacks</option>
+                                    <option value="Sauces">Sauces</option>
+                                    <option value="Hygiene">Hygiene</option>
+                                    <option value="Household Supplies">Household Supplies</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="newmodal3 form-group">
+                                <div>
+                                    <img id="classImgPreview" class="shopping-image" src="../images/placeholderimage.png"/>
+                                </div>
+                                <div>
+                                    <label for="classImg" class="file-upload">
+                                        Upload Image
+                                    </label>
+                                    <input type="file" name="file" id="classImg" accept="image/*" required onchange="classImageReadURL(this)"/>
+                                </div>
+                            </div>
+                        </form>
+                        <button type="submit" style="margin: .5rem auto;display:block; width:30%" class="btn btn-red" onclick="submitNewItemClass()">Submit</button>
+                        <h6 style="float:left;display:none" id="itemClassWarningText"><strong>*Please fill out ALL fields before proceeding.</strong></h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
