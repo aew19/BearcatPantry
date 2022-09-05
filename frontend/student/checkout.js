@@ -221,7 +221,30 @@ function setPickupDropDown(){
         newElem.value = date.toISOString().split('T')[0];
         dateSelect.appendChild(newElem);
     }
+
+    updateCheckoutTime();
 }
+
+function updateCheckoutTime(){
+    
+    let dateSelect = document.getElementById("checkoutDayDropDown").value;
+    let date = new Date(dateSelect)
+    let pickupTimeDropDown = document.getElementById("checkoutTime");
+    console.log(dateSelect)
+    pickupTimeDropDown.innerHTML = "";
+    // NOTE: for some reason sets date to day behind, so check for 1 as Tuesday
+    if(date.getDay() == 1){
+        var opt = document.createElement("option");
+        opt.textContent = "11 am - 1 pm";
+        pickupTimeDropDown.appendChild(opt);
+    }
+    else{
+        var opt = document.createElement("option");
+        opt.textContent = "2 pm - 4 pm";
+        pickupTimeDropDown.appendChild(opt);
+    }
+}
+
 
 // method added to Date class
 Date.prototype.addDays = function(days) {
