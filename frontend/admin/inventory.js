@@ -623,17 +623,17 @@ function popNewItem(){
 }
 
 async function popEditItem(barcode1, quantity){
-    let dropDown = document.getElementById("newType");
+    let dropDown = document.getElementById("newItemClass");
     dropDown.innerHTML = "";
     let inventoryItem = await getInventoryItem(barcode1);
-    console.log(inventoryItem);
+    //console.log(inventoryItem);
     let itemClasses = await getAllItemClasses();
-    console.log(itemClasses);
+    //console.log(itemClasses);
     getBarcode(barcode1).then(
         data => {
             document.getElementById("editItem").style.display = "block";
             document.getElementById('page-mask').style.position = "fixed";
-            //document.getElementById("newType").value = data.type;
+            document.getElementById("newType").value = data.type;
             document.getElementById("newBarcode").value = data.barcode;
             document.getElementById("newItemName").value = data.name;
             document.getElementById("newQuantity").value = quantity;
@@ -742,7 +742,7 @@ function editItem(){
     let vegan = false;
     let image = document.getElementById("editImg").files[0];
     let weight = parseFloat(document.getElementById("editItemWeight").value);
-    let itemClass = document.getElementById("newType").value
+    let itemClass = document.getElementById("newItemClass").value
 
     document.getElementById("editItem").style.display = "none";
     document.getElementById('page-mask').style.position = "unset";
