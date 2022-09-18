@@ -15,6 +15,9 @@ public class InventoryTable {
     private String barcodeId;
     private Integer quantity;
 
+    @ManyToOne
+    @JoinColumn(name = "classId", nullable = false)
+    private ItemClass itemClass;
 
 
     //Constructors
@@ -28,10 +31,12 @@ public class InventoryTable {
     public Long getId(){return this.inventoryId;}
     public String getBarcodeId(){return this.barcodeId;}
     public Integer getQuantity(){return this.quantity;}
+    public ItemClass getItemClass(){return this.itemClass;}
 
 
     //Setters
     public void setBarcodeId(String barcodeId){this.barcodeId = barcodeId;}
     public void setQuantity(Integer quantity){this.quantity = quantity;}
+    public void setItemClass(ItemClass _itemClass){this.itemClass = _itemClass;}
 
 }
