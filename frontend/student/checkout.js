@@ -201,8 +201,11 @@ function setPickupDropDown(){
 
     // if Sunday, get Tu/Wed of that week, otherwise get Tu/Wed of NEXT week
     if(dayOfWeekToday == 0){
-        nextAvailTues = nextAvailTues.setDate(nextAvailTues.getDate() + 2); //new Date(today.getDate() + 2);
-        nextAvailWed = nextAvailWed.setDate(nextAvailWed.getDate() + 3); //new Date(today.getDate() + 3);
+        //nextAvailTues = nextAvailTues.setDate(nextAvailTues.getDate() + 2); //new Date(today.getDate() + 2);
+        nextAvailTues = nextAvailTues.addDays(2);
+        //nextAvailWed = nextAvailWed.setDate(nextAvailWed.getDate() + 3); //new Date(today.getDate() + 3);
+        nextAvailWed = nextAvailWed.addDays(3);
+        //console.log(nextAvailTues);
         pickupDates.push(nextAvailTues, nextAvailWed);
     }
     else{
@@ -211,7 +214,7 @@ function setPickupDropDown(){
         nextAvailWed = nextAvailWed.addDays(gapToTues + 1); // just add 1 for next Wed
         pickupDates.push(nextAvailTues, nextAvailWed);
     }
-
+    
     let dateSelect = document.getElementById("checkoutDayDropDown");
     dateSelect.innerHTML = "";
     for(var i=0; i<pickupDates.length; i++){
